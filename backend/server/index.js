@@ -1,17 +1,18 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3001;
-
 const db = require('../models');
 
-// Test DB connection
-db.sequelize.authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(error => {
-    console.error('Unable to connect to the database:', error);
-  });
+// Test the connection to the SQL server
+async function testConnection() {
+  try {
+      await db.sequelize.authenticate();
+      console.log('Connection with postgreSQL server established successfully.');
+    } catch (error) {
+      console.error('Unable to connect to postgreSQL server:', error);
+    }
+}
+testConnection();
   
 app.get('/', (req, res) => {
     res.send('Hello, World!');
