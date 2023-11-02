@@ -33,7 +33,7 @@ async function parseCSV(filePath) {
 async function migrate(db, tableName) {
     // Construct the file path for the CSV file
     const filePath = path.join(__dirname, modelToFileMap[tableName]);
-    console.log(`Migrating data for ${tableName}, file path: ${filePath}`);
+    //console.log(`Migrating data for ${tableName}, file path: ${filePath}`);
 
     try {
         // Parse the CSV file
@@ -50,11 +50,10 @@ async function migrate(db, tableName) {
         if (!db[tableName]) {
             throw new Error(`Model for ${tableName} is not defined in db object.`);
         }
-        console.log(`Data being inserted for ${tableName}:`, data);
 
         // Bulk insert parsed data into the corresponding table
         await db[tableName].bulkCreate(data);
-        console.log(`Migration for ${tableName} completed.`);
+        //console.log(`Migration for ${tableName} completed.`);
     } catch (error) {
         console.error(`Error migrating data for ${tableName}:`, error);
         throw error; // Propagate the error to be handled by the caller
@@ -68,7 +67,20 @@ async function migrate(db, tableName) {
 async function runMigrations(db) {
     try {
         // Array of table names in the order they need to be migrated
-        const tables = ['Country', 'Brand','VatCategory', 'ProductCategory', 'VatRatePerCountry', 'ProductCategoryRank', 'ProductTaxCategory', 'Ean', 'Asin', 'Sku', 'AsinSku', 'EanInAsin'];
+        const tables = [
+            'Country',
+            'Brand',
+            'VatCategory', 
+            'ProductCategory', 
+            'VatRatePerCountry', 
+            'ProductCategoryRank', 
+            'ProductTaxCategory', 
+            'Ean', 
+            'Asin', 
+            'Sku', 
+            'AsinSku', 
+            'EanInAsin'
+        ];
 
         // Sequentially migrate each table
         for (const table of tables) {

@@ -75,7 +75,7 @@ setupAssociations(sequelize);
 	}
 };  
 
-// synchronizeAndMigrate();
+synchronizeAndMigrate();
 
 // Assign the Sequelize instance and class to the db object
 db.sequelize = sequelize;

@@ -1,7 +1,6 @@
 // Required modules
 const fs = require('fs');                       // File System module to read files
 const path = require('path');                   // Path module to handle file paths
-const basename = path.basename(__filename);
 const modelsDirectory = path.resolve(__dirname, '../database/models'); 
 const { Sequelize } = require('sequelize'); // Sequelize module
 const sequelize = require('./testDatabase'); // Sequelize instance
@@ -22,22 +21,14 @@ fs.readdirSync(modelsDirectory)
     );
   })
   .forEach(file => {
-	
 	// `path.join(__dirname, file)` creates an absolute path to the model file
 	const modelFilePath = path.join(modelsDirectory, file);
-	console.log("modelFilePath: ", modelFilePath);
 
-	// `require(modelFilePath)` dynamically requires the model file.
-	// This is akin to importing the file, but done programmatically.
-	// The require function actually returns the exported function from your model file.
+	// `require(modelFilePath)` dynamically requires the model file..
 	const modelDefinitionFunction = require(modelFilePath);
 
 	// `modelDefinitionFunction(sequelize, Sequelize.DataTypes)` invokes the function
-	// exported from your model file, passing in the sequelize instance and DataTypes.
-	// This is where your model gets defined (e.g., using sequelize.define).
-	// The function is expected to return the model.
 	const model = modelDefinitionFunction(sequelize, Sequelize.DataTypes);
-	
 
 	// Alternative to the above 4 lines of code:
    	//const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
@@ -48,7 +39,6 @@ fs.readdirSync(modelsDirectory)
 
 // Load and apply model associations
 const setupAssociations = require('../database/modelsAssociations.js');
-const { debugPort } = require('process');
 setupAssociations(sequelize);
 
 // Synchronize all models with the database
@@ -77,7 +67,8 @@ setupAssociations(sequelize);
 	}
 };  
 
-synchronizeAndMigrate();
+// commented out in the test environment because it is called in the test files.
+//synchronizeAndMigrate();
 
 // Assign the Sequelize instance and class to the db object
 db.sequelize = sequelize;
