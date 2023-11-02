@@ -45,7 +45,7 @@ fs.readdirSync(__dirname)
   });
 
 // Load and apply model associations
-const setupAssociations = require('./modelsAssociations.js');
+const setupAssociations = require('../modelsAssociations.js');
 
 setupAssociations(sequelize);
 
@@ -75,7 +75,7 @@ setupAssociations(sequelize);
 	}
 };  
 
-synchronizeAndMigrate();
+// synchronizeAndMigrate();
 
 // Assign the Sequelize instance and class to the db object
 db.sequelize = sequelize;

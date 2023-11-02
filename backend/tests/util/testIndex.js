@@ -47,7 +47,7 @@ fs.readdirSync(modelsDirectory)
   });
 
 // Load and apply model associations
-const setupAssociations = require('../../database/models/modelsAssociations.js');
+const setupAssociations = require('../../database/modelsAssociations.js');
 const { debugPort } = require('process');
 setupAssociations(sequelize);
 

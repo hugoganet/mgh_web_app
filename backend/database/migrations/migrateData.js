@@ -4,7 +4,7 @@ const path = require('path');
 // csv-parser package for parsing CSV files
 const csvParser = require('csv-parser');
 
-const modelToFileMap = require('../models/modelToFileMap');
+const modelToFileMap = require('../modelToFileMap');
 
 /**
  * Function to parse CSV file and return data as an array.

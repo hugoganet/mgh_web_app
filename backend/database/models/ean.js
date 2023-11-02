@@ -8,6 +8,12 @@ module.exports = (sequelize) => {
 			type: DataTypes.STRING(13),
 			allowNull: false,
 			primaryKey: true,
+			validate: {
+				is: {
+					args: /^[0-9]{13}$/,
+					msg: 'EAN must be 13 digits long.'
+				}
+			}
 		},
 		productName: { // this creates a column called product_name in the table
 			type: DataTypes.TEXT(),
