@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3001;
-const db = require('../models');
+const db = require('../database/models');
 
 // Test the connection to the SQL server
 async function testConnection() {

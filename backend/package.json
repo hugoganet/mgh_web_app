@@ -9,6 +9,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "csv-parser": "^3.0.0",
     "dotenv": "^16.3.1",
     "express": "^4.17.3",
     "pg": "^8.11.3",
@@ -17,7 +18,9 @@
     "sequelize-cli": "^6.6.1"
   },
   "devDependencies": {
-    "jest": "^29.0.0",
-    "nodemon": "^2.0.15"
+    "jest": "^29.7.0",
+    "nodemon": "^2.0.15",
+    "sequelize-test-helpers": "^1.4.3",
+    "supertest": "^6.3.3"
   }
 }

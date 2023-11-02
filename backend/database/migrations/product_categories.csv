@@ -1,0 +1,24 @@
+productCategoryId,productCategoryNameEn,productCategoryNameFr,productCategoryNameDe,productCategoryNameEs,productCategoryNameIt
+1,Grocery,Epicerie,Lebensmittel & Getränke,Alimentación y bebidas,Alimentari e cura della casa
+2,Health & Personal Care,Hygiène et Santé,Drogerie & Körperpflege,Salud y cuidado personal,Salute e cura della persona
+3,Office product,Fournitures de bureau,Bürobedarf & Schreibwaren,Oficina y papelería,Cancelleria e prodotti per ufficio
+4,Beauty,Beauté et Parfum,Kosmetik,Belleza,Bellezza
+5,Book,Livres,Bücher,Libros,Libri
+6,Video games,Jeux vidéo,Games,Videojuegos,Videogiochi
+7,DVD,DVD et Blu-ray,DVD & Blu-ray,Películas y TV,Film e TV
+8,Toy,Jeux et Jouets,Spielzeug,Juguetes y juegos,Giochi e giocattoli
+9,High-Tech,High-Tech,Elektronik & Foto,Electrónica,Elettronica
+10,Garden,Jardin,Garten,Jardín,Giardino e giardinaggio
+11,Baby product,Bébé et Puériculture,Baby,Bebé,Prima infanzia
+12,Lighting,Luminaires et Éclairage,Beleuchtung,Iluminación,Illuminazione
+13,Sports,Sports et Loisirs,Sport & Freizeit,Deportes y aire libre,Sport e tempo libero
+14,Pet Supplies,Animalerie,Haustier,Productos para mascotas,Prodotti per animali domestici
+15,Home and Kitchen,Cuisine et Maison,"Küche, Haushalt & Wohnen",Hogar y cocina,Casa e cucina
+16,Instruments de musique et Sono,Instruments de musique et Sono,Musikinstrumente & DJ-Equipment,Instrumentos musicales,Strumenti musicali
+17,Home Improvement,Bricolage,Baumarkt,Bricolaje y herramientas,Fai da te
+18,Car & Motorbike,Auto et Moto,Auto & Motorrad,Coche y moto,Auto e Moto
+19,"Business, Industrial, and Scientific Supplies","Commerce, Industrie et Science","Gewerbe, Industrie & Wissenschaft","Industria, empresas y ciencia","Commercio, Industria e Scienza"
+20,Full-Size Appliances,Gros électroménager,Elektro-Großgeräte,Grandes electrodomésticos,Grandi elettrodomestici
+21,Clothing and Accessories,Mode,Fashion,Moda,Moda
+22,Personal computer,Informatique,Computer & Zubehör,Informática,Informatica
+23,Everything else,Autres,Sonstiges,Otros Productos,Altro
