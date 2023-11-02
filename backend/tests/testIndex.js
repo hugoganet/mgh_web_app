@@ -2,10 +2,10 @@
 const fs = require('fs');                       // File System module to read files
 const path = require('path');                   // Path module to handle file paths
 const basename = path.basename(__filename);
-const modelsDirectory = path.resolve(__dirname, '../../database/models'); 
+const modelsDirectory = path.resolve(__dirname, '../database/models'); 
 const { Sequelize } = require('sequelize'); // Sequelize module
 const sequelize = require('./testDatabase'); // Sequelize instance
-const runMigrations = require('../../database/migrations/migrateData'); // Function to run migrations
+const runMigrations = require('../database/migrations/migrateData'); // Function to run migrations
 
 // Database object to hold our models
 const db = {};
@@ -47,7 +47,7 @@ fs.readdirSync(modelsDirectory)
   });
 
 // Load and apply model associations
-const setupAssociations = require('../../database/modelsAssociations.js');
+const setupAssociations = require('../database/modelsAssociations.js');
 const { debugPort } = require('process');
 setupAssociations(sequelize);
 

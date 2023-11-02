@@ -1,6 +1,6 @@
 const {Sequelize} = require('sequelize'); // Sequelize module
-const config = require('../../database/config/config.json'); // Config file
-const db = require('../../database/models');
+const config = require('../database/config/config.json'); // Config file
+const db = require('../database/models');
 
 // Configure and create a Sequelize instance
 console.log("Configuring Sequelize instance...");
