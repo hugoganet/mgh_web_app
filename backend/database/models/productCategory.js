@@ -15,23 +15,28 @@ module.exports = (sequelize) => {
 		},
 		productCategoryNameEn: {
 			type: DataTypes.STRING(150),
-			allowNull: false
+			allowNull: false,
+			unique: true
 		},
 		productCategoryNameFr: {
 			type: DataTypes.STRING(150),
-			allowNull: false
+			allowNull: false,
+			unique: true
 		},
 		productCategoryNameDe: {
 			type: DataTypes.STRING(150),
-			allowNull: false
+			allowNull: false,
+			unique: true
 		},
 		productCategoryNameEs: {
 			type: DataTypes.STRING(150),
-			allowNull: false
+			allowNull: false,
+			unique: true
 		},
 		productCategoryNameIt: {
 			type: DataTypes.STRING(150),
-			allowNull: false
+			allowNull: false,
+			unique: true
 		}
 	}, {
 		sequelize,
