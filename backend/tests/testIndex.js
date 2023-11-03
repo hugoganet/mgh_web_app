@@ -67,7 +67,8 @@ setupAssociations(sequelize);
 	}
 };  
 
-// commented out in the test environment because it is called in the test files.
+
+//TODO : create a condition to run the migration only if the database is empty
 //synchronizeAndMigrate();
 
 // Assign the Sequelize instance and class to the db object
