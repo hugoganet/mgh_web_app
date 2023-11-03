@@ -1,4 +1,4 @@
-const { initializeDatabase, closeDatabase, db } = require('./testModelsSetup'); 
+const { initializeDatabase, closeDatabase, db } = require('../../jest.setup'); 
 
 describe(`Country Model Tests`, () => {
     beforeAll(async () => {

@@ -1,4 +1,4 @@
-const { initializeDatabase, closeDatabase, db } = require('./testModelsSetup'); 
+const { initializeDatabase, closeDatabase, db } = require('../../jest.setup'); 
 
 describe(`Brand Model Tests`, () => {
     beforeAll(async () => {
@@ -9,7 +9,6 @@ describe(`Brand Model Tests`, () => {
         await closeDatabase();
     });
 
-    console.log(db.Brand)
     // Basic tests for creating, updating, deleting, and retrieving data
     test('Create a valid Brand', async () => {
         // Test for creating a new instance
@@ -50,11 +49,8 @@ describe(`Brand Model Tests`, () => {
         // Test for checking the association between Brand and Product
         const brand = await db.Brand.findOne({ where: { brandName: 'KONG' } });
         const eans = await brand.getEans();
-        console.log(`Number of eans corresponding => ${eans.length}`)
         expect(eans.length).toBeGreaterThan(0);
     });
-
-   
 
 });
 

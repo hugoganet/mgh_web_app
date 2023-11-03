@@ -2,9 +2,10 @@
 const fs = require('fs');                       // File System module to read files
 const path = require('path');                   // Path module to handle file paths
 const modelsDirectory = path.resolve(__dirname, '../database/models'); 
+const unitTestsDirectory = path.resolve(__dirname, './unit/models');
 const { Sequelize } = require('sequelize'); // Sequelize module
-const sequelize = require('./testDatabase'); // Sequelize instance
-const runMigrations = require('../database/migrations/migrateData'); // Function to run migrations
+const sequelize = require('./testDatabase.js'); // Sequelize instance
+const runMigrations = require('../database/migrations/migrateData.js'); // Function to run migrations
 
 // Database object to hold our models
 const db = {};
@@ -67,9 +68,8 @@ setupAssociations(sequelize);
 	}
 };  
 
+// run all the files in the unit/models directory
 
-//TODO : create a condition to run the migration only if the database is empty
-//synchronizeAndMigrate();
 
 // Assign the Sequelize instance and class to the db object
 db.sequelize = sequelize;
