@@ -1,204 +1,204 @@
 productTaxCategoryId,countryCode,productTaxCategoryName,productTaxCategoryDescription,vatCategoryId
-1,AT,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-2,BE,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-3,BG,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-4,HR,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-5,CY,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-6,CZ,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-7,DK,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-8,EE,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-9,FI,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-10,FR,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-11,DE,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-12,GR,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-13,HU,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-14,IE,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-15,IT,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-16,LV,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-17,LT,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-18,LU,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-19,MT,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-20,NL,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-21,PL,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-22,PT,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-23,RO,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-24,SK,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-25,SI,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-26,ES,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-27,SE,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-28,CH,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-29,GB,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
-30,AT,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
-31,BE,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
-32,BG,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
-33,HR,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
-34,CY,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
-35,CZ,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
-36,DK,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,S
-37,EE,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
-38,FI,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
-39,FR,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
-40,DE,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
-41,GR,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
-42,HU,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
-43,IE,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,Z
-44,IT,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,SR
-45,LV,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
-46,LT,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
-47,LU,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,SR
-48,MT,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
-49,NL,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
-50,PL,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
-51,PT,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
-52,RO,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
-53,SK,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
-54,SI,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
-55,ES,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,SR
-56,SE,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
-57,CH,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
-58,GB,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,Z
-59,AT,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R2
-60,BE,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
-61,BG,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
-62,HR,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
-63,CY,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
-64,CZ,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
-65,DK,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
-66,EE,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
-67,FI,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
-68,FR,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R2
-69,DE,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
-70,GR,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
-71,HU,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
-72,IE,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",Z
-73,IT,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
-74,LV,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
-75,LT,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
-76,LU,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",SR
-77,MT,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",Z
-78,NL,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
-79,PL,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
-80,PT,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
-81,RO,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
-82,SK,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
-83,SI,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
-84,ES,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
-85,SE,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
-86,CH,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R2
-87,GB,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",Z
-88,AT,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R2
-89,BE,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
-90,BG,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
-91,HR,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
-92,CY,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
-93,CZ,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
-94,DK,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
-95,EE,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
-96,FI,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
-97,FR,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R2
-98,DE,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
-99,GR,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
-100,HU,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
-101,IE,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",Z
-102,IT,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",SR
-103,LV,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
-104,LT,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
-105,LU,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",SR
-106,MT,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",Z
-107,NL,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
-108,PL,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",Z
-109,PT,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R2
-110,RO,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
-111,SK,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
-112,SI,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
-113,ES,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",Z
-114,SE,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
-115,CH,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R2
-116,GB,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",Z
-117,AT,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
-118,BE,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
-119,BG,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
-120,HR,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
-121,CY,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
-122,CZ,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
-123,DK,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
-124,EE,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
-125,FI,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
-126,FR,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R2
-127,DE,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
-128,GR,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
-129,HU,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
-130,IE,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",Z
-131,IT,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
-132,LV,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
-133,LT,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
-134,LU,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",SR
-135,MT,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",Z
-136,NL,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
-137,PL,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
-138,PT,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
-139,RO,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
-140,SK,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
-141,SI,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
-142,ES,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
-143,SE,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
-144,CH,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R2
-145,GB,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",Z
-146,AT,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
-147,BE,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-148,BG,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-149,HR,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-150,CY,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
-151,CZ,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
-152,DK,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-153,EE,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-154,FI,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
-155,FR,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-156,DE,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
-157,GR,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-158,HU,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-159,IE,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-160,IT,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-161,LV,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-162,LT,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-163,LU,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",SR
-164,MT,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",Z
-165,NL,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-166,PL,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
-167,PT,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-168,RO,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
-169,SK,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-170,SI,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
-171,ES,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
-172,SE,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-173,CH,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R2
-174,GB,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
-175,AT,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-176,BE,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
-177,BG,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-178,HR,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-179,CY,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
-180,CZ,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-181,DK,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-182,EE,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
-183,FI,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-184,FR,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R2
-185,DE,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-186,GR,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-187,HU,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-188,IE,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
-189,IT,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-190,LV,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-191,LT,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-192,LU,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,SR
-193,MT,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-194,NL,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
-195,PL,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
-196,PT,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R2
-197,RO,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-198,SK,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-199,SI,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
-200,ES,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,SR
-201,SE,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-202,CH,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
-203,GB,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
+,AT,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,BE,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,BG,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,HR,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,CY,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,CZ,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,DK,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,EE,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,FI,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,FR,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,DE,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,GR,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,HU,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,IE,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,IT,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,LV,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,LT,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,LU,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,MT,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,NL,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,PL,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,PT,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,RO,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,SK,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,SI,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,ES,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,SE,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,CH,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,GB,A_GEN_STANDARD,Items typically included within this product tax code include general merchandise that is otherwise not included in more specific tax product codes.,S
+,AT,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
+,BE,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
+,BG,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
+,HR,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
+,CY,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
+,CZ,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
+,DK,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,S
+,EE,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
+,FI,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
+,FR,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
+,DE,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
+,GR,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
+,HU,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
+,IE,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,Z
+,IT,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,SR
+,LV,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
+,LT,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
+,LU,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,SR
+,MT,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
+,NL,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
+,PL,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
+,PT,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
+,RO,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
+,SK,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R
+,SI,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
+,ES,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,SR
+,SE,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
+,CH,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,R2
+,GB,A_BOOKS_GEN,Items typically included within this product tax code include printed books and booklets.,Z
+,AT,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R2
+,BE,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
+,BG,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
+,HR,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
+,CY,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
+,CZ,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
+,DK,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
+,EE,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
+,FI,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
+,FR,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R2
+,DE,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
+,GR,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
+,HU,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
+,IE,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",Z
+,IT,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
+,LV,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
+,LT,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
+,LU,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",SR
+,MT,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",Z
+,NL,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
+,PL,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
+,PT,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
+,RO,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
+,SK,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",S
+,SI,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
+,ES,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
+,SE,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R
+,CH,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",R2
+,GB,A_FOOD_GEN,"Items typically included within this product tax code include general food, boxed meals, sweeteners, sugar, gravy, oatmeal, cornflakes, pasta sauces, and other general food items.",Z
+,AT,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R2
+,BE,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
+,BG,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
+,HR,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
+,CY,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
+,CZ,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
+,DK,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
+,EE,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
+,FI,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
+,FR,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R2
+,DE,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
+,GR,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
+,HU,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
+,IE,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",Z
+,IT,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",SR
+,LV,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
+,LT,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
+,LU,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",SR
+,MT,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",Z
+,NL,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
+,PL,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",Z
+,PT,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R2
+,RO,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
+,SK,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",S
+,SI,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
+,ES,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",Z
+,SE,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R
+,CH,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",R2
+,GB,A_FOOD_RICE,"Items typically included within this product tax code include rice, quinoa and barley.",Z
+,AT,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
+,BE,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
+,BG,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
+,HR,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
+,CY,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
+,CZ,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
+,DK,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
+,EE,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
+,FI,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
+,FR,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R2
+,DE,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
+,GR,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
+,HU,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
+,IE,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",Z
+,IT,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
+,LV,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
+,LT,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
+,LU,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",SR
+,MT,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",Z
+,NL,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
+,PL,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
+,PT,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
+,RO,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
+,SK,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",S
+,SI,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
+,ES,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
+,SE,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R
+,CH,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",R2
+,GB,A_FOOD_TEA,"Items typically included within this product tax code include whole, bagged, instant tea, and tea drinks.",Z
+,AT,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
+,BE,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,BG,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,HR,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,CY,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
+,CZ,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
+,DK,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,EE,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,FI,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
+,FR,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,DE,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
+,GR,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,HU,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,IE,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,IT,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,LV,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,LT,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,LU,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",SR
+,MT,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",Z
+,NL,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,PL,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
+,PT,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,RO,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
+,SK,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,SI,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
+,ES,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R
+,SE,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,CH,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",R2
+,GB,A_FOOD_PETFOOD,"Items typically included within this product tax code include food and treats for pet dogs, cats, birds, fish and other household pets",S
+,AT,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,BE,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
+,BG,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,HR,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,CY,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
+,CZ,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,DK,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,EE,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
+,FI,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,FR,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R2
+,DE,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,GR,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,HU,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,IE,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
+,IT,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,LV,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,LT,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,LU,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,SR
+,MT,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,NL,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
+,PL,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
+,PT,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R2
+,RO,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,SK,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,SI,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R
+,ES,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,SR
+,SE,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,CH,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,S
+,GB,A_HPC_CONTRACEPTIVE,Items typically included within this product tax code include condoms and other contraceptive aids.,R

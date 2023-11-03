@@ -140,7 +140,7 @@ module.exports = (sequelize) => {
         onUpdate: 'CASCADE'
     });
     ProductTaxCategory.hasMany(Asin, {
-        // foreignKey: 'productTaxCategoryId',
+        foreignKey: 'productTaxCategoryId',
         sourceKey: 'productTaxCategoryId', 
         foreignKey: 'productTaxCategoryName',
     });

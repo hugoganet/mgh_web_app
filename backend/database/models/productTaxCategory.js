@@ -9,13 +9,13 @@ module.exports = (sequelize) => {
 	ProductTaxCategory.init({
 		productTaxCategoryId: {
 			type: DataTypes.INTEGER,
-			unique: true,
+			autoIncrement: true,
+			primaryKey: true,
 			allowNull: false
 		},
 		countryCode: {
 			type: DataTypes.CHAR(2),
 			allowNull: false,
-			primaryKey: true, // part of composite key
 			references: {
 				model: 'countries',
 				key: 'country_code'
@@ -23,7 +23,6 @@ module.exports = (sequelize) => {
 		},
 		productTaxCategoryName: {
 			type: DataTypes.STRING(100),
-			primaryKey: true, // part of composite key
 			allowNull: false
 		},
 		productTaxCategoryDescription: {
@@ -32,7 +31,7 @@ module.exports = (sequelize) => {
 		},
 		
 		vatCategoryId: {
-			type: DataTypes.CHAR(2),
+			type: DataTypes.STRING(2),
 			allowNull: false,
 			references: {
 				model: 'vat_categories',
