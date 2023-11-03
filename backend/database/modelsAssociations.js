@@ -43,11 +43,13 @@ module.exports = (sequelize) => {
         onUpdate: 'CASCADE'
         }
     );
-    Asin.belongsToMany(Ean,
-        { through: EanInAsin},
-        {onDelete: 'NO ACTION'},
-        {onUpdate: 'CASCADE'}
-    );
+    Asin.belongsToMany(Ean, {
+        through: EanInAsin,
+        foreignKey: 'asinId', // This must match the field name in EanInAsin
+        otherKey: 'ean', // This must match the field name in EanInAsin
+        onDelete: 'NO ACTION',
+        onUpdate: 'CASCADE'
+      });
     Asin.belongsToMany(Sku, 
         { through: "AsinSku"},
         {onDelete: 'NO ACTION'},
@@ -96,11 +98,13 @@ module.exports = (sequelize) => {
         onUpdate: 'CASCADE'
         }
     );
-    Ean.belongsToMany(Asin, 
-        {through: EanInAsin },
-        {onDelete: 'NO ACTION'},
-        {onUpdate: 'CASCADE'}
-    );
+    Ean.belongsToMany(Asin, {
+        through: EanInAsin,
+        foreignKey: 'ean', // This must match the field name in EanInAsin
+        otherKey: 'asinId', // This must match the field name in EanInAsin
+        onDelete: 'NO ACTION',
+        onUpdate: 'CASCADE'
+    });
 
     // Associations for ProductCategory
     ProductCategory.hasMany(Asin, {

@@ -60,7 +60,7 @@ setupAssociations(sequelize);
 	    await db.AsinSku.sync({ force: true });
 	    await db.EanInAsin.sync({ force: true });
 	    //console.log('All tables created in order');
-  
+		
 	    // Run migrations
 		await runMigrations(db);
 	} catch (error) {
@@ -69,7 +69,7 @@ setupAssociations(sequelize);
 };  
 
 // run all the files in the unit/models directory
-
+//synchronizeAndMigrate();
 
 // Assign the Sequelize instance and class to the db object
 db.sequelize = sequelize;
