@@ -83,6 +83,11 @@ module.exports = (sequelize) => {
         onDelete: 'NO ACTION',
         onUpdate: 'CASCADE'
     });
+    Country.hasMany(ProductCategoryRank, {
+        foreignKey: 'countryCode',
+        onDelete: 'NO ACTION',
+        onUpdate: 'CASCADE'
+    });
 
     // Associations for Ean
     Ean.belongsTo(Brand, {

@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
 			allowNull: false
 		},
 		countryName: {
-			type: DataTypes.STRING(255),
+			type: DataTypes.STRING(50),
 			allowNull: false
 		}
 	}, {
