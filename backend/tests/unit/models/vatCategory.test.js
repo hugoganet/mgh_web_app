@@ -30,7 +30,6 @@ describe(`VatCategory Model Tests`, () => {
         const vatCategory = await db.VatCategory.findOne({ where: { vatCategoryId: 'Z' }});
         const vatRatePerCountry = await vatCategory.getVatRatePerCountries();
         expect(vatRatePerCountry.length).toBeGreaterThan(0);
-        console.log(vatRatePerCountry.length);
     });
 
 });
