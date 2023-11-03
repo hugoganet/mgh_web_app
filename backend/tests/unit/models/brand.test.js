@@ -12,7 +12,6 @@ describe(`Brand Model Tests`, () => {
     // Basic tests for creating, updating, deleting, and retrieving data
     test('Create a valid Brand', async () => {
         // Test for creating a new instance
-        // const brand = await db.Brand.create({ brandName: 'Nike' });
         try {
             const brand = await db.Brand.create({ brandName: 'Nike' });
             expect(brand.brandName).toBe('Nike');

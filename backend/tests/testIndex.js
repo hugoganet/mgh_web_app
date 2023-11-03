@@ -10,7 +10,7 @@ const runMigrations = require('../database/migrations/migrateData.js'); // Funct
 // Database object to hold our models
 const db = {};
 
-console.log("Sequelize instance configured. Loading models...");
+//console.log("Sequelize instance configured. Loading models...");
 
 // Read all files in the current directory, filter out non-model files, and import each model
 fs.readdirSync(modelsDirectory)
@@ -45,7 +45,7 @@ setupAssociations(sequelize);
 // Synchronize all models with the database
  async function synchronizeAndMigrate() {
  	try {
-		console.log('Synchronizing all models with the database...');
+		//console.log('Synchronizing all models with the database...');
 	    // Synchronize tables in the order of dependency
 	    await db.Country.sync({ force: true });
 	    await db.Brand.sync({ force: true });
@@ -59,7 +59,7 @@ setupAssociations(sequelize);
 	    await db.Sku.sync({ force: true });
 	    await db.AsinSku.sync({ force: true });
 	    await db.EanInAsin.sync({ force: true });
-	    console.log('All tables created in order');
+	    //console.log('All tables created in order');
   
 	    // Run migrations
 		await runMigrations(db);

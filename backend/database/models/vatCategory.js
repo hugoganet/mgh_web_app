@@ -6,14 +6,15 @@ module.exports = (sequelize) => {
 	}
 	VatCategory.init({
 		vatCategoryId: {
-			type: DataTypes.CHAR(2),
+			type: DataTypes.STRING(2),
 			primaryKey: true,
 			allowNull: false,
 		},
 			
 		vatCategoryDefinition: {
-			type: DataTypes.CHAR(30),
+			type: DataTypes.STRING(30),
 			allowNull: false,
+			unique: true,
 		},
 	}, {
 		sequelize,

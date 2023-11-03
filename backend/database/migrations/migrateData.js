@@ -86,8 +86,7 @@ async function runMigrations(db) {
         for (const table of tables) {
             await migrate(db, table);
         }
-
-        console.log('All migrations completed.');
+        //console.log('All migrations completed.');
     } catch (error) {
         console.error('Migration failed:', error);
     }
