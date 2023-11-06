@@ -18,6 +18,7 @@ module.exports = (sequelize) => {
         VatCategory,
         VatRatePerCountry,
         EanInAsin,
+        AsinSku
     } = sequelize.models;
 
     // Associations for Asin
@@ -50,11 +51,13 @@ module.exports = (sequelize) => {
         onDelete: 'NO ACTION',
         onUpdate: 'CASCADE'
       });
-    Asin.belongsToMany(Sku, 
-        { through: "AsinSku"},
-        {onDelete: 'NO ACTION'},
-        {onUpdate: 'CASCADE'}
-    );
+    Asin.belongsToMany(Sku, { 
+        through: AsinSku,
+        foreignKey: 'asinId',
+        otherKey: 'skuId',
+        onDelete: 'NO ACTION',
+        onUpdate: 'CASCADE'
+    });
 
     // Associations for Brand
     Brand.hasMany(Ean, {
@@ -177,10 +180,12 @@ module.exports = (sequelize) => {
         onUpdate: 'CASCADE'
         }
     );
-    Sku.belongsToMany(Asin, 
-        {through: 'AsinSku'},
-        {onDelete: 'NO ACTION'},
-        {onUpdate: 'CASCADE'}
-    );
+    Sku.belongsToMany(Asin, {
+        through: AsinSku,
+        foreignKey: 'skuId',
+        otherKey: 'asinId',
+        onDelete: 'NO ACTION',
+        onUpdate: 'CASCADE' 
+    });
 
 };

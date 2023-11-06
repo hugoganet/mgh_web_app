@@ -1,0 +1,16 @@
+{
+    "env": {
+        "commonjs": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "google",
+        "plugin:prettier/recommended" // integrates Prettier with ESLint
+      ],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+    }
+}
