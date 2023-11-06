@@ -1,14 +1,13 @@
-const { initializeDatabase, closeDatabase, db } = require('../../jest.setup'); 
+const { initializeDatabase, closeDatabase, db } = require('../../jest.setup');
 
 describe(`Ean Model Tests`, () => {
-    beforeAll(async () => {
-        await initializeDatabase();
-    });     
+  beforeAll(async () => {
+    await initializeDatabase();
+  });
 
-    afterAll(async () => {
-        await closeDatabase();
-    });
-
+  afterAll(async () => {
+    await closeDatabase();
+  });
 
   // CREATE Tests
   test('Create a valid Ean', async () => {
@@ -21,10 +20,12 @@ describe(`Ean Model Tests`, () => {
   });
 
   test('Fail to create Ean with invalid EAN', async () => {
-    await expect(db.Ean.create({
-      ean: '123',
-      productName: 'Invalid EAN Product',
-    })).rejects.toThrow();
+    await expect(
+      db.Ean.create({
+        ean: '123',
+        productName: 'Invalid EAN Product',
+      }),
+    ).rejects.toThrow();
   });
 
   // UPDATE Tests
@@ -35,7 +36,7 @@ describe(`Ean Model Tests`, () => {
     });
 
     const updatedEan = await eanToUpdate.update({
-      productName: 'New Product Name'
+      productName: 'New Product Name',
     });
 
     expect(updatedEan.productName).toBe('New Product Name');
@@ -46,13 +47,15 @@ describe(`Ean Model Tests`, () => {
       ean: '9876543210123',
       productName: 'Some Product',
     });
-  
-    await eanToUpdate.update({
-      productName: null
-    }).catch(e => null); // Catch and ignore the error
-  
+
+    await eanToUpdate
+      .update({
+        productName: null,
+      })
+      .catch(e => null); // Catch and ignore the error
+
     const notUpdatedEan = await db.Ean.findByPk('9876543210123');
-  
+
     // Check that the productName did not change
     expect(notUpdatedEan.productName).toBe('Some Product');
   });
@@ -85,7 +88,7 @@ describe(`Ean Model Tests`, () => {
   test('Ean belongs to Brand', async () => {
     const ean = await db.Ean.findByPk('9782012272323');
     const brand = await ean.getBrand();
-    expect(brand.brandName).toBe('DEUX COQS D\'OR');
+    expect(brand.brandName).toBe("DEUX COQS D'OR");
   });
 
   test('Select all Asin records associated with a given Ean', async () => {
@@ -94,23 +97,21 @@ describe(`Ean Model Tests`, () => {
     expect(asins).toBeInstanceOf(Array);
     expect(asins.length).toBeGreaterThan(0);
   });
-  
+
   // Test to check ON DELETE NO ACTION
-test('Ean deletion should not be allowed if associated with Asin', async () => {
-  // Assuming eanToDelete is an Ean that is associated with some Asin records
-  const eanToDelete = await db.Ean.findByPk('3553330100485');
+  test('Ean deletion should not be allowed if associated with Asin', async () => {
+    // Assuming eanToDelete is an Ean that is associated with some Asin records
+    const eanToDelete = await db.Ean.findByPk('3553330100485');
 
-  try {
-    await eanToDelete.destroy();
-  } catch (error) {
-    // Expect an error due to the NO ACTION constraint
-    expect(error).toBeDefined();
-  }
+    try {
+      await eanToDelete.destroy();
+    } catch (error) {
+      // Expect an error due to the NO ACTION constraint
+      expect(error).toBeDefined();
+    }
 
-  // Check if the Ean still exists
-  const eanStillExists = await db.Ean.findByPk('3553330100485');
-  expect(eanStillExists).not.toBeNull();
-});
-
-  
+    // Check if the Ean still exists
+    const eanStillExists = await db.Ean.findByPk('3553330100485');
+    expect(eanStillExists).not.toBeNull();
+  });
 });

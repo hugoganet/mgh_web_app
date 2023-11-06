@@ -1,16 +1,27 @@
 {
-    "env": {
-        "commonjs": true,
-        "es2021": true,
-        "node": true
-    },
-    "extends": [
-        "google",
-        "plugin:prettier/recommended" // integrates Prettier with ESLint
-      ],
-    "parserOptions": {
-        "ecmaVersion": "latest"
-    },
-    "rules": {
-    }
+  "env": {
+    "commonjs": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": ["google", "plugin:prettier/recommended"],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "rules": {
+    "prettier/prettier": ["error", { "singleQuote": true, "parser": "babel" }],
+    "new-cap": [
+      "error",
+      {
+        "capIsNewExceptions": [
+          "DataTypes.STRING",
+          "DataTypes.INTEGER",
+          "DataTypes.TEXT",
+          "DataTypes.CHAR",
+          "DataTypes.DECIMAL"
+        ]
+      }
+    ]
+  }
 }

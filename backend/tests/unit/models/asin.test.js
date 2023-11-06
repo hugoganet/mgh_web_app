@@ -1,4 +1,4 @@
-const { initializeDatabase, closeDatabase, db } = require("../../jest.setup");
+const { initializeDatabase, closeDatabase, db } = require('../../jest.setup');
 
 describe(`Asin Model Tests`, () => {
   beforeAll(async () => {
@@ -11,50 +11,50 @@ describe(`Asin Model Tests`, () => {
 
   // BASIC TESTS
   // Create a valid Asin
-  test("Create a valid Asin", async () => {
+  test('Create a valid Asin', async () => {
     const newAsin = await db.Asin.create({
-      asin: "B01N5IB20Q",
-      countryCode: "FR",
+      asin: 'B01N5IB20Q',
+      countryCode: 'FR',
       productCategoryId: 1,
       productCategoryRankId: 1,
       productTaxCategoryId: 1,
-      asinName: "Example Product Name",
-      urlAmazon: "http://example.com/product", // Assuming this field can have any string URL.
-      urlImage: "http://example.com/product.jpg", // Assuming this field can have any string URL.
+      asinName: 'Example Product Name',
+      urlAmazon: 'http://example.com/product', // Assuming this field can have any string URL.
+      urlImage: 'http://example.com/product.jpg', // Assuming this field can have any string URL.
       asinPotentialWarehousesQuantity: 10,
       asinNumberOfActiveSku: 5,
       asinAverageUnitSoldPerDay: 2.5,
       isBatteryRequired: false,
       isHazmat: false,
     });
-    expect(newAsin).toHaveProperty("asinId");
-    expect(newAsin.asin).toBe("B01N5IB20Q");
+    expect(newAsin).toHaveProperty('asinId');
+    expect(newAsin.asin).toBe('B01N5IB20Q');
   });
 
   // Fail to create an Asin with invalid data
-  test("Fail to create an Asin with invalid data", async () => {
+  test('Fail to create an Asin with invalid data', async () => {
     await expect(
       db.Asin.create({
         asin: null, // asin is required and cannot be null
-        countryCode: "US",
+        countryCode: 'US',
         productCategoryRankId: 1,
         productTaxCategoryId: 1,
-        asinName: "Example Product Name",
+        asinName: 'Example Product Name',
       }),
     ).rejects.toThrow();
   });
 
   // Update an Asin
-  test("Update an Asin", async () => {
+  test('Update an Asin', async () => {
     const createdAsin = await db.Asin.create({
-      asin: "B01N5IB20Q",
-      countryCode: "FR",
+      asin: 'B01N5IB20Q',
+      countryCode: 'FR',
       productCategoryId: 1,
       productCategoryRankId: 1,
       productTaxCategoryId: 1,
-      asinName: "Example Product Name",
-      urlAmazon: "http://example.com/product",
-      urlImage: "http://example.com/product.jpg",
+      asinName: 'Example Product Name',
+      urlAmazon: 'http://example.com/product',
+      urlImage: 'http://example.com/product.jpg',
       asinPotentialWarehousesQuantity: 10,
       asinNumberOfActiveSku: 5,
       asinAverageUnitSoldPerDay: 2.5,
@@ -62,23 +62,23 @@ describe(`Asin Model Tests`, () => {
       isHazmat: false,
     });
 
-    await createdAsin.update({ asinName: "Updated Product Name" });
+    await createdAsin.update({ asinName: 'Updated Product Name' });
 
     const updatedAsin = await db.Asin.findByPk(createdAsin.asinId);
-    expect(updatedAsin.asinName).toBe("Updated Product Name");
+    expect(updatedAsin.asinName).toBe('Updated Product Name');
   });
 
   // Delete an Asin
-  test("Delete an Asin", async () => {
+  test('Delete an Asin', async () => {
     const createdAsin = await db.Asin.create({
-      asin: "B01N5IB20Q",
-      countryCode: "FR",
+      asin: 'B01N5IB20Q',
+      countryCode: 'FR',
       productCategoryId: 1,
       productCategoryRankId: 1,
       productTaxCategoryId: 1,
-      asinName: "Example Product Name",
-      urlAmazon: "http://example.com/product",
-      urlImage: "http://example.com/product.jpg",
+      asinName: 'Example Product Name',
+      urlAmazon: 'http://example.com/product',
+      urlImage: 'http://example.com/product.jpg',
       asinPotentialWarehousesQuantity: 10,
       asinNumberOfActiveSku: 5,
       asinAverageUnitSoldPerDay: 2.5,

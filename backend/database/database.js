@@ -1,16 +1,20 @@
-const {Sequelize} = require('sequelize'); // Sequelize module
-const config = require('./config/config.json'); // Config 
-const customLogger = require('./config/customLogger'); // Logger
+const { Sequelize } = require('sequelize'); // Sequelize module
+const config = require('./config/config.json'); // Config
 
 // Configure and create a Sequelize instance
-console.log("Configuring Sequelize instance...");
+console.log('Configuring Sequelize instance...');
 
-const sequelize = new Sequelize(config.development.database, config.development.username, config.development.password,{
+const sequelize = new Sequelize(
+  config.development.database,
+  config.development.username,
+  config.development.password,
+  {
     dialect: 'postgres',
     define: {
-        underscored: true,
+      underscored: true,
     },
     logging: false,
-});
+  },
+);
 
 module.exports = sequelize;
