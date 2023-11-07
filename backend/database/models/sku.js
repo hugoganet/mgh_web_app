@@ -42,7 +42,8 @@ module.exports = sequelize => {
       },
       skuAfnTotalQuantity: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
+        defaultValue: 0,
       },
       skuAverageSellingPrice: {
         type: DataTypes.DECIMAL(10, 2),
