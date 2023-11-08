@@ -69,6 +69,8 @@ async function synchronizeAndMigrate() {
     await db.Sku.sync({ force: true });
     await db.AsinSku.sync({ force: true });
     await db.EanInAsin.sync({ force: true });
+    await db.Warehouse.sync({ force: true });
+
     console.log('All tables created in order');
 
     // Run migrations

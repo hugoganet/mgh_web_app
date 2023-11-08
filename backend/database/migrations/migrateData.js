@@ -31,6 +31,7 @@ async function parseCSV(filePath) {
  * @param {string} tableName - Name of the table to migrate data to.
  */
 async function migrate(db, tableName) {
+  // console.log(`Migrating data for ${tableName}...`);
   // Construct the file path for the CSV file
   const filePath = path.join(__dirname, modelToFileMap[tableName]);
   // console.log(`Migrating data for ${tableName}, file path: ${filePath}`);
@@ -83,6 +84,7 @@ async function runMigrations(db) {
       'Sku',
       'AsinSku',
       'EanInAsin',
+      'Warehouse',
     ];
 
     // Sequentially migrate each table

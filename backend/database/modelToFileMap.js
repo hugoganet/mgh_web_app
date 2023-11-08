@@ -11,6 +11,7 @@ const modelToFileMap = {
   Sku: 'skus.csv',
   VatRatePerCountry: 'vat_rates_per_country.csv',
   EanInAsin: 'eans_in_asins.csv',
+  Warehouse: 'warehouses.csv',
 };
 
 module.exports = modelToFileMap;
