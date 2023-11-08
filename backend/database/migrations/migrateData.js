@@ -89,6 +89,7 @@ async function runMigrations(db) {
       'ProductAndAmzReferralFeeCategory',
       'PriceGridFbaFee',
       'PricingRule',
+      'Supplier',
     ];
 
     // Sequentially migrate each table

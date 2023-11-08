@@ -20,6 +20,7 @@ module.exports = sequelize => {
     AsinSku,
     AmazonReferralFee,
     PriceGridFbaFee,
+    Supplier,
   } = sequelize.models;
 
   // Associations for Asin
@@ -99,6 +100,11 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
+  Country.hasMany(Supplier, {
+    foreignKey: 'countryCode',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
 
   // Associations for Ean
   Ean.belongsTo(Brand, {
@@ -127,6 +133,9 @@ module.exports = sequelize => {
     otherKey: 'referralFeeCategoryId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
+  });
+  ProductCategory.hasMany(Supplier, {
+    foreignKey: 'productCategoryId',
   });
 
   // Associations for ProductCategoryRank
@@ -214,6 +223,18 @@ module.exports = sequelize => {
   // Associations for PriceGridFbaFee
   PriceGridFbaFee.belongsTo(Country, {
     foreignKey: 'countryCode',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for Supplier
+  Supplier.belongsTo(Country, {
+    foreignKey: 'countryCode',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Supplier.belongsTo(ProductCategory, {
+    foreignKey: 'productCategoryId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
