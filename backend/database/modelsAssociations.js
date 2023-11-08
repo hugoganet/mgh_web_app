@@ -21,6 +21,8 @@ module.exports = sequelize => {
     AmazonReferralFee,
     PriceGridFbaFee,
     Supplier,
+    SupplierOrder,
+    Warehouse,
   } = sequelize.models;
 
   // Associations for Asin
@@ -101,6 +103,11 @@ module.exports = sequelize => {
     onUpdate: 'CASCADE',
   });
   Country.hasMany(Supplier, {
+    foreignKey: 'countryCode',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Country.hasMany(Warehouse, {
     foreignKey: 'countryCode',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
@@ -235,6 +242,35 @@ module.exports = sequelize => {
   });
   Supplier.belongsTo(ProductCategory, {
     foreignKey: 'productCategoryId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Supplier.hasMany(SupplierOrder, {
+    foreignKey: 'supplierId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for SupplierOrder
+  SupplierOrder.belongsTo(Supplier, {
+    foreignKey: 'supplierId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  SupplierOrder.belongsTo(Warehouse, {
+    foreignKey: 'warehouseId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for Warehouse
+  Warehouse.belongsTo(Country, {
+    foreignKey: 'countryCode',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Warehouse.hasMany(SupplierOrder, {
+    foreignKey: 'warehouseId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });

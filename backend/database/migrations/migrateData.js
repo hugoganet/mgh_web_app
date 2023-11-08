@@ -91,6 +91,7 @@ async function runMigrations(db) {
       'PricingRule',
       'Supplier',
       'Donation',
+      'SupplierOrder',
     ];
 
     // Sequentially migrate each table
