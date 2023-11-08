@@ -10,7 +10,7 @@ module.exports = sequelize => {
 
   EanInSupplierOrder.init(
     {
-      eanSupplierOrderId: {
+      eanInSupplierOrderId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,

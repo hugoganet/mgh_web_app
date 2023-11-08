@@ -83,6 +83,7 @@ async function synchronizeAndMigrate() {
     await db.SupplierBrandCatalog.sync({ force: true });
     await db.EanInSupplierOrder.sync({ force: true });
     await db.EanInDonation.sync({ force: true });
+    await db.WarehouseStock.sync({ force: true });
 
     console.log('All tables created in order');
 

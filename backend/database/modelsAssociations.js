@@ -31,6 +31,7 @@ module.exports = sequelize => {
     EanInSupplierOrder,
     Donation,
     EanInDonation,
+    WarehouseStock,
   } = sequelize.models;
 
   // Associations for Asin
@@ -160,6 +161,13 @@ module.exports = sequelize => {
     through: EanInDonation,
     foreignKey: 'ean',
     otherKey: 'donationId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Ean.belongsToMany(Warehouse, {
+    through: WarehouseStock,
+    foreignKey: 'ean',
+    otherKey: 'warehouseId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
@@ -347,6 +355,13 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
+  Warehouse.belongsToMany(Ean, {
+    through: WarehouseStock,
+    foreignKey: 'warehouseId',
+    otherKey: 'ean',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
 
   // Associations for MinimumSellingPrice
   MinimumSellingPrice.belongsTo(Sku, {
@@ -408,6 +423,32 @@ module.exports = sequelize => {
     through: EanInDonation,
     foreignKey: 'donationId',
     otherKey: 'ean',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for EanInDonation
+  EanInDonation.belongsTo(Donation, {
+    foreignKey: 'donationId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for EanInSupplierOrder
+  EanInSupplierOrder.belongsTo(SupplierOrder, {
+    foreignKey: 'supplierOrderId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for WarehouseStock
+  WarehouseStock.belongsTo(Warehouse, {
+    foreignKey: 'warehouseId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  WarehouseStock.belongsTo(EanInSupplierOrder, {
+    foreignKey: 'eanSupplierOrderId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });

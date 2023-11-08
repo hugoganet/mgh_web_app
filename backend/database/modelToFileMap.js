@@ -26,6 +26,7 @@ const modelToFileMap = {
   SupplierBrandCatalog: 'suppliers_brands_catalog.csv',
   EanInSupplierOrder: 'eans_in_suppliers_orders.csv',
   EanInDonation: 'eans_in_donations.csv',
+  WarehouseStock: 'warehouses_stock.csv',
 };
 
 module.exports = modelToFileMap;
