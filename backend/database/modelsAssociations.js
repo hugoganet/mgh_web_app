@@ -29,6 +29,8 @@ module.exports = sequelize => {
     Catalog,
     SupplierBrandCatalog,
     EanInSupplierOrder,
+    Donation,
+    EanInDonation,
   } = sequelize.models;
 
   // Associations for Asin
@@ -151,6 +153,13 @@ module.exports = sequelize => {
     through: Catalog,
     foreignKey: 'ean',
     otherKey: 'supplierId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Ean.belongsToMany(Donation, {
+    through: EanInDonation,
+    foreignKey: 'ean',
+    otherKey: 'donationId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
@@ -390,6 +399,15 @@ module.exports = sequelize => {
     through: EanInSupplierOrder,
     foreignKey: 'catalogId',
     otherKey: 'supplierOrderId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for Donation
+  Donation.belongsToMany(Ean, {
+    through: EanInDonation,
+    foreignKey: 'donationId',
+    otherKey: 'ean',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });

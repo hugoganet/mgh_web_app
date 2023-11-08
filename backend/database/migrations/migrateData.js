@@ -97,6 +97,7 @@ async function runMigrations(db) {
       'Catalog',
       'SupplierBrandCatalog',
       'EanInSupplierOrder',
+      'EanInDonation',
     ];
 
     // Sequentially migrate each table
