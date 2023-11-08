@@ -18,6 +18,7 @@ module.exports = sequelize => {
     VatRatePerCountry,
     EanInAsin,
     AsinSku,
+    AmazonReferralFee,
   } = sequelize.models;
 
   // Associations for Asin
@@ -106,6 +107,16 @@ module.exports = sequelize => {
   ProductCategory.hasMany(Asin, {
     foreignKey: 'productCategoryId',
   });
+  ProductCategory.hasMany(ProductCategoryRank, {
+    foreignKey: 'productCategoryId',
+  });
+  ProductCategory.belongsToMany(AmazonReferralFee, {
+    through: 'ProductAndAmazonReferralFeeCategory',
+    foreignKey: 'productCategoryId',
+    otherKey: 'referralFeeCategoryId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
 
   // Associations for ProductCategoryRank
   ProductCategoryRank.belongsTo(Country, {
@@ -171,6 +182,21 @@ module.exports = sequelize => {
     through: AsinSku,
     foreignKey: 'skuId',
     otherKey: 'asinId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for AmazonReferralFee
+  AmazonReferralFee.belongsTo(Country, {
+    foreignKey: 'countryCode',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  AmazonReferralFee.belongsToMany(ProductCategory, {
+    through: 'Product',
+    foreignKey: 'referralFeeCategoryId',
+    otherKey: 'productCategoryId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });

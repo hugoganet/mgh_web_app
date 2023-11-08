@@ -12,6 +12,9 @@ const modelToFileMap = {
   VatRatePerCountry: 'vat_rates_per_country.csv',
   EanInAsin: 'eans_in_asins.csv',
   Warehouse: 'warehouses.csv',
+  AmazonReferralFee: 'amazon_referral_fees.csv',
+  ProductAndAmzReferralFeeCategory:
+    'product_and_amz_referral_fees_categories.csv',
 };
 
 module.exports = modelToFileMap;

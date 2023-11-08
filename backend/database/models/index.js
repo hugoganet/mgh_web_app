@@ -70,6 +70,8 @@ async function synchronizeAndMigrate() {
     await db.AsinSku.sync({ force: true });
     await db.EanInAsin.sync({ force: true });
     await db.Warehouse.sync({ force: true });
+    await db.AmazonReferralFee.sync({ force: true });
+    await db.ProductAndAmzReferralFeeCategory.sync({ force: true });
 
     console.log('All tables created in order');
 

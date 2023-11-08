@@ -85,6 +85,8 @@ async function runMigrations(db) {
       'AsinSku',
       'EanInAsin',
       'Warehouse',
+      'AmazonReferralFee',
+      'ProductAndAmzReferralFeeCategory',
     ];
 
     // Sequentially migrate each table
