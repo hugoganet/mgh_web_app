@@ -25,6 +25,7 @@ module.exports = sequelize => {
     Warehouse,
     MinimumSellingPrice,
     PricingRule,
+    FbaFee,
   } = sequelize.models;
 
   // Associations for Asin
@@ -59,6 +60,11 @@ module.exports = sequelize => {
     through: AsinSku,
     foreignKey: 'asinId',
     otherKey: 'skuId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Asin.hasMany(FbaFee, {
+    foreignKey: 'asinId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
@@ -245,6 +251,11 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
+  PriceGridFbaFee.hasMany(FbaFee, {
+    foreignKey: 'priceGridFbaFeeId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
 
   // Associations for Supplier
   Supplier.belongsTo(Country, {
@@ -307,6 +318,18 @@ module.exports = sequelize => {
   // Associations for PricingRule
   PricingRule.hasMany(MinimumSellingPrice, {
     foreignKey: 'pricingRuleId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for FbaFee
+  FbaFee.belongsTo(Asin, {
+    foreignKey: 'asinId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  FbaFee.belongsTo(PriceGridFbaFee, {
+    foreignKey: 'priceGridFbaFeeId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });

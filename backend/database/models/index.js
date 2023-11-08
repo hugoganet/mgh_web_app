@@ -78,6 +78,7 @@ async function synchronizeAndMigrate() {
     await db.Donation.sync({ force: true });
     await db.SupplierOrder.sync({ force: true });
     await db.MinimumSellingPrice.sync({ force: true });
+    await db.FbaFee.sync({ force: true });
 
     console.log('All tables created in order');
 

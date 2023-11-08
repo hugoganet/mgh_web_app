@@ -93,6 +93,7 @@ async function runMigrations(db) {
       'Donation',
       'SupplierOrder',
       'MinimumSellingPrice',
+      'FbaFee',
     ];
 
     // Sequentially migrate each table

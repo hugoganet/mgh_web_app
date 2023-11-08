@@ -21,6 +21,7 @@ const modelToFileMap = {
   Donation: 'donations.csv',
   SupplierOrder: 'suppliers_orders.csv',
   MinimumSellingPrice: 'minimum_selling_prices.csv',
+  FbaFee: 'fba_fees.csv',
 };
 
 module.exports = modelToFileMap;
