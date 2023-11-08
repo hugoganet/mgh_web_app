@@ -23,6 +23,8 @@ module.exports = sequelize => {
     Supplier,
     SupplierOrder,
     Warehouse,
+    MinimumSellingPrice,
+    PricingRule,
   } = sequelize.models;
 
   // Associations for Asin
@@ -212,6 +214,11 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
+  Sku.hasMany(MinimumSellingPrice, {
+    foreignKey: 'skuId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
 
   // Associations for AmazonReferralFee
   AmazonReferralFee.belongsTo(Country, {
@@ -223,6 +230,11 @@ module.exports = sequelize => {
     through: 'Product',
     foreignKey: 'referralFeeCategoryId',
     otherKey: 'productCategoryId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  AmazonReferralFee.hasMany(MinimumSellingPrice, {
+    foreignKey: 'referralFeeCategoryId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
@@ -271,6 +283,30 @@ module.exports = sequelize => {
   });
   Warehouse.hasMany(SupplierOrder, {
     foreignKey: 'warehouseId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for MinimumSellingPrice
+  MinimumSellingPrice.belongsTo(Sku, {
+    foreignKey: 'skuId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  MinimumSellingPrice.belongsTo(PricingRule, {
+    foreignKey: 'pricingRuleId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  MinimumSellingPrice.belongsTo(AmazonReferralFee, {
+    foreignKey: 'referralFeeCategoryId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for PricingRule
+  PricingRule.hasMany(MinimumSellingPrice, {
+    foreignKey: 'pricingRuleId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
