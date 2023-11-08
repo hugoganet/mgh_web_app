@@ -18,6 +18,7 @@ const modelToFileMap = {
   PriceGridFbaFee: 'price_grid_fba_fees.csv',
   PricingRule: 'pricing_rules.csv',
   Supplier: 'suppliers.csv',
+  Donation: 'donations.csv',
 };
 
 module.exports = modelToFileMap;

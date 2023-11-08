@@ -90,6 +90,7 @@ async function runMigrations(db) {
       'PriceGridFbaFee',
       'PricingRule',
       'Supplier',
+      'Donation',
     ];
 
     // Sequentially migrate each table
