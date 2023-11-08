@@ -24,6 +24,7 @@ const modelToFileMap = {
   FbaFee: 'fba_fees.csv',
   Catalog: 'catalog.csv',
   SupplierBrandCatalog: 'suppliers_brands_catalog.csv',
+  EanInSupplierOrder: 'eans_in_suppliers_orders.csv',
 };
 
 module.exports = modelToFileMap;

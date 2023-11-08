@@ -28,6 +28,7 @@ module.exports = sequelize => {
     FbaFee,
     Catalog,
     SupplierBrandCatalog,
+    EanInSupplierOrder,
   } = sequelize.models;
 
   // Associations for Asin
@@ -318,6 +319,13 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
+  SupplierOrder.belongsToMany(Catalog, {
+    through: EanInSupplierOrder,
+    foreignKey: 'supplierOrderId',
+    otherKey: 'catalogId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
 
   // Associations for Warehouse
   Warehouse.belongsTo(Country, {
@@ -363,6 +371,25 @@ module.exports = sequelize => {
   });
   FbaFee.belongsTo(PriceGridFbaFee, {
     foreignKey: 'priceGridFbaFeeId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for Catalog
+  Catalog.belongsTo(Supplier, {
+    foreignKey: 'supplierId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Catalog.belongsTo(Brand, {
+    foreignKey: 'brandId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Catalog.belongsToMany(SupplierOrder, {
+    through: EanInSupplierOrder,
+    foreignKey: 'catalogId',
+    otherKey: 'supplierOrderId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });

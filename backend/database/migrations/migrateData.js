@@ -96,6 +96,7 @@ async function runMigrations(db) {
       'FbaFee',
       'Catalog',
       'SupplierBrandCatalog',
+      'EanInSupplierOrder',
     ];
 
     // Sequentially migrate each table

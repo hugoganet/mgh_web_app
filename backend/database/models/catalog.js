@@ -20,6 +20,12 @@ module.exports = sequelize => {
       supplierEan: {
         type: DataTypes.STRING(13),
         allowNull: false,
+        validate: {
+          is: {
+            args: /^[0-9]{13}$/,
+            msg: 'EAN must be 13 digits long.',
+          },
+        },
       },
       supplierId: {
         type: DataTypes.INTEGER,
