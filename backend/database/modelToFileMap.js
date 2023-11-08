@@ -16,6 +16,7 @@ const modelToFileMap = {
   ProductAndAmzReferralFeeCategory:
     'product_and_amz_referral_fees_categories.csv',
   PriceGridFbaFee: 'price_grid_fba_fees.csv',
+  PricingRule: 'pricing_rules.csv',
 };
 
 module.exports = modelToFileMap;
