@@ -26,6 +26,7 @@ module.exports = sequelize => {
     MinimumSellingPrice,
     PricingRule,
     FbaFee,
+    Catalog,
   } = sequelize.models;
 
   // Associations for Asin
@@ -71,6 +72,9 @@ module.exports = sequelize => {
 
   // Associations for Brand
   Brand.hasMany(Ean, {
+    foreignKey: 'brandId',
+  });
+  Brand.hasMany(Catalog, {
     foreignKey: 'brandId',
   });
 
@@ -129,8 +133,8 @@ module.exports = sequelize => {
   });
   Ean.belongsToMany(Asin, {
     through: EanInAsin,
-    foreignKey: 'ean', // This must match the field name in EanInAsin
-    otherKey: 'asinId', // This must match the field name in EanInAsin
+    foreignKey: 'ean',
+    otherKey: 'asinId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
@@ -273,6 +277,11 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
+  Supplier.hasMany(Catalog, {
+    foreignKey: 'supplierId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
 
   // Associations for SupplierOrder
   SupplierOrder.belongsTo(Supplier, {
@@ -330,6 +339,18 @@ module.exports = sequelize => {
   });
   FbaFee.belongsTo(PriceGridFbaFee, {
     foreignKey: 'priceGridFbaFeeId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for Catalog
+  Catalog.belongsTo(Supplier, {
+    foreignKey: 'supplierId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Catalog.belongsTo(Brand, {
+    foreignKey: 'brandId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
