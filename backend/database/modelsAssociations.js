@@ -27,6 +27,7 @@ module.exports = sequelize => {
     PricingRule,
     FbaFee,
     Catalog,
+    SupplierBrandCatalog,
   } = sequelize.models;
 
   // Associations for Asin
@@ -52,8 +53,8 @@ module.exports = sequelize => {
   });
   Asin.belongsToMany(Ean, {
     through: EanInAsin,
-    foreignKey: 'asinId', // This must match the field name in EanInAsin
-    otherKey: 'ean', // This must match the field name in EanInAsin
+    foreignKey: 'asinId',
+    otherKey: 'ean',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
@@ -76,6 +77,13 @@ module.exports = sequelize => {
   });
   Brand.hasMany(Catalog, {
     foreignKey: 'brandId',
+  });
+  Brand.belongsToMany(Supplier, {
+    through: SupplierBrandCatalog,
+    foreignKey: 'brandId',
+    otherKey: 'supplierId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
   });
 
   // Associations for Country
@@ -135,6 +143,13 @@ module.exports = sequelize => {
     through: EanInAsin,
     foreignKey: 'ean',
     otherKey: 'asinId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Ean.belongsToMany(Supplier, {
+    through: Catalog,
+    foreignKey: 'ean',
+    otherKey: 'supplierId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
@@ -277,8 +292,17 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  Supplier.hasMany(Catalog, {
+  Supplier.belongsToMany(Ean, {
+    through: Catalog,
     foreignKey: 'supplierId',
+    otherKey: 'ean',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Supplier.belongsToMany(Brand, {
+    through: SupplierBrandCatalog,
+    foreignKey: 'supplierId',
+    otherKey: 'brandId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
@@ -339,18 +363,6 @@ module.exports = sequelize => {
   });
   FbaFee.belongsTo(PriceGridFbaFee, {
     foreignKey: 'priceGridFbaFeeId',
-    onDelete: 'NO ACTION',
-    onUpdate: 'CASCADE',
-  });
-
-  // Associations for Catalog
-  Catalog.belongsTo(Supplier, {
-    foreignKey: 'supplierId',
-    onDelete: 'NO ACTION',
-    onUpdate: 'CASCADE',
-  });
-  Catalog.belongsTo(Brand, {
-    foreignKey: 'brandId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });

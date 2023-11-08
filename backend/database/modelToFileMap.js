@@ -23,6 +23,7 @@ const modelToFileMap = {
   MinimumSellingPrice: 'minimum_selling_prices.csv',
   FbaFee: 'fba_fees.csv',
   Catalog: 'catalog.csv',
+  SupplierBrandCatalog: 'suppliers_brands_catalog.csv',
 };
 
 module.exports = modelToFileMap;

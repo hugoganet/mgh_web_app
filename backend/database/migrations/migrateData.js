@@ -95,6 +95,7 @@ async function runMigrations(db) {
       'MinimumSellingPrice',
       'FbaFee',
       'Catalog',
+      'SupplierBrandCatalog',
     ];
 
     // Sequentially migrate each table
