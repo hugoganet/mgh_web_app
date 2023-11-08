@@ -72,6 +72,7 @@ async function synchronizeAndMigrate() {
     await db.Warehouse.sync({ force: true });
     await db.AmazonReferralFee.sync({ force: true });
     await db.ProductAndAmzReferralFeeCategory.sync({ force: true });
+    await db.PriceGridFbaFee.sync({ force: true });
 
     console.log('All tables created in order');
 
