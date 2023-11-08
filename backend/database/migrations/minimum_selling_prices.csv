@@ -1,9 +1,4 @@
 minimumSellingPriceId,skuId,pricingRuleId,enrolledInPanEu,eligibleForPanEu,referralFeeCategoryId,minimumMarginWanted,minimumSellingPriceLocalAndPanEu,minimumSellingPriceEfn,maximumSellingPriceLocalAndPanEu,maximumSellingPriceEfn
-,1804,3,TRUE,TRUE,8,1,9.87,12.13,14.8,18.2
-,3377,3,TRUE,TRUE,8,1,19.15,25.02,28.72,37.53
-,3494,3,FALSE,TRUE,8,1,19.15,25.02,28.72,37.53
-,3522,3,TRUE,TRUE,8,1,17.41,21.69,26.12,32.54
-,3527,3,TRUE,TRUE,8,1,17.15,21.44,25.72,32.16
 ,3630,1,FALSE,TRUE,4,1,15.34,17.87,23.01,26.8
 ,3635,1,TRUE,TRUE,6,1,9,13.43,10,20.14
 ,3637,1,TRUE,TRUE,6,1,9.14,13.67,10,20.5

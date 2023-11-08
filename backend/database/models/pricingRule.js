@@ -25,9 +25,11 @@ module.exports = sequelize => {
       },
       pricingRuleMinimumRoi: {
         type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
       },
       pricingRuleMinimumMargin: {
         type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
       },
     },
     {

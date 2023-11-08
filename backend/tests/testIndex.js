@@ -49,7 +49,7 @@ setupAssociations(sequelize);
  */
 async function synchronizeAndMigrate() {
   try {
-    // console.log('Synchronizing all models with the database...');
+    console.log('Synchronizing all models with the database...');
     // Synchronize tables in the order of dependency
     await db.Country.sync({ force: true });
     await db.Brand.sync({ force: true });
@@ -63,7 +63,23 @@ async function synchronizeAndMigrate() {
     await db.Sku.sync({ force: true });
     await db.AsinSku.sync({ force: true });
     await db.EanInAsin.sync({ force: true });
-    // console.log('All tables created in order');
+    await db.Warehouse.sync({ force: true });
+    await db.AmazonReferralFee.sync({ force: true });
+    await db.ProductAndAmzReferralFeeCategory.sync({ force: true });
+    await db.PriceGridFbaFee.sync({ force: true });
+    await db.PricingRule.sync({ force: true });
+    await db.Supplier.sync({ force: true });
+    await db.Donation.sync({ force: true });
+    await db.SupplierOrder.sync({ force: true });
+    await db.MinimumSellingPrice.sync({ force: true });
+    await db.FbaFee.sync({ force: true });
+    await db.Catalog.sync({ force: true });
+    await db.SupplierBrandCatalog.sync({ force: true });
+    await db.EanInSupplierOrder.sync({ force: true });
+    await db.EanInDonation.sync({ force: true });
+    await db.WarehouseStock.sync({ force: true });
+
+    console.log('All tables created in order');
 
     // Run migrations
     await runMigrations(db);

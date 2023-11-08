@@ -225,7 +225,6 @@ describe(`Asin Model Tests`, () => {
     // Fetch the associated Skus using the automatically generated Sequelize method
     const skusForAsin = await asinRecord.getSkus();
 
-    console.log(skusForAsin);
     // Assertions
     expect(skusForAsin).not.toBeNull();
     expect(Array.isArray(skusForAsin)).toBe(true);
