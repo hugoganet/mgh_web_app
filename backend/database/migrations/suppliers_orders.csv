@@ -1,2 +1,2 @@
 supplierOrderId,supplierId,supplierOrderMadeDate,supplierOrderDeliveryDate,warehouseId,supplierOrderNumberOfUnit,supplierOrderTotalPaidExc,supplierOrderDeliveryCostExc,supplierOrderDeliveryCostVatRate,supplierOrderVatPaid,supplierOrderInvoiceFileLink
-1,283,2023-03-10,2023-03-30,2,1714,4794,250,0.2,1008.8,https://drive.google.com/file/d/1BfMctW7EHqhVBn0HZprUI9CKR7Jucr1b/view
+,283,2023-03-10,2023-03-30,2,1714,4794,250,0.2,1008.8,https://drive.google.com/file/d/1BfMctW7EHqhVBn0HZprUI9CKR7Jucr1b/view

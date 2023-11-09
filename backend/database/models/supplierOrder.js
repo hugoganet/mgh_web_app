@@ -52,7 +52,7 @@ module.exports = sequelize => {
         allowNull: false,
       },
       supplierOrderDeliveryCostVatRate: {
-        type: DataTypes.DECIMAL(5, 2),
+        type: DataTypes.DECIMAL(6, 5),
         allowNull: false,
       },
       supplierOrderVatPaid: {
