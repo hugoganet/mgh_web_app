@@ -36,7 +36,7 @@ describe(`Asin Model Tests`, () => {
     await expect(
       db.Asin.create({
         asin: null, // asin is required and cannot be null
-        countryCode: 'US',
+        countryCode: 'FR',
         productCategoryRankId: 1,
         productTaxCategoryId: 1,
         asinName: 'Example Product Name',
