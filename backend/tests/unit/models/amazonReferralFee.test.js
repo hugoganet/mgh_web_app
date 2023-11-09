@@ -103,7 +103,6 @@ describe(`AmazonReferralFee Model Tests`, () => {
 
     const productCategoryNameEn =
       amazonReferralFee.ProductCategories[0].productCategoryNameEn;
-    console.log(productCategoryNameEn);
     expect(productCategoryNameEn).toBe('Beauty');
   });
 });

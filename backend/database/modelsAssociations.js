@@ -132,11 +132,6 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  Country.hasMany(Warehouse, {
-    foreignKey: 'countryCode',
-    onDelete: 'NO ACTION',
-    onUpdate: 'CASCADE',
-  });
 
   // Associations for Ean
   Ean.belongsTo(Brand, {
@@ -151,13 +146,6 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  // Ean.belongsToMany(Supplier, {
-  //   through: Catalog,
-  //   foreignKey: 'ean',
-  //   otherKey: 'supplierId',
-  //   onDelete: 'NO ACTION',
-  //   onUpdate: 'CASCADE',
-  // });
   Ean.belongsToMany(SupplierOrder, {
     through: EanInSupplierOrder,
     foreignKey: 'ean',
@@ -318,13 +306,6 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  // Supplier.belongsToMany(Ean, {
-  //   through: Catalog,
-  //   foreignKey: 'supplierId',
-  //   otherKey: 'ean',
-  //   onDelete: 'NO ACTION',
-  //   onUpdate: 'CASCADE',
-  // });
   Supplier.belongsToMany(Brand, {
     through: SupplierBrandCatalog,
     foreignKey: 'supplierId',
@@ -344,13 +325,6 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  // SupplierOrder.belongsToMany(Catalog, {
-  //   through: EanInSupplierOrder,
-  //   foreignKey: 'supplierOrderId',
-  //   otherKey: 'catalogId',
-  //   onDelete: 'NO ACTION',
-  //   onUpdate: 'CASCADE',
-  // });
   SupplierOrder.belongsToMany(Ean, {
     through: EanInSupplierOrder,
     foreignKey: 'supplierOrderId',
@@ -360,11 +334,6 @@ module.exports = sequelize => {
   });
 
   // Associations for Warehouse
-  Warehouse.belongsTo(Country, {
-    foreignKey: 'countryCode',
-    onDelete: 'NO ACTION',
-    onUpdate: 'CASCADE',
-  });
   Warehouse.hasMany(SupplierOrder, {
     foreignKey: 'warehouseId',
     onDelete: 'NO ACTION',
