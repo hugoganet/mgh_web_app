@@ -27,4 +27,34 @@ describe(`ProductCategory Model Tests`, () => {
     const asins = await productCategory.getAsins();
     expect(asins.length).toBeGreaterThan(0);
   });
+
+  // belongsToMany AmazonReferralFee through ProductAndAmzReferralFeeCategory
+  // retrieve all AmazonReferralFee.referralFeeCategoryNameEn for a ProductCategory.productCategoryNameEn('Beauty')
+  test('retrieve all AmazonReferralFee.referralFeeCategoryNameEn for ProductCategory.productCategoryNameEn "Beauty"', async () => {
+    // Find the ProductCategory with the name 'Beauty'
+    const productCategory = await db.ProductCategory.findOne({
+      where: { productCategoryNameEn: 'Beauty' },
+      include: [
+        {
+          model: db.AmazonReferralFee,
+          through: {
+            model: db.ProductAndAmzReferralFeeCategory, // The join table model
+            attributes: [], // You can specify attributes if you want to include them from the join table
+          },
+        },
+      ],
+    });
+
+    // Extract the referralFeeCategoryNameEn from each associated AmazonReferralFee
+    const referralFeeNames = productCategory.AmazonReferralFees.map(
+      fee => fee.referralFeeCategoryNameEn,
+    );
+
+    console.log(referralFeeNames);
+    // Add appropriate expectations for your test
+    // For example, you can check if the array is not empty
+    expect(referralFeeNames.length).toBeGreaterThan(0);
+    // If you expect specific referral fee names, you can check for those
+    // expect(referralFeeNames).toContain('SpecificName');
+  });
 });
