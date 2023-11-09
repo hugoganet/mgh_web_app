@@ -394,19 +394,17 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  // Catalog.belongsToMany(SupplierOrder, {
-  //   through: EanInSupplierOrder,
-  //   foreignKey: 'catalogId',
-  //   otherKey: 'supplierOrderId',
-  //   onDelete: 'NO ACTION',
-  //   onUpdate: 'CASCADE',
-  // });
 
   // Associations for Donation
   Donation.belongsToMany(Ean, {
     through: EanInDonation,
     foreignKey: 'donationId',
     otherKey: 'ean',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Donation.belongsTo(Warehouse, {
+    foreignKey: 'warehouseId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
