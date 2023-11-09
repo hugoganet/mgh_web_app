@@ -16,12 +16,12 @@ module.exports = sequelize => {
         allowNull: false,
         autoIncrement: true,
       },
-      catalogId: {
+      ean: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'catalog',
-          key: 'catalog_id',
+          model: 'eans',
+          key: 'ean',
         },
       },
       supplierOrderId: {

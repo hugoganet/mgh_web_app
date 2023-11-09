@@ -150,10 +150,17 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  Ean.belongsToMany(Supplier, {
-    through: Catalog,
+  // Ean.belongsToMany(Supplier, {
+  //   through: Catalog,
+  //   foreignKey: 'ean',
+  //   otherKey: 'supplierId',
+  //   onDelete: 'NO ACTION',
+  //   onUpdate: 'CASCADE',
+  // });
+  Ean.belongsToMany(SupplierOrder, {
+    through: EanInSupplierOrder,
     foreignKey: 'ean',
-    otherKey: 'supplierId',
+    otherKey: 'supplierOrderId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
@@ -310,13 +317,13 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  Supplier.belongsToMany(Ean, {
-    through: Catalog,
-    foreignKey: 'supplierId',
-    otherKey: 'ean',
-    onDelete: 'NO ACTION',
-    onUpdate: 'CASCADE',
-  });
+  // Supplier.belongsToMany(Ean, {
+  //   through: Catalog,
+  //   foreignKey: 'supplierId',
+  //   otherKey: 'ean',
+  //   onDelete: 'NO ACTION',
+  //   onUpdate: 'CASCADE',
+  // });
   Supplier.belongsToMany(Brand, {
     through: SupplierBrandCatalog,
     foreignKey: 'supplierId',
@@ -336,10 +343,17 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  SupplierOrder.belongsToMany(Catalog, {
+  // SupplierOrder.belongsToMany(Catalog, {
+  //   through: EanInSupplierOrder,
+  //   foreignKey: 'supplierOrderId',
+  //   otherKey: 'catalogId',
+  //   onDelete: 'NO ACTION',
+  //   onUpdate: 'CASCADE',
+  // });
+  SupplierOrder.belongsToMany(Ean, {
     through: EanInSupplierOrder,
     foreignKey: 'supplierOrderId',
-    otherKey: 'catalogId',
+    otherKey: 'ean',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
@@ -410,13 +424,13 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  Catalog.belongsToMany(SupplierOrder, {
-    through: EanInSupplierOrder,
-    foreignKey: 'catalogId',
-    otherKey: 'supplierOrderId',
-    onDelete: 'NO ACTION',
-    onUpdate: 'CASCADE',
-  });
+  // Catalog.belongsToMany(SupplierOrder, {
+  //   through: EanInSupplierOrder,
+  //   foreignKey: 'catalogId',
+  //   otherKey: 'supplierOrderId',
+  //   onDelete: 'NO ACTION',
+  //   onUpdate: 'CASCADE',
+  // });
 
   // Associations for Donation
   Donation.belongsToMany(Ean, {
@@ -437,6 +451,11 @@ module.exports = sequelize => {
   // Associations for EanInSupplierOrder
   EanInSupplierOrder.belongsTo(SupplierOrder, {
     foreignKey: 'supplierOrderId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  EanInSupplierOrder.belongsTo(Ean, {
+    foreignKey: 'ean',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });

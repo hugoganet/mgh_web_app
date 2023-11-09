@@ -17,7 +17,7 @@ module.exports = sequelize => {
         allowNull: false,
         autoIncrement: true,
       },
-      supplierEan: {
+      ean: {
         type: DataTypes.STRING(13),
         allowNull: false,
         validate: {
