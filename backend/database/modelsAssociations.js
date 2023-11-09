@@ -32,6 +32,7 @@ module.exports = sequelize => {
     Donation,
     EanInDonation,
     WarehouseStock,
+    ProductAndAmzReferralFeeCategory,
   } = sequelize.models;
 
   // Associations for Asin
@@ -187,7 +188,7 @@ module.exports = sequelize => {
     foreignKey: 'productCategoryId',
   });
   ProductCategory.belongsToMany(AmazonReferralFee, {
-    through: 'ProductAndAmazonReferralFeeCategory',
+    through: ProductAndAmzReferralFeeCategory,
     foreignKey: 'productCategoryId',
     otherKey: 'referralFeeCategoryId',
     onDelete: 'NO ACTION',
@@ -277,7 +278,7 @@ module.exports = sequelize => {
     onUpdate: 'CASCADE',
   });
   AmazonReferralFee.belongsToMany(ProductCategory, {
-    through: 'Product',
+    through: ProductAndAmzReferralFeeCategory,
     foreignKey: 'referralFeeCategoryId',
     otherKey: 'productCategoryId',
     onDelete: 'NO ACTION',
