@@ -19,6 +19,7 @@ module.exports = sequelize => {
       skuId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        unique: true,
         references: {
           model: 'skus',
           key: 'sku_id',
