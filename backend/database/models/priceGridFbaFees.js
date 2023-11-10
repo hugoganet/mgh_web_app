@@ -29,22 +29,22 @@ module.exports = sequelize => {
         allowNull: false,
       },
       categoryMaxWeight: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(10, 2),
       },
       categoryMaxLength: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(10, 2),
       },
       categoryMaxWidth: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(10, 2),
       },
       categoryMaxHeight: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(10, 2),
       },
       fbaFeeLocalAndPanEu: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(10, 2),
       },
-      fbaFeeEfnBe: {
-        type: DataTypes.DECIMAL,
+      fbaFeeEfn: {
+        type: DataTypes.DECIMAL(10, 2),
       },
     },
     {

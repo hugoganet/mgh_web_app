@@ -19,6 +19,7 @@ module.exports = sequelize => {
       asinId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        unique: true,
         references: {
           model: 'asins',
           key: 'asin_id',
@@ -47,14 +48,6 @@ module.exports = sequelize => {
           model: 'price_grid_fba_fees',
           key: 'price_grid_fba_fee_id',
         },
-      },
-      fbaFeesLocalAndPanEu: {
-        type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
-      },
-      fbaFeesEfn: {
-        type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
       },
     },
     {

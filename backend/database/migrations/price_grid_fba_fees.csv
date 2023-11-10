@@ -1,4 +1,4 @@
-priceGridFbaFeeId,countryCode,fbaPackageCategoryName,categoryMaxWeight,categoryMaxLength,categoryMaxWidth,categoryMaxHeight,fbaFeesLocalAndPanEu,fbaFeesEfn
+priceGridFbaFeeId,countryCode,fbaPackageCategoryName,categoryMaxWeight,categoryMaxLength,categoryMaxWidth,categoryMaxHeight,fbaFeeLocalAndPanEu,fbaFeeEfn
 ,FR,small envelope,80,20,15,1,2.7,5.06
 ,FR,standard envelope,60,33,23,2.5,2.8,5.22
 ,FR,standard envelope,210,33,23,2.5,3.34,5.57
