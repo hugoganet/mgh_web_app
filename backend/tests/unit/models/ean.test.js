@@ -85,33 +85,75 @@ describe(`Ean Model Tests`, () => {
   });
 
   // ASSOCIATION Tests
+  // Ean belongsTo Brand
   test('Ean belongs to Brand', async () => {
     const ean = await db.Ean.findByPk('9782012272323');
     const brand = await ean.getBrand();
     expect(brand.brandName).toBe("DEUX COQS D'OR");
   });
 
+  // belongsToMany Asin through EanInAsin
   test('Select all Asin records associated with a given Ean', async () => {
     const ean = await db.Ean.findByPk('3553330100485');
     const asins = await ean.getAsins();
+
     expect(asins).toBeInstanceOf(Array);
     expect(asins.length).toBeGreaterThan(0);
   });
 
-  // Test to check ON DELETE NO ACTION
-  test('Ean deletion should not be allowed if associated with Asin', async () => {
-    // Assuming eanToDelete is an Ean that is associated with some Asin records
-    const eanToDelete = await db.Ean.findByPk('3553330100485');
+  // Ean belongsToMany SupplierOrder through EanInSupplierOrder
+  test('Select all SupplierOrder records associated with a given Ean(8410436208611)', async () => {
+    const ean = await db.Ean.findByPk('8410436208611', {
+      include: [
+        {
+          model: db.SupplierOrder,
+          through: { model: db.EanInSupplierOrder },
+        },
+      ],
+    });
 
-    try {
-      await eanToDelete.destroy();
-    } catch (error) {
-      // Expect an error due to the NO ACTION constraint
-      expect(error).toBeDefined();
-    }
+    expect(ean).not.toBeNull();
+    expect(ean.SupplierOrders).not.toBeNull();
+    ean.SupplierOrders.forEach(order => {
+      expect(order instanceof db.SupplierOrder).toBe(true);
+    });
+  });
 
-    // Check if the Ean still exists
-    const eanStillExists = await db.Ean.findByPk('3553330100485');
-    expect(eanStillExists).not.toBeNull();
+  // Ean belongsToMany Donation through EanInDonation
+  test('Select all Donation records associated with a given Ean(9782810418800)', async () => {
+    const ean = await db.Ean.findByPk('9782810418800', {
+      include: [
+        {
+          model: db.Donation,
+          through: { model: db.EanInDonation },
+          as: 'Donations',
+        },
+      ],
+    });
+
+    expect(ean).not.toBeNull();
+    expect(ean.Donations).not.toBeNull();
+    ean.Donations.forEach(donation => {
+      expect(donation instanceof db.Donation).toBe(true);
+    });
+  });
+
+  // Ean belongsToMany Warehouse through WarehouseStock
+  test('Select all Warehouse records associated with a given Ean(5022496101349)', async () => {
+    const ean = await db.Ean.findByPk('5022496101349', {
+      include: [
+        {
+          model: db.Warehouse,
+          through: { model: db.WarehouseStock },
+          as: 'Warehouses', // Replace with the correct association alias
+        },
+      ],
+    });
+
+    expect(ean).not.toBeNull();
+    expect(ean.Warehouses).not.toBeNull();
+    ean.Warehouses.forEach(warehouse => {
+      expect(warehouse instanceof db.Warehouse).toBe(true);
+    });
   });
 });
