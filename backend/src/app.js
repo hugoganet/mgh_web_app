@@ -1,7 +1,7 @@
 // Initialize the express app and test the connection to the SQL server
 const express = require('express');
 const app = express();
-const db = require('./database/models'); // Import the database object
+const db = require('./api/models'); // Import the database object
 
 /**
  * Test the connection to the SQL server

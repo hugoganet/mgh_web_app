@@ -2,8 +2,8 @@
 const fs = require('fs'); // File System module to read files
 const path = require('path'); // Path module to handle file paths
 const { Sequelize } = require('sequelize'); // Sequelize module
-const sequelize = require('../database'); // Sequelize instance
-const runMigrations = require('../migrations/migrateData'); // Function to run migrations
+const sequelize = require('../../database/database.js'); // Sequelize instance
+const runSeeding = require('../../database/seeders/migrateData'); // Function to run migrations
 
 // Database object to hold our models
 const db = {};
@@ -42,7 +42,7 @@ fs.readdirSync(__dirname)
   });
 
 // Load and apply model associations
-const setupAssociations = require('../modelsAssociations.js');
+const setupAssociations = require('../../database/modelsAssociations');
 
 setupAssociations(sequelize);
 
@@ -88,7 +88,7 @@ async function synchronizeAndMigrate() {
     console.log('All tables created in order');
 
     // Run migrations
-    await runMigrations(db);
+    await runSeeding(db);
   } catch (error) {
     console.error('Error creating tables:', error);
   }
