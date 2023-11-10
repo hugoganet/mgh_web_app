@@ -44,11 +44,31 @@ describe(`Brand Model Tests`, () => {
     expect(deletedbrand).toBeNull();
   });
 
-  // Association tests
-  test('Brand has many Eans', async () => {
-    // Test for checking the association between Brand and Product
-    const brand = await db.Brand.findOne({ where: { brandName: 'KONG' } });
-    const eans = await brand.getEans();
-    expect(eans.length).toBeGreaterThan(0);
+  // ASSOCIATION TESTS
+  // belongsToMany Supplier trhough SupplierBrandCatalog
+  test('Retrieve the Suppliers of Brand(1)', async () => {
+    // Assuming you have a Brand model and its associations are set up
+    const brand = await db.Brand.findByPk(81, {
+      include: [
+        {
+          model: db.Supplier,
+          through: { model: db.SupplierBrandCatalog },
+        },
+      ],
+    });
+
+    // Check if brand is not null
+    expect(brand).not.toBeNull();
+
+    // Check if brand has suppliers
+    expect(brand.Suppliers).not.toBeNull();
+
+    // Optionally, if you want to check for specific properties or length
+    expect(brand.Suppliers.length).toBeGreaterThan(0);
+
+    // Check if suppliers are instances of the Supplier model
+    brand.Suppliers.forEach(supplier => {
+      expect(supplier instanceof db.Supplier).toBe(true);
+    });
   });
 });
