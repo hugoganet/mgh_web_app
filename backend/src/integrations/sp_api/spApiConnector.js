@@ -165,29 +165,78 @@ class SpApiConnector {
   hmac(key, message) {
     return crypto.createHmac('sha256', key).update(message).digest();
   }
-}
 
-/**
- * Connects to the Amazon Selling Partner (SP) API using the provided credentials.
- * It fetches the Login with Amazon (LWA) token and can be extended to perform
- * further operations with the SP API.
- *
- * @async
- * @function connectToSpApi
- * @return {Promise<void>} A promise that resolves when the connection process is complete.
- */
-async function connectToSpApi() {
-  const clientId = process.env.CLIENT_ID;
-  const clientSecret = process.env.CLIENT_SECRET;
-  const refreshToken = process.env.REFRESH_TOKEN;
+  /**
+   * Sends a request to the Amazon Selling Partner API with the specified method, path, and parameters.
+   *
+   * @async
+   * @function sendRequest
+   * @param {string} method - The HTTP method for the request (e.g., 'GET', 'POST').
+   * @param {string} path - The API path for the request.
+   * @param {Object} [queryParams={}] - Query parameters to be appended to the URL.
+   * @param {Object} [body={}] - The request body, relevant for POST and PUT methods.
+   * @return {Promise<Object>} - A promise that resolves to the response from the API call.
+   * @description This function handles the construction and sending of requests to the Amazon Selling Partner API.
+   *              It handles the generation of the canonical request, signing the request, and setting the appropriate headers.
+   */
+  async sendRequest(method, path, queryParams = {}, body = {}) {
+    const accessToken = await this.getLWAToken();
+    const date = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '');
+    const queryString = Object.entries(queryParams)
+      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+      .join('&');
+    const canonicalRequest = this.createCanonicalRequest(
+      method,
+      'https://sellingpartnerapi-eu.amazon.com',
+      path,
+      queryString,
+      '',
+      accessToken,
+      date,
+    );
+    const stringToSign = this.createStringToSign(
+      canonicalRequest,
+      date,
+      'eu-west-1',
+      'execute-api',
+    );
+    const signature = this.getSignature(
+      process.env.AWS_SECRET_KEY,
+      date,
+      'eu-west-1',
+      'execute-api',
+      stringToSign,
+    );
+    const authHeader = this.createAuthorizationHeader(
+      process.env.AWS_ACCESS_KEY,
+      date,
+      'eu-west-1',
+      'execute-api',
+      signature,
+    );
 
-  const spApi = new SpApiConnector(clientId, clientSecret, refreshToken);
+    const headers = {
+      'Content-Type': 'application/json',
+      'User-Agent': 'MyApp/1.0 (Platform=Node.js; Language=JavaScript)',
+      'x-amz-access-token': accessToken,
+      'x-amz-date': date,
+      Authorization: authHeader,
+    };
 
-  try {
-    await spApi.getLWAToken();
-  } catch (error) {
-    console.error('Error connecting to SP API:', error);
+    const endpoint = `https://sellingpartnerapi-eu.amazon.com${path}`;
+    if (method === 'GET') {
+      return axios.get(`${endpoint}?${queryString}`, { headers });
+    } else {
+      return axios[method.toLowerCase()](endpoint, body, { headers });
+    }
   }
 }
-connectToSpApi();
-module.exports = { connectToSpApi };
+
+const spApiInstance = new SpApiConnector(
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
+  process.env.REFRESH_TOKEN,
+);
+
+// Export the instance
+module.exports = { spApiInstance };
