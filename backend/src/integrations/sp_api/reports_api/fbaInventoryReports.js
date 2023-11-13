@@ -21,7 +21,8 @@ async function requestFbaInventoryReport(marketplaceId, startDate, endDate) {
 
   try {
     const reportIdResponse = await getReportId(config);
-    console.log('FBA Inventory Report ID:', reportIdResponse.reportId);
+    console.log(reportIdResponse);
+    // console.log('FBA Inventory Report ID:', reportIdResponse.reportId);
     // Further processing, such as getting the report document, can be done here
   } catch (error) {
     console.error('Error in requesting FBA Inventory report:', error);

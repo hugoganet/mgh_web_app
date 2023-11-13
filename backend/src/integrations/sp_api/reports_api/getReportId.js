@@ -34,7 +34,7 @@ async function getReportId(config) {
 
     return response.data;
   } catch (error) {
-    console.error(`Error fetching report ID: ${error}`);
+    console.error(error.response);
   }
 }
 

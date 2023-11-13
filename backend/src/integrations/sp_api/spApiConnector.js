@@ -185,6 +185,7 @@ class SpApiConnector {
     const queryString = Object.entries(queryParams)
       .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
       .join('&');
+
     const canonicalRequest = this.createCanonicalRequest(
       method,
       'https://sellingpartnerapi-eu.amazon.com',
@@ -194,12 +195,16 @@ class SpApiConnector {
       accessToken,
       date,
     );
+    // console.log(`canonicalRequest => ${canonicalRequest} -----------------`);
+
     const stringToSign = this.createStringToSign(
       canonicalRequest,
       date,
       'eu-west-1',
       'execute-api',
     );
+    // console.log(`stringToSign => ${stringToSign} -----------------`);
+
     const signature = this.getSignature(
       process.env.AWS_SECRET_KEY,
       date,
@@ -207,6 +212,8 @@ class SpApiConnector {
       'execute-api',
       stringToSign,
     );
+    console.log(`signature => ${signature} -----------------`);
+
     const authHeader = this.createAuthorizationHeader(
       process.env.AWS_ACCESS_KEY,
       date,
@@ -214,6 +221,7 @@ class SpApiConnector {
       'execute-api',
       signature,
     );
+    console.log(`authHeader => ${authHeader} -----------------`);
 
     const headers = {
       'Content-Type': 'application/json',
