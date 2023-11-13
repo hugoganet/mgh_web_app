@@ -17,6 +17,8 @@ class SpApiConnector {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     this.refreshToken = refreshToken;
+    this.accessToken = null;
+    this.tokenExpiration = null;
   }
 
   /**
@@ -30,6 +32,12 @@ class SpApiConnector {
    * @return {Promise<string>} A promise that resolves to the LWA access token.
    */
   async getLWAToken() {
+    // Check if the existing token is still valid
+    if (this.accessToken && new Date() < this.tokenExpiration) {
+      return this.accessToken;
+    }
+
+    // Token is either null or expired, fetch a new one
     const url = 'https://api.amazon.com/auth/o2/token';
     const payload = {
       grant_type: 'refresh_token',
@@ -40,8 +48,12 @@ class SpApiConnector {
 
     try {
       const response = await axios.post(url, payload);
-      console.log('LWA Token fetched successfully.');
-      return response.data.access_token;
+      this.accessToken = response.data.access_token;
+
+      // Assuming the token is valid for 1 hour, set expiration 5 minutes earlier as a buffer
+      this.tokenExpiration = new Date(new Date().getTime() + 55 * 60 * 1000);
+
+      return this.accessToken;
     } catch (error) {
       console.error('Error fetching LWA Token:', error);
       throw error;
@@ -212,7 +224,7 @@ class SpApiConnector {
       'execute-api',
       stringToSign,
     );
-    console.log(`signature => ${signature} -----------------`);
+    // console.log(`signature => ${signature} -----------------`);
 
     const authHeader = this.createAuthorizationHeader(
       process.env.AWS_ACCESS_KEY,
@@ -221,7 +233,7 @@ class SpApiConnector {
       'execute-api',
       signature,
     );
-    console.log(`authHeader => ${authHeader} -----------------`);
+    // console.log(`authHeader => ${authHeader} -----------------`);
 
     const headers = {
       'Content-Type': 'application/json',

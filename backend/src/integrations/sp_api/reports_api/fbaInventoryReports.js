@@ -1,4 +1,9 @@
 const { getReportId } = require('./getReportId');
+const { getReportDocumentId } = require('./getReportDocumentId');
+const { getDocumentUrl } = require('./getDocumentUrl');
+const {
+  downloadAndDecompressDocument,
+} = require('./downloadAndDecompressDocument');
 const markeplaces = require('../../../../src/config/marketplaces');
 
 /**
@@ -14,16 +19,30 @@ const markeplaces = require('../../../../src/config/marketplaces');
 async function requestFbaInventoryReport(marketplaceId, startDate, endDate) {
   const config = {
     marketplaceId: marketplaceId,
-    reportType: 'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
+    reportType: 'GET_AFN_INVENTORY_DATA_BY_COUNTRY',
     dataStartTime: startDate,
     dataEndTime: endDate,
   };
 
   try {
-    const reportIdResponse = await getReportId(config);
-    console.log(reportIdResponse);
-    // console.log('FBA Inventory Report ID:', reportIdResponse.reportId);
-    // Further processing, such as getting the report document, can be done here
+    // // Request report ID
+    // const reportIdResponse = await getReportId(config);
+    // console.log(`reportIdResponse.reportId => ${reportIdResponse.reportId}`);
+    // // Request report document ID
+    // getReportDocumentId(reportIdResponse.reportId);
+    // Request report document URL
+    const { documentUrl, compressionAlgorithm } = await getDocumentUrl(
+      'amzn1.spdoc.1.4.eu.cda350bf-18e1-4e6c-bc92-942df88d9b54.T3KTK4DJJSGG8G.2100',
+    );
+
+    await downloadAndDecompressDocument(
+      documentUrl,
+      compressionAlgorithm,
+      config.reportType,
+      markeplaces.france.countryCode,
+      config.dataStartTime,
+      config.dataEndTime,
+    );
   } catch (error) {
     console.error('Error in requesting FBA Inventory report:', error);
   }
