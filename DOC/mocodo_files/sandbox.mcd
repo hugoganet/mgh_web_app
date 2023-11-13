@@ -1,0 +1,83 @@
+:
+ship_donations , 11 donations, 1N> warehouses
+warehouses : warehouse_id [INT], warehouse_name [VARCHAR (100)], warehouse_address [VARCHAR (255)], warehouse_postcode [VARCHAR (20)], warehouse_city [VARCHAR (20)], warehouse_country [VARCHAR (50)], warehouse_note [TEXT], warehouse_contact_name [VARCHAR (50)], warehouse_contact_number [VARCHAR (20)], warehouse_contact_email [VARCHAR (100)]
+receive_order , 11 suppliers_orders, 1N> warehouses
+suppliers_orders : supplier_order_id [INT], supplier_id [INT], supplier_order_made_date [DATE], supplier_order_delivery_date [DATE], warehouse_id [INT], supplier_order_number_of_unit [INT], supplier_order_total_paid_exc [DECIMAL (10,2)], supplier_order_delivery_cost_exc [DECIMAL (10,2)], supplier_order_delivery_cost_rate [DECIMAL (5,2)], supplier_order_vat_paid [DECIMAL (10,2)], supplier_order_invoice_file_link [VARCHAR (255)]
+eans_in_suppliers_orders , 0N> eans, 1N suppliers_orders : ean_in_supplier_order_id [VARCHAR (13)], ean [VARCHAR (13)], supplier_order_id [INT], ean_ordered_quantity [INT], ean_received_quantity [INT], product_purchase_cost_exc [DECIMAL (10,2)], product_vat_rate [DECIMAL (7,5)], best_before_date [DATE]
+eans : ean [CHAR (13)], product_name [VARCHAR (100)], brand_id [INT]
+eans_brand , 0N> brands, 11 eans
+brands : brand_id [INT], brand_name [VARCHAR (255)]
+suppliers_brands_catalog , 0N brands, 0N suppliers : supplier_brand_catalog_id [INT], brand_id [INT], supplier_id [INT]
+suppliers : supplier_id [INT], product_category_id [INT], supplier_name [VARCHAR (50)], supplier_website [VARCHAR (100)], supplier_number [VARCHAR (20)], supplier_email [VARCHAR (100)], supplier_address [VARCHAR (255)], supplier_postcode [VARCHAR (20)], supplier_country_code [VARCHAR (50)], supplier_note [TEXT], contact_name [VARCHAR (50)], contact_position [VARCHAR (50)], contact_number [VARCHAR (20)], contact_email [VARCHAR (100)], account_open [BOOLEAN], account_refused [BOOLEAN], account_refused_date [DATE], account_refused_reason [TEXT], is_interesting [BOOLEAN], is_brand [BOOLEAN]
+has7 , 11 catalog, 11 suppliers
+catalog : catalog_id [INT], ean [VARCHAR (13)], supplier_id [INT], supplier_part_number [VARCHAR], brand_id [INT], unit_pack_size [INT], product_price_exc [DECIMAL (10,2)], product_vat_rate [DECIMAL (6,5)], catalog_entry_last_update [DATE]
+has2 , 11 asins, 0N> product_categories_ranks
+asins : asin_id [INT], asin [VARCHAR (10)], country_code [CHAR (2)], product_category_id [INT], product_category_rank_id [INT], product_tax_category_id [VARCHAR (15)], asin_preparation [TEXT], url_amazon [VARCHAR (255)], url_image [VARCHAR (255)], asin_name [VARCHAR (100)], asin_potential_warehouse_quantity [INT], asin_number_of_active_sku [INT], asin_average_unit_sold_per_day [DECIMAL (10,2)], is_battery_required [BOOLEAN], is_hazmat [BOOLEAN], is_loi_lang [BOOLEAN]
+is_listed_in , 1N> asins, 11 countries
+countries : country_code [CHAR (2)], country_name [VARCHAR (50)]
+is_sold_in , 1N> skus, 11 countries
+skus : sku_id [VARCHAR (50)], sku [VARCHAR (50)], country_code [CHAR (2)], fnsku [VARCHAR (50)], sku_acquisition_cost_exc [DECIMAL (10,2)], sku_acquisition_cost_inc [DECIMAL (10,2)], sku_afn_total_quantity [INT], sku_average_selling_price [DECIMAL (10,2)], sku_average_net_margin [DECIMAL (10,2)], sku_average_net_margin_percentage [DECIMAL (10,5)], sku_average_return_on_investment_rate [DECIMAL (10,5)], sku_average_daily_return_on_investment_rate [DECIMAL (10,5)], is_active [BOOLEAN], number_of_active_days [INT], number_of_unit_sold [INT], sku_average_unit_sold_per_day [DECIMAL (10,5)], sku_restock_alert_quantity [INT], sku_is_test [BOOLEAN]
+asins_skus , 1N asins, 0N skus : asins_skus_id [INT], sku_id [INT], asin_id [INT]
+
+has10 , 0N vat_categories, 11 product_tax_categories
+vat_categories : vat_category_id [VARCHAR (2)], vat_category_description [VARCHAR (100)]
+has9 , 0N vat_categories, 11 vat_rates_per_country
+vat_rates_per_country : vat_rate_per_country_id [INT], country_code [CHAR (2)], vat_rate_category [CHAR (2)], vat_rate [DECIMAL (6,5)]
+df4 , 0N> vat_rates_per_country, 11 product_tax_categories
+product_tax_categories : product_tax_category_id [INT], country_code [CHAR (2)], product_tax_category_name [VARCHAR (100)], product_tax_category_description [TEXT], vat_rate_category [VARCHAR (2)]
+has5 , 11 asins, 0N> product_tax_categories
+has , 01 skus, 11 minimum_selling_prices
+minimum_selling_prices : minimum_selling_price_id [INTR], sku_id [INT], pricing_rule_id [VARCHAR (50)], enrolled_in_pan_eu [BOOLEAN], eligible_for_pan_eu [BOOLEAN], referral_fee_category_id [INT], minimum_margin_desired [DECIMAL (10,2)], minimum_selling_price_local_and_pan_eu [DECIMAL (10,2)], minimum_selling_price_efn [DECIMAL (10,2)], maximum_selling_price_local_and_pan_eu [DECIMAL (10,2)], maximum_selling_price_efn [DECIMAL (10,2)]
+has_referral_fees , 11> minimum_selling_prices, 0N amazon_referral_fees
+amazon_referral_fees : referral_fee_category_id [INT], country_code [CHAR (2)], product_category_id [INT], referral_fee_category_name_en [VARCHAR (100)], referral_fee_percentage [DECIMAL (6,5)], reduced_referral_fee_percentage [DECIMAL (6,5)], reduced_referral_fee_limit [DECIMAL (5,2)], reduced_referral_fee_threshold [DECIMAL (5,2)], per_item_minimum_referral_fee [DECIMAL (5,2)], closing_fee [DECIMAL (5,2)]
+product_and_amz_referral_fees_categories , 1N product_categories, 1N amazon_referral_fees : product_and_amz_referral_fee_category_id [INT], product_category_id [INT], referral_fee_category_id [INT]
+product_categories : product_category_id [INT], product_category_name_en [VARCHAR (150)], product_category_name_fr [VARCHAR (150)], product_category_name_de [VARCHAR (150)], product_category_name_es [VARCHAR (150)], product_category_name_it [VARCHAR (150)]
+df3 , 11 product_categories, 0N> product_categories_ranks
+product_categories_ranks : produc_category_rank_id [INT], country_code [CHAR (2)], product_category_id [INT], ranking_threshold [INT], ranking_threshold_percentage [DECIMAL (10,5)]
+is_ranked_in , 1N> product_categories_ranks, 11 product_categories
+:
+:
+:
+:
+
+:
+:
+:
+:
+:
+donations : donation_id [INT], warehouse_id [INT], donation_to [VARCHAR (250)], donation_date [DATE], donation_note [TEXT]
+eans_in_donations , 0N> eans, 1N donations : donation_id [INT], ean [VARCHAR (13)], ean_donation_quantity [INT]
+eans_in_asins , 1N asins, 0N eans : ean_in_asin_id [INT], asin_id [INT], ean [VARCHAR (13)], ean_quantity_in_asin [INT]
+has8 , 0N pricing_rules, 11 minimum_selling_prices
+pricing_rules : pricing_rule_id [INT], pricing_rule_name [VARCHAR (250)], pricing_rule_description [TEXT], pricing_rule_minimum_roi [DECIMAL (10,2)], pricing_rule_minimum_margin [DECIMAL (10,2)]
+has3 , 11 asins, 11> fba_fees
+fba_fees : fba_fee_id [INT], asin_id [INT], package_length [DECIMAL (5,2)], package_width [DECIMAL (5,2)], package_height [DECIMAL (5,2)], package_weight [DECIMAL (5,2)], fba_package_category_id [INT], fba_fees_local_and_pan_eu [DECIMAL (10,2)], fba_fees_efn [DECIMAL (10,2)]
+df2 , 11> fba_fees, 0N price_grid_fba_fees
+price_grid_fba_fees : price_grid_fba_fee_id [INT], country_code [CHAR (2)], fba_package_category_name [VARCHAR (255)], category_max_weight [DECIMAL], category_max_length [DECIMAL], category_max_width [DECIMAL], category_max_height [DECIMAL], fba_fee_local_and_pan_eu [DECIMAL], fba_fee_efn_be [DECIMAL]
+:
+:
+:
+:
+:
+:
+
+:
+:
+:
+warehouses_stock , 1N eans, 0N warehouses : warehouse_stock_id [INT], warehouse_id [INT], ean_in_supplier_orders_id [INT], ean [VARCHAR (13)], warehouse_total_received_quantity [INT], warehouse_total_shipped_quantity [INT], warehouse_in_stock_quantity [INT]
+:
+is_send , 11 suppliers_orders, 0N> suppliers
+:
+:
+:
+:
+:
+:
+:
+:
+:
+identified_by , 11 skus, 1N> asins
+:
+:
+:
+:

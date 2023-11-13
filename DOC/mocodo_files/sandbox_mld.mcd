@@ -1,0 +1,113 @@
+%%mocodo
+
+:
+:
+:
+:
+:
+:
+:
+warehouses: warehouse_id, warehouse_name, warehouse_address, warehouse_postcode, warehouse_city, warehouse_country, warehouse_note, warehouse_contact_name, warehouse_contact_number, warehouse_contact_email
+:
+:
+:
+:
+:
+:
+:
+
+:
+:
+:
+:
+:
+:
+:
+donations: donation_id, warehouse_id 1, donation_to, donation_date, donation_note, #warehouse_id 2 > warehouses > warehouse_id
+:
+suppliers_orders: supplier_order_id, supplier_id 1, supplier_order_made_date, supplier_order_delivery_date, warehouse_id 1, supplier_order_number_of_unit, supplier_order_total_paid_exc, supplier_order_delivery_cost_exc, supplier_order_delivery_cost_rate, supplier_order_vat_paid, supplier_order_invoice_file_link, #warehouse_id 2 > warehouses > warehouse_id, #supplier_id 2 > suppliers > supplier_id
+:
+:
+:
+:
+:
+
+:
+:
+:
+:
+:
+warehouses_stock: #ean 1 > eans > ean, _#warehouse_id 1 > warehouses > warehouse_id, warehouse_stock_id, warehouse_id 2, ean_in_supplier_orders_id, ean 2, warehouse_total_received_quantity, warehouse_total_shipped_quantity, warehouse_in_stock_quantity
+:
+eans_in_donations: #ean 1 > eans > ean, _#donation_id 1 > donations > donation_id, donation_id 2, ean 2, ean_donation_quantity
+:
+eans_in_suppliers_orders: #ean 1 > eans > ean, _#supplier_order_id 1 > suppliers_orders > supplier_order_id, ean_in_supplier_order_id, ean 2, supplier_order_id 2, ean_ordered_quantity, ean_received_quantity, product_purchase_cost_exc, product_vat_rate, best_before_date
+:
+suppliers: supplier_id, product_category_id, supplier_name, supplier_website, supplier_number, supplier_email, supplier_address, supplier_postcode, supplier_country_code, supplier_note, contact_name, contact_position, contact_number, contact_email, account_open, account_refused, account_refused_date, account_refused_reason, is_interesting, is_brand
+:
+catalog: catalog_id, ean, supplier_id 1, supplier_part_number, brand_id, unit_pack_size, product_price_exc, product_vat_rate, catalog_entry_last_update, #supplier_id 2 > suppliers > supplier_id
+:
+
+:
+:
+:
+:
+:
+product_categories: product_category_id, product_category_name_en, product_category_name_fr, product_category_name_de, product_category_name_es, product_category_name_it, #produc_category_rank_id 1 > product_categories_ranks > produc_category_rank_id, #produc_category_rank_id 2 > product_categories_ranks > produc_category_rank_id
+:
+eans: ean, product_name, brand_id 1, #brand_id 2 > brands > brand_id
+:
+brands: brand_id, brand_name
+:
+suppliers_brands_catalog: #brand_id 1 > brands > brand_id, _#supplier_id 1 > suppliers > supplier_id, supplier_brand_catalog_id, brand_id 2, supplier_id 2
+:
+:
+:
+
+:
+:
+:
+product_and_amz_referral_fees_categories: #product_category_id 1 > product_categories > product_category_id, _#referral_fee_category_id 1 > amazon_referral_fees > referral_fee_category_id, product_and_amz_referral_fee_category_id, product_category_id 2, referral_fee_category_id 2
+:
+product_categories_ranks: produc_category_rank_id, country_code, product_category_id, ranking_threshold, ranking_threshold_percentage
+:
+eans_in_asins: #asin_id 1 > asins > asin_id, _#ean 1 > eans > ean, ean_in_asin_id, asin_id 2, ean 2, ean_quantity_in_asin
+:
+vat_rates_per_country: vat_rate_per_country_id, country_code, vat_rate_category, vat_rate, #vat_category_id > vat_categories > vat_category_id
+:
+vat_categories: vat_category_id, vat_category_description
+:
+:
+:
+
+:
+:
+:
+amazon_referral_fees: referral_fee_category_id, country_code, product_category_id, referral_fee_category_name_en, referral_fee_percentage, reduced_referral_fee_percentage, reduced_referral_fee_limit, reduced_referral_fee_threshold, per_item_minimum_referral_fee, closing_fee
+:
+asins_skus: #asin_id 1 > asins > asin_id, _#sku_id 1 > skus > sku_id, asins_skus_id, sku_id 2, asin_id 2
+:
+asins: asin_id, asin, country_code, product_category_id, product_category_rank_id, product_tax_category_id 1, asin_preparation, url_amazon, url_image, asin_name, asin_potential_warehouse_quantity, asin_number_of_active_sku, asin_average_unit_sold_per_day, is_battery_required, is_hazmat, is_loi_lang, #produc_category_rank_id > product_categories_ranks > produc_category_rank_id, #product_tax_category_id 2 > product_tax_categories > product_tax_category_id, #fba_fee_id > fba_fees > fba_fee_id
+:
+product_tax_categories: product_tax_category_id, country_code, product_tax_category_name, product_tax_category_description, vat_rate_category, #vat_category_id > vat_categories > vat_category_id, #vat_rate_per_country_id > vat_rates_per_country > vat_rate_per_country_id
+:
+:
+:
+:
+:
+
+:
+pricing_rules: pricing_rule_id, pricing_rule_name, pricing_rule_description, pricing_rule_minimum_roi, pricing_rule_minimum_margin
+:
+minimum_selling_prices: minimum_selling_price_id, sku_id 1, pricing_rule_id 1, enrolled_in_pan_eu, eligible_for_pan_eu, referral_fee_category_id 1, minimum_margin_desired, minimum_selling_price_local_and_pan_eu, minimum_selling_price_efn, maximum_selling_price_local_and_pan_eu, maximum_selling_price_efn, #sku_id 2 > skus > sku_id, #referral_fee_category_id 2 > amazon_referral_fees > referral_fee_category_id, #pricing_rule_id 2 > pricing_rules > pricing_rule_id
+:
+skus: sku_id, sku, country_code, fnsku, sku_acquisition_cost_exc, sku_acquisition_cost_inc, sku_afn_total_quantity, sku_average_selling_price, sku_average_net_margin, sku_average_net_margin_percentage, sku_average_return_on_investment_rate, sku_average_daily_return_on_investment_rate, is_active, number_of_active_days, number_of_unit_sold, sku_average_unit_sold_per_day, sku_restock_alert_quantity, sku_is_test, #asin_id > asins > asin_id
+:
+countries: country_code, country_name, #asin_id > asins > asin_id, #sku_id > skus > sku_id
+:
+fba_fees: fba_fee_id, asin_id, package_length, package_width, package_height, package_weight, fba_package_category_id, fba_fees_local_and_pan_eu, fba_fees_efn, #price_grid_fba_fee_id > price_grid_fba_fees > price_grid_fba_fee_id
+:
+price_grid_fba_fees: price_grid_fba_fee_id, country_code, fba_package_category_name, category_max_weight, category_max_length, category_max_width, category_max_height, fba_fee_local_and_pan_eu, fba_fee_efn_be
+:
+:
+:

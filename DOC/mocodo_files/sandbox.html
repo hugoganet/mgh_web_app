@@ -1,0 +1,350 @@
+<html>
+<head>
+<meta charset='utf-8'>
+<style>
+  #mld .relation { font-variant: small-caps; font-weight: bold }
+  #mld .primary { text-decoration: underline }
+  #mld .foreign { font-style: oblique }
+  #mld .normal { }
+</style>
+</head>
+<body>
+<div id='mld'>
+<div>
+  <span class='relation'>AMAZON_REFERRAL_FEES</span> (
+    <span class='primary'>referral_fee_category_id</span>,
+    <span class='primary'>country_code</span>,
+    <span class='normal'>referral_fee_category_name_en</span>,
+    <span class='normal'>referral_fee_percentage</span>,
+    <span class='normal'>reduced_referral_fee_percentage</span>,
+    <span class='normal'>reduced_referral_fee_limit</span>,
+    <span class='normal'>reduced_referral_fee_threshold</span>,
+    <span class='normal'>per_item_minimum_referral_fee</span>,
+    <span class='normal'>closing_fee</span>
+  )
+</div>
+<div>
+  <span class='relation'>ASIN</span> (
+    <span class='primary'>asin</span>,
+    <span class='primary'>country_code</span>,
+    <span class='normal'>product_category_id</span>,
+    <span class='normal'>product_category_rank_id</span>,
+    <span class='normal'>product_tax_category_id</span>,
+    <span class='normal'>asin_preparation</span>,
+    <span class='normal'>url_amazon</span>,
+    <span class='normal'>url_image</span>,
+    <span class='normal'>asin_name</span>,
+    <span class='normal'>asin_number_of_active_sku</span>,
+    <span class='normal'>asin_average_unit_sold_per_day</span>,
+    <span class='normal'>batterie_required</span>,
+    <span class='normal'>is_hazmat</span>,
+    <span class='foreign'>#produc_category_rank_id</span>,
+    <span class='foreign'>#country_code.1</span>,
+    <span class='foreign'>#asin.1</span>,
+    <span class='foreign'>#country_code.2</span>,
+    <span class='foreign'>#product_tax_category_id.1</span>,
+    <span class='foreign'>#country_code.3</span>
+  )
+</div>
+<div>
+  <span class='relation'>BRANDS</span> (
+    <span class='primary'>brand_id</span>,
+    <span class='normal'>brand_name</span>
+  )
+</div>
+<div>
+  <span class='relation'>CATALOG</span> (
+    <span class='foreign primary'>#ean</span>,
+    <span class='foreign primary'>#supplier_id</span>,
+    <span class='normal'>ean.1</span>,
+    <span class='normal'>_supplier_id</span>,
+    <span class='normal'>supplier_part_number</span>,
+    <span class='normal'>brand_id</span>,
+    <span class='normal'>unit_pack_size</span>,
+    <span class='normal'>product_price_exc</span>,
+    <span class='normal'>product_vat_rate</span>,
+    <span class='normal'>catalog_entry_last_update</span>
+  )
+</div>
+<div>
+  <span class='relation'>COUNTRIES</span> (
+    <span class='primary'>country_code</span>,
+    <span class='normal'>country</span>,
+    <span class='foreign'>#sku</span>,
+    <span class='foreign'>#country_code.1</span>,
+    <span class='foreign'>#asin</span>,
+    <span class='foreign'>#country_code.2</span>
+  )
+</div>
+<div>
+  <span class='relation'>DF3</span> (
+    <span class='foreign primary'>#product_category_id</span>,
+    <span class='foreign primary'>#produc_category_rank_id</span>,
+    <span class='foreign primary'>#country_code</span>
+  )
+</div>
+<div>
+  <span class='relation'>DONATIONS</span> (
+    <span class='primary'>donation_id</span>,
+    <span class='normal'>warehouse_id</span>,
+    <span class='normal'>donation_to</span>,
+    <span class='normal'>donation_date</span>,
+    <span class='normal'>donation_note</span>,
+    <span class='foreign'>#warehouse_id.1</span>
+  )
+</div>
+<div>
+  <span class='relation'>EAN</span> (
+    <span class='primary'>ean</span>,
+    <span class='normal'>product_name</span>,
+    <span class='normal'>brand_id</span>,
+    <span class='foreign'>#brand_id.1</span>
+  )
+</div>
+<div>
+  <span class='relation'>EAN_IN_ASIN</span> (
+    <span class='foreign primary'>#asin</span>,
+    <span class='foreign primary'>#country_code</span>,
+    <span class='foreign primary'>#ean</span>,
+    <span class='normal'>asin.1</span>,
+    <span class='normal'>_country_code</span>,
+    <span class='normal'>ean.1</span>,
+    <span class='normal'>ean_quantity_in_asin</span>
+  )
+</div>
+<div>
+  <span class='relation'>EAN_IN_DONATIONS</span> (
+    <span class='foreign primary'>#ean</span>,
+    <span class='foreign primary'>#donation_id</span>,
+    <span class='normal'>donation_id.1</span>,
+    <span class='normal'>ean.1</span>,
+    <span class='normal'>ean_donation_quantity</span>
+  )
+</div>
+<div>
+  <span class='relation'>EAN_IN_SUPPLIER_ORDERS</span> (
+    <span class='foreign primary'>#ean</span>,
+    <span class='foreign primary'>#supplier_order_id</span>,
+    <span class='normal'>ean.1</span>,
+    <span class='normal'>supplier_order_id.1</span>,
+    <span class='normal'>warehouse_id</span>,
+    <span class='normal'>ean_ordered_quantity</span>,
+    <span class='normal'>ean_received_quantity</span>,
+    <span class='normal'>product_purchase_cost_exc</span>,
+    <span class='normal'>product_vat_rate</span>,
+    <span class='normal'>best_before_date</span>
+  )
+</div>
+<div>
+  <span class='relation'>FBA_FEES</span> (
+    <span class='primary'>asin</span>,
+    <span class='primary'>country_code</span>,
+    <span class='normal'>package_length</span>,
+    <span class='normal'>package_width</span>,
+    <span class='normal'>package_height</span>,
+    <span class='normal'>package_weight</span>,
+    <span class='normal'>fba_package_category_id</span>,
+    <span class='normal'>fba_fees_local_and_pan_eu</span>,
+    <span class='normal'>fba_fees_efn</span>,
+    <span class='foreign'>#fba_package_category_id.1</span>,
+    <span class='foreign'>#country_code.1</span>
+  )
+</div>
+<div>
+  <span class='relation'>MINIMUM_SELLING_PRICES</span> (
+    <span class='primary'>sku</span>,
+    <span class='primary'>country_code</span>,
+    <span class='normal'>pricing_rule_id</span>,
+    <span class='normal'>enrolled_in_pan_eu</span>,
+    <span class='normal'>eligible_for_pan_eu</span>,
+    <span class='normal'>referral_fee_category_id</span>,
+    <span class='normal'>minimum_margin_desired</span>,
+    <span class='normal'>minimum_selling_price_local_and_pan_eu</span>,
+    <span class='normal'>minimum_selling_price_efn</span>,
+    <span class='normal'>maximum_selling_price_local_and_pan_eu</span>,
+    <span class='normal'>maximum_selling_price_efn</span>,
+    <span class='foreign'>#referral_fee_category_id.1</span>,
+    <span class='foreign'>#country_code.1</span>,
+    <span class='foreign'>#sku.1</span>,
+    <span class='foreign'>#country_code.2</span>
+  )
+</div>
+<div>
+  <span class='relation'>PRICE_GRID_FBA_FEES</span> (
+    <span class='primary'>fba_package_category_id</span>,
+    <span class='primary'>country_code</span>,
+    <span class='normal'>fba_package_category_name</span>,
+    <span class='normal'>category_max_weight</span>,
+    <span class='normal'>category_max_length</span>,
+    <span class='normal'>category_max_width</span>,
+    <span class='normal'>category_max_height</span>,
+    <span class='normal'>fba_fee_local_and_pan_eu</span>,
+    <span class='normal'>fba_fee_efn_be</span>
+  )
+</div>
+<div>
+  <span class='relation'>PRICING_RULES</span> (
+    <span class='primary'>pricing_rule_id</span>,
+    <span class='normal'>pricing_rule_name</span>,
+    <span class='normal'>pricing_rule_description</span>,
+    <span class='normal'>pricing_rule_minimum_roi</span>,
+    <span class='normal'>pricing_rule_minimum_margin</span>
+  )
+</div>
+<div>
+  <span class='relation'>PRODUCT_AND_AMZ_REFERRAL_FEES_CATEGORIES_MAPPING</span> (
+    <span class='foreign primary'>#product_category_id</span>,
+    <span class='foreign primary'>#referral_fee_category_id</span>,
+    <span class='foreign primary'>#country_code</span>,
+    <span class='normal'>product_category_id.1</span>,
+    <span class='normal'>_referral_fee_category_id</span>
+  )
+</div>
+<div>
+  <span class='relation'>PRODUCT_CATEGORIES</span> (
+    <span class='primary'>product_category_id</span>,
+    <span class='normal'>product_categry_name_en</span>,
+    <span class='normal'>product_categry_name_fr</span>,
+    <span class='normal'>product_categry_name_de</span>,
+    <span class='normal'>product_categry_name_es</span>,
+    <span class='normal'>product_categry_name_it</span>,
+    <span class='foreign'>#produc_category_rank_id</span>,
+    <span class='foreign'>#country_code</span>
+  )
+</div>
+<div>
+  <span class='relation'>PRODUCT_CATEGORY_RANKS</span> (
+    <span class='primary'>produc_category_rank_id</span>,
+    <span class='primary'>country_code</span>,
+    <span class='normal'>product_category_id</span>,
+    <span class='normal'>ranking_threshold</span>,
+    <span class='normal'>ranking_threshold_percentage</span>
+  )
+</div>
+<div>
+  <span class='relation'>PRODUCT_TAX_CATEGORIES</span> (
+    <span class='primary'>product_tax_category_id</span>,
+    <span class='primary'>country_code</span>,
+    <span class='normal'>product_tax_category_name</span>,
+    <span class='normal'>product_tax_category_description</span>,
+    <span class='normal'>vat_rate_category</span>,
+    <span class='foreign'>#country_code.1</span>,
+    <span class='foreign'>#vat_rate_category.1</span>
+  )
+</div>
+<div>
+  <span class='relation'>SELLING_PRICES</span> (
+    <span class='primary'>sku</span>,
+    <span class='primary'>country_code</span>,
+    <span class='normal'>actual_price</span>,
+    <span class='normal'>currency</span>,
+    <span class='foreign'>#pricing_rule_id</span>,
+    <span class='foreign'>#sku.1</span>,
+    <span class='foreign'>#country_code.1</span>
+  )
+</div>
+<div>
+  <span class='relation'>SKU</span> (
+    <span class='primary'>sku</span>,
+    <span class='primary'>country_code</span>,
+    <span class='normal'>fnsku</span>,
+    <span class='normal'>asin</span>,
+    <span class='normal'>sku_acquisition_cost_exc</span>,
+    <span class='normal'>sku_acquisition_cost_inc</span>,
+    <span class='normal'>sku_afn_total_quantity</span>,
+    <span class='normal'>sku_average_selling_price</span>,
+    <span class='normal'>sku_average_net_margin</span>,
+    <span class='normal'>sku_average_net_margin_percentage</span>,
+    <span class='normal'>sku_average_return_on_investment_rate</span>,
+    <span class='normal'>sku_average_daily_return_on_investment_rate</span>,
+    <span class='normal'>is_active</span>,
+    <span class='normal'>number_of_active_days</span>,
+    <span class='normal'>number_of_unit_sold</span>,
+    <span class='normal'>sku_average_unit_sold_per_day</span>,
+    <span class='foreign'>#asin.1</span>,
+    <span class='foreign'>#country_code.1</span>
+  )
+</div>
+<div>
+  <span class='relation'>SUPPLIERS</span> (
+    <span class='primary'>supplier_id</span>,
+    <span class='normal'>supplier_name</span>,
+    <span class='normal'>supplier_website</span>,
+    <span class='normal'>supplier_number</span>,
+    <span class='normal'>supplier_email</span>,
+    <span class='normal'>supplier_address</span>,
+    <span class='normal'>supplier_postcode</span>,
+    <span class='normal'>supplier_country_code</span>,
+    <span class='normal'>supplier_note</span>,
+    <span class='normal'>contact_name</span>,
+    <span class='normal'>contact_position</span>,
+    <span class='normal'>contact_number</span>,
+    <span class='normal'>contact_email</span>,
+    <span class='normal'>account_open</span>,
+    <span class='normal'>account_refused</span>,
+    <span class='normal'>account_refused_date</span>,
+    <span class='normal'>account_refused_reason</span>,
+    <span class='normal'>is_interesting</span>,
+    <span class='normal'>is_brand</span>
+  )
+</div>
+<div>
+  <span class='relation'>SUPPLIERS_BRANDS-CATALOG</span> (
+    <span class='foreign primary'>#brand_id</span>,
+    <span class='foreign primary'>#supplier_id</span>,
+    <span class='normal'>brand_id.1</span>,
+    <span class='normal'>supplier_id.1</span>
+  )
+</div>
+<div>
+  <span class='relation'>SUPPLIER_ORDERS</span> (
+    <span class='primary'>supplier_order_id</span>,
+    <span class='normal'>supplier_id</span>,
+    <span class='normal'>supplier_order_made_date</span>,
+    <span class='normal'>supplier_order_delivery_date</span>,
+    <span class='normal'>warehouse_id</span>,
+    <span class='normal'>supplier_order_total_paid_exc</span>,
+    <span class='normal'>supplier_order_vat_rate</span>,
+    <span class='normal'>supplier_order_invoice_file_link</span>,
+    <span class='normal'>supplier_order_number_of_unit</span>,
+    <span class='normal'>supplier_order_delivery_cost_exc</span>,
+    <span class='normal'>supplier_order_delivery_cost_rate</span>,
+    <span class='foreign'>#supplier_id.1</span>,
+    <span class='foreign'>#warehouse_id.1</span>
+  )
+</div>
+<div>
+  <span class='relation'>VAT_RATE_PER_COUNTRY</span> (
+    <span class='primary'>country_code</span>,
+    <span class='primary'>vat_rate_category</span>,
+    <span class='normal'>vat_rate</span>
+  )
+</div>
+<div>
+  <span class='relation'>WAREHOUSES</span> (
+    <span class='primary'>warehouse_id</span>,
+    <span class='normal'>warehouse_name</span>,
+    <span class='normal'>warehouse_address</span>,
+    <span class='normal'>warehouse_postcode</span>,
+    <span class='normal'>warehouse_city</span>,
+    <span class='normal'>warehouse_country</span>,
+    <span class='normal'>warehouse_note</span>,
+    <span class='normal'>warehouse_contact_name</span>,
+    <span class='normal'>warehouse_contact_number</span>,
+    <span class='normal'>warehouse_contact_email</span>
+  )
+</div>
+<div>
+  <span class='relation'>WAREHOUSE_STOCK</span> (
+    <span class='foreign primary'>#ean</span>,
+    <span class='foreign primary'>#warehouse_id</span>,
+    <span class='normal'>ean.1</span>,
+    <span class='normal'>_warehouse_id</span>,
+    <span class='normal'>warehouse_total_received_quantity</span>,
+    <span class='normal'>warehouse_total_shipped_quantity</span>,
+    <span class='normal'>warehouse_in_stock_quantity</span>
+  )
+</div>
+</div>
+</body>
+</html>
