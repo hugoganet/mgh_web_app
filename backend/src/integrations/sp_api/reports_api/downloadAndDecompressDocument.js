@@ -36,14 +36,13 @@ async function downloadAndDecompressDocument(
       responseType: 'stream',
     });
 
-    // Format the start date to YYYY-MM-DD format for the filename
-    const formattedStartDate = new Date(dataStartTime)
-      .toISOString()
-      .split('T')[0];
-    // Format the end date to YYYY-MM-DD format for the filename
-    const formattedEndDate = new Date(dataEndTime).toISOString().split('T')[0];
-    // Construct the filename using report type, country code, and date
-    const fileName = `${reportType}_${countryCode}_${formattedStartDate}_${formattedEndDate}.csv`;
+    // Usage in downloadAndDecompressDocument
+    const fileName = formatFileName(
+      reportType,
+      countryCode,
+      dataStartTime,
+      dataEndTime,
+    );
     // Create the full path for the output file
     const outputFilePath = path.join(outputPath, fileName);
 
@@ -78,6 +77,28 @@ async function downloadAndDecompressDocument(
     console.error(`Error downloading or decompressing document: ${error}`);
     throw error;
   }
+}
+
+/**
+ * @param {*} reportType
+ * @param {*} countryCode
+ * @param {*} startDate
+ * @param {*} endDate
+ * @return {string} fileName
+ */
+function formatFileName(reportType, countryCode, startDate, endDate) {
+  const formatDate = date =>
+    date ? new Date(date).toISOString().split('T')[0] : '';
+
+  const formattedStartDate = formatDate(startDate);
+  const formattedEndDate = formatDate(endDate);
+
+  let fileName = `${reportType}_${countryCode}`;
+  if (formattedStartDate) fileName += `_${formattedStartDate}`;
+  if (formattedEndDate) fileName += `_${formattedEndDate}`;
+  fileName += '.csv';
+
+  return fileName;
 }
 
 module.exports = { downloadAndDecompressDocument };

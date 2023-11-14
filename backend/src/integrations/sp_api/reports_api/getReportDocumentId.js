@@ -39,7 +39,6 @@ async function getReportDocumentId(reportId) {
       if (parsedResponse.reportDocumentId) {
         reportDocumentId = parsedResponse.reportDocumentId;
         console.log('Report Document ID fetched:', reportDocumentId);
-        // Further processing here
         break;
       } else {
         console.log('Waiting for report to be ready...');

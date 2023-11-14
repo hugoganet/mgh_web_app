@@ -6,7 +6,7 @@ const { spApiInstance } = require('../spApiConnector');
  * @async
  * @function getReportId
  * @param {Object} config - Configuration parameters for the report request.
- * @param {string} config.marketplaceId - The marketplace identifier for which the report is requested.
+ * @param {array} config.marketplaceIds - The marketplace identifier for which the report is requested.
  * @param {string} config.reportType - The type of report being requested.
  * @param {string} config.dataStartTime - The start time for the data range of the report.
  * @param {string} config.dataEndTime - The end time for the data range of the report.
@@ -16,7 +16,12 @@ const { spApiInstance } = require('../spApiConnector');
  * @return {Promise<string>} - A promise that resolves to the report ID.
  */
 async function getReportId(config) {
-  const { marketplaceId, reportType, dataStartTime, dataEndTime } = config;
+  const {
+    marketplaceIds = [],
+    reportType,
+    dataStartTime,
+    dataEndTime,
+  } = config;
   const path = '/reports/2021-06-30/reports';
 
   try {
@@ -26,7 +31,7 @@ async function getReportId(config) {
       {},
       {
         reportType,
-        marketplaceIds: [marketplaceId],
+        marketplaceIds: marketplaceIds,
         dataStartTime,
         dataEndTime,
       },
