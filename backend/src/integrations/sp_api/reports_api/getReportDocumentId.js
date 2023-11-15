@@ -7,6 +7,7 @@ const { spApiInstance } = require('../spApiConnector');
  * @async
  * @function getReportDocumentId
  * @param {string} reportId - The unique identifier of the report for which the document ID is being fetched.
+ * @param {boolean} createLog - Whether to create a log file for the request.
  * @return {Promise<void>} A promise that resolves when the report document ID is successfully retrieved.
  * @throws {Error} Throws an error if there is an issue fetching the report document ID.
  * @description This function continuously polls the Amazon SP API at 60-second intervals to check if the report
@@ -14,24 +15,20 @@ const { spApiInstance } = require('../spApiConnector');
  *              is available, the function breaks out of the loop and logs the report document ID. This function
  *              should be used in sequence after requesting a report and obtaining a report ID.
  */
-async function getReportDocumentId(reportId) {
+async function getReportDocumentId(reportId, createLog) {
   const path = `/reports/2021-06-30/reports/${reportId}`;
-
-  // Fetch the LWA token once before the loop
-  const accessToken = await spApiInstance.getLWAToken();
 
   let reportDocumentId = null;
   let response;
 
   while (reportDocumentId === null) {
     try {
-      // Use the same access token for each request
       response = await spApiInstance.sendRequest(
         'GET',
         path,
         {},
         {},
-        accessToken,
+        createLog,
       );
 
       const parsedResponse = response.data;

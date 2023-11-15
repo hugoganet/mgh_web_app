@@ -6,13 +6,21 @@ const { spApiInstance } = require('../spApiConnector');
  * @async
  * @function getDocumentUrl
  * @param {string} reportDocumentId - The report document ID.
+ * @param {boolean} createLog - Whether to create a log file for the request.
  * @return {Promise<string>} - A promise that resolves to the URL of the report document.
  */
-async function getDocumentUrl(reportDocumentId) {
+async function getDocumentUrl(reportDocumentId, createLog) {
   const path = `/reports/2021-06-30/documents/${reportDocumentId}`;
 
   try {
-    const response = await spApiInstance.sendRequest('GET', path);
+    const response = await spApiInstance.sendRequest(
+      'GET',
+      path,
+      {},
+      {},
+      createLog,
+    );
+
     const parsedResponse = response.data;
     const documentUrl = parsedResponse.url;
     const compressionAlgorithm = parsedResponse.compressionAlgorithm; // Could be 'GZIP', etc.
@@ -25,7 +33,5 @@ async function getDocumentUrl(reportDocumentId) {
     throw error;
   }
 }
-
-module.exports = { getDocumentUrl };
 
 module.exports = { getDocumentUrl };

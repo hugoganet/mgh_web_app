@@ -188,7 +188,7 @@ class SpApiConnector {
    * @param {string} path - The API path for the request.
    * @param {Object} [queryParams={}] - Query parameters to be appended to the URL.
    * @param {Object} [body={}] - The request body, relevant for POST and PUT methods.
-   * @param {boolean} [createLog=false] - Whether to create a log of the request and response.
+   * @param {boolean} createLog - Whether to create a log of the request and response.
    * @return {Promise<Object>} - A promise that resolves to the response from the API call, or an error object if the request fails.
    * @description This function handles the construction and sending of requests to the Amazon Selling Partner API.
    *              It handles the generation of the canonical request, signing the request, and setting the appropriate headers.
@@ -219,17 +219,26 @@ class SpApiConnector {
         });
       }
 
-      // Logging the response directly and if response
       if (createLog) {
-        logAndCollect(
-          `Request URL: ${fullUrl} \n\n x-amzn-requestId: ${
-            axiosResponse.headers['x-amzn-requestid']
-          } \n\n Request Options: ${JSON.stringify({
+        const reportType = body.reportType || axiosResponse.data.reportType;
+
+        // Clone the headers object and remove the Authorization header
+        const safeHeaders = { ...headers };
+        delete safeHeaders.Authorization;
+
+        const logData = {
+          'Request URL': fullUrl,
+          'x-amzn-requestId': axiosResponse.headers['x-amzn-requestid'],
+          'Request Options': {
             method: method,
-            headers: headers,
-            body: method !== 'GET' ? JSON.stringify(body) : null,
-          })} \n\n Response: ${JSON.stringify(axiosResponse.data)}`,
-        );
+            headers: safeHeaders,
+            body: method !== 'GET' ? body : null, // Keep this as the raw object
+          },
+          Response: axiosResponse.data,
+          'Report Type': reportType,
+        };
+
+        logAndCollect(JSON.stringify(logData, null, 2), reportType);
       }
 
       return axiosResponse;
