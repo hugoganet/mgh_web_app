@@ -21,6 +21,7 @@ async function getReportId(config) {
     reportType,
     dataStartTime,
     dataEndTime,
+    createLog,
   } = config;
   const path = '/reports/2021-06-30/reports';
 
@@ -34,9 +35,11 @@ async function getReportId(config) {
         marketplaceIds: marketplaceIds,
         dataStartTime,
         dataEndTime,
+        createLog,
       },
     );
 
+    console.log(response);
     return response.data;
   } catch (error) {
     console.error(error.response);

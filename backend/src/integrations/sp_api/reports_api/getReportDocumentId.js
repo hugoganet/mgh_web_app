@@ -42,7 +42,7 @@ async function getReportDocumentId(reportId) {
         break;
       } else {
         console.log('Waiting for report to be ready...');
-        await new Promise(resolve => setTimeout(resolve, 60000)); // Wait for 60 seconds
+        await new Promise(resolve => setTimeout(resolve, 60000 * 5)); // Wait for 5 minutes
       }
     } catch (error) {
       console.error(`Error while fetching report document ID: ${error}`);

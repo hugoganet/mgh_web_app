@@ -22,6 +22,7 @@ async function requestFbaInventoryReport(marketplaceIds, startDate, endDate) {
     reportType: 'GET_AFN_INVENTORY_DATA_BY_COUNTRY',
     dataStartTime: startDate,
     dataEndTime: endDate,
+    createLog: true,
   };
 
   try {

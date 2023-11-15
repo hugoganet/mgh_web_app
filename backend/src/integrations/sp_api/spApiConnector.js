@@ -1,6 +1,7 @@
 require('dotenv').config();
 const axios = require('axios');
 const crypto = require('crypto');
+const { logAndCollect } = require('../sp_api/reports_api/logs/logAndCollect');
 
 /**
  * @class SpApiConnector
@@ -187,68 +188,114 @@ class SpApiConnector {
    * @param {string} path - The API path for the request.
    * @param {Object} [queryParams={}] - Query parameters to be appended to the URL.
    * @param {Object} [body={}] - The request body, relevant for POST and PUT methods.
-   * @return {Promise<Object>} - A promise that resolves to the response from the API call.
+   * @param {boolean} [createLog=false] - Whether to create a log of the request and response.
+   * @return {Promise<Object>} - A promise that resolves to the response from the API call, or an error object if the request fails.
    * @description This function handles the construction and sending of requests to the Amazon Selling Partner API.
    *              It handles the generation of the canonical request, signing the request, and setting the appropriate headers.
    */
-  async sendRequest(method, path, queryParams = {}, body = {}) {
-    const accessToken = await this.getLWAToken();
-    const date = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '');
-    const queryString = Object.entries(queryParams)
-      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-      .join('&');
+  async sendRequest(method, path, queryParams = {}, body = {}, createLog) {
+    try {
+      const accessToken = await this.getLWAToken();
+      const date = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '');
+      const queryString = Object.entries(queryParams)
+        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+        .join('&');
 
-    const canonicalRequest = this.createCanonicalRequest(
-      method,
-      'https://sellingpartnerapi-eu.amazon.com',
-      path,
-      queryString,
-      '',
-      accessToken,
-      date,
-    );
-    // console.log(`canonicalRequest => ${canonicalRequest} -----------------`);
+      const fullUrl = `https://sellingpartnerapi-eu.amazon.com${path}?${queryString}`;
+      const headers = this.createRequestHeaders(
+        method,
+        fullUrl,
+        queryString,
+        accessToken,
+        date,
+      );
 
-    const stringToSign = this.createStringToSign(
-      canonicalRequest,
-      date,
-      'eu-west-1',
-      'execute-api',
-    );
-    // console.log(`stringToSign => ${stringToSign} -----------------`);
+      let axiosResponse;
+      if (method === 'GET') {
+        axiosResponse = await axios.get(fullUrl, { headers });
+      } else {
+        axiosResponse = await axios[method.toLowerCase()](fullUrl, body, {
+          headers,
+        });
+      }
 
+      // Logging the response directly and if response
+      if (createLog) {
+        logAndCollect(
+          `Request URL: ${fullUrl} \n\n x-amzn-requestId: ${
+            axiosResponse.headers['x-amzn-requestid']
+          } \n\n Request Options: ${JSON.stringify({
+            method: method,
+            headers: headers,
+            body: method !== 'GET' ? JSON.stringify(body) : null,
+          })} \n\n Response: ${JSON.stringify(axiosResponse.data)}`,
+        );
+      }
+
+      return axiosResponse;
+    } catch (error) {
+      // Handle and log errors from the request
+      console.error(`Error in sendRequest: ${error}`);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error(error.response.data);
+        console.error(error.response.status);
+        console.error(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error', error.message);
+      }
+      throw error; // Rethrow the error for further handling
+    }
+  }
+
+  /**
+   * Creates headers for the request.
+   * @param {string} method - The HTTP method for the request.
+   * @param {string} fullUrl - The full URL of the request.
+   * @param {string} queryString - Query string parameters.
+   * @param {string} accessToken - The LWA access token.
+   * @param {string} date - The current date and time in ISO format.
+   * @return {Object} The headers for the request.
+   */
+  createRequestHeaders(method, fullUrl, queryString, accessToken, date) {
     const signature = this.getSignature(
       process.env.AWS_SECRET_KEY,
       date,
       'eu-west-1',
       'execute-api',
-      stringToSign,
+      this.createStringToSign(
+        this.createCanonicalRequest(
+          method,
+          fullUrl,
+          queryString,
+          '',
+          accessToken,
+          date,
+        ),
+        date,
+        'eu-west-1',
+        'execute-api',
+      ),
     );
-    // console.log(`signature => ${signature} -----------------`);
 
-    const authHeader = this.createAuthorizationHeader(
-      process.env.AWS_ACCESS_KEY,
-      date,
-      'eu-west-1',
-      'execute-api',
-      signature,
-    );
-    // console.log(`authHeader => ${authHeader} -----------------`);
-
-    const headers = {
+    return {
       'Content-Type': 'application/json',
       'User-Agent': 'MyApp/1.0 (Platform=Node.js; Language=JavaScript)',
       'x-amz-access-token': accessToken,
       'x-amz-date': date,
-      Authorization: authHeader,
+      Authorization: this.createAuthorizationHeader(
+        process.env.AWS_ACCESS_KEY,
+        date,
+        'eu-west-1',
+        'execute-api',
+        signature,
+      ),
     };
-
-    const endpoint = `https://sellingpartnerapi-eu.amazon.com${path}`;
-    if (method === 'GET') {
-      return axios.get(`${endpoint}?${queryString}`, { headers });
-    } else {
-      return axios[method.toLowerCase()](endpoint, body, { headers });
-    }
   }
 }
 
