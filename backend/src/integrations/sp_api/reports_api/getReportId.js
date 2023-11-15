@@ -38,6 +38,7 @@ async function getReportId(config) {
         dataEndTime,
       },
       createLog,
+      reportType,
     );
 
     return response.data;

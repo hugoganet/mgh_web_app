@@ -43,6 +43,9 @@ async function downloadAndDecompressDocument(
       dataStartTime,
       dataEndTime,
     );
+
+    console.log('outputPath:', outputPath);
+    console.log('fileName:', fileName);
     // Create the full path for the output file
     const outputFilePath = path.join(outputPath, fileName);
 
@@ -58,6 +61,8 @@ async function downloadAndDecompressDocument(
       case 'GZIP':
         decompressionStream = zlib.createGunzip();
         break;
+      case null:
+      case undefined:
       // If no compression or unrecognized, use a pass-through stream
       default:
         decompressionStream = new PassThrough();

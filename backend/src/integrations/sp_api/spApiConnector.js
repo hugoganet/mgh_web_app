@@ -189,11 +189,20 @@ class SpApiConnector {
    * @param {Object} [queryParams={}] - Query parameters to be appended to the URL.
    * @param {Object} [body={}] - The request body, relevant for POST and PUT methods.
    * @param {boolean} createLog - Whether to create a log of the request and response.
+   * @param {string} reportType - The type of report being requested.
    * @return {Promise<Object>} - A promise that resolves to the response from the API call, or an error object if the request fails.
+   * @throws {Error} - An error object if the request fails.
    * @description This function handles the construction and sending of requests to the Amazon Selling Partner API.
    *              It handles the generation of the canonical request, signing the request, and setting the appropriate headers.
    */
-  async sendRequest(method, path, queryParams = {}, body = {}, createLog) {
+  async sendRequest(
+    method,
+    path,
+    queryParams = {},
+    body = {},
+    createLog,
+    reportType = null,
+  ) {
     try {
       const accessToken = await this.getLWAToken();
       const date = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '');
@@ -220,8 +229,6 @@ class SpApiConnector {
       }
 
       if (createLog) {
-        const reportType = body.reportType || axiosResponse.data.reportType;
-
         // Clone the headers object and remove the Authorization header
         const safeHeaders = { ...headers };
         delete safeHeaders.Authorization;

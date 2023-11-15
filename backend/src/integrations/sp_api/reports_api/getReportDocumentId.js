@@ -8,6 +8,7 @@ const { spApiInstance } = require('../spApiConnector');
  * @function getReportDocumentId
  * @param {string} reportId - The unique identifier of the report for which the document ID is being fetched.
  * @param {boolean} createLog - Whether to create a log file for the request.
+ * @param {string} reportType - The type of report being requested.
  * @return {Promise<void>} A promise that resolves when the report document ID is successfully retrieved.
  * @throws {Error} Throws an error if there is an issue fetching the report document ID.
  * @description This function continuously polls the Amazon SP API at 60-second intervals to check if the report
@@ -15,7 +16,7 @@ const { spApiInstance } = require('../spApiConnector');
  *              is available, the function breaks out of the loop and logs the report document ID. This function
  *              should be used in sequence after requesting a report and obtaining a report ID.
  */
-async function getReportDocumentId(reportId, createLog) {
+async function getReportDocumentId(reportId, createLog, reportType) {
   const path = `/reports/2021-06-30/reports/${reportId}`;
 
   let reportDocumentId = null;
@@ -29,6 +30,7 @@ async function getReportDocumentId(reportId, createLog) {
         {},
         {},
         createLog,
+        reportType,
       );
 
       const parsedResponse = response.data;
