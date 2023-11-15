@@ -23,6 +23,7 @@ module.exports = sequelize => {
       countryCode: {
         type: DataTypes.CHAR(2),
         allowNull: false,
+        defaultValue: 'FR',
       },
       actualPrice: {
         type: DataTypes.DECIMAL(5, 2),

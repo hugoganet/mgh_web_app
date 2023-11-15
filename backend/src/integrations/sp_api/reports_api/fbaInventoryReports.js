@@ -4,6 +4,7 @@ const { getDocumentUrl } = require('./getDocumentUrl');
 const {
   downloadAndDecompressDocument,
 } = require('./downloadAndDecompressDocument');
+const { fetchAndProcessCSV } = require('./fecthAndProcessCsv');
 const markeplaces = require('../../../../src/config/marketplaces');
 
 /**
@@ -32,15 +33,18 @@ async function requestFbaInventoryReport(
   };
 
   try {
-    // Request report ID
-    const reportIdResponse = await getReportId(config);
+    // // Request report ID
+    // const reportIdResponse = await getReportId(config);
 
-    // Request report document ID
-    const reportDocumentId = await getReportDocumentId(
-      reportIdResponse.reportId,
-      config.createLog,
-      config.reportType,
-    );
+    // // Request report document ID
+    // const reportDocumentId = await getReportDocumentId(
+    //   reportIdResponse.reportId,
+    //   config.createLog,
+    //   config.reportType,
+    // );
+
+    const reportDocumentId =
+      'amzn1.spdoc.1.4.eu.2fbf55b1-0a14-4cef-85ae-8143f274e5e4.TYLM8LGX9K0WH.2651';
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getDocumentUrl(
@@ -49,14 +53,21 @@ async function requestFbaInventoryReport(
       config.reportType,
     );
 
-    await downloadAndDecompressDocument(
+    // Fetch CSV data and process into database
+    await fetchAndProcessCSV(
       documentUrl,
       compressionAlgorithm,
-      config.reportType,
-      markeplaces.france.countryCode,
-      config.dataStartTime,
-      config.dataEndTime,
+      reportDocumentId,
     );
+
+    //   await downloadAndDecompressDocument(
+    //     documentUrl,
+    //     compressionAlgorithm,
+    //     config.reportType,
+    //     markeplaces.france.countryCode,
+    //     config.dataStartTime,
+    //     config.dataEndTime,
+    //   );
   } catch (error) {
     console.error('Error in requesting FBA Inventory report:', error);
   }

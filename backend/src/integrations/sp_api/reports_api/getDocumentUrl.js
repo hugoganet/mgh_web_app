@@ -26,10 +26,11 @@ async function getDocumentUrl(reportDocumentId, createLog, reportType) {
     const parsedResponse = response.data;
     const documentUrl = parsedResponse.url;
     const compressionAlgorithm = parsedResponse.compressionAlgorithm; // Could be 'GZIP', etc.
+    const reportDocumentId = parsedResponse.reportDocumentId;
 
     console.log('Document URL:', documentUrl);
 
-    return { documentUrl, compressionAlgorithm };
+    return { documentUrl, compressionAlgorithm, reportDocumentId };
   } catch (error) {
     console.error(`Error fetching document URL: ${error}`);
     throw error;
