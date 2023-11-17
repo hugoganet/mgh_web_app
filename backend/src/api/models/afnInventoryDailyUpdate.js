@@ -16,14 +16,13 @@ module.exports = sequelize => {
         allowNull: false,
         autoIncrement: true,
       },
-      sku: {
-        type: DataTypes.STRING(100),
+      skuId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-      },
-      countryCode: {
-        type: DataTypes.CHAR(2),
-        allowNull: false,
-        defaultValue: 'FR',
+        references: {
+          model: 'skus',
+          key: 'sku_id',
+        },
       },
       actualPrice: {
         type: DataTypes.DECIMAL(5, 2),

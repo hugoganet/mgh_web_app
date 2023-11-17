@@ -1,29 +1,30 @@
 const { getReportId } = require('./getReportId');
 const { getReportDocumentId } = require('./getReportDocumentId');
 const { getDocumentUrl } = require('./getDocumentUrl');
-const {
-  downloadAndDecompressDocument,
-} = require('./downloadAndDecompressDocument');
-const { fetchAndProcessCSV } = require('./fecthAndProcessCsv');
-const markeplaces = require('../../../../src/config/marketplaces');
+const { fetchAndProcessCsv } = require('./fecthAndProcessCsv');
+const marketplaces = require('../../../../src/config/marketplaces');
 
 /**
  * Requests an FBA Inventory report from the Amazon Selling Partner API.
  *
  * @async
  * @function requestFbaInventoryReport
- * @param {array} marketplaceIds - The marketplace identifier for which the report is requested.
+ * @param {array} countryKeys - The marketplace identifier for which the report is requested.
  * @param {string} reportType - The type of report being requested.
  * @param {string} startDate - The start date and time for the report data in ISO 8601 format.
  * @param {string} endDate - The end date and time for the report data in ISO 8601 format.
  * @return {Promise<void>} - A promise that resolves when the report request is completed.
  */
 async function requestFbaInventoryReport(
-  marketplaceIds,
+  countryKeys,
   reportType,
   startDate,
   endDate,
 ) {
+  const marketplaceIds = countryKeys.map(
+    key => marketplaces[key].marketplaceId,
+  );
+
   const config = {
     marketplaceIds: marketplaceIds,
     reportType: reportType,
@@ -33,18 +34,18 @@ async function requestFbaInventoryReport(
   };
 
   try {
-    // // Request report ID
-    // const reportIdResponse = await getReportId(config);
+    // Request report ID
+    const reportIdResponse = await getReportId(config);
 
-    // // Request report document ID
-    // const reportDocumentId = await getReportDocumentId(
-    //   reportIdResponse.reportId,
-    //   config.createLog,
-    //   config.reportType,
-    // );
+    // Request report document ID
+    const reportDocumentId = await getReportDocumentId(
+      reportIdResponse.reportId,
+      config.createLog,
+      config.reportType,
+    );
 
-    const reportDocumentId =
-      'amzn1.spdoc.1.4.eu.2fbf55b1-0a14-4cef-85ae-8143f274e5e4.TYLM8LGX9K0WH.2651';
+    // const reportDocumentId =
+    //   'amzn1.spdoc.1.4.eu.2fbf55b1-0a14-4cef-85ae-8143f274e5e4.TYLM8LGX9K0WH.2651';
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getDocumentUrl(
@@ -54,30 +55,19 @@ async function requestFbaInventoryReport(
     );
 
     // Fetch CSV data and process into database
-    await fetchAndProcessCSV(
+    await fetchAndProcessCsv(
       documentUrl,
       compressionAlgorithm,
       reportDocumentId,
+      countryKeys,
+      reportType,
     );
-
-    //   await downloadAndDecompressDocument(
-    //     documentUrl,
-    //     compressionAlgorithm,
-    //     config.reportType,
-    //     markeplaces.france.countryCode,
-    //     config.dataStartTime,
-    //     config.dataEndTime,
-    //   );
   } catch (error) {
     console.error('Error in requesting FBA Inventory report:', error);
   }
 }
 requestFbaInventoryReport(
-  [
-    markeplaces.france.marketplaceId,
-    markeplaces.belgium.marketplaceId,
-    markeplaces.germany.marketplaceId,
-  ],
+  ['spain'],
   'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
   null,
   null,

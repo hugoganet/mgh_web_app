@@ -1,8 +1,10 @@
+// Import required modules and libraries
 const axios = require('axios');
 const csvParser = require('csv-parser');
 const { PassThrough, Transform } = require('stream');
 const zlib = require('zlib');
 const db = require('../../../api/models/index');
+const marketplaces = require('../../../../src/config/marketplaces');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -10,17 +12,30 @@ const db = require('../../../api/models/index');
  * @param {string} url - The URL of the CSV file.
  * @param {string|null} compressionAlgorithm - The compression algorithm used (e.g., 'GZIP'), or null if uncompressed.
  * @param {string} reportDocumentId - The document ID associated with the report.
+ * @param {string[]} countryKeys - The country keys to associate with the report.
+ * @param {string} reportType - The type of report being processed.
+ * @return {Promise<void>} - A promise that resolves when the CSV file has been fetched and processed.
  */
-async function fetchAndProcessCSV(url, compressionAlgorithm, reportDocumentId) {
+async function fetchAndProcessCsv(
+  url,
+  compressionAlgorithm,
+  reportDocumentId,
+  countryKeys,
+  reportType,
+) {
+  // Retrieve the countryCode from the marketplaces configuration using the first countryKey
+  const countryCode = marketplaces[countryKeys[0]].countryCode;
+  const invalidSkus = []; // Array to store invalid SKUs
+
   try {
-    // Send a GET request to the URL and receive the response as a stream
+    // Make a GET request to the provided URL to receive the file as a stream
     const response = await axios({
       method: 'get',
       url: url,
       responseType: 'stream',
     });
 
-    // Determine the appropriate decompression stream based on the compression algorithm
+    // Choose the appropriate decompression stream based on the compression algorithm
     const decompressionStream = chooseDecompressionStream(compressionAlgorithm);
 
     // Create a transform stream to process each row of CSV data
@@ -28,27 +43,20 @@ async function fetchAndProcessCSV(url, compressionAlgorithm, reportDocumentId) {
       objectMode: true,
       transform(chunk, encoding, callback) {
         try {
-          // Log the chunk to see the parsed data
+          // Log the current chunk for debugging
           console.log(chunk);
 
-          // Check if SKU is present and valid
+          // Check if the SKU field exists and is a string, skip if invalid
+          // If SKU is invalid, add it to the invalidSkus array
           if (!chunk['sku'] || typeof chunk['sku'] !== 'string') {
-            console.error('Invalid or missing SKU, skipping record:', chunk);
+            invalidSkus.push({ sku: chunk['sku'], countryCode });
+            // console.error('Invalid or missing SKU, skipping record:', chunk);
             callback();
             return;
           }
-          // Construct the record for the database from the CSV row
-          const record = {
-            sku: chunk['sku'],
-            countryCode: 'FR', // Default country code
-            actualPrice: parseFloat(chunk['your-price']),
-            afnFulfillableQuantity: parseInt(
-              chunk['afn-fulfillable-quantity'],
-              10,
-            ),
-            reportDocumentId: reportDocumentId,
-          };
-          this.push(record);
+
+          // Push the SKU and countryCode for the next processing stage
+          this.push({ sku: chunk['sku'], countryCode });
           callback();
         } catch (err) {
           callback(err);
@@ -56,27 +64,55 @@ async function fetchAndProcessCSV(url, compressionAlgorithm, reportDocumentId) {
       },
     });
 
-    // Process the data stream
-    // console.log(response.data);
+    // Pipe the data through the decompression stream, then CSV parser, then transform stream
     response.data
       .pipe(decompressionStream)
       .pipe(csvParser({ separator: '\t' }))
       .pipe(transformStream)
-      .on('data', async data => {
+      .on('data', async ({ sku, countryCode }) => {
         try {
-          // Insert data into the database
-          await db.AfnInventoryDailyUpdate.create(data);
+          // Find the corresponding SKU record from the database
+          const skuRecord = await db.Sku.findOne({
+            where: { sku, countryCode },
+          });
+
+          // Skip processing if the SKU record is not found and log the issue
+          if (!skuRecord) {
+            console.log(`SKU not found for ${sku} in ${countryCode}`);
+            return;
+          }
+
+          // Construct the record for the database from the CSV row
+          const record = {
+            skuId: skuRecord.skuId, // Use skuId from the found SKU record
+            actualPrice: parseFloat(chunk['your-price']),
+            afnFulfillableQuantity: parseInt(
+              chunk['afn-fulfillable-quantity'],
+              10,
+            ),
+            reportDocumentId,
+          };
+
+          // Insert the constructed record into the database
+          await db.AfnInventoryDailyUpdate.create(record);
         } catch (dbErr) {
-        //   console.error('Error inserting data into database:', dbErr);
+          // Log any error that occurs during database insertion
+          console.error('Error inserting data into database:', dbErr);
         }
       })
       .on('error', error => {
+        // Log any error that occurs during stream processing
         console.error('Error processing data stream:', error);
       })
       .on('end', () => {
+        if (invalidSkus.length > 0) {
+          const message = `Invalid SKUs found: ${JSON.stringify(invalidSkus)}`;
+          logAndCollect(message, reportType);
+        }
         console.log('Data processing completed');
       });
   } catch (error) {
+    // Log any error that occurs during data fetching
     console.error('Error fetching data:', error);
   }
 }
@@ -100,13 +136,6 @@ function chooseDecompressionStream(compressionAlgorithm) {
   }
 }
 
-// // Example usage
-// // Replace with actual URL and document ID
-// const documentUrl = 'YOUR_DOCUMENT_URL';
-// const compressionAlgorithm = 'GZIP'; // Set to null if no compression
-// const reportDocumentId = 'YOUR_DOCUMENT_ID';
-
-// fetchAndProcessCSV(documentUrl, compressionAlgorithm, reportDocumentId);
 module.exports = {
-  fetchAndProcessCSV,
+  fetchAndProcessCsv,
 };

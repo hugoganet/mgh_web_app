@@ -33,6 +33,7 @@ module.exports = sequelize => {
     EanInDonation,
     WarehouseStock,
     ProductAndAmzReferralFeeCategory,
+    AfnInventoryDailyUpdate,
   } = sequelize.models;
 
   // Associations for Asin
@@ -258,6 +259,11 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
+  Sku.hasMany(AfnInventoryDailyUpdate, {
+    foreignKey: 'skuId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
 
   // Associations for AmazonReferralFee
   AmazonReferralFee.belongsTo(Country, {
@@ -436,6 +442,13 @@ module.exports = sequelize => {
   });
   WarehouseStock.belongsTo(EanInSupplierOrder, {
     foreignKey: 'eanSupplierOrderId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for AfnInventoryDailyUpdate
+  AfnInventoryDailyUpdate.belongsTo(Sku, {
+    foreignKey: 'skuId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
