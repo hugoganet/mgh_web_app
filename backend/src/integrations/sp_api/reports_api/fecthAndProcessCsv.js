@@ -1,10 +1,11 @@
 // Import required modules and libraries
-const axios = require('axios');
-const csvParser = require('csv-parser');
-const { PassThrough, Transform } = require('stream');
-const zlib = require('zlib');
-const db = require('../../../api/models/index');
-const marketplaces = require('../../../../src/config/marketplaces');
+const axios = require('axios'); // For making HTTP requests
+const csvParser = require('csv-parser'); // To parse CSV data
+const { PassThrough, Transform } = require('stream'); // To work with streams
+const zlib = require('zlib'); // To handle compression
+const db = require('../../../api/models/index'); // Database models
+const marketplaces = require('../../../../src/config/marketplaces'); // Marketplace configuration
+const { logAndCollect } = require('./logs/logAndCollect'); // Logging function
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -23,19 +24,18 @@ async function fetchAndProcessCsv(
   countryKeys,
   reportType,
 ) {
-  // Retrieve the countryCode from the marketplaces configuration using the first countryKey
-  const countryCode = marketplaces[countryKeys[0]].countryCode;
+  const countryCode = marketplaces[countryKeys[0]].countryCode; // Retrieve the countryCode from the first countryKey
   const invalidSkus = []; // Array to store invalid SKUs
 
   try {
-    // Make a GET request to the provided URL to receive the file as a stream
+    // Make a GET request to receive the file as a stream
     const response = await axios({
       method: 'get',
       url: url,
       responseType: 'stream',
     });
 
-    // Choose the appropriate decompression stream based on the compression algorithm
+    // Choose the appropriate decompression stream based on the algorithm
     const decompressionStream = chooseDecompressionStream(compressionAlgorithm);
 
     // Create a transform stream to process each row of CSV data
@@ -43,20 +43,17 @@ async function fetchAndProcessCsv(
       objectMode: true,
       transform(chunk, encoding, callback) {
         try {
-          // Log the current chunk for debugging
-          console.log(chunk);
-
-          // Check if the SKU field exists and is a string, skip if invalid
-          // If SKU is invalid, add it to the invalidSkus array
-          if (!chunk['sku'] || typeof chunk['sku'] !== 'string') {
-            invalidSkus.push({ sku: chunk['sku'], countryCode });
-            // console.error('Invalid or missing SKU, skipping record:', chunk);
-            callback();
-            return;
-          }
-
-          // Push the SKU and countryCode for the next processing stage
-          this.push({ sku: chunk['sku'], countryCode });
+          // Extract necessary data from the chunk and pass it downstream
+          const skuData = {
+            sku: chunk['sku'],
+            countryCode: countryCode,
+            actualPrice: parseFloat(chunk['your-price']),
+            afnFulfillableQuantity: parseInt(
+              chunk['afn-fulfillable-quantity'],
+              10,
+            ),
+          };
+          this.push(skuData);
           callback();
         } catch (err) {
           callback(err);
@@ -64,55 +61,56 @@ async function fetchAndProcessCsv(
       },
     });
 
-    // Pipe the data through the decompression stream, then CSV parser, then transform stream
+    // Set up the data processing pipeline
     response.data
-      .pipe(decompressionStream)
-      .pipe(csvParser({ separator: '\t' }))
-      .pipe(transformStream)
-      .on('data', async ({ sku, countryCode }) => {
-        try {
-          // Find the corresponding SKU record from the database
-          const skuRecord = await db.Sku.findOne({
-            where: { sku, countryCode },
-          });
+      .pipe(decompressionStream) // Decompress the data
+      .pipe(csvParser({ separator: '\t' })) // Parse CSV data
+      .pipe(transformStream) // Transform each row
+      .on(
+        'data',
+        async ({ sku, countryCode, actualPrice, afnFulfillableQuantity }) => {
+          try {
+            // Find corresponding SKU record in the database
+            const skuRecord = await db.Sku.findOne({
+              where: { sku, countryCode },
+            });
 
-          // Skip processing if the SKU record is not found and log the issue
-          if (!skuRecord) {
-            console.log(`SKU not found for ${sku} in ${countryCode}`);
-            return;
+            // If SKU not found, log and skip processing
+            if (!skuRecord) {
+              invalidSkus.push({ sku, countryCode });
+              return;
+            }
+
+            // Construct the record for database insertion
+            const record = {
+              skuId: skuRecord.skuId,
+              actualPrice,
+              afnFulfillableQuantity,
+              reportDocumentId,
+            };
+
+            // Insert the record into the database
+            await db.AfnInventoryDailyUpdate.create(record);
+          } catch (dbErr) {
+            console.error('Error inserting data into database:', dbErr);
           }
-
-          // Construct the record for the database from the CSV row
-          const record = {
-            skuId: skuRecord.skuId, // Use skuId from the found SKU record
-            actualPrice: parseFloat(chunk['your-price']),
-            afnFulfillableQuantity: parseInt(
-              chunk['afn-fulfillable-quantity'],
-              10,
-            ),
-            reportDocumentId,
-          };
-
-          // Insert the constructed record into the database
-          await db.AfnInventoryDailyUpdate.create(record);
-        } catch (dbErr) {
-          // Log any error that occurs during database insertion
-          console.error('Error inserting data into database:', dbErr);
-        }
-      })
+        },
+      )
       .on('error', error => {
-        // Log any error that occurs during stream processing
         console.error('Error processing data stream:', error);
       })
       .on('end', () => {
+        // Log invalid SKUs at the end of processing
         if (invalidSkus.length > 0) {
-          const message = `Invalid SKUs found: ${JSON.stringify(invalidSkus)}`;
-          logAndCollect(message, reportType);
+          let tableString = 'Invalid SKUs:\nSKU\t\tCountryCode\n';
+          invalidSkus.forEach(({ sku, countryCode }) => {
+            tableString += `${sku}\t\t${countryCode}\n`;
+          });
+          logAndCollect(tableString, reportType);
         }
         console.log('Data processing completed');
       });
   } catch (error) {
-    // Log any error that occurs during data fetching
     console.error('Error fetching data:', error);
   }
 }

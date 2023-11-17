@@ -45,7 +45,7 @@ async function requestFbaInventoryReport(
     );
 
     // const reportDocumentId =
-    //   'amzn1.spdoc.1.4.eu.2fbf55b1-0a14-4cef-85ae-8143f274e5e4.TYLM8LGX9K0WH.2651';
+    //   'amzn1.spdoc.1.4.eu.5623e23e-7de2-4c80-8ee5-6b32b380b64d.T1577F0GXOPX05.2651';
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getDocumentUrl(
@@ -67,7 +67,7 @@ async function requestFbaInventoryReport(
   }
 }
 requestFbaInventoryReport(
-  ['spain'],
+  ['france'],
   'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
   null,
   null,
