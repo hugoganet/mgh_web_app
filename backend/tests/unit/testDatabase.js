@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize'); // Sequelize module
-const config = require('../src/config/config.json'); // Config file
+const config = require('../../src/config/config.json'); // Config file
 
 // Configure and create a Sequelize instance
 // console.log("Configuring Sequelize instance...");
