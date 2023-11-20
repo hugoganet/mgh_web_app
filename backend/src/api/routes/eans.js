@@ -4,38 +4,57 @@ const eansController = require('../controllers/eansController');
 
 /**
  * @swagger
+ * components:
+ *  schemas:
+ *   Ean:
+ *    type: object
+ *    required:
+ *     - ean
+ *     - productName
+ *     - brandId
+ *    properties:
+ *     ean:
+ *      type: string
+ *      description: The EAN code.
+ *     productName:
+ *      type: string
+ *      description: The name of the product.
+ *     brandId:
+ *      type: integer
+ *      description: The ID of the brand.
+ */
+/**
+ * @swagger
+ * tags:
+ *  name: Eans
+ *  description: The Eans managing API
  * /eans:
  *   get:
- *     summary: Retrieve a list of EANs
+ *     summary: Retrieve the list of EANs
+ *     tags: [Eans]
  *     responses:
  *       200:
- *         description: A list of EANs.
+ *         description: The list of EANs.
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 type: object
- *                 properties:
- *                   ean:
- *                     type: string
- *                     description: The EAN code.
- *                   productName:
- *                     type: string
- *                     description: The name of the product.
+ *                $ref: '#/components/schemas/Ean'
  */
+
 router.get('/eans', eansController.getAllEans);
 
-// GET a single EAN by ID
-router.get('/:eanId', eansController.getEanById);
+// // GET a single EAN by ID
+// router.get('/:eanId', eansController.getEanById);
 
-// POST a new EAN
-router.post('/ean', eansController.createEan);
+// // POST a new EAN
+// router.post('/ean', eansController.createEan);
 
-// PUT (update) an existing EAN
-router.put('/:eanId', eansController.updateEan);
+// // PUT (update) an existing EAN
+// router.put('/:eanId', eansController.updateEan);
 
-// DELETE an EAN
-router.delete('/:eanId', eansController.deleteEan);
+// // DELETE an EAN
+// router.delete('/:eanId', eansController.deleteEan);
 
 module.exports = router;

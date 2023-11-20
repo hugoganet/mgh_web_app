@@ -1,7 +1,6 @@
-// Initialize the express app and test the connection to the SQL server
+require('./api/models');
 const express = require('express');
 const app = express();
-const db = require('./api/models'); // Import the database object
 const eans = require('./api/routes/eans');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
@@ -12,9 +11,9 @@ app.use(express.json()); // Enable parsing JSON bodies
 const swaggerDefinition = {
   openapi: '3.0.0', // Specify the OpenAPI/Swagger version
   info: {
-    title: 'MGH API', // Title of the documentation
-    version: '1.0.0', // Version of the app
-    description: 'MGH Web App API documentation', // Description of the API
+    title: 'MGH API',
+    version: '1.0.0',
+    description: 'MGH Web App API documentation',
   },
   servers: [
     {
@@ -26,7 +25,7 @@ const swaggerDefinition = {
 
 const options = {
   swaggerDefinition,
-  apis: ['src/api/routes/eans.js'], // Path to your API routes
+  apis: ['src/api/routes/*.js'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
@@ -37,21 +36,8 @@ app.use(
   swaggerUi.setup(swaggerSpec, { explorer: true }),
 );
 
-/**
- * Test the connection to the SQL server
- */
-async function testConnection() {
-  try {
-    await db.sequelize.authenticate();
-    console.log('Connection with postgreSQL server established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to postgreSQL server:', error);
-  }
-}
-testConnection();
-
 // Routes
-app.use('/eans', eans);
+app.use('/', eans);
 
 app.get('/', (req, res) => {
   res.status(200).send('Hello World!');

@@ -1,12 +1,10 @@
-const Ean = require('../models/Ean'); // Import the Ean model
-
-// Controller for handling EAN-related operations
+const db = require('../models/index'); // Import the sequelize models and instance
 
 // GET all EANs
 exports.getAllEans = async (req, res) => {
   try {
     // Retrieve all EANs from the database
-    const eans = await Ean.findAll();
+    const eans = await db.Ean.findAll();
     // Send the retrieved EANs as a JSON response
     res.status(200).json(eans);
   } catch (error) {
