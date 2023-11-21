@@ -37,7 +37,7 @@ app.use(
 );
 
 // Routes
-app.use('/', eans);
+app.use('/eans', eans);
 
 app.get('/', (req, res) => {
   res.status(200).send('Hello World!');
