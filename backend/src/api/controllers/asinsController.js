@@ -48,8 +48,6 @@ exports.createAsin = async (req, res) => {
     };
 
     const newAsin = await db.Asin.create(newAsinData);
-
-    // Send the created ASIN as a JSON response with a 201 status code
     res.status(201).json(newAsin);
   } catch (error) {
     // Handle validation errors or other types of errors
