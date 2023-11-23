@@ -12,6 +12,7 @@ const countriesRoutes = require('./api/routes/countriesRoutes');
 const pricingRulesRoutes = require('./api/routes/pricingRulesRoutes');
 const vatCategoriesRoutes = require('./api/routes/vatCategoriesRoutes');
 const vatRatesPerCountryRoutes = require('./api/routes/vatRatesPerCountryRoutes');
+const productTaxCategoriesRoutes = require('./api/routes/productTaxCategoriesRoutes');
 
 app.use(express.json()); // Enable parsing JSON bodies
 
@@ -53,6 +54,7 @@ app.use('/countries', countriesRoutes);
 app.use('/pricingRules', pricingRulesRoutes);
 app.use('/vatCategories', vatCategoriesRoutes);
 app.use('/vatRatesPerCountry', vatRatesPerCountryRoutes);
+app.use('/productTaxCategories', productTaxCategoriesRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).send('Hello World!');
