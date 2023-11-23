@@ -154,7 +154,7 @@ router.post('/', skusController.createSku);
  * @swagger
  * /skus/{skuId}:
  *   patch:
- *     summary: Update an existing SKU
+ *     summary: Partially update an existing SKU
  *     tags: [Skus]
  *     parameters:
  *       - in: path
@@ -168,7 +168,64 @@ router.post('/', skusController.createSku);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Sku'
+ *             type: object
+ *             properties:
+ *               countryCode:
+ *                 type: string
+ *                 description: The country code associated with the SKU.
+ *               fnsku:
+ *                 type: string
+ *                 description: Fulfillment Network Stock Keeping Unit identifier.
+ *               skuAcquisitionCostExc:
+ *                 type: number
+ *                 format: decimal
+ *                 description: Exclusive acquisition cost of the SKU.
+ *               skuAcquisitionCostInc:
+ *                 type: number
+ *                 format: decimal
+ *                 description: Inclusive acquisition cost of the SKU.
+ *               skuAfnTotalQuantity:
+ *                 type: integer
+ *                 description: Total quantity of SKU in Amazon Fulfillment Network.
+ *               skuAverageSellingPrice:
+ *                 type: number
+ *                 format: decimal
+ *                 description: Average selling price of the SKU.
+ *               skuAverageNetMargin:
+ *                 type: number
+ *                 format: decimal
+ *                 description: Net margin for the SKU.
+ *               skuAverageNetMarginPercentage:
+ *                 type: number
+ *                 format: decimal
+ *                 description: Net margin percentage for the SKU.
+ *               skuAverageReturnOnInvestmentRate:
+ *                 type: number
+ *                 format: decimal
+ *                 description: Average return on investment rate for the SKU.
+ *               skuAverageDailyReturnOnInvestmentRate:
+ *                 type: number
+ *                 format: decimal
+ *                 description: Daily return on investment rate for the SKU.
+ *               isActive:
+ *                 type: boolean
+ *                 description: Whether the SKU is active or not.
+ *               numberOfActiveDays:
+ *                 type: integer
+ *                 description: Number of active days for the SKU.
+ *               numberOfUnitSold:
+ *                 type: integer
+ *                 description: Number of units sold.
+ *               skuAverageUnitSoldPerDay:
+ *                 type: number
+ *                 format: decimal
+ *                 description: Average units sold per day.
+ *               skuRestockAlertQuantity:
+ *                 type: integer
+ *                 description: Alert quantity for SKU restock.
+ *               skuIsTest:
+ *                 type: boolean
+ *                 description: Whether the SKU is a test SKU.
  *     responses:
  *       200:
  *         description: SKU updated successfully.
@@ -177,6 +234,7 @@ router.post('/', skusController.createSku);
  *       400:
  *         description: Invalid input.
  */
+
 router.patch('/:skuId', skusController.updateSku);
 
 /**

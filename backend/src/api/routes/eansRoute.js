@@ -108,29 +108,36 @@ router.post('/', eansController.createEan);
 /**
  * @swagger
  * /eans/{ean}:
- *  patch:
- *    summary: Update an existing EAN
- *    tags: [Eans]
- *    parameters:
- *      - in: path
- *        name: ean
- *        schema:
- *          type: string
- *        required: true
- *        description: The ean ID
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/components/schemas/Ean'
- *    responses:
- *      200:
- *        description: EAN updated successfully.
- *      400:
- *        description: Invalid input.
- *      404:
- *        description: EAN not found.
+ *   patch:
+ *     summary: Partially update an existing EAN
+ *     tags: [Eans]
+ *     parameters:
+ *       - in: path
+ *         name: ean
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The EAN code of the product to update
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               productName:
+ *                 type: string
+ *                 description: The name of the product.
+ *               brandId:
+ *                 type: integer
+ *                 description: The ID of the brand.
+ *     responses:
+ *       200:
+ *         description: EAN updated successfully.
+ *       404:
+ *         description: EAN not found.
+ *       400:
+ *         description: Invalid input.
  */
 
 router.patch('/:ean', eansController.updateEan);

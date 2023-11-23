@@ -148,29 +148,70 @@ router.post('/', asinsController.createAsin);
 /**
  * @swagger
  * /asins/{asinId}:
- *  patch:
- *    summary: Update an existing ASIN
- *    tags: [Asins]
- *    parameters:
- *      - in: path
- *        name: asinId
- *        schema:
- *          type: integer
- *        required: true
- *        description: The ASIN ID
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/components/schemas/Asin'
- *    responses:
- *      200:
- *        description: ASIN updated successfully.
- *      404:
- *        description: ASIN not found.
- *      400:
- *        description: Invalid input.
+ *   patch:
+ *     summary: Partially update an existing ASIN
+ *     tags: [Asins]
+ *     parameters:
+ *       - in: path
+ *         name: asinId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID of the ASIN to update
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               countryCode:
+ *                 type: string
+ *                 description: Country code associated with the ASIN.
+ *               productCategoryId:
+ *                 type: integer
+ *                 description: ID of the product category.
+ *               productCategoryRankId:
+ *                 type: integer
+ *                 description: Rank ID of the product category.
+ *               productTaxCategoryId:
+ *                 type: integer
+ *                 description: Tax category ID of the product.
+ *               asinPreparation:
+ *                 type: string
+ *                 description: Preparation details for the ASIN.
+ *               urlAmazon:
+ *                 type: string
+ *                 description: Amazon URL of the product.
+ *               urlImage:
+ *                 type: string
+ *                 description: Image URL of the product.
+ *               asinName:
+ *                 type: string
+ *                 description: Name of the product associated with the ASIN.
+ *               asinPotentialWarehousesQuantity:
+ *                 type: integer
+ *                 description: Potential quantity of the product in warehouses.
+ *               asinNumberOfActiveSku:
+ *                 type: integer
+ *                 description: Number of active SKUs.
+ *               asinAverageUnitSoldPerDay:
+ *                 type: number
+ *                 format: double
+ *                 description: Average units sold per day.
+ *               isBatteryRequired:
+ *                 type: boolean
+ *                 description: Indicates if a battery is required.
+ *               isHazmat:
+ *                 type: boolean
+ *                 description: Indicates if the product is hazardous material.
+ *     responses:
+ *       200:
+ *         description: ASIN updated successfully.
+ *       404:
+ *         description: ASIN not found.
+ *       400:
+ *         description: Invalid input.
  */
 
 router.patch('/:asinId', asinsController.updateAsin);
