@@ -8,6 +8,7 @@ const eansRoutes = require('./api/routes/eansRoutes');
 const asinsRoutes = require('./api/routes/asinsRoutes');
 const skusRoutes = require('./api/routes/skusRoutes');
 const warehousesRoutes = require('./api/routes/warehousesRoutes');
+const countriesRoutes = require('./api/routes/countriesRoutes');
 
 app.use(express.json()); // Enable parsing JSON bodies
 
@@ -45,6 +46,7 @@ app.use('/eans', eansRoutes);
 app.use('/asins', asinsRoutes);
 app.use('/skus', skusRoutes);
 app.use('/warehouses', warehousesRoutes);
+app.use('/countries', countriesRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).send('Hello World!');

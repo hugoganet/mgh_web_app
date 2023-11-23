@@ -78,6 +78,9 @@ const skusController = require('../controllers/skusController');
  *        skuIsTest:
  *          type: boolean
  *          description: Indicates if the SKU is a test SKU
+ * tags:
+ *  name: Skus
+ *  description: The SKUs managing API
  */
 
 /**

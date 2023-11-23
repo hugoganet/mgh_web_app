@@ -22,10 +22,6 @@ const eansController = require('../controllers/eansController');
  *        brandId:
  *          type: integer
  *          description: The ID of the brand.
- */
-
-/**
- * @swagger
  * tags:
  *  name: Eans
  *  description: The Eans managing API
