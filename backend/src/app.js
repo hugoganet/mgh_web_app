@@ -1,9 +1,11 @@
 require('./api/models');
 const express = require('express');
 const app = express();
-const eans = require('./api/routes/eans');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
+
+const eansRoutes = require('./api/routes/eansRoute');
+const asinsRoutes = require('./api/routes/asinsRoutes');
 
 app.use(express.json()); // Enable parsing JSON bodies
 
@@ -37,7 +39,8 @@ app.use(
 );
 
 // Routes
-app.use('/eans', eans);
+app.use('/eans', eansRoutes);
+app.use('/asins', asinsRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).send('Hello World!');

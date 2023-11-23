@@ -53,18 +53,22 @@ exports.updateEan = async (req, res) => {
   const updateData = req.body;
 
   try {
-    const [numberOfAffectedRows] = await db.Ean.update(updateData, {
-      where: { ean: eanToUpdate },
-    });
-
-    if (numberOfAffectedRows === 0) {
+    // Retrieve the EAN instance
+    const ean = await db.Ean.findByPk(eanToUpdate);
+    if (!ean) {
       return res.status(404).json({ message: 'EAN not found' });
     }
 
-    res.status(200).json({ message: 'EAN updated successfully' });
+    // Update the EAN properties
+    Object.assign(ean, updateData);
+
+    // Save the changes
+    await ean.save();
+
+    res.status(200).json({ message: 'EAN updated successfully', ean });
   } catch (error) {
     if (error instanceof ValidationError) {
-      sendErrorResponse(res, error, 400);
+      sendErrorResponse(res, error, 400); // Bad request for validation errors
     } else {
       sendErrorResponse(res, error);
     }

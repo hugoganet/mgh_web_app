@@ -19,7 +19,8 @@
           "DataTypes.INTEGER",
           "DataTypes.TEXT",
           "DataTypes.CHAR",
-          "DataTypes.DECIMAL"
+          "DataTypes.DECIMAL",
+          "Router"
         ]
       }
     ]

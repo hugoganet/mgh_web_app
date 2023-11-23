@@ -1,5 +1,4 @@
 const express = require('express');
-// eslint-disable-next-line new-cap
 const router = express.Router();
 const eansController = require('../controllers/eansController');
 
@@ -109,7 +108,7 @@ router.post('/', eansController.createEan);
 /**
  * @swagger
  * /eans/{ean}:
- *  put:
+ *  patch:
  *    summary: Update an existing EAN
  *    tags: [Eans]
  *    parameters:
@@ -134,7 +133,7 @@ router.post('/', eansController.createEan);
  *        description: EAN not found.
  */
 
-router.put('/:ean', eansController.updateEan);
+router.patch('/:ean', eansController.updateEan);
 
 /**
  * @swagger
