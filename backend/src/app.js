@@ -15,6 +15,7 @@ const vatRatesPerCountryRoutes = require('./api/routes/vatRatesPerCountryRoutes'
 const productTaxCategoriesRoutes = require('./api/routes/productTaxCategoriesRoutes');
 const priceGridFbaFeesRoutes = require('./api/routes/priceGridFbaFeesRoutes');
 const brandsRoutes = require('./api/routes/brandsRoutes');
+const productCategoriesRoutes = require('./api/routes/productCategoriesRoutes');
 
 app.use(express.json()); // Enable parsing JSON bodies
 
@@ -59,6 +60,7 @@ app.use('/vatRatesPerCountry', vatRatesPerCountryRoutes);
 app.use('/productTaxCategories', productTaxCategoriesRoutes);
 app.use('/priceGridFbaFees', priceGridFbaFeesRoutes);
 app.use('/brands', brandsRoutes);
+app.use('/productCategories', productCategoriesRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).send('Hello World!');
