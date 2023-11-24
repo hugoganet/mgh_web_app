@@ -82,7 +82,7 @@ const asinsController = require('../controllers/asinsController');
  *         name: limit
  *         schema:
  *           type: integer
- *           default: 10
+ *           default: 50
  *         description: Maximum number of ASINs to return
  *     responses:
  *       200:

@@ -18,6 +18,7 @@ const brandsRoutes = require('./api/routes/brandsRoutes');
 const productCategoriesRoutes = require('./api/routes/productCategoriesRoutes');
 const amazonReferralFeesRoutes = require('./api/routes/amazonReferralFeesRoutes');
 const productCategoriesRanksRoutes = require('./api/routes/productCategoriesRanksRoutes');
+const catalogRoutes = require('./api/routes/catalogRoutes');
 
 app.use(express.json()); // Enable parsing JSON bodies
 
@@ -65,6 +66,7 @@ app.use('/brands', brandsRoutes);
 app.use('/productCategories', productCategoriesRoutes);
 app.use('/amazonReferralFees', amazonReferralFeesRoutes);
 app.use('/productCategoriesRanks', productCategoriesRanksRoutes);
+app.use('/catalog', catalogRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).send('Hello World!');

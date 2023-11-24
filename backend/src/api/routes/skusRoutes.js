@@ -94,7 +94,7 @@ const skusController = require('../controllers/skusController');
  *         name: limit
  *         schema:
  *           type: integer
- *           default: 10
+ *           default: 50
  *         description: Maximum number of ASINs to return
  *     responses:
  *       200:

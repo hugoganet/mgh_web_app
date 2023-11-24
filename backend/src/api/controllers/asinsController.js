@@ -10,7 +10,7 @@ const sendErrorResponse = (res, error, statusCode = 500) => {
 
 // GET all ASINs with optional pagination
 exports.getAllAsins = async (req, res) => {
-  const limit = parseInt(req.query.limit) || 10;
+  const limit = parseInt(req.query.limit) || 50;
 
   if (isNaN(limit)) {
     return sendErrorResponse(res, new Error("Invalid 'limit' value"), 400);

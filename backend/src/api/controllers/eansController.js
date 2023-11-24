@@ -9,7 +9,7 @@ const sendErrorResponse = (res, error, statusCode = 500) => {
 };
 
 exports.getAllEans = async (req, res) => {
-  const limit = parseInt(req.query.limit) || 10;
+  const limit = parseInt(req.query.limit) || 50;
 
   if (isNaN(limit)) {
     return sendErrorResponse(res, new Error("Invalid 'limit' value"), 400);
