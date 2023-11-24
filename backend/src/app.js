@@ -19,6 +19,7 @@ const productCategoriesRoutes = require('./api/routes/productCategoriesRoutes');
 const amazonReferralFeesRoutes = require('./api/routes/amazonReferralFeesRoutes');
 const productCategoriesRanksRoutes = require('./api/routes/productCategoriesRanksRoutes');
 const catalogRoutes = require('./api/routes/catalogRoutes');
+const suppliersRoutes = require('./api/routes/suppliersRoutes');
 
 app.use(express.json()); // Enable parsing JSON bodies
 
@@ -35,7 +36,6 @@ const swaggerDefinition = {
       url: 'http://localhost:3001', // URL of your API
     },
   ],
-  // ... other Swagger configuration
 };
 
 const options = {
@@ -67,6 +67,7 @@ app.use('/productCategories', productCategoriesRoutes);
 app.use('/amazonReferralFees', amazonReferralFeesRoutes);
 app.use('/productCategoriesRanks', productCategoriesRanksRoutes);
 app.use('/catalog', catalogRoutes);
+app.use('/suppliers', suppliersRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).send('Hello World!');
