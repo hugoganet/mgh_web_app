@@ -161,7 +161,6 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  
 
   // Associations for ProductCategory
   ProductCategory.hasMany(Asin, {

@@ -26,6 +26,7 @@ const suppliersOrdersRoutes = require('./api/routes/suppliersOrdersRoutes');
 const fbaFeesRoutes = require('./api/routes/fbaFeesRoutes');
 const productAndAmzReferralFeesCategoriesMappingRoutes = require('./api/routes/productAndAmzReferralFeeCategoriesMappingRoutes');
 const warehousesStockRoutes = require('./api/routes/warehousesStockRoutes');
+const eansInDonationsRoutes = require('./api/routes/eansInDonationsRoutes');
 
 app.use(express.json()); // Enable parsing JSON bodies
 
@@ -83,6 +84,7 @@ app.use(
   productAndAmzReferralFeesCategoriesMappingRoutes,
 );
 app.use('/warehousesStock', warehousesStockRoutes);
+app.use('/eansInDonations', eansInDonationsRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).send('Hello World!');
