@@ -7,7 +7,11 @@
   "extends": ["google", "plugin:prettier/recommended"],
   "plugins": ["prettier"],
   "parserOptions": {
-    "ecmaVersion": "latest"
+    "ecmaVersion": "latest",
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+        }
   },
   "rules": {
     "prettier/prettier": ["error", { "singleQuote": true, "parser": "babel" }],
@@ -23,6 +27,15 @@
           "Router"
         ]
       }
-    ]
+    ],
+      "require-jsdoc": ["error", {
+          "require": {
+              "FunctionDeclaration": false,
+              "MethodDefinition": false,
+              "ClassDeclaration": false,
+              "ArrowFunctionExpression": false,
+              "FunctionExpression": false
+          }
+      }]
   }
 }
