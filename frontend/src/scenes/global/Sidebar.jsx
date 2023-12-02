@@ -27,18 +27,21 @@ import { tokens } from '../../theme';
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   return (
-    <MenuItem
-      active={selected === title}
-      onClick={() => setSelected(title)}
-      icon={icon}
-      style={{
-        color: colors.grey[100],
-      }}
-    >
-      <Typography>{title}</Typography>
-      <Link to={to} />
-    </MenuItem>
+    // Wrap the MenuItem with Link
+    <Link to={to} style={{ textDecoration: 'none', color: 'inherit' }}>
+      <MenuItem
+        active={selected === title}
+        onClick={() => setSelected(title)}
+        icon={icon}
+        style={{
+          color: colors.grey[100],
+        }}
+      >
+        <Typography>{title}</Typography>
+      </MenuItem>
+    </Link>
   );
 };
 
@@ -92,6 +95,7 @@ const Sidebar = () => {
             </Box>
           )}
         </MenuItem>
+
         {!isCollapsed && (
           <Box mb="25px">
             <Box display="flex" justifyContent="center" alignItems="center">

@@ -19,11 +19,6 @@
       "error",
       {
         "capIsNewExceptions": [
-          "DataTypes.STRING",
-          "DataTypes.INTEGER",
-          "DataTypes.TEXT",
-          "DataTypes.CHAR",
-          "DataTypes.DECIMAL",
           "Router"
         ]
       }
