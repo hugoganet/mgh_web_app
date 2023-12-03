@@ -1,8 +1,14 @@
-require('./api/models');
-const express = require('express');
-const app = express();
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
+require('./api/models');
+const cors = require('cors');
+
+const express = require('express');
+
+const app = express();
+
+// Enable CORS for all requests
+app.use(cors());
 
 const eansRoutes = require('./api/routes/eansRoutes');
 const asinsRoutes = require('./api/routes/asinsRoutes');
