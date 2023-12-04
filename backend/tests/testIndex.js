@@ -3,7 +3,7 @@ const fs = require('fs'); // File System module to read files
 const path = require('path'); // Path module to handle file paths
 const modelsDirectory = path.resolve(__dirname, '../src/api/models');
 const { Sequelize } = require('sequelize'); // Sequelize module
-const sequelize = require('./testDatabase.js'); // Sequelize instance
+const sequelize = require('./unit/testDatabase.js'); // Sequelize instance
 const runSeeding = require('../src/database/seeders/migrateData.js'); // Function to run migrations
 
 // Database object to hold our models
@@ -11,7 +11,7 @@ const db = {};
 
 // console.log("Sequelize instance configured. Loading models...");
 
-// Read all files in the current directory, filter out non-model files, and import each model
+// Read all files in the models directory, filter out non-model files, and import each model
 fs.readdirSync(modelsDirectory)
   .filter(file => {
     return (
@@ -79,8 +79,6 @@ async function synchronizeAndMigrate() {
     await db.EanInDonation.sync({ force: true });
     await db.WarehouseStock.sync({ force: true });
     await db.AfnInventoryDailyUpdate.sync({ force: true });
-
-    console.log('All tables created in order');
 
     // Run migrations
     await runSeeding(db);
