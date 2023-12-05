@@ -83,7 +83,18 @@ async function synchronizeAndMigrate() {
   }
 }
 
-// synchronizeAndMigrate();
+// Check if the environment is 'test'
+const isTestEnvironment = process.env.NODE_ENV === 'test';
+
+if (!isTestEnvironment) {
+  // Run synchronizeAndMigrate only if not in test environment
+  synchronizeAndMigrate().catch(error => {
+    console.error(
+      'Error synchronizing and migrating in non-test environment:',
+      error,
+    );
+  });
+}
 
 // Assign the Sequelize instance and class to the db object
 db.sequelize = sequelize;
