@@ -1,5 +1,5 @@
 jest.setTimeout(30000); // Set a higher than default timeout, as database operations can be slow
-const db = require('../../../api/models/index.js');
+const db = require('../src/api/models/index.js');
 
 /**
  * Initialize the database
