@@ -7,8 +7,11 @@ const express = require('express');
 
 const app = express();
 
-// Enable CORS for all requests
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000', // Allow only your frontend origin
+  }),
+);
 
 const eansRoutes = require('./api/routes/eansRoutes');
 const asinsRoutes = require('./api/routes/asinsRoutes');
