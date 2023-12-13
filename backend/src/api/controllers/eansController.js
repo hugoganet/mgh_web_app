@@ -10,14 +10,28 @@ const sendErrorResponse = (res, error, statusCode = 500) => {
 
 exports.getAllEans = async (req, res) => {
   const limit = parseInt(req.query.limit) || 50;
+  const page = parseInt(req.query.page) || 1; // Add support for page
+  const offset = (page - 1) * limit;
 
-  if (isNaN(limit)) {
-    return sendErrorResponse(res, new Error("Invalid 'limit' value"), 400);
+  if (isNaN(limit) || isNaN(page)) {
+    return sendErrorResponse(
+      res,
+      new Error("Invalid 'limit' or 'page' value"),
+      400,
+    );
   }
 
   try {
-    const eans = await db.Ean.findAll({ limit });
-    res.status(200).json(eans);
+    const { count, rows } = await db.Ean.findAndCountAll({
+      limit,
+      offset,
+    });
+    res.status(200).json({
+      total: count,
+      page,
+      totalPages: Math.ceil(count / limit),
+      data: rows,
+    });
   } catch (error) {
     sendErrorResponse(res, error);
   }
