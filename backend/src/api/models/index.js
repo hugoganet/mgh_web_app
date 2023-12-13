@@ -20,22 +20,10 @@ fs.readdirSync(__dirname)
     );
   })
   .forEach(file => {
-    // `path.join(__dirname, file)` creates an absolute path to the model file
-    const modelFilePath = path.join(__dirname, file);
-
-    // `require(modelFilePath)` dynamically requires the model file.
-    // This is akin to importing the file, but done programmatically.
-    // The require function actually returns the exported function from your model file.
-    const modelDefinitionFunction = require(modelFilePath);
-
-    // `modelDefinitionFunction(sequelize, Sequelize.DataTypes)` invokes the function
-    // exported from your model file, passing in the sequelize instance and DataTypes.
-    // This is where your model gets defined (e.g., using sequelize.define).
-    // The function is expected to return the model.
-    const model = modelDefinitionFunction(sequelize, Sequelize.DataTypes);
-
-    // Alternative to the above 4 lines of code:
-    // const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    const model = require(path.join(__dirname, file))(
+      sequelize,
+      Sequelize.DataTypes,
+    );
 
     // Add the model to the db object
     db[model.name] = model;
@@ -95,7 +83,18 @@ async function synchronizeAndMigrate() {
   }
 }
 
-synchronizeAndMigrate();
+// Check if the environment is 'test'
+const isTestEnvironment = process.env.NODE_ENV === 'test';
+
+if (!isTestEnvironment) {
+  // Run synchronizeAndMigrate only if not in test environment
+  synchronizeAndMigrate().catch(error => {
+    console.error(
+      'Error synchronizing and migrating in non-test environment:',
+      error,
+    );
+  });
+}
 
 // Assign the Sequelize instance and class to the db object
 db.sequelize = sequelize;

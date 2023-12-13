@@ -161,6 +161,13 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
+  Ean.belongsToMany(Warehouse, {
+    through: WarehouseStock,
+    foreignKey: 'ean',
+    otherKey: 'warehouseId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
 
   // Associations for ProductCategory
   ProductCategory.hasMany(Asin, {

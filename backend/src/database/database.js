@@ -1,15 +1,21 @@
-const { Sequelize } = require('sequelize'); // Sequelize module
-const config = require('../config/config.json'); // Config
+const { Sequelize } = require('sequelize');
+const config = require('../config/config.json');
 
-// Configure and create a Sequelize instance
-console.log('Configuring Sequelize instance...');
+// Determine the environment and choose the appropriate database configuration
+const env = process.env.NODE_ENV || 'development';
+const dbConfig = config[env];
 
+console.log(`Configuring Sequelize for ${env} environment...`);
+
+// Create a Sequelize instance with the selected configuration
 const sequelize = new Sequelize(
-  config.development.database,
-  config.development.username,
-  config.development.password,
+  dbConfig.database,
+  dbConfig.username,
+  dbConfig.password,
   {
-    dialect: 'postgres',
+    host: dbConfig.host,
+    port: dbConfig.port,
+    dialect: dbConfig.dialect || 'postgres', // Default to 'postgres' if not specified
     define: {
       underscored: true,
     },
