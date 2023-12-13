@@ -3,10 +3,26 @@
   "version": "0.1.0",
   "description": "Backend for the MGH Web App",
   "main": "index.js",
+  "jest" : {
+    "collectCoverageFrom": [
+      "**/*.{js,jsx,ts,tsx}",
+      "!**/tests/**",
+      "!**/node_modules/**"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
+  },
   "scripts": {
     "start": "node src/server/index.js",
     "dev": "nodemon src/server/index.js",
     "test": "NODE_ENV=test jest --runInBand --watch",
+    "test:coverage": "NODE_ENV=test jest --runInBand --coverage",
     "format": "prettier --write .",
     "lint": "eslint . --fix"
   },
