@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { tokens } from '../../theme';
 import Header from '../../components/Header';
 import { useTheme } from '@mui/material';
@@ -29,9 +29,7 @@ const Stock = () => {
           paginationModel.pageSize
         }`,
       );
-      console.log(response.data);
       setEans(response.data.data);
-      console.log(eans);
       setTotalEans(response.data.total);
     } catch (error) {
       console.error('Error fetching EAN data:', error);
@@ -44,7 +42,6 @@ const Stock = () => {
 
   // Handle changes to the pagination model
   const handlePaginationModelChange = newModel => {
-    console.log(newModel);
     setPaginationModel(newModel);
   };
 
@@ -66,11 +63,32 @@ const Stock = () => {
         m="40px 0 0 0"
         height="75vh"
         sx={{
-          // Styling for the DataGrid component
-          '& .MuiDataGrid-root': { border: 'none' },
-          '& .MuiDataGrid-cell': { borderBottom: 'none' },
-          '& .name-column--cell': { color: colors.greenAccent[300] },
-          // ...other styles...
+          '& .MuiDataGrid-root': {
+            border: 'none',
+          },
+          '& .MuiDataGrid-cell': {
+            borderBottom: 'none',
+          },
+          '& .name-column--cell': {
+            color: colors.greenAccent[300],
+          },
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: colors.blueAccent[700],
+            borderBottom: 'none',
+          },
+          '& .MuiDataGrid-virtualScroller': {
+            backgroundColor: colors.primary[400],
+          },
+          '& .MuiDataGrid-footerContainer': {
+            borderTop: 'none',
+            backgroundColor: colors.blueAccent[700],
+          },
+          '& .MuiCheckbox-root': {
+            color: `${colors.greenAccent[200]} !important`,
+          },
+          '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
+            color: `${colors.grey[100]} !important`,
+          },
         }}
       >
         <DataGrid
@@ -79,6 +97,7 @@ const Stock = () => {
           rowCount={totalEans}
           paginationModel={paginationModel}
           paginationMode="server"
+          slots={{ toolbar: GridToolbar }}
           onPaginationModelChange={handlePaginationModelChange}
           pageSizeOptions={[25, 50, 100]}
           getRowId={row => row.ean}
