@@ -10,8 +10,9 @@ const sendErrorResponse = (res, error, statusCode = 500) => {
 
 exports.getAllEans = async (req, res) => {
   const limit = parseInt(req.query.limit) || 50;
-  const page = parseInt(req.query.page) || 1; // Add support for page
+  const page = Math.max(parseInt(req.query.page) || 1, 1); // Ensure page is at least 1
   const offset = (page - 1) * limit;
+  console.log(`limit: ${limit}, page: ${page}, offset: ${offset}`);
 
   if (isNaN(limit) || isNaN(page)) {
     return sendErrorResponse(

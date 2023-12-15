@@ -35,15 +35,15 @@ const eansController = require('../controllers/eansController');
  *     tags: [Eans]
  *     parameters:
  *       - in: query
- *         name: offset
+ *         name: page
  *         schema:
  *           type: integer
- *         description: The number of items to skip before starting to collect the result set
+ *         description: The page number starting from 1
  *       - in: query
  *         name: limit
  *         schema:
  *           type: integer
- *         description: Maximum number of EANs to return
+ *         description: Maximum number of EANs to return per page
  *     responses:
  *       200:
  *         description: A list of EANs with pagination details.
@@ -63,7 +63,7 @@ const eansController = require('../controllers/eansController');
  *                   items:
  *                     $ref: '#/components/schemas/Ean'
  *       400:
- *         description: Invalid input for limit or offset.
+ *         description: Invalid input for limit or page.
  */
 router.get('/', eansController.getAllEans);
 
