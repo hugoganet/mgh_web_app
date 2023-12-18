@@ -22,7 +22,7 @@ const Ean = () => {
       if (response.data.warehouses && warehouseColumns.length === 0) {
         const newColumns = response.data.warehouses.map(warehouseName => ({
           field: `stock_${warehouseName}`,
-          headerName: `Stock (${warehouseName})`,
+          headerName: `Stock ${warehouseName}`,
           type: 'number',
           valueGetter: params => {
             const warehouseStock = params.row.WarehouseStocks.find(
@@ -98,6 +98,7 @@ const Ean = () => {
             },
           }}
           checkboxSelection={true}
+          disableSelectionOnClick
           pageSizeOptions={[25, 50, 100]}
           getRowId={row => row.ean}
         />

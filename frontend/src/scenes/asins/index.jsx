@@ -7,58 +7,35 @@ import { tokens } from '../../theme';
 import Header from '../../components/Header';
 import { useTheme } from '@mui/material';
 
-const Stock = () => {
+const Asin = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const [eans, setEans] = useState([]); // State for storing EAN data from the API
+  const [asins, setAsins] = useState([]);
 
-  const [totalEans, setTotalEans] = useState(0); // State for the total count of EANs (for pagination)
-
-  // State for the pagination model (page and pageSize)
-  const [paginationModel, setPaginationModel] = useState({
-    pageSize: 50,
-    page: 0, // DataGrid uses a zero-based index for pages
-  });
-
-  // Function to fetch EANs from the API based on the current pagination model
-  const fetchEans = async () => {
+  const fetchAsins = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:3001/eans?page=${paginationModel.page + 1}&limit=${
-          paginationModel.pageSize
-        }`,
-      );
-      setEans(response.data.data);
-      setTotalEans(response.data.total);
+      const response = await axios.get(`http://localhost:3001/asins`);
+      setAsins(response.data);
     } catch (error) {
-      console.error('Error fetching EAN data:', error);
+      console.error('Error fetching ASIN data:', error);
     }
   };
 
   useEffect(() => {
-    fetchEans();
-  }, [paginationModel]);
+    fetchAsins();
+  }, []);
 
-  // Handle changes to the pagination model
-  const handlePaginationModelChange = newModel => {
-    setPaginationModel(newModel);
-  };
-
-  // Column configuration for the DataGrid
   const columns = [
-    {
-      field: 'ean',
-      headerName: 'EAN',
-      cellClassName: 'name-column--cell',
-      flex: 1,
-    },
-    { field: 'productName', headerName: 'Product Name', flex: 2 },
+    { field: 'asin', headerName: 'ASIN', flex: 1 },
+    { field: 'asinName', headerName: 'Name', flex: 2 },
+    // Add other columns based on the properties of the ASIN schema
+    // ...
   ];
 
   return (
     <Box m="20px">
-      <Header title="Stock" subtitle="List of all EANs." />
+      <Header title="ASIN" subtitle="List of all ASINs." />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -92,19 +69,23 @@ const Stock = () => {
         }}
       >
         <DataGrid
-          rows={eans}
+          rows={asins}
           columns={columns}
-          rowCount={totalEans}
-          paginationModel={paginationModel}
-          paginationMode="server"
+          pageSize={50}
+          rowsPerPageOptions={[25, 50, 100]}
+          checkboxSelection
+          disableSelectionOnClick
           slots={{ toolbar: GridToolbar }}
-          onPaginationModelChange={handlePaginationModelChange}
-          pageSizeOptions={[25, 50, 100]}
-          getRowId={row => row.ean}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+            },
+          }}
+          getRowId={row => row.asinId}
         />
       </Box>
     </Box>
   );
 };
 
-export default Stock;
+export default Asin;

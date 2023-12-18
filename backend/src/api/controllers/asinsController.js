@@ -8,16 +8,9 @@ const sendErrorResponse = (res, error, statusCode = 500) => {
   res.status(statusCode).send({ error: message });
 };
 
-// GET all ASINs with optional pagination
 exports.getAllAsins = async (req, res) => {
-  const limit = parseInt(req.query.limit) || 50;
-
-  if (isNaN(limit)) {
-    return sendErrorResponse(res, new Error("Invalid 'limit' value"), 400);
-  }
-
   try {
-    const asins = await db.Asin.findAll({ limit });
+    const asins = await db.Asin.findAll();
     res.status(200).json(asins);
   } catch (error) {
     sendErrorResponse(res, error);
