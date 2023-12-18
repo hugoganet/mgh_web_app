@@ -7,6 +7,7 @@ import Dashboard from './scenes/dashboard';
 import Team from './scenes/team';
 import Contacts from './scenes/contacts';
 import EAN from './scenes/eans';
+import Stock from './scenes/stock';
 import Invoices from './scenes/invoices';
 import Form from './scenes/form';
 import Calendar from './scenes/calendar';
@@ -35,6 +36,7 @@ function App() {
               <Route path="/team" element={<Team />} />
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/ean" element={<EAN />} />
+              <Route path="/stock" element={<Stock />} />
               <Route path="/invoices" element={<Invoices />} />
               <Route path="/form" element={<Form />} />
               <Route path="/calendar" element={<Calendar />} />

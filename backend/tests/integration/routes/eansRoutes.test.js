@@ -12,15 +12,17 @@ describe('EANs API Routes', () => {
   });
 
   describe('GET /eans', () => {
-    it('should retrieve a list of EANs', async () => {
+    it('should retrieve a list of EANs with pagination and warehouse stock levels', async () => {
       const response = await request(app).get('/eans');
       expect(response.statusCode).toBe(200);
-      expect(response.body).toBeInstanceOf(Array);
+      expect(response.body).toHaveProperty('data');
+      expect(response.body.data).toBeInstanceOf(Array);
+      expect(response.body.data[0]).toHaveProperty('ean');
     });
   });
 
   describe('GET /eans/:ean', () => {
-    it('should retrieve a single EAN by ID', async () => {
+    it('should retrieve a single EAN by ID, including warehouse stock levels', async () => {
       const newEan = await createEan();
       const response = await request(app).get(`/eans/${newEan.ean}`);
       expect(response.statusCode).toBe(200);

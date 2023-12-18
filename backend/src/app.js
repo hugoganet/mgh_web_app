@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: 'http://localhost:3000', // Allow only your frontend origin
+    origin: '*', // Allow only your frontend origin
   }),
 );
 

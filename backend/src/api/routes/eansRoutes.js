@@ -22,6 +22,11 @@ const eansController = require('../controllers/eansController');
  *        brandId:
  *          type: integer
  *          description: The ID of the brand.
+ *        stockLevels:
+ *          type: object
+ *          additionalProperties:
+ *            type: integer
+ *          description: An object containing stock levels in various warehouses, with warehouse names as keys.
  * tags:
  *  name: Eans
  *  description: The Eans managing API
@@ -31,7 +36,7 @@ const eansController = require('../controllers/eansController');
  * @swagger
  * /eans:
  *   get:
- *     summary: Retrieve the list of EANs with optional pagination
+ *     summary: Retrieve the list of EANs with optional pagination and warehouse stock levels
  *     tags: [Eans]
  *     parameters:
  *       - in: query
@@ -46,7 +51,7 @@ const eansController = require('../controllers/eansController');
  *         description: Maximum number of EANs to return per page
  *     responses:
  *       200:
- *         description: A list of EANs with pagination details.
+ *         description: A list of EANs with pagination details and warehouse stock levels.
  *         content:
  *           application/json:
  *             schema:
@@ -71,7 +76,7 @@ router.get('/', eansController.getAllEans);
  * @swagger
  * /eans/{ean}:
  *  get:
- *    summary: Get a single EAN by ID
+ *    summary: Get a single EAN by ID, including warehouse stock levels
  *    tags: [Eans]
  *    parameters:
  *      - in: path
@@ -82,7 +87,7 @@ router.get('/', eansController.getAllEans);
  *        description: The ean ID
  *    responses:
  *      200:
- *        description: Details of the EAN.
+ *        description: Details of the EAN, including warehouse stock levels.
  *        content:
  *          application/json:
  *            schema:

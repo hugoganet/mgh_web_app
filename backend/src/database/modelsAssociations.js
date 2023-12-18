@@ -168,6 +168,21 @@ module.exports = sequelize => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
+  Ean.hasMany(EanInSupplierOrder, {
+    foreignKey: 'ean',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Ean.hasMany(EanInDonation, {
+    foreignKey: 'ean',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Ean.hasMany(WarehouseStock, {
+    foreignKey: 'ean',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
 
   // Associations for ProductCategory
   ProductCategory.hasMany(Asin, {
@@ -442,6 +457,11 @@ module.exports = sequelize => {
   });
   WarehouseStock.belongsTo(EanInSupplierOrder, {
     foreignKey: 'eanSupplierOrderId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  WarehouseStock.belongsTo(Ean, {
+    foreignKey: 'ean',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });

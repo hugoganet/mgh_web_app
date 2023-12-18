@@ -1,5 +1,4 @@
 const db = require('../models/index');
-const { ValidationError } = require('sequelize');
 
 // Common function to send error responses
 const sendErrorResponse = (res, error, statusCode = 500) => {
@@ -12,7 +11,6 @@ exports.getAllEans = async (req, res) => {
   const limit = parseInt(req.query.limit) || 50;
   const page = Math.max(parseInt(req.query.page) || 1, 1); // Ensure page is at least 1
   const offset = (page - 1) * limit;
-  console.log(`limit: ${limit}, page: ${page}, offset: ${offset}`);
 
   if (isNaN(limit) || isNaN(page)) {
     return sendErrorResponse(
@@ -23,15 +21,43 @@ exports.getAllEans = async (req, res) => {
   }
 
   try {
+    // Fetch EANs with associated warehouse stock
     const { count, rows } = await db.Ean.findAndCountAll({
+      include: [
+        {
+          model: db.WarehouseStock,
+          include: [
+            {
+              model: db.Warehouse,
+              attributes: ['warehouseName'],
+            },
+          ],
+        },
+      ],
       limit,
       offset,
     });
+
+    // Transform the data to include stock levels for each warehouse
+    const transformedRows = rows.map(ean => {
+      const stockLevels = {};
+
+      ean.WarehouseStocks.forEach(stock => {
+        const warehouseName = stock.Warehouse.warehouseName;
+        stockLevels[`stock_${warehouseName}`] = stock.warehouseInStockQuantity;
+      });
+
+      return {
+        ...ean.get({ plain: true }),
+        ...stockLevels,
+      };
+    });
+
     res.status(200).json({
       total: count,
       page,
       totalPages: Math.ceil(count / limit),
-      data: rows,
+      data: transformedRows,
     });
   } catch (error) {
     sendErrorResponse(res, error);
@@ -40,11 +66,37 @@ exports.getAllEans = async (req, res) => {
 
 exports.getEanById = async (req, res) => {
   try {
-    const ean = await db.Ean.findByPk(req.params.ean);
+    const ean = await db.Ean.findByPk(req.params.ean, {
+      include: [
+        {
+          model: db.WarehouseStock,
+          include: [
+            {
+              model: db.Warehouse,
+              attributes: ['warehouseName'],
+            },
+          ],
+        },
+      ],
+    });
+
     if (!ean) {
       return res.status(404).send({ error: 'EAN not found' });
     }
-    res.status(200).json(ean);
+
+    // Transform the EAN data to include stock levels for each warehouse
+    const stockLevels = {};
+    ean.WarehouseStocks.forEach(stock => {
+      const warehouseName = stock.Warehouse.warehouseName;
+      stockLevels[`stock_${warehouseName}`] = stock.warehouseInStockQuantity;
+    });
+
+    const transformedEan = {
+      ...ean.get({ plain: true }),
+      ...stockLevels,
+    };
+
+    res.status(200).json(transformedEan);
   } catch (error) {
     sendErrorResponse(res, error);
   }
