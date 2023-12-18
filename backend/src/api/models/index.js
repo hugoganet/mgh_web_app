@@ -78,6 +78,9 @@ async function synchronizeAndMigrate() {
 
     // Run migrations
     await runSeeding(db);
+
+    // Create SQL views
+    await createSqlViews();
   } catch (error) {
     console.error('Error creating tables:', error);
   }
@@ -94,6 +97,36 @@ if (!isTestEnvironment) {
       error,
     );
   });
+}
+
+/**
+ * Create a SQL view to get the total warehouse quantity for each ASIN
+ * @async
+ * @function createSqlViews
+ * @return {Promise<void>} Promise object that represents the completion of the operation
+ * @throws {Error} Error creating SQL view
+ */
+async function createSqlViews() {
+  const createAsinWarehouseQuantitiesView = `
+    CREATE OR REPLACE VIEW asin_warehouse_quantities AS
+    SELECT
+      a.asin_id,
+      SUM(eia.ean_in_asin_quantity * ws.warehouse_in_stock_quantity) AS total_warehouse_quantity
+    FROM
+      asins a
+      JOIN eans_in_asins eia ON a.asin_id = eia.asin_id
+      JOIN eans e ON eia.ean = e.ean
+      JOIN warehouses_stock ws ON e.ean = ws.ean
+    GROUP BY
+      a.asin_id;
+  `;
+
+  try {
+    await db.sequelize.query(createAsinWarehouseQuantitiesView);
+    console.log('SQL view created successfully.');
+  } catch (error) {
+    console.error('Error creating SQL view:', error);
+  }
 }
 
 // Assign the Sequelize instance and class to the db object

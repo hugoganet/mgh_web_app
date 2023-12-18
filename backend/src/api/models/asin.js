@@ -67,12 +67,6 @@ module.exports = sequelize => {
         type: DataTypes.TEXT(),
         allowNull: false,
       },
-      asinPotentialWarehousesQuantity: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
-        // This field requires custom logic or a database trigger
-      },
       asinNumberOfActiveSku: {
         type: DataTypes.INTEGER,
         allowNull: false,
