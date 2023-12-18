@@ -8,40 +8,18 @@ const sendErrorResponse = (res, error, statusCode = 500) => {
 };
 
 exports.getAllEans = async (req, res) => {
-  const limit = parseInt(req.query.limit) || 50;
-  const page = Math.max(parseInt(req.query.page) || 1, 1); // Ensure page is at least 1
-  const offset = (page - 1) * limit;
-
-  if (isNaN(limit) || isNaN(page)) {
-    return sendErrorResponse(
-      res,
-      new Error("Invalid 'limit' or 'page' value"),
-      400,
-    );
-  }
-
   try {
-    // Fetch EANs with associated warehouse stock
-    const { count, rows } = await db.Ean.findAndCountAll({
+    const eans = await db.Ean.findAll({
       include: [
         {
           model: db.WarehouseStock,
-          include: [
-            {
-              model: db.Warehouse,
-              attributes: ['warehouseName'],
-            },
-          ],
+          include: [{ model: db.Warehouse, attributes: ['warehouseName'] }],
         },
       ],
-      limit,
-      offset,
     });
 
-    // Transform the data to include stock levels for each warehouse
-    const transformedRows = rows.map(ean => {
+    const transformedEans = eans.map(ean => {
       const stockLevels = {};
-
       ean.WarehouseStocks.forEach(stock => {
         const warehouseName = stock.Warehouse.warehouseName;
         stockLevels[`stock_${warehouseName}`] = stock.warehouseInStockQuantity;
@@ -53,11 +31,13 @@ exports.getAllEans = async (req, res) => {
       };
     });
 
+    const warehouses = await db.Warehouse.findAll({
+      attributes: ['warehouseName'],
+    });
+
     res.status(200).json({
-      total: count,
-      page,
-      totalPages: Math.ceil(count / limit),
-      data: transformedRows,
+      data: transformedEans,
+      warehouses: warehouses.map(wh => wh.warehouseName),
     });
   } catch (error) {
     sendErrorResponse(res, error);

@@ -11,26 +11,28 @@ const Ean = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const [eans, setEans] = useState([]); // State for storing EAN data from the API
+  const [eans, setEans] = useState([]);
+  const [warehouseColumns, setWarehouseColumns] = useState([]);
 
-  const [totalEans, setTotalEans] = useState(0); // State for the total count of EANs (for pagination)
-
-  // State for the pagination model (page and pageSize)
-  const [paginationModel, setPaginationModel] = useState({
-    pageSize: 50,
-    page: 0, // DataGrid uses a zero-based index for pages
-  });
-
-  // Function to fetch EANs from the API based on the current pagination model
   const fetchEans = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:3001/eans?page=${paginationModel.page + 1}&limit=${
-          paginationModel.pageSize
-        }`,
-      );
+      const response = await axios.get(`http://localhost:3001/eans`);
       setEans(response.data.data);
-      setTotalEans(response.data.total);
+
+      if (response.data.warehouses && warehouseColumns.length === 0) {
+        const newColumns = response.data.warehouses.map(warehouseName => ({
+          field: `stock_${warehouseName}`,
+          headerName: `Stock (${warehouseName})`,
+          type: 'number',
+          valueGetter: params => {
+            const warehouseStock = params.row.WarehouseStocks.find(
+              ws => ws.Warehouse.warehouseName === warehouseName,
+            );
+            return warehouseStock ? warehouseStock.warehouseInStockQuantity : 0;
+          },
+        }));
+        setWarehouseColumns(newColumns);
+      }
     } catch (error) {
       console.error('Error fetching EAN data:', error);
     }
@@ -38,23 +40,18 @@ const Ean = () => {
 
   useEffect(() => {
     fetchEans();
-  }, [paginationModel]);
+  }, []);
 
-  // Handle changes to the pagination model
-  const handlePaginationModelChange = newModel => {
-    setPaginationModel(newModel);
-  };
-
-  // Column configuration for the DataGrid
-  const columns = [
+  const baseColumns = [
     {
       field: 'ean',
       headerName: 'EAN',
-      cellClassName: 'name-column--cell',
       flex: 1,
     },
     { field: 'productName', headerName: 'Product Name', flex: 2 },
   ];
+
+  const columns = [...baseColumns, ...warehouseColumns];
 
   return (
     <Box m="20px">
@@ -94,11 +91,12 @@ const Ean = () => {
         <DataGrid
           rows={eans}
           columns={columns}
-          rowCount={totalEans}
-          paginationModel={paginationModel}
-          paginationMode="server"
           slots={{ toolbar: GridToolbar }}
-          onPaginationModelChange={handlePaginationModelChange}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+            },
+          }}
           pageSizeOptions={[25, 50, 100]}
           getRowId={row => row.ean}
         />
