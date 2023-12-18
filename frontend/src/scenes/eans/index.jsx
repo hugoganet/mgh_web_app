@@ -7,7 +7,7 @@ import { tokens } from '../../theme';
 import Header from '../../components/Header';
 import { useTheme } from '@mui/material';
 
-const Stock = () => {
+const Ean = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -58,7 +58,7 @@ const Stock = () => {
 
   return (
     <Box m="20px">
-      <Header title="EAN STOCK" subtitle="List of all EANs." />
+      <Header title="EAN" subtitle="List of all EANs." />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -107,4 +107,4 @@ const Stock = () => {
   );
 };
 
-export default Stock;
+export default Ean;

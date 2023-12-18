@@ -155,8 +155,8 @@ const Sidebar = () => {
             setSelected={setSelected}
           />
           <Item
-            title="Stock"
-            to="/stock"
+            title="EANs"
+            to="/ean"
             icon={<InventoryOutlinedIcon />}
             selected={selected}
             setSelected={setSelected}
