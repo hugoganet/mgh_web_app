@@ -97,6 +97,7 @@ const Ean = () => {
               showQuickFilter: true,
             },
           }}
+          checkboxSelection={true}
           pageSizeOptions={[25, 50, 100]}
           getRowId={row => row.ean}
         />
