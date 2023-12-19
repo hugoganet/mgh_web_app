@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box } from '@mui/material';
+import { Box, Dialog, DialogContent } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { tokens } from '../../theme';
 import Header from '../../components/Header';
@@ -13,6 +13,22 @@ const Asin = () => {
 
   const [asins, setAsins] = useState([]);
   const [error, setError] = useState('');
+
+  // State for controlling the visibility and content of the image modal
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [selectedImageUrl, setSelectedImageUrl] = useState('');
+
+  // Function to open the modal with the selected image
+  const openImageModal = imageUrl => {
+    setSelectedImageUrl(imageUrl);
+    setIsImageModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeImageModal = () => {
+    setIsImageModalOpen(false);
+    setSelectedImageUrl('');
+  };
 
   const fetchAsins = async () => {
     try {
@@ -69,16 +85,29 @@ const Asin = () => {
       field: 'urlImage',
       headerName: 'Image',
       flex: 1,
-      renderCell: params =>
-        params.value ? (
-          <img
-            src={params.value}
-            alt={params.row.asinName}
-            style={{ height: '50px' }}
-          />
-        ) : (
-          'No Image'
-        ),
+      renderCell: params => (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+            cursor: 'pointer', // Change cursor to indicate clickable
+          }}
+          onClick={() => openImageModal(params.value)}
+        >
+          {params.value ? (
+            <img
+              src={params.value}
+              alt={params.row.asinName}
+              style={{ maxHeight: '50px', maxWidth: '100%' }}
+            />
+          ) : (
+            'No Image'
+          )}
+        </Box>
+      ),
     },
     { field: 'asin', headerName: 'ASIN', flex: 1 },
     { field: 'asinName', headerName: 'Name', flex: 2 },
@@ -125,7 +154,6 @@ const Asin = () => {
       flex: 1,
     },
     { field: 'isHazmat', headerName: 'Hazmat', type: 'boolean', flex: 1 },
-    // Additional field for warehouse quantity view
     {
       field: 'totalWarehouseQuantity',
       headerName: 'Warehouse Stock',
@@ -138,6 +166,15 @@ const Asin = () => {
     <Box m="20px">
       <Header title="ASIN" subtitle="List of all ASINs." />
       {error && <div style={{ color: 'red' }}>{error}</div>}
+      <Dialog open={isImageModalOpen} onClose={closeImageModal}>
+        <DialogContent>
+          <img
+            src={selectedImageUrl}
+            alt="Selected"
+            style={{ width: '100%' }}
+          />
+        </DialogContent>
+      </Dialog>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -151,10 +188,6 @@ const Asin = () => {
           '& .name-column--cell': {
             color: colors.greenAccent[300],
           },
-          '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: colors.blueAccent[700],
-            borderBottom: 'none',
-          },
           '& .MuiDataGrid-virtualScroller': {
             backgroundColor: colors.primary[400],
           },
@@ -167,6 +200,21 @@ const Asin = () => {
           },
           '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
             color: `${colors.grey[100]} !important`,
+          },
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: colors.blueAccent[700],
+            borderBottom: 'none',
+            justifyContent: 'center', // Center align the column headers
+            whiteSpace: 'normal', // Allow text to wrap
+            lineHeight: 'normal', // Adjust line height for wrapped text
+            textAlign: 'center', // Center align the text
+            '& .MuiDataGrid-columnHeaderTitle': {
+              overflow: 'hidden', // Hide overflow
+              textOverflow: 'ellipsis', // Use ellipsis for overflowed text
+              whiteSpace: 'normal', // Allow text to wrap
+              lineHeight: 'normal', // Adjust line height for wrapped text
+              textAlign: 'center', // Center align the text
+            },
           },
         }}
       >
