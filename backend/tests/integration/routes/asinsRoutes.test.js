@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../../../src/app'); // Adjust the path as needed
+const app = require('../../../src/app');
 const { initializeDatabase, closeDatabase } = require('../../jest.setup');
 
 describe('ASINs API Routes', () => {

@@ -80,7 +80,6 @@ describe('Warehouse Stock API Routes', () => {
 async function generateWarehouseStockData() {
   try {
     const newEan = await createEan();
-    console.log('Generated EAN:', newEan.ean);
     return {
       warehouseId: 1,
       ean: newEan.ean,

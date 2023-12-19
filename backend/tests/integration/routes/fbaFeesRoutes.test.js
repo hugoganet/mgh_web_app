@@ -118,7 +118,6 @@ async function createAsin() {
 async function generateFbaFeeData() {
   try {
     const newAsin = await createAsin();
-    console.log('newAsin', newAsin);
     const asinId = newAsin.asinId;
     return {
       asinId: asinId,

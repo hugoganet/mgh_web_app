@@ -95,7 +95,6 @@ async function createMinimumSellingPrice() {
  */
 function generateMinimumSellingPriceData() {
   const skuId = Math.floor(Math.random() * 2000) + 1; // generate random SKU ID between 1 and 2000 (skuId exist but not used in miinimumSellingPrices table)
-  console.log(skuId);
   return {
     skuId: skuId,
     pricingRuleId: 1,

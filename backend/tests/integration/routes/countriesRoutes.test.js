@@ -16,24 +16,20 @@ describe('Countries API Routes', () => {
       const response = await request(app).get('/countries');
       expect(response.statusCode).toBe(200);
       expect(response.body).toBeInstanceOf(Array);
-      // Additional assertions based on expected data structure
     });
   });
 
   describe('GET /countries/:countryCode', () => {
     it('should retrieve a single country by its code', async () => {
-      // Create a new country to ensure the code exists
       const newCountry = await createCountry();
       const response = await request(app).get(
         `/countries/${newCountry.countryCode}`,
-        console.log(newCountry.countryCode),
       );
       expect(response.statusCode).toBe(200);
       expect(response.body).toHaveProperty(
         'countryCode',
         newCountry.countryCode,
       );
-      // Additional assertions as needed
     });
   });
 
@@ -46,17 +42,14 @@ describe('Countries API Routes', () => {
 
       expect(response.statusCode).toBe(201);
       expect(response.body).toHaveProperty('countryCode');
-      // Additional assertions as needed
     });
   });
 
   describe('PATCH /countries/:countryCode', () => {
     it('should update an existing country', async () => {
-      // Create a new country to ensure the code exists
       const newCountry = await createCountry();
       const updatedData = {
         countryName: 'Updated Country Name',
-        // Include other fields to update
       };
 
       const response = await request(app)
@@ -64,20 +57,17 @@ describe('Countries API Routes', () => {
         .send(updatedData);
 
       expect(response.statusCode).toBe(200);
-      // Additional assertions as needed
     });
   });
 
   describe('DELETE /countries/:countryCode', () => {
     it('should delete a country', async () => {
-      // Create a new country to ensure the code exists
       const newCountry = await createCountry();
 
       const deleteResponse = await request(app).delete(
         `/countries/${newCountry.countryCode}`,
       );
       expect(deleteResponse.statusCode).toBe(200);
-      // Additional assertions as needed
     });
   });
 });

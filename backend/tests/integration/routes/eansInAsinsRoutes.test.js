@@ -13,7 +13,6 @@ describe('EANs In ASINs API Routes', () => {
   describe('GET /eansInAsins/:id', () => {
     it('should retrieve an EAN-ASIN association by ID', async () => {
       const newAssociation = await createEanInAsin();
-      console.log(newAssociation);
       const response = await request(app).get(
         `/eansInAsins/${newAssociation.eanInAsinId}`,
       );
@@ -150,7 +149,6 @@ async function generateEanInAsinData() {
  */
 async function createEanInAsin() {
   const newAssociationData = await generateEanInAsinData();
-  console.log(newAssociationData);
   const response = await request(app)
     .post('/eansInAsins')
     .send(newAssociationData);
