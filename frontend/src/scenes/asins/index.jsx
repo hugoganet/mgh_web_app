@@ -12,30 +12,132 @@ const Asin = () => {
   const colors = tokens(theme.palette.mode);
 
   const [asins, setAsins] = useState([]);
+  const [error, setError] = useState('');
 
   const fetchAsins = async () => {
     try {
       const response = await axios.get(`http://localhost:3001/asins`);
-      setAsins(response.data);
+      return response.data;
     } catch (error) {
       console.error('Error fetching ASIN data:', error);
+      setError('Failed to load ASIN data'); // Set a user-friendly error message
+      return []; // Return an empty array in case of error
     }
   };
 
+  const fetchAsinWarehouseQuantities = async () => {
+    try {
+      const response = await axios.get(
+        'http://localhost:3001/asinwarehousequantity',
+      );
+      return response.data; // Assuming the response data is the array of warehouse quantities
+    } catch (error) {
+      console.error('Error fetching ASIN data:', error);
+      setError('Failed to load ASIN data'); // Set a user-friendly error message
+      return []; // Return an empty array in case of error
+    }
+  };
+
+  const fetchAndCombineData = async () => {
+    const [asinsData, asinWarehouseQuantities] = await Promise.all([
+      fetchAsins(),
+      fetchAsinWarehouseQuantities(),
+    ]);
+
+    // Combine the data
+    const combinedData = asinsData.map(asin => {
+      const warehouseQuantity = asinWarehouseQuantities.find(
+        q => q.asinId === asin.asinId,
+      );
+      return {
+        ...asin,
+        totalWarehouseQuantity: warehouseQuantity
+          ? warehouseQuantity.totalWarehouseQuantity
+          : 0,
+      };
+    });
+
+    setAsins(combinedData);
+  };
+
   useEffect(() => {
-    fetchAsins();
+    fetchAndCombineData();
   }, []);
 
   const columns = [
+    {
+      field: 'urlImage',
+      headerName: 'Image',
+      flex: 1,
+      renderCell: params =>
+        params.value ? (
+          <img
+            src={params.value}
+            alt={params.row.asinName}
+            style={{ height: '50px' }}
+          />
+        ) : (
+          'No Image'
+        ),
+    },
     { field: 'asin', headerName: 'ASIN', flex: 1 },
     { field: 'asinName', headerName: 'Name', flex: 2 },
-    // Add other columns based on the properties of the ASIN schema
-    // ...
+    { field: 'countryCode', headerName: 'Country', flex: 1 },
+    { field: 'productCategoryId', headerName: 'Product Category ID', flex: 1 },
+    {
+      field: 'productCategoryRankId',
+      headerName: 'Product Category Rank ID',
+      flex: 1,
+    },
+    {
+      field: 'productTaxCategoryId',
+      headerName: 'Product Tax Category ID',
+      flex: 1,
+    },
+    { field: 'asinPreparation', headerName: 'Preparation', flex: 1 },
+    {
+      field: 'urlAmazon',
+      headerName: 'Amazon URL',
+      flex: 1,
+      renderCell: params => (
+        <a href={params.value} target="_blank" rel="noopener noreferrer">
+          Amazon
+        </a>
+      ),
+    },
+
+    {
+      field: 'asinNumberOfActiveSku',
+      headerName: 'Number of Active SKU',
+      type: 'number',
+      flex: 1,
+    },
+    {
+      field: 'asinAverageUnitSoldPerDay',
+      headerName: 'Avg. Units Sold/Day',
+      type: 'number',
+      flex: 1,
+    },
+    {
+      field: 'isBatteryRequired',
+      headerName: 'Battery Required',
+      type: 'boolean',
+      flex: 1,
+    },
+    { field: 'isHazmat', headerName: 'Hazmat', type: 'boolean', flex: 1 },
+    // Additional field for warehouse quantity view
+    {
+      field: 'totalWarehouseQuantity',
+      headerName: 'Warehouse Stock',
+      type: 'number',
+      flex: 1,
+    },
   ];
 
   return (
     <Box m="20px">
       <Header title="ASIN" subtitle="List of all ASINs." />
+      {error && <div style={{ color: 'red' }}>{error}</div>}
       <Box
         m="40px 0 0 0"
         height="75vh"
