@@ -8,6 +8,7 @@ import Team from './scenes/team';
 import Contacts from './scenes/contacts';
 import EAN from './scenes/eans';
 import Asin from './scenes/asins';
+import Sku from './scenes/skus';
 import Invoices from './scenes/invoices';
 import Form from './scenes/form';
 import Calendar from './scenes/calendar';
@@ -37,6 +38,7 @@ function App() {
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/ean" element={<EAN />} />
               <Route path="/asin" element={<Asin />} />
+              <Route path="/sku" element={<Sku />} />
               <Route path="/invoices" element={<Invoices />} />
               <Route path="/form" element={<Form />} />
               <Route path="/calendar" element={<Calendar />} />
