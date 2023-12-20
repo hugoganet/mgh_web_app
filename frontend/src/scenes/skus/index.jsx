@@ -25,48 +25,91 @@ const Sku = () => {
     }
   };
 
-  // const fetchAsinWarehouseQuantities = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       'http://localhost:3001/asinwarehousequantity',
-  //     );
-  //     return response.data; // Assuming the response data is the array of warehouse quantities
-  //   } catch (error) {
-  //     console.error('Error fetching ASIN data:', error);
-  //     setError('Failed to load ASIN data'); // Set a user-friendly error message
-  //     return []; // Return an empty array in case of error
-  //   }
-  // };
-
-  // const fetchAndCombineData = async () => {
-  //   const [asinsData, asinWarehouseQuantities] = await Promise.all([
-  //     fetchSkus(),
-  //     fetchAsinWarehouseQuantities(),
-  //   ]);
-
-  //   // Combine the data
-  //   const combinedData = asinsData.map(asin => {
-  //     const warehouseQuantity = asinWarehouseQuantities.find(
-  //       q => q.asinId === asin.asinId,
-  //     );
-  //     return {
-  //       ...asin,
-  //       totalWarehouseQuantity: warehouseQuantity
-  //         ? warehouseQuantity.totalWarehouseQuantity
-  //         : 0,
-  //     };
-  //   });
-
-  //   setAsins(combinedData);
-  // };
-
   useEffect(() => {
     fetchSkus();
   }, []);
 
   const columns = [
-    { field: 'sku', headerName: 'SKU', flex: 1 },
+    { field: 'sku', headerName: 'SKU', flex: 2 },
     { field: 'countryCode', headerName: 'Country', flex: 1 },
+    { field: 'fnsku', headerName: 'FNSKU', flex: 1 },
+    {
+      field: 'skuAcquisitionCostExc',
+      headerName: 'Acquisition Cost (Excl)',
+      type: 'number',
+      flex: 1,
+    },
+    {
+      field: 'skuAcquisitionCostInc',
+      headerName: 'Acquisition Cost (Incl)',
+      type: 'number',
+      flex: 1,
+    },
+    {
+      field: 'skuAfnTotalQuantity',
+      headerName: 'AFN Total Quantity',
+      type: 'number',
+      flex: 1,
+    },
+    {
+      field: 'skuAverageSellingPrice',
+      headerName: 'Average Selling Price',
+      type: 'number',
+      flex: 1,
+    },
+    {
+      field: 'skuAverageNetMargin',
+      headerName: 'Average Net Margin',
+      type: 'number',
+      flex: 1,
+    },
+    {
+      field: 'skuAverageNetMarginPercentage',
+      headerName: 'Net Margin %',
+      type: 'number',
+      flex: 1,
+      valueFormatter: params => `${(params.value * 100).toFixed(2)}%`,
+    },
+    {
+      field: 'skuAverageReturnOnInvestmentRate',
+      headerName: 'ROI Rate',
+      type: 'number',
+      flex: 1,
+      valueFormatter: params => `${(params.value * 100).toFixed(2)}%`,
+    },
+    {
+      field: 'skuAverageDailyReturnOnInvestmentRate',
+      headerName: 'Daily ROI Rate',
+      type: 'number',
+      flex: 1,
+      valueFormatter: params => `${(params.value * 100).toFixed(2)}%`,
+    },
+    { field: 'isActive', headerName: 'Active', type: 'boolean', flex: 1 },
+    {
+      field: 'numberOfActiveDays',
+      headerName: 'Active Days',
+      type: 'number',
+      flex: 1,
+    },
+    {
+      field: 'numberOfUnitSold',
+      headerName: 'Units Sold',
+      type: 'number',
+      flex: 1,
+    },
+    {
+      field: 'skuAverageUnitSoldPerDay',
+      headerName: 'Avg Units Sold/Day',
+      type: 'number',
+      flex: 1,
+    },
+    {
+      field: 'skuRestockAlertQuantity',
+      headerName: 'Restock Alert Qty',
+      type: 'number',
+      flex: 1,
+    },
+    { field: 'skuIsTest', headerName: 'Test SKU', type: 'boolean', flex: 1 },
   ];
 
   return (
