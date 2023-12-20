@@ -1,7 +1,6 @@
 require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
-require('./api/models');
 const cors = require('cors');
 
 const express = require('express');
@@ -10,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: '*', // Allow only your frontend origin
+    origin: '*',
   }),
 );
 

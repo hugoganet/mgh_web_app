@@ -1,10 +1,7 @@
-// Node.js modules for file system and path manipulation
 const fs = require('fs');
 const path = require('path');
-// csv-parser package for parsing CSV files
 const csvParser = require('csv-parser');
-
-const modelToFileMap = require('../modelToFileMap');
+const modelToFileMap = require('./modelToFileMap');
 
 /**
  * Function to parse CSV file and return data as an array.
@@ -30,11 +27,9 @@ async function parseCSV(filePath) {
  * @param {Object} db - Database object.
  * @param {string} tableName - Name of the table to migrate data to.
  */
-async function migrate(db, tableName) {
-  // console.log(`Migrating data for ${tableName}...`);
+async function seedDb(db, tableName) {
   // Construct the file path for the CSV file
-  const filePath = path.join(__dirname, modelToFileMap[tableName]);
-  // console.log(`Migrating data for ${tableName}, file path: ${filePath}`);
+  const filePath = path.join(__dirname, 'seeders/', modelToFileMap[tableName]);
 
   try {
     // Parse the CSV file
@@ -65,12 +60,11 @@ async function migrate(db, tableName) {
 }
 
 /**
- * Function to run migrations for all tables in the order of dependency.
+ * Function to run seeding for all tables in the order of dependency.
  * @param {Object} db - Database object get from models/index.js.
  */
-async function runMigrations(db) {
+async function runSeeding(db) {
   try {
-    // Array of table names in the order they need to be migrated
     const tables = [
       'Country',
       'Brand',
@@ -101,14 +95,14 @@ async function runMigrations(db) {
       'WarehouseStock',
     ];
 
-    // Sequentially migrate each table
+    // Sequentially seed each table
     for (const table of tables) {
-      await migrate(db, table);
+      await seedDb(db, table);
     }
-    // console.log('All migrations completed.');
+    console.log('All seeding completed.');
   } catch (error) {
-    console.error('Migration failed:', error);
+    console.error('Seeding failed:', error);
   }
 }
 
-module.exports = runMigrations;
+module.exports = runSeeding;

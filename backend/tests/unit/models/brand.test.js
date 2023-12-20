@@ -1,8 +1,12 @@
-const { initializeDatabase, closeDatabase, db } = require('../../jest.setup');
+const {
+  initializeTestDatabase,
+  closeDatabase,
+  db,
+} = require('../../jest.setup');
 
 describe(`Brand Model Tests`, () => {
   beforeAll(async () => {
-    await initializeDatabase();
+    await initializeTestDatabase();
   });
 
   afterAll(async () => {

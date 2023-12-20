@@ -1,30 +1,30 @@
-jest.setTimeout(30000); // Set a higher than default timeout, as database operations can be slow
+jest.setTimeout(30000); // Higher timeout for database operations
+
 const db = require('../src/api/models/index.js');
+const initializeDatabase = require('../src/database/initialize');
 
 /**
- * Initialize the database
+ * Initialize the database for testing.
  * @async
- * @function initializeDatabase
- * @return {Promise<void>} Promise object that represents the completion of the operation
+ * @function initializeTestDatabase
+ * @return {Promise<void>} Promise representing the completion of initialization
  */
-async function initializeDatabase() {
-  await db.synchronizeAndMigrate();
-  // console.log('Database synchronized and migrated');
+async function initializeTestDatabase() {
+  await initializeDatabase({ forceSync: true });
 }
 
 /**
- * Close the database connection
+ * Close the database connection.
  * @async
  * @function closeDatabase
- * @return {Promise<void>} Promise object that represents the completion of the operation
+ * @return {Promise<void>} Promise representing the completion of closing the connection
  */
 async function closeDatabase() {
   await db.sequelize.close();
-  // console.log('Database connection closed');
 }
 
 module.exports = {
   db,
-  initializeDatabase,
+  initializeTestDatabase,
   closeDatabase,
 };

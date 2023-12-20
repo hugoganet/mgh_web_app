@@ -1,10 +1,5 @@
-// module.exports = (sequelize) => { ... } defines a function that is exported from this module.
-// This function takes one argument, which is named sequelize.
-// In this context, sequelize is expected to be an instance of Sequelize,
-
-// which typically includes a models property where all your models are registered.
-module.exports = sequelize => {
-  // Destructuring models from sequelize
+module.exports = db => {
+  // Destructuring models from db
   const {
     Asin,
     Brand,
@@ -34,7 +29,7 @@ module.exports = sequelize => {
     WarehouseStock,
     ProductAndAmzReferralFeeCategory,
     AfnInventoryDailyUpdate,
-  } = sequelize.models;
+  } = db;
 
   // Associations for Asin
   Asin.belongsTo(ProductCategory, {

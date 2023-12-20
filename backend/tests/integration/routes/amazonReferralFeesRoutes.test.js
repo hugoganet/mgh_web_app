@@ -1,10 +1,10 @@
 const request = require('supertest');
 const app = require('../../../src/app');
-const { initializeDatabase, closeDatabase } = require('../../jest.setup');
+const { initializeTestDatabase, closeDatabase } = require('../../jest.setup');
 
 describe('AmazonReferralFees API Routes', () => {
   beforeAll(async () => {
-    await initializeDatabase();
+    await initializeTestDatabase();
   });
 
   afterAll(async () => {
@@ -100,6 +100,5 @@ function generateAmazonReferralFeeData() {
     referralFeePercentage: 0.15,
     perItemMinimumReferralFee: 1.0,
     closingFee: 0.5,
-    // Add other required fields as per your schema
   };
 }

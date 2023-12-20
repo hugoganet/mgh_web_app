@@ -1,10 +1,10 @@
 const request = require('supertest');
 const app = require('../../../src/app');
-const { initializeDatabase, closeDatabase } = require('../../jest.setup');
+const { initializeTestDatabase, closeDatabase } = require('../../jest.setup');
 
 describe('ProductCategories API Routes', () => {
   beforeAll(async () => {
-    await initializeDatabase();
+    await initializeTestDatabase();
   });
 
   afterAll(async () => {

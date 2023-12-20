@@ -1,5 +1,4 @@
 require('dotenv').config({ path: 'backend/.env' });
-console.log(process.env);
 const axios = require('axios');
 const crypto = require('crypto');
 const { logAndCollect } = require('../sp_api/reports_api/logs/logAndCollect');
@@ -38,9 +37,6 @@ class SpApiConnector {
     if (this.accessToken && new Date() < this.tokenExpiration) {
       return this.accessToken;
     }
-    console.log(process.env.REFRESH_TOKEN);
-    console.log(this.refreshToken);
-    console.log(this.clientId);
 
     // Token is either null or expired, fetch a new one
     const url = 'https://api.amazon.com/auth/o2/token';

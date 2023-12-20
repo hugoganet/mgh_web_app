@@ -1,10 +1,10 @@
 const request = require('supertest');
 const app = require('../../../src/app'); // Adjust the path as needed
-const { initializeDatabase, closeDatabase } = require('../../jest.setup');
+const { initializeTestDatabase, closeDatabase } = require('../../jest.setup');
 
 describe('Supplier Orders API Routes', () => {
   beforeAll(async () => {
-    await initializeDatabase();
+    await initializeTestDatabase();
   });
 
   afterAll(async () => {
