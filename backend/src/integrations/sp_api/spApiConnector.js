@@ -203,6 +203,7 @@ class SpApiConnector {
     createLog,
     reportType = null,
   ) {
+    let logMessage = '';
     try {
       const accessToken = await this.getLWAToken();
       const date = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '');
@@ -219,6 +220,21 @@ class SpApiConnector {
         date,
       );
 
+      // Prepare log message for the request
+      logMessage +=
+        'Request Details:\n' +
+        JSON.stringify(
+          {
+            URL: fullUrl,
+            Method: method,
+            Headers: headers,
+            QueryParams: queryParams,
+            Body: body,
+          },
+          null,
+          2,
+        );
+
       let axiosResponse;
       if (method === 'GET') {
         axiosResponse = await axios.get(fullUrl, { headers });
@@ -228,44 +244,51 @@ class SpApiConnector {
         });
       }
 
-      if (createLog) {
-        // Clone the headers object and remove the Authorization header
-        const safeHeaders = { ...headers };
-        delete safeHeaders.Authorization;
-
-        const logData = {
-          'Request URL': fullUrl,
-          'x-amzn-requestId': axiosResponse.headers['x-amzn-requestid'],
-          'Request Options': {
-            method: method,
-            headers: safeHeaders,
-            body: method !== 'GET' ? body : null, // Keep this as the raw object
+      // Append log message with response details
+      logMessage +=
+        '\n\nResponse Details:\n' +
+        JSON.stringify(
+          {
+            Data: axiosResponse.data,
+            Status: axiosResponse.status,
+            Headers: axiosResponse.headers,
           },
-          Response: axiosResponse.data,
-          'Report Type': reportType,
-        };
+          null,
+          2,
+        );
 
-        logAndCollect(JSON.stringify(logData, null, 2), reportType);
+      if (createLog) {
+        logAndCollect(logMessage, reportType);
       }
 
       return axiosResponse;
     } catch (error) {
-      // Handle and log errors from the request
-      console.error(`Error in sendRequest: ${error}`);
+      // Append log message with error details
+      logMessage += '\n\nError in sendRequest: ' + error.toString();
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error(error.response.data);
-        console.error(error.response.status);
-        console.error(error.response.headers);
+        logMessage +=
+          '\nResponse Error Details:\n' +
+          JSON.stringify(
+            {
+              Data: error.response.data,
+              Status: error.response.status,
+              Headers: error.response.headers,
+            },
+            null,
+            2,
+          );
       } else if (error.request) {
-        // The request was made but no response was received
-        console.error(error.request);
+        logMessage +=
+          '\nRequest Error Details:\n' + JSON.stringify(error.request, null, 2);
       } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error('Error', error.message);
+        logMessage += '\nSetup Error: ' + error.message;
       }
-      throw error; // Rethrow the error for further handling
+
+      if (createLog) {
+        logAndCollect(logMessage, reportType);
+      }
+
+      throw error;
     }
   }
 

@@ -1,7 +1,8 @@
 const { spApiInstance } = require('../spApiConnector');
 const marketplaces = require('../../../../src/config/marketplaces');
 const calculateNextReportCreationTime = require('./calculateNextReportCreationTime');
-
+const { createDestination, createSubscription } = require('../amazonSqsSetup');
+const sqsArn = process.env.SQS_ARN;
 /**
  * Sets up a schedule for automatic report generation on Amazon SP API.
  *
@@ -50,7 +51,19 @@ const config = {
 };
 
 createReportSchedule(config)
-  .then(scheduleId =>
-    console.log(`Report scheduled successfully. Schedule ID: ${scheduleId}`),
-  )
-  .catch(error => console.error('Error scheduling report:', error));
+  .then(scheduleId => {
+    console.log(`Report scheduled successfully. Schedule ID: ${scheduleId}`);
+    return createDestination(sqsArn); // Return the promise from createDestination
+  })
+  .then(destinationId => {
+    console.log(
+      `Destination created successfully. Destination ID: ${destinationId}`,
+    );
+    return createSubscription(destinationId, 'REPORT_PROCESSING_FINISHED'); // Return the promise from createSubscription
+  })
+  .then(subscriptionId => {
+    console.log(
+      `Subscription created successfully. Subscription ID: ${subscriptionId}`,
+    );
+  })
+  .catch(error => console.error('Error in report scheduling process:', error));
