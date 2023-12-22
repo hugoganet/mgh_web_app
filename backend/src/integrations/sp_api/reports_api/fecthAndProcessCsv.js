@@ -1,6 +1,5 @@
-// Import required modules and libraries
-const axios = require('axios'); // For making HTTP requests
-const csvParser = require('csv-parser'); // To parse CSV data
+const axios = require('axios');
+const csvParser = require('csv-parser');
 const { PassThrough, Transform } = require('stream'); // To work with streams
 const zlib = require('zlib'); // To handle compression
 const db = require('../../../api/models/index'); // Database models
