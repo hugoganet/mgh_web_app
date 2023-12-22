@@ -1,7 +1,10 @@
 const { getReportId } = require('./getReportId');
 const { getReportDocumentId } = require('./getReportDocumentId');
 const { getDocumentUrl } = require('./getDocumentUrl');
-const { fetchAndProcessCsv } = require('./fecthAndProcessCsv');
+// const { fetchAndProcessCsv } = require('./fecthAndProcessCsv');
+const {
+  downloadAndDecompressDocument,
+} = require('./downloadAndDecompressDocument');
 const marketplaces = require('../../../config/marketplaces');
 
 /**
@@ -45,7 +48,7 @@ async function requestFbaSalesReport(
     );
 
     // const reportDocumentId =
-    //   'amzn1.spdoc.1.4.eu.5623e23e-7de2-4c80-8ee5-6b32b380b64d.T1577F0GXOPX05.2651';
+    //   'amzn1.spdoc.1.4.eu.673f578f-6140-40bb-8e39-6e7454594fd8.T10YJJPFSHCMER.2511';
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getDocumentUrl(
@@ -54,20 +57,29 @@ async function requestFbaSalesReport(
       config.reportType,
     );
 
-    // Fetch CSV data and process into database
+    downloadAndDecompressDocument(
+      documentUrl,
+      compressionAlgorithm,
+      reportType,
+      countryKeys,
+      config.dataStartTime,
+      config.dataEndTime,
+      outputPath,
+    );
+    /* // Fetch CSV data and process into database
     await fetchAndProcessCsv(
       documentUrl,
       compressionAlgorithm,
       reportDocumentId,
       countryKeys,
       reportType,
-    );
+    ); */
   } catch (error) {
     console.error('Error in requesting FBA Inventory report:', error);
   }
 }
 requestFbaSalesReport(
-  ['france'],
+  ['germany'],
   'GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL',
   '2023-09-15',
   '2023-10-15',

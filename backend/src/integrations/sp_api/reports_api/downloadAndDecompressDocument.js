@@ -26,7 +26,7 @@ async function downloadAndDecompressDocument(
   countryCode,
   dataStartTime,
   dataEndTime,
-  outputPath = './src/integrations/sp_api/reports_api/downloads/',
+  outputPath = 'backend/src/integrations/sp_api/reports_api/downloads/',
 ) {
   try {
     // Send a GET request to the URL and receive the response as a stream
