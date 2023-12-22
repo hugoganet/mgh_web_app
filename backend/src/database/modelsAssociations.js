@@ -29,6 +29,7 @@ module.exports = db => {
     WarehouseStock,
     ProductAndAmzReferralFeeCategory,
     AfnInventoryDailyUpdate,
+    FbaSaleProcessed,
   } = db;
 
   // Associations for Asin
@@ -124,6 +125,11 @@ module.exports = db => {
     onUpdate: 'CASCADE',
   });
   Country.hasMany(Supplier, {
+    foreignKey: 'countryCode',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Country.hasMany(FbaSaleProcessed, {
     foreignKey: 'countryCode',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
@@ -271,6 +277,11 @@ module.exports = db => {
   });
   Sku.hasMany(AfnInventoryDailyUpdate, {
     foreignKey: 'skuId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  Sku.hasMany(FbaSaleProcessed, {
+    foreignKey: 'sku',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
@@ -464,6 +475,18 @@ module.exports = db => {
   // Associations for AfnInventoryDailyUpdate
   AfnInventoryDailyUpdate.belongsTo(Sku, {
     foreignKey: 'skuId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for FbaSaleProcessed
+  FbaSaleProcessed.belongsTo(Sku, {
+    foreignKey: 'sku',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  FbaSaleProcessed.belongsTo(Country, {
+    foreignKey: 'countryCode',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });

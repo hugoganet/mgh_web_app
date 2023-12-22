@@ -39,6 +39,7 @@ async function initializeDatabase({ forceSync = false } = {}) {
       'EanInDonation',
       'WarehouseStock',
       'AfnInventoryDailyUpdate',
+      'FbaSaleProcessed',
     ];
 
     // Synchronize each model in order
