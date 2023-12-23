@@ -59,7 +59,7 @@ module.exports = sequelize => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      salesFbaFees: {
+      salesFbaFee: {
         type: DataTypes.DECIMAL(5, 2),
         allowNull: true,
       },
