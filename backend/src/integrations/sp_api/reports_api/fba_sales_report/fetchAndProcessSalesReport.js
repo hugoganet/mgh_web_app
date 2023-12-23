@@ -2,11 +2,13 @@ const axios = require('axios');
 const csvParser = require('csv-parser');
 const { Transform } = require('stream');
 const db = require('../../../../api/models/index');
-const marketplaces = require('../../../../config/marketplaces');
 const { logAndCollect } = require('../logs/logAndCollect');
 const {
   chooseDecompressionStream,
 } = require('../../chooseDecompressionStream');
+const {
+  mapSalesChannelToCountryCode,
+} = require('../../../../utils/mapSalesChannelToCountryCode.js');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -15,7 +17,6 @@ const {
  * @param {string} url - The URL of the CSV file.
  * @param {string|null} compressionAlgorithm - The compression algorithm used (e.g., 'GZIP'), or null if uncompressed.
  * @param {string} reportDocumentId - The document ID associated with the report.
- * @param {string[]} countryKeys - The country keys to associate with the report.
  * @param {string} reportType - The type of report being processed.
  * @return {Promise<void>} - A promise that resolves when the CSV file has been fetched and processed.
  */
@@ -23,10 +24,8 @@ async function fetchAndProcessSalesReport(
   url,
   compressionAlgorithm,
   reportDocumentId,
-  countryKeys,
   reportType,
 ) {
-  const countryCode = marketplaces[countryKeys[0]].countryCode;
   const invalidSkus = [];
 
   try {
@@ -43,12 +42,15 @@ async function fetchAndProcessSalesReport(
     // Create a transform stream to process each row of CSV data
     const transformStream = new Transform({
       objectMode: true,
-      transform(chunk, encoding, callback) {
+      async transform(chunk, encoding, callback) {
         try {
+          const countryCode = await mapSalesChannelToCountryCode(
+            chunk['sales-channel'],
+          );
           // Extract necessary data from the chunk and pass it downstream
           const salesData = {
             sku: chunk['sku'], // Map to 'sku' field in the model
-            countryCode: countryCode, // Map to 'countryCode' field in the model
+            countryCode,
             amazonSalesId: chunk['amazon-order-id'], // Map to 'amazonSalesId' field in the model
             salesShipCountryCode: chunk['ship-country'], // Map to 'salesShipCountryCode' field in the model
             salesItemCurrency: chunk['currency'], // Map to 'salesItemCurrency' field in the model
@@ -86,7 +88,7 @@ async function fetchAndProcessSalesReport(
           try {
             // Find corresponding SKU record in the database
             const skuRecord = await db.Sku.findOne({
-              where: { sku, countryCode },
+              // where: { sku, countryCode },
             });
 
             // If SKU not found, log and skip processing

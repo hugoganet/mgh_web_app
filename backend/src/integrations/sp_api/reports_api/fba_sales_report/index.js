@@ -72,7 +72,6 @@ async function requestFbaSalesReport(
       documentUrl,
       compressionAlgorithm,
       reportDocumentId,
-      countryKeys,
       reportType,
     );
   } catch (error) {
