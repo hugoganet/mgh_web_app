@@ -15,7 +15,7 @@ module.exports = sequelize => {
         primaryKey: true,
         autoIncrement: true,
       },
-      sku: {
+      skuId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -25,7 +25,7 @@ module.exports = sequelize => {
       },
       countryCode: {
         type: DataTypes.CHAR(2),
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'countries',
           key: 'country_code',
@@ -53,7 +53,7 @@ module.exports = sequelize => {
       },
       salesItemVatRate: {
         type: DataTypes.DECIMAL(5, 2),
-        allowNull: false,
+        allowNull: true,
       },
       salesSkuQuantity: {
         type: DataTypes.INTEGER,
@@ -61,7 +61,7 @@ module.exports = sequelize => {
       },
       salesFbaFees: {
         type: DataTypes.DECIMAL(5, 2),
-        allowNull: false,
+        allowNull: true,
       },
       salesPurchaseDate: {
         type: DataTypes.DATE,
@@ -69,31 +69,31 @@ module.exports = sequelize => {
       },
       salesGrossMarginTotal: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
       },
       salesGrossMarginPerItem: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
       },
       salesGrossMarginPercentagePerItem: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
       },
       salesNetMarginTotal: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
       },
       salesNetMarginPerItem: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
       },
       salesNetMarginPercentagePerItem: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
       },
       salesRoiPerItem: {
         type: DataTypes.FLOAT,
-        allowNull: false,
+        allowNull: true,
       },
     },
     {

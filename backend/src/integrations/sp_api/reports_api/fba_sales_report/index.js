@@ -1,11 +1,11 @@
-const { getReportId } = require('./getReportId');
-const { getReportDocumentId } = require('./getReportDocumentId');
-const { getDocumentUrl } = require('./getDocumentUrl');
-// const { fetchAndProcessCsv } = require('./fecthAndProcessCsv');
+const { getReportId } = require('../getReportId');
+const { getReportDocumentId } = require('../getReportDocumentId');
+const { getDocumentUrl } = require('../getDocumentUrl');
+const { fetchAndProcessSalesReport } = require('./fetchAndProcessSalesReport');
 const {
   downloadAndDecompressDocument,
-} = require('./downloadAndDecompressDocument');
-const marketplaces = require('../../../config/marketplaces');
+} = require('../downloadAndDecompressDocument');
+const marketplaces = require('../../../../config/marketplaces');
 
 /**
  * Requests an FBA Inventory report from the Amazon Selling Partner API.
@@ -37,7 +37,7 @@ async function requestFbaSalesReport(
   };
 
   try {
-    // Request report ID
+    /*   // Request report ID
     const reportIdResponse = await getReportId(config);
 
     // Request report document ID
@@ -45,10 +45,10 @@ async function requestFbaSalesReport(
       reportIdResponse.reportId,
       config.createLog,
       config.reportType,
-    );
+    ); */
 
-    // const reportDocumentId =
-    //   'amzn1.spdoc.1.4.eu.673f578f-6140-40bb-8e39-6e7454594fd8.T10YJJPFSHCMER.2511';
+    const reportDocumentId =
+      'amzn1.spdoc.1.4.eu.d13319d3-08f1-4258-91a1-1012a2b9b910.T6SL13GP8HJUL.2511';
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getDocumentUrl(
@@ -57,7 +57,7 @@ async function requestFbaSalesReport(
       config.reportType,
     );
 
-    downloadAndDecompressDocument(
+    /*   downloadAndDecompressDocument(
       documentUrl,
       compressionAlgorithm,
       reportType,
@@ -66,20 +66,21 @@ async function requestFbaSalesReport(
       config.dataEndTime,
       outputPath,
     );
-    /* // Fetch CSV data and process into database
-    await fetchAndProcessCsv(
+ */
+    // Fetch CSV data and process into database
+    await fetchAndProcessSalesReport(
       documentUrl,
       compressionAlgorithm,
       reportDocumentId,
       countryKeys,
       reportType,
-    ); */
+    );
   } catch (error) {
     console.error('Error in requesting FBA Inventory report:', error);
   }
 }
 requestFbaSalesReport(
-  ['germany'],
+  ['france'],
   'GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL',
   '2023-09-15',
   '2023-10-15',
