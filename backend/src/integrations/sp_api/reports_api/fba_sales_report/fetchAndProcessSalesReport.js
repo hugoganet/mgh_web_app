@@ -95,12 +95,15 @@ async function fetchAndProcessSalesReport(
               return;
             }
 
+            const salesItemVatRate = salesItemTax / salesItemSellingPriceExc;
+
             // Construct the record for database insertion
             const record = {
               skuId: skuRecord.skuId,
               amazonSalesId,
               salesShipCountryCode,
               salesItemCurrency,
+              salesItemVatRate,
               salesItemSellingPriceExc,
               salesItemTax,
               salesSkuQuantity,
