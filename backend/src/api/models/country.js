@@ -19,6 +19,10 @@ module.exports = sequelize => {
         type: DataTypes.STRING(50),
         allowNull: false,
       },
+      countryMarketplaceDomain: {
+        type: DataTypes.STRING(50),
+        allowNull: true,
+      },
     },
     {
       sequelize,

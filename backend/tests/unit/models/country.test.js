@@ -19,9 +19,11 @@ describe(`Country Model Tests`, () => {
     const country = await db.Country.create({
       countryCode: 'US',
       countryName: 'United States',
+      countryMarketplaceDomain: 'Amazon.com',
     });
     expect(country.countryCode).toBe('US');
     expect(country.countryName).toBe('United States');
+    expect(country.countryMarketplaceDomain).toBe('Amazon.com');
   });
 
   test('Fail to create a Country with invalid data', async () => {

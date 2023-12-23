@@ -18,6 +18,9 @@ const countriesController = require('../controllers/countriesController');
  *        countryName:
  *          type: string
  *          description: The name of the country.
+ *        countryMarketplaceDomain:
+ *          type: string
+ *          description: The second and top level domain.
  * tags:
  *  name: Countries
  *  description: The countries managing API
