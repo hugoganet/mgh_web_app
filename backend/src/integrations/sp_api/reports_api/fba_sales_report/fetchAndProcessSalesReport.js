@@ -88,7 +88,7 @@ async function fetchAndProcessSalesReport(
           try {
             // Find corresponding SKU record in the database
             const skuRecord = await db.Sku.findOne({
-              // where: { sku, countryCode },
+              where: { sku, countryCode },
             });
 
             // If SKU not found, log and skip processing
