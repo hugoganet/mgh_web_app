@@ -57,16 +57,15 @@ async function requestFbaSalesReport(
       config.reportType,
     );
 
-    /*   downloadAndDecompressDocument(
+    downloadAndDecompressDocument(
       documentUrl,
       compressionAlgorithm,
       reportType,
       countryKeys,
       config.dataStartTime,
       config.dataEndTime,
-      outputPath,
     );
- */
+
     // Fetch CSV data and process into database
     await fetchAndProcessSalesReport(
       documentUrl,

@@ -34,7 +34,6 @@ module.exports = sequelize => {
       amazonSalesId: {
         type: DataTypes.STRING(50),
         allowNull: false,
-        unique: true,
       },
       salesShipCountryCode: {
         type: DataTypes.CHAR(2),
@@ -67,6 +66,10 @@ module.exports = sequelize => {
       salesPurchaseDate: {
         type: DataTypes.DATE,
         allowNull: false,
+      },
+      salesCogs: {
+        type: DataTypes.DECIMAL(5, 2),
+        allowNull: true,
       },
       salesGrossMarginTotal: {
         type: DataTypes.FLOAT,

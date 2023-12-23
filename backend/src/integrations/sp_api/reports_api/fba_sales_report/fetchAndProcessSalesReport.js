@@ -47,7 +47,7 @@ async function fetchAndProcessSalesReport(
           const countryCode = await mapSalesChannelToCountryCode(
             chunk['sales-channel'],
           );
-          // Extract necessary data from the chunk and pass it downstream
+
           const salesData = {
             sku: chunk['sku'], // Map to 'sku' field in the model
             countryCode,
@@ -86,12 +86,10 @@ async function fetchAndProcessSalesReport(
           salesPurchaseDate,
         }) => {
           try {
-            // Find corresponding SKU record in the database
             const skuRecord = await db.Sku.findOne({
               where: { sku, countryCode },
             });
 
-            // If SKU not found, log and skip processing
             if (!skuRecord) {
               invalidSkus.push({ sku, countryCode });
               return;
@@ -107,6 +105,7 @@ async function fetchAndProcessSalesReport(
               salesItemTax,
               salesSkuQuantity,
               salesPurchaseDate,
+              salesCogs: skuRecord.skuAcquisitionCostExc,
               reportDocumentId,
             };
 
