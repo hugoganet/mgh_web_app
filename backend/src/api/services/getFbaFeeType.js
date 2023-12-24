@@ -20,7 +20,9 @@ const getFbaFeeType = async skuId => {
       return null;
     }
 
-    return minimumSellingPriceRecord.enrolledInPanEu ? 'localAndPanEu' : 'efn';
+    return minimumSellingPriceRecord.enrolledInPanEu
+      ? 'fbaFeeLocalAndPanEu'
+      : 'fbaFeeEfn';
   } catch (error) {
     console.error('Error retrieving FBA fee type:', error);
     return null;
@@ -30,5 +32,3 @@ const getFbaFeeType = async skuId => {
 module.exports = {
   getFbaFeeType,
 };
-
-getFbaFeeType(3709);

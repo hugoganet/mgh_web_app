@@ -18,10 +18,10 @@ const getFbaFees = async asinId => {
       return null;
     }
 
-    return {
+    return (fbaFees = {
       fbaFeeLocalAndPanEu: priceGridFbaFee.fbaFeeLocalAndPanEu,
       fbaFeeEfn: priceGridFbaFee.fbaFeeEfn,
-    };
+    });
   } catch (error) {
     console.error('Error retrieving FBA fees:', error);
     return null;

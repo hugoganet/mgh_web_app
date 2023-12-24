@@ -9,6 +9,11 @@ const {
 const {
   mapSalesChannelToCountryCode,
 } = require('../../../../utils/mapSalesChannelToCountryCode.js');
+const { getFbaFeeType } = require('../../../../api/services/getFbaFeeType');
+const { getFbaFees } = require('../../../../api/services/getFbaFees');
+const {
+  getAsinFromSkuId,
+} = require('../../../../api/services/getAsinFromSkuId');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -95,7 +100,15 @@ async function fetchAndProcessSalesReport(
               return;
             }
 
-            const salesItemVatRate = salesItemTax / salesItemSellingPriceExc;
+            const salesItemVatRate = (
+              salesItemTax / salesItemSellingPriceExc
+            ).toFixed(2);
+
+            const asinId = await getAsinFromSkuId(skuRecord.skuId);
+
+            const salesFbaFeeType = await getFbaFeeType(skuRecord.skuId);
+
+            const salesFbaFee = await getFbaFees(asinId);
 
             // Construct the record for database insertion
             const record = {
@@ -107,6 +120,7 @@ async function fetchAndProcessSalesReport(
               salesItemSellingPriceExc,
               salesItemTax,
               salesSkuQuantity,
+              salesFbaFee: salesFbaFee[salesFbaFeeType],
               salesPurchaseDate,
               salesCogs: skuRecord.skuAcquisitionCostExc,
               reportDocumentId,
