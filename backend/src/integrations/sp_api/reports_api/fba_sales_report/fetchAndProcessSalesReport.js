@@ -17,6 +17,7 @@ const {
 const {
   calculateGrossMargin,
 } = require('../../../../utils/calculateGrossMargin');
+const { calculateNetMargin } = require('../../../../utils/calculateNetMargin');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -103,6 +104,9 @@ async function fetchAndProcessSalesReport(
               return;
             }
 
+            const salesCogs =
+              skuRecord.skuAcquisitionCostExc * salesSkuQuantity;
+
             const salesItemVatRate = (
               salesItemTax / salesItemSellingPriceExc
             ).toFixed(2);
@@ -111,10 +115,12 @@ async function fetchAndProcessSalesReport(
 
             const salesFbaFeeType = await getFbaFeeType(skuRecord.skuId);
 
-            const salesFbaFee = await getFbaFees(asinId);
+            const salesFbaFees = await getFbaFees(asinId);
+            const salesFbaFee =
+              salesFbaFees[salesFbaFeeType] * salesSkuQuantity;
 
             const salesGrossMarginTotal = calculateGrossMargin(
-              skuRecord.skuAcquisitionCostExc,
+              salesCogs,
               salesItemSellingPriceExc,
             );
 
@@ -126,6 +132,13 @@ async function fetchAndProcessSalesReport(
               (salesItemSellingPriceExc / salesSkuQuantity)
             ).toFixed(5);
 
+            const salesNetMarginTotal = calculateNetMargin(
+              salesCogs,
+              salesItemSellingPriceExc,
+              salesFbaFee,
+            );
+            console.log(salesFbaFee);
+
             // Construct the record for database insertion
             const record = {
               skuId: skuRecord.skuId,
@@ -136,12 +149,13 @@ async function fetchAndProcessSalesReport(
               salesItemSellingPriceExc,
               salesItemTax,
               salesSkuQuantity,
-              salesFbaFee: salesFbaFee[salesFbaFeeType],
+              salesFbaFee,
               salesPurchaseDate,
-              salesCogs: skuRecord.skuAcquisitionCostExc,
+              salesCogs,
               salesGrossMarginTotal,
               salesGrossMarginPerItem,
               salesGrossMarginPercentagePerItem,
+              salesNetMarginTotal,
               reportDocumentId,
             };
 
