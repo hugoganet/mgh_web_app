@@ -121,6 +121,11 @@ async function fetchAndProcessSalesReport(
             const salesGrossMarginPerItem =
               salesGrossMarginTotal / salesSkuQuantity;
 
+            const salesGrossMarginPercentagePerItem = (
+              salesGrossMarginPerItem /
+              (salesItemSellingPriceExc / salesSkuQuantity)
+            ).toFixed(5);
+
             // Construct the record for database insertion
             const record = {
               skuId: skuRecord.skuId,
@@ -136,6 +141,7 @@ async function fetchAndProcessSalesReport(
               salesCogs: skuRecord.skuAcquisitionCostExc,
               salesGrossMarginTotal,
               salesGrossMarginPerItem,
+              salesGrossMarginPercentagePerItem,
               reportDocumentId,
             };
 
