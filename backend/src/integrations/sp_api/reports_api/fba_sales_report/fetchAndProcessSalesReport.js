@@ -137,7 +137,9 @@ async function fetchAndProcessSalesReport(
               salesItemSellingPriceExc,
               salesFbaFee,
             );
-            console.log(salesFbaFee);
+
+            const salesNetMarginPerItem =
+              salesNetMarginTotal / salesSkuQuantity;
 
             // Construct the record for database insertion
             const record = {
@@ -156,6 +158,7 @@ async function fetchAndProcessSalesReport(
               salesGrossMarginPerItem,
               salesGrossMarginPercentagePerItem,
               salesNetMarginTotal,
+              salesNetMarginPerItem,
               reportDocumentId,
             };
 
