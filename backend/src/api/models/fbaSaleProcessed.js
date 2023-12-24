@@ -52,7 +52,7 @@ module.exports = sequelize => {
         allowNull: false,
       },
       salesItemVatRate: {
-        type: DataTypes.DECIMAL(5, 2),
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
       },
       salesSkuQuantity: {
@@ -60,7 +60,7 @@ module.exports = sequelize => {
         allowNull: false,
       },
       salesFbaFee: {
-        type: DataTypes.DECIMAL(5, 2),
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
       },
       salesPurchaseDate: {
@@ -68,35 +68,35 @@ module.exports = sequelize => {
         allowNull: false,
       },
       salesCogs: {
-        type: DataTypes.DECIMAL(5, 2),
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
       },
       salesGrossMarginTotal: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
       },
       salesGrossMarginPerItem: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
       },
       salesGrossMarginPercentagePerItem: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10, 5),
         allowNull: true,
       },
       salesNetMarginTotal: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
       },
       salesNetMarginPerItem: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
       },
       salesNetMarginPercentagePerItem: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10, 5),
         allowNull: true,
       },
       salesRoiPerItem: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10, 5),
         allowNull: true,
       },
     },

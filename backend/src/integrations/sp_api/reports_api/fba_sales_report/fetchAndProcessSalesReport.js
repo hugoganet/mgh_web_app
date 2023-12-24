@@ -14,6 +14,9 @@ const { getFbaFees } = require('../../../../api/services/getFbaFees');
 const {
   getAsinFromSkuId,
 } = require('../../../../api/services/getAsinFromSkuId');
+const {
+  calculateGrossMargin,
+} = require('../../../../utils/calculateGrossMargin');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -110,6 +113,12 @@ async function fetchAndProcessSalesReport(
 
             const salesFbaFee = await getFbaFees(asinId);
 
+            const salesGrossMarginTotal = calculateGrossMargin(
+              skuRecord.skuAcquisitionCostExc,
+              salesItemSellingPriceExc,
+            );
+            console.log('salesGrossMarginTotal', salesGrossMarginTotal);
+
             // Construct the record for database insertion
             const record = {
               skuId: skuRecord.skuId,
@@ -123,6 +132,7 @@ async function fetchAndProcessSalesReport(
               salesFbaFee: salesFbaFee[salesFbaFeeType],
               salesPurchaseDate,
               salesCogs: skuRecord.skuAcquisitionCostExc,
+              salesGrossMarginTotal,
               reportDocumentId,
             };
 
