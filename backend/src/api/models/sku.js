@@ -68,7 +68,7 @@ module.exports = sequelize => {
       isActive: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: true,
+        defaultValue: false,
       },
       numberOfActiveDays: {
         type: DataTypes.INTEGER,

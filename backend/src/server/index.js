@@ -6,7 +6,6 @@ const initializeDatabase = require('../database/initialize');
 const isTest = process.env.NODE_ENV === 'test';
 
 (async () => {
-  // Only sync and seed the database if we're running tests
   if (isTest) {
     console.log('Initializing database...');
     await initializeDatabase({ forceSync: true });

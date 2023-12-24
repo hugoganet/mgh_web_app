@@ -1,8 +1,13 @@
 const { getReportId } = require('./getReportId');
 const { getReportDocumentId } = require('./getReportDocumentId');
 const { getDocumentUrl } = require('./getDocumentUrl');
-const { fetchAndProcessCsv } = require('./fecthAndProcessCsv');
+const {
+  fetchAndProcessInventoryReport,
+} = require('./fetchAndProcessInventoryReport');
 const marketplaces = require('../../../../src/config/marketplaces');
+// const {
+//   downloadAndDecompressDocument,
+// } = require('./downloadAndDecompressDocument');
 
 /**
  * Requests an FBA Inventory report from the Amazon Selling Partner API.
@@ -34,18 +39,18 @@ async function requestFbaInventoryReport(
   };
 
   try {
-    // Request report ID
-    const reportIdResponse = await getReportId(config);
+    // // Request report ID
+    // const reportIdResponse = await getReportId(config);
 
-    // Request report document ID
-    const reportDocumentId = await getReportDocumentId(
-      reportIdResponse.reportId,
-      config.createLog,
-      config.reportType,
-    );
+    // // Request report document ID
+    // const reportDocumentId = await getReportDocumentId(
+    //   reportIdResponse.reportId,
+    //   config.createLog,
+    //   config.reportType,
+    // );
 
-    // const reportDocumentId =
-    //   'amzn1.spdoc.1.4.eu.5623e23e-7de2-4c80-8ee5-6b32b380b64d.T1577F0GXOPX05.2651';
+    const reportDocumentId =
+      'amzn1.spdoc.1.4.eu.df53ff0c-fec9-426e-8bdb-7fcd875f3e1e.T1IXG6WZJSJXXN.2651';
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getDocumentUrl(
@@ -54,8 +59,17 @@ async function requestFbaInventoryReport(
       config.reportType,
     );
 
+    // downloadAndDecompressDocument(
+    //   documentUrl,
+    //   compressionAlgorithm,
+    //   reportType,
+    //   countryKeys,
+    //   config.dataStartTime,
+    //   config.dataEndTime,
+    // );
+
     // Fetch CSV data and process into database
-    await fetchAndProcessCsv(
+    await fetchAndProcessInventoryReport(
       documentUrl,
       compressionAlgorithm,
       reportDocumentId,

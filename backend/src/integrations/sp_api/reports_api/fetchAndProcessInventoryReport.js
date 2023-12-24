@@ -1,10 +1,15 @@
 const axios = require('axios');
 const csvParser = require('csv-parser');
-const { PassThrough, Transform } = require('stream'); // To work with streams
-const zlib = require('zlib'); // To handle compression
+const { Transform } = require('stream'); // To work with streams
 const db = require('../../../api/models/index'); // Database models
-const marketplaces = require('../../../../src/config/marketplaces'); // Marketplace configuration
+const marketplaces = require('../../../config/marketplaces'); // Marketplace configuration
 const { logAndCollect } = require('./logs/logAndCollect'); // Logging function
+const {
+  chooseDecompressionStream,
+} = require('../chooseDecompressionStream.js');
+const {
+  checkSkuIsActive,
+} = require('../../../api/services/checkSkuIsActive.js');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -16,7 +21,7 @@ const { logAndCollect } = require('./logs/logAndCollect'); // Logging function
  * @param {string} reportType - The type of report being processed.
  * @return {Promise<void>} - A promise that resolves when the CSV file has been fetched and processed.
  */
-async function fetchAndProcessCsv(
+async function fetchAndProcessInventoryReport(
   url,
   compressionAlgorithm,
   reportDocumentId,
@@ -88,6 +93,7 @@ async function fetchAndProcessCsv(
               reportDocumentId,
             };
 
+            checkSkuIsActive(skuRecord.skuId);
             // Insert the record into the database
             await db.AfnInventoryDailyUpdate.create(record);
           } catch (dbErr) {
@@ -114,25 +120,6 @@ async function fetchAndProcessCsv(
   }
 }
 
-/**
- * Chooses the appropriate decompression stream based on the compression algorithm.
- * @param {string|null} compressionAlgorithm - The compression algorithm used.
- * @return {stream.Transform} The decompression stream.
- */
-function chooseDecompressionStream(compressionAlgorithm) {
-  switch (compressionAlgorithm) {
-    case 'GZIP':
-      return zlib.createGunzip();
-    case null:
-    case undefined:
-      return new PassThrough(); // No decompression needed
-    default:
-      throw new Error(
-        `Unsupported compression algorithm: ${compressionAlgorithm}`,
-      );
-  }
-}
-
 module.exports = {
-  fetchAndProcessCsv,
+  fetchAndProcessInventoryReport,
 };

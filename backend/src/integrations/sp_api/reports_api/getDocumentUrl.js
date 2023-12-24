@@ -25,7 +25,7 @@ async function getDocumentUrl(reportDocumentId, createLog, reportType) {
 
     const parsedResponse = response.data;
     const documentUrl = parsedResponse.url;
-    const compressionAlgorithm = parsedResponse.compressionAlgorithm; // Could be 'GZIP', etc.
+    const compressionAlgorithm = parsedResponse.compressionAlgorithm;
     const reportDocumentId = parsedResponse.reportDocumentId;
 
     console.log('Document URL:', documentUrl);
