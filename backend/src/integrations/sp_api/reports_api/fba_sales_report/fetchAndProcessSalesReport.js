@@ -18,6 +18,7 @@ const {
   calculateGrossMargin,
 } = require('../../../../utils/calculateGrossMargin');
 const { calculateNetMargin } = require('../../../../utils/calculateNetMargin');
+const { calculateRoi } = require('../../../../utils/calculateRoi');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -104,23 +105,32 @@ async function fetchAndProcessSalesReport(
               return;
             }
 
-            const salesCogs =
+            const skuId = skuRecord.skuId;
+
+            const salesCogsTotal =
               skuRecord.skuAcquisitionCostExc * salesSkuQuantity;
 
             const salesItemVatRate = (
               salesItemTax / salesItemSellingPriceExc
             ).toFixed(2);
 
-            const asinId = await getAsinFromSkuId(skuRecord.skuId);
+            const asinId = await getAsinFromSkuId(skuId);
 
-            const salesFbaFeeType = await getFbaFeeType(skuRecord.skuId);
+            const salesFbaFeeType = await getFbaFeeType(skuId);
 
             const salesFbaFees = await getFbaFees(asinId);
             const salesFbaFee =
               salesFbaFees[salesFbaFeeType] * salesSkuQuantity;
+            /* console.log(
+              `FBA fees: ${JSON.stringify(salesFbaFees)}
+              FBA fee type: ${salesFbaFeeType},
+              FBA fee: ${salesFbaFee},
+              ASIN ID: ${asinId},
+              SKU ID: ${skuId},`,
+            ); */
 
             const salesGrossMarginTotal = calculateGrossMargin(
-              salesCogs,
+              salesCogsTotal,
               salesItemSellingPriceExc,
             );
 
@@ -133,7 +143,7 @@ async function fetchAndProcessSalesReport(
             ).toFixed(5);
 
             const salesNetMarginTotal = calculateNetMargin(
-              salesCogs,
+              salesCogsTotal,
               salesItemSellingPriceExc,
               salesFbaFee,
             );
@@ -141,9 +151,19 @@ async function fetchAndProcessSalesReport(
             const salesNetMarginPerItem =
               salesNetMarginTotal / salesSkuQuantity;
 
+            const salesNetMarginPercentagePerItem = (
+              salesNetMarginPerItem /
+              (salesItemSellingPriceExc / salesSkuQuantity)
+            ).toFixed(5);
+
+            const salesRoiPerItem = calculateRoi(
+              skuRecord.skuAcquisitionCostExc,
+              salesNetMarginPerItem,
+            );
+
             // Construct the record for database insertion
             const record = {
-              skuId: skuRecord.skuId,
+              skuId,
               amazonSalesId,
               salesShipCountryCode,
               salesItemCurrency,
@@ -153,12 +173,14 @@ async function fetchAndProcessSalesReport(
               salesSkuQuantity,
               salesFbaFee,
               salesPurchaseDate,
-              salesCogs,
+              salesCogsTotal,
               salesGrossMarginTotal,
               salesGrossMarginPerItem,
               salesGrossMarginPercentagePerItem,
               salesNetMarginTotal,
               salesNetMarginPerItem,
+              salesNetMarginPercentagePerItem,
+              salesRoiPerItem,
               reportDocumentId,
             };
 
