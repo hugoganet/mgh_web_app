@@ -23,10 +23,6 @@ const updateAfnQuantity = async skuId => {
     // Assume you're updating the total quantity field in the Sku table
     const skuAfnTotalQuantity = latestUpdate.afnFulfillableQuantity;
     await db.Sku.update({ skuAfnTotalQuantity }, { where: { skuId: skuId } });
-
-    console.log(
-      `Updated SKU ID: ${skuId} with AFN Total Quantity: ${skuAfnTotalQuantity}`,
-    );
   } catch (error) {
     console.error('Error updating SKU AFN total quantity:', error);
   }

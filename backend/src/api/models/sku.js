@@ -77,6 +77,7 @@ module.exports = sequelize => {
       numberOfUnitSold: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        defaultValue: 0,
       },
       skuAverageUnitSoldPerDay: {
         type: DataTypes.DECIMAL(10, 5),

@@ -32,7 +32,7 @@ async function fetchAndProcessInventoryReport(
   reportType,
 ) {
   const countryCode = marketplaces[countryKeys[0]].countryCode; // Retrieve the countryCode from the first countryKey
-  const invalidSkus = []; // Array to store invalid SKUs
+  const createdSkus = []; // Array to store newly created SKUs
 
   try {
     // Make a GET request to receive the file as a stream
@@ -77,25 +77,59 @@ async function fetchAndProcessInventoryReport(
         'data',
         async ({ sku, countryCode, actualPrice, afnFulfillableQuantity }) => {
           try {
-            // Attempt to find corresponding SKU record in the database
-            const skuRecord = await db.Sku.findOne({
+            // Find or create the SKU record in the database
+            const [skuRecord, created] = await db.Sku.findOrCreate({
               where: { sku, countryCode },
+              defaults: {
+                sku,
+                countryCode,
+                fnsku: null,
+                skuAcquisitionCostExc: 0,
+                skuAcquisitionCostInc: 0,
+                skuAfnTotalQuantity: afnFulfillableQuantity,
+                skuAverageSellingPrice: actualPrice,
+                skuAverageNetMargin: null,
+                skuAverageNetMarginPercentage: null,
+                skuAverageReturnOnInvestmentRate: null,
+                skuAverageDailyReturnOnInvestmentRate: null,
+                isActive: false,
+                numberOfActiveDays: null,
+                numberOfUnitSold: 0,
+                skuAverageUnitSoldPerDay: null,
+                skuRestockAlertQuantity: 1,
+                skuIsTest: false,
+              },
             });
+
+            // If the record was created, find another SKU with the same sku to copy acquisition costs
+            if (created) {
+              const similarSku = await db.Sku.findOne({
+                where: {
+                  sku,
+                  countryCode: { [db.Sequelize.Op.ne]: countryCode }, // Not the same countryCode
+                },
+              });
+              console.log(
+                `Created:
+                ${skuRecord.skuId}
+                ${skuRecord.countryCode}
+                ${similarSku.skuId}`,
+              );
+
+              // If a similar SKU is found, copy the acquisition cost values
+              if (similarSku) {
+                skuRecord.skuAcquisitionCostExc =
+                  similarSku.skuAcquisitionCostExc;
+                skuRecord.skuAcquisitionCostInc =
+                  similarSku.skuAcquisitionCostInc;
+                await skuRecord.save(); // Save the updated values
+              }
+            }
 
             // If SKU not found, log it as invalid
             if (!skuRecord) {
-              invalidSkus.push({ sku, countryCode });
+              createdSkus.push({ sku, countryCode });
             }
-
-            // Construct the record for database insertion
-            const record = {
-              skuId: skuRecord ? skuRecord.skuId : null, // Use null if SKU not found
-              sku,
-              countryCode,
-              actualPrice,
-              afnFulfillableQuantity,
-              reportDocumentId,
-            };
 
             // Check SKU activity and update AFN quantity if SKU exists
             if (skuRecord) {
@@ -103,8 +137,26 @@ async function fetchAndProcessInventoryReport(
               updateAfnQuantity(skuRecord.skuId);
             }
 
-            // Insert the record into the database
-            await db.AfnInventoryDailyUpdate.create(record);
+            // Attempt to find or create a corresponding AfnInventoryDailyUpdate record in the database
+            const [inventoryRecord, createdAfnInventoryRecord] =
+              await db.AfnInventoryDailyUpdate.findOrCreate({
+                where: { skuId: skuRecord.skuId },
+                defaults: {
+                  skuId: skuRecord.skuId,
+                  sku,
+                  countryCode,
+                  actualPrice,
+                  afnFulfillableQuantity,
+                  reportDocumentId,
+                },
+              });
+
+            // Update the fields if the record exists
+            if (!createdAfnInventoryRecord) {
+              inventoryRecord.actualPrice = actualPrice;
+              inventoryRecord.afnFulfillableQuantity = afnFulfillableQuantity;
+              await inventoryRecord.save(); // Save the updated record
+            }
           } catch (dbErr) {
             console.error('Error inserting data into database:', dbErr);
           }
@@ -115,9 +167,9 @@ async function fetchAndProcessInventoryReport(
       })
       .on('end', () => {
         // Log invalid SKUs at the end of processing
-        /*  if (invalidSkus.length > 0) {
+        /*  if (createdSkus.length > 0) {
           let tableString = 'Invalid SKUs:\nSKU\t\tCountryCode\n';
-          invalidSkus.forEach(({ sku, countryCode }) => {
+          createdSkus.forEach(({ sku, countryCode }) => {
             tableString += `${sku}\t\t${countryCode}\n`;
           });
           console.log(tableString);

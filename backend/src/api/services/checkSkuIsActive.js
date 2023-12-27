@@ -26,8 +26,6 @@ const checkSkuIsActive = async skuId => {
 
     // Update the Sku table with the new active status
     await db.Sku.update({ isActive }, { where: { skuId: skuId } });
-
-    console.log(`Updated SKU ID: ${skuId} active status to: ${isActive}`);
   } catch (error) {
     console.error('Error checking and updating SKU active status:', error);
   }
