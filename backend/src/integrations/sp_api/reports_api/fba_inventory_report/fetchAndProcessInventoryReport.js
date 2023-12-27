@@ -3,7 +3,7 @@ const csvParser = require('csv-parser');
 const { Transform } = require('stream'); // To work with streams
 const db = require('../../../../api/models/index'); // Database models
 const marketplaces = require('../../../../config/marketplaces.js'); // Marketplace configuration
-const { logAndCollect } = require('../logs/logAndCollect.js'); // Logging function
+// const { logAndCollect } = require('../logs/logAndCollect.js'); // Logging function
 const {
   chooseDecompressionStream,
 } = require('../../chooseDecompressionStream.js');
@@ -77,27 +77,32 @@ async function fetchAndProcessInventoryReport(
         'data',
         async ({ sku, countryCode, actualPrice, afnFulfillableQuantity }) => {
           try {
-            // Find corresponding SKU record in the database
+            // Attempt to find corresponding SKU record in the database
             const skuRecord = await db.Sku.findOne({
               where: { sku, countryCode },
             });
 
-            // If SKU not found, log and skip processing
+            // If SKU not found, log it as invalid
             if (!skuRecord) {
               invalidSkus.push({ sku, countryCode });
-              return;
             }
 
             // Construct the record for database insertion
             const record = {
-              skuId: skuRecord.skuId,
+              skuId: skuRecord ? skuRecord.skuId : null, // Use null if SKU not found
+              sku,
+              countryCode,
               actualPrice,
               afnFulfillableQuantity,
               reportDocumentId,
             };
 
-            checkSkuIsActive(skuRecord.skuId);
-            updateAfnQuantity(skuRecord.skuId);
+            // Check SKU activity and update AFN quantity if SKU exists
+            if (skuRecord) {
+              checkSkuIsActive(skuRecord.skuId);
+              updateAfnQuantity(skuRecord.skuId);
+            }
+
             // Insert the record into the database
             await db.AfnInventoryDailyUpdate.create(record);
           } catch (dbErr) {
@@ -110,13 +115,14 @@ async function fetchAndProcessInventoryReport(
       })
       .on('end', () => {
         // Log invalid SKUs at the end of processing
-        if (invalidSkus.length > 0) {
+        /*  if (invalidSkus.length > 0) {
           let tableString = 'Invalid SKUs:\nSKU\t\tCountryCode\n';
           invalidSkus.forEach(({ sku, countryCode }) => {
             tableString += `${sku}\t\t${countryCode}\n`;
           });
+          console.log(tableString);
           logAndCollect(tableString, reportType);
-        }
+        } */
         console.log('Data processing completed');
       });
   } catch (error) {

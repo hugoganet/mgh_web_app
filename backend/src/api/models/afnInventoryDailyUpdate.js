@@ -18,11 +18,19 @@ module.exports = sequelize => {
       },
       skuId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'skus',
           key: 'sku_id',
         },
+      },
+      sku: {
+        type: DataTypes.STRING(250),
+        allowNull: false,
+      },
+      countryCode: {
+        type: DataTypes.STRING(2),
+        allowNull: false,
       },
       actualPrice: {
         type: DataTypes.DECIMAL(5, 2),
