@@ -1,5 +1,5 @@
 const { spApiInstance } = require('../spApiConnector');
-const marketplaces = require('../../../../src/config/marketplaces');
+const marketplaces = require('../../../config/marketplaces');
 const calculateNextReportCreationTime = require('./calculateNextReportCreationTime');
 const { createDestination, createSubscription } = require('../amazonSqsSetup');
 const sqsArn = process.env.SQS_ARN;

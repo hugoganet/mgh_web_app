@@ -1,5 +1,5 @@
 require('dotenv').config({ path: 'backend/.env' });
-const { spApiInstance } = require('./spApiConnector');
+const { spApiInstance } = require('../spApiConnector');
 // const logAndCollect = require('./reports_api/logs/logAndCollect');
 
 /**

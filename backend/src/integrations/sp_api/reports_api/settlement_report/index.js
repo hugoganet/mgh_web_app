@@ -1,7 +1,7 @@
-const { getReports } = require('./getReports');
-const { getDocumentUrl } = require('./getDocumentUrl');
+const { getReports } = require('../getReports');
+const { getDocumentUrl } = require('../getDocumentUrl');
 const { fetchAndProcessCsv } = require('./fecthAndProcessCsv');
-const marketplaces = require('../../../../src/config/marketplaces');
+const marketplaces = require('../../../../config/marketplaces');
 
 /**
  * Requests a settlement report from the Amazon Selling Partner API and processes the data.
