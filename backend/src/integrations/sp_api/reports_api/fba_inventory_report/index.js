@@ -1,13 +1,14 @@
-const { getReportId } = require('./getReportId');
-const { getReportDocumentId } = require('./getReportDocumentId');
-const { getDocumentUrl } = require('./getDocumentUrl');
+/* eslint-disable no-unused-vars */
+const { getReportId } = require('../getReportId');
+const { getReportDocumentId } = require('../getReportDocumentId');
+const { getDocumentUrl } = require('../getDocumentUrl');
 const {
   fetchAndProcessInventoryReport,
 } = require('./fetchAndProcessInventoryReport');
-const marketplaces = require('../../../../src/config/marketplaces');
-// const {
-//   downloadAndDecompressDocument,
-// } = require('./downloadAndDecompressDocument');
+const marketplaces = require('../../../../config/marketplaces');
+const {
+  downloadAndDecompressDocument,
+} = require('../downloadAndDecompressDocument');
 
 /**
  * Requests an FBA Inventory report from the Amazon Selling Partner API.
@@ -50,7 +51,7 @@ async function requestFbaInventoryReport(
     // );
 
     const reportDocumentId =
-      'amzn1.spdoc.1.4.eu.df53ff0c-fec9-426e-8bdb-7fcd875f3e1e.T1IXG6WZJSJXXN.2651';
+      'amzn1.spdoc.1.4.eu.d70967bb-6eee-435a-af6c-22b9962d509b.T2K0V4W0QRVHHC.2651';
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getDocumentUrl(
@@ -59,14 +60,14 @@ async function requestFbaInventoryReport(
       config.reportType,
     );
 
-    // downloadAndDecompressDocument(
-    //   documentUrl,
-    //   compressionAlgorithm,
-    //   reportType,
-    //   countryKeys,
-    //   config.dataStartTime,
-    //   config.dataEndTime,
-    // );
+    downloadAndDecompressDocument(
+      documentUrl,
+      compressionAlgorithm,
+      reportType,
+      countryKeys,
+      config.dataStartTime,
+      config.dataEndTime,
+    );
 
     // Fetch CSV data and process into database
     await fetchAndProcessInventoryReport(
@@ -81,7 +82,7 @@ async function requestFbaInventoryReport(
   }
 }
 requestFbaInventoryReport(
-  ['france'],
+  ['belgium'],
   'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
   null,
   null,

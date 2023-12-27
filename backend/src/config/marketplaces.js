@@ -23,6 +23,22 @@ const marketplaces = {
     marketplaceId: 'AMEN7PMS3EDWL',
     countryCode: 'BE',
   },
+  sweden: {
+    marketplaceId: 'A2NODRKZP88ZB9',
+    countryCode: 'SE',
+  },
+  poland: {
+    marketplaceId: 'A1C3SOZRARQ6R3',
+    countryCode: 'PL',
+  },
+  turkey: {
+    marketplaceId: 'A33AVAJ2PDY3EV',
+    countryCode: 'TR',
+  },
+  unitedKingdom: {
+    marketplaceId: 'A1F83G8C2ARO7P',
+    countryCode: 'UK',
+  },
 };
 
 module.exports = marketplaces;

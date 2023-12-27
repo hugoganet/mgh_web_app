@@ -1,15 +1,18 @@
 const axios = require('axios');
 const csvParser = require('csv-parser');
 const { Transform } = require('stream'); // To work with streams
-const db = require('../../../api/models/index'); // Database models
-const marketplaces = require('../../../config/marketplaces'); // Marketplace configuration
-const { logAndCollect } = require('./logs/logAndCollect'); // Logging function
+const db = require('../../../../api/models/index'); // Database models
+const marketplaces = require('../../../../config/marketplaces.js'); // Marketplace configuration
+const { logAndCollect } = require('../logs/logAndCollect.js'); // Logging function
 const {
   chooseDecompressionStream,
-} = require('../chooseDecompressionStream.js');
+} = require('../../chooseDecompressionStream.js');
 const {
   checkSkuIsActive,
-} = require('../../../api/services/checkSkuIsActive.js');
+} = require('../../../../api/services/checkSkuIsActive.js');
+const {
+  updateAfnQuantity,
+} = require('../../../../api/services/updateAfnQuantity.js');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -94,6 +97,7 @@ async function fetchAndProcessInventoryReport(
             };
 
             checkSkuIsActive(skuRecord.skuId);
+            updateAfnQuantity(skuRecord.skuId);
             // Insert the record into the database
             await db.AfnInventoryDailyUpdate.create(record);
           } catch (dbErr) {
