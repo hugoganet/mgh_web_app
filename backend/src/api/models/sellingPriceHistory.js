@@ -26,11 +26,16 @@ module.exports = sequelize => {
         type: DataTypes.STRING(5),
         allowNull: false,
       },
+      date: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+      },
     },
     {
       sequelize,
       modelName: 'SellingPriceHistory',
       tableName: 'selling_prices_history',
+      timestamps: false,
     },
   );
 
