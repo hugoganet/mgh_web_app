@@ -19,7 +19,7 @@ module.exports = sequelize => {
         },
       },
       dailyPrice: {
-        type: DataTypes.DECIMAL(5, 2),
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
       currency: {

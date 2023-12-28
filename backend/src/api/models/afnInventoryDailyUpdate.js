@@ -33,7 +33,7 @@ module.exports = sequelize => {
         allowNull: false,
       },
       actualPrice: {
-        type: DataTypes.DECIMAL(5, 2),
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
       afnFulfillableQuantity: {

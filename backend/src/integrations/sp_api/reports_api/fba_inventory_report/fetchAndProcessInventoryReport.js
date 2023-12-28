@@ -109,12 +109,6 @@ async function fetchAndProcessInventoryReport(
                   countryCode: { [db.Sequelize.Op.ne]: countryCode }, // Not the same countryCode
                 },
               });
-              console.log(
-                `Created:
-                ${skuRecord.skuId}
-                ${skuRecord.countryCode}
-                ${similarSku.skuId}`,
-              );
 
               // If a similar SKU is found, copy the acquisition cost values
               if (similarSku) {

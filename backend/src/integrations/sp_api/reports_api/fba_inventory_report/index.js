@@ -9,6 +9,9 @@ const marketplaces = require('../../../../config/marketplaces');
 const {
   downloadAndDecompressDocument,
 } = require('../downloadAndDecompressDocument');
+const {
+  seedSellingPriceHistory,
+} = require('../../../../api/services/seedSellingPricesHistory');
 
 /**
  * Requests an FBA Inventory report from the Amazon Selling Partner API.
@@ -40,19 +43,20 @@ async function requestFbaInventoryReport(
   };
 
   try {
-    // // Request report ID
-    // const reportIdResponse = await getReportId(config);
+    // Request report ID
+    const reportIdResponse = await getReportId(config);
 
-    // // Request report document ID
-    // const reportDocumentId = await getReportDocumentId(
-    //   reportIdResponse.reportId,
-    //   config.createLog,
-    //   config.reportType,
-    // );
+    // Request report document ID
+    const reportDocumentId = await getReportDocumentId(
+      reportIdResponse.reportId,
+      config.createLog,
+      config.reportType,
+    );
 
-    const reportDocumentId =
-      'amzn1.spdoc.1.4.eu.0f9e82d9-228b-4100-be74-9ab6b130efc2.T3UYJ0G28GMMO3.2651'; // BE
+    // const reportDocumentId =
+    //   'amzn1.spdoc.1.4.eu.0f9e82d9-228b-4100-be74-9ab6b130efc2.T3UYJ0G28GMMO3.2651'; // BE
     // 'amzn1.spdoc.1.4.eu.f1869d8e-0cc2-4f37-ac61-145dfeb94996.T1STUU7A5ISUK2.2651'; // FR
+    // 'amzn1.spdoc.1.4.eu.4a226136-e5bb-44ff-9fe4-fa0ae1dde7be.T11LMVTFHAIXHG.2651' // SE
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getDocumentUrl(
@@ -61,14 +65,14 @@ async function requestFbaInventoryReport(
       config.reportType,
     );
 
-    /* downloadAndDecompressDocument(
+    downloadAndDecompressDocument(
       documentUrl,
       compressionAlgorithm,
       reportType,
       countryKeys,
       config.dataStartTime,
       config.dataEndTime,
-    ); */
+    );
 
     // Fetch CSV data and process into database
     await fetchAndProcessInventoryReport(
@@ -78,12 +82,14 @@ async function requestFbaInventoryReport(
       countryKeys,
       reportType,
     );
+
+    // await seedSellingPriceHistory();
   } catch (error) {
     console.error('Error in requesting FBA Inventory report:', error);
   }
 }
 requestFbaInventoryReport(
-  ['belgium'],
+  ['sweden'],
   'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
   null,
   null,
