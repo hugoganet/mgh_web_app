@@ -30,6 +30,7 @@ module.exports = db => {
     ProductAndAmzReferralFeeCategory,
     AfnInventoryDailyUpdate,
     FbaSaleProcessed,
+    SellingPriceHistory,
   } = db;
 
   // Associations for Asin
@@ -285,6 +286,11 @@ module.exports = db => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
+  Sku.hasMany(SellingPriceHistory, {
+    foreignKey: 'skuId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
 
   // Associations for AmazonReferralFee
   AmazonReferralFee.belongsTo(Country, {
@@ -487,6 +493,13 @@ module.exports = db => {
   });
   FbaSaleProcessed.belongsTo(Country, {
     foreignKey: 'countryCode',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for SellingPriceHistory
+  SellingPriceHistory.belongsTo(Sku, {
+    foreignKey: 'skuId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
