@@ -49,6 +49,10 @@ module.exports = sequelize => {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
       },
+      currencyCode: {
+        type: DataTypes.STRING(3),
+        allowNull: false,
+      },
       skuAverageNetMargin: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: true,

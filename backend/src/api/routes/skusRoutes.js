@@ -11,6 +11,7 @@ const skusController = require('../controllers/skusController');
  *      required:
  *        - sku
  *        - countryCode
+ *        - currencyCode
  *        - skuAcquisitionCostExc
  *        - skuAcquisitionCostInc
  *        - skuAfnTotalQuantity
@@ -39,6 +40,9 @@ const skusController = require('../controllers/skusController');
  *        skuAfnTotalQuantity:
  *          type: integer
  *          description: Total quantity of SKU in AFN
+ *        currencyCode:
+ *          type: string
+ *          description: Currency code
  *        skuAverageSellingPrice:
  *          type: number
  *          format: float
@@ -190,6 +194,9 @@ router.post('/', skusController.createSku);
  *               skuAfnTotalQuantity:
  *                 type: integer
  *                 description: Total quantity of SKU in Amazon Fulfillment Network.
+ *               currencyCode:
+ *                 type: string
+ *                 description: Currency code.
  *               skuAverageSellingPrice:
  *                 type: number
  *                 format: decimal

@@ -19,6 +19,7 @@ describe(`Sku Model Tests`, () => {
     const validSkuData = {
       sku: 'TESTSKU123',
       countryCode: 'FR',
+      currencyCode: 'EUR',
       skuAcquisitionCostExc: 10.0,
       skuAcquisitionCostInc: 12.0,
       numberOfUnitSold: 100,
@@ -39,6 +40,7 @@ describe(`Sku Model Tests`, () => {
       await db.Sku.create({
         sku: 'TESTSKU123',
         countryCode: 'FR',
+        currencyCode: 'EUR',
         skuAcquisitionCostExc: 10.0,
         skuAcquisitionCostInc: null,
         numberOfUnitSold: 0,
@@ -53,6 +55,7 @@ describe(`Sku Model Tests`, () => {
     const skuDataToUpdate = {
       sku: 'TESTSKU123',
       countryCode: 'FR',
+      currencyCode: 'EUR',
       skuAcquisitionCostExc: 10.0,
       skuAcquisitionCostInc: 12.0,
       numberOfUnitSold: 100,
@@ -71,6 +74,7 @@ describe(`Sku Model Tests`, () => {
     const skuDataToDelete = {
       sku: 'TESTSKU123',
       countryCode: 'DE',
+      currencyCode: 'EUR',
       skuAcquisitionCostExc: 10.0,
       skuAcquisitionCostInc: 12.0,
       numberOfUnitSold: 100,
@@ -91,6 +95,7 @@ describe(`Sku Model Tests`, () => {
       await db.Sku.create({
         sku: 'TESTSKU123',
         countryCode: 'US',
+        currencyCode: 'USD',
         skuAcquisitionCostExc: 10.0,
         skuAcquisitionCostInc: 12.0,
         numberOfUnitSold: 0,

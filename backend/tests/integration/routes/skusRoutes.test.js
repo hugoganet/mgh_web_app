@@ -43,7 +43,6 @@ describe('SKUs API Routes', () => {
       const newSku = await createSku();
       const updatedData = {
         skuAcquisitionCostExc: 20.0,
-        // Include other fields to update
       };
 
       const response = await request(app)
@@ -86,6 +85,7 @@ function generateSkuData() {
   return {
     sku: `SKU${Date.now()}`,
     countryCode: 'FR',
+    currencyCode: 'EUR',
     skuAcquisitionCostExc: 10.0,
     skuAcquisitionCostInc: 12.0,
     skuAfnTotalQuantity: 100,
