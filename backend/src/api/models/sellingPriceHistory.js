@@ -22,7 +22,7 @@ module.exports = sequelize => {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
-      currency: {
+      currencyCode: {
         type: DataTypes.STRING(5),
         allowNull: false,
       },

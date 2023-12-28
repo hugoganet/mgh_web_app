@@ -11,6 +11,7 @@ const seedSellingPriceHistory = async () => {
       const record = {
         skuId: update.skuId,
         dailyPrice: update.actualPrice,
+        currencyCode: update.currencyCode,
         date: dateString,
       };
 

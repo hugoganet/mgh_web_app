@@ -55,6 +55,7 @@ async function fetchAndProcessInventoryReport(
           const skuData = {
             sku: chunk['sku'],
             countryCode: countryCode,
+            currencyCode: currencyCode,
             actualPrice: parseFloat(chunk['your-price']),
             afnFulfillableQuantity: parseInt(
               chunk['afn-fulfillable-quantity'],
@@ -76,7 +77,13 @@ async function fetchAndProcessInventoryReport(
       .pipe(transformStream) // Transform each row
       .on(
         'data',
-        async ({ sku, countryCode, actualPrice, afnFulfillableQuantity }) => {
+        async ({
+          sku,
+          countryCode,
+          currencyCode,
+          actualPrice,
+          afnFulfillableQuantity,
+        }) => {
           try {
             // Find or create the SKU record in the database
             const [skuRecord, created] = await db.Sku.findOrCreate({
@@ -89,6 +96,7 @@ async function fetchAndProcessInventoryReport(
                 skuAcquisitionCostInc: 0,
                 skuAfnTotalQuantity: afnFulfillableQuantity,
                 skuAverageSellingPrice: actualPrice,
+                currencyCode,
                 skuAverageNetMargin: null,
                 skuAverageNetMarginPercentage: null,
                 skuAverageReturnOnInvestmentRate: null,
