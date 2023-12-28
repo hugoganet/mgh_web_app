@@ -31,7 +31,8 @@ async function fetchAndProcessInventoryReport(
   countryKeys,
   reportType,
 ) {
-  const countryCode = marketplaces[countryKeys[0]].countryCode; // Retrieve the countryCode from the first countryKey
+  const countryCode = marketplaces[countryKeys[0]].countryCode;
+  const currencyCode = marketplaces[countryKeys[0]].currencyCode;
   const createdSkus = []; // Array to store newly created SKUs
 
   try {
@@ -139,6 +140,7 @@ async function fetchAndProcessInventoryReport(
                   skuId: skuRecord.skuId,
                   sku,
                   countryCode,
+                  currencyCode,
                   actualPrice,
                   afnFulfillableQuantity,
                   reportDocumentId,
@@ -149,7 +151,8 @@ async function fetchAndProcessInventoryReport(
             if (!createdAfnInventoryRecord) {
               inventoryRecord.actualPrice = actualPrice;
               inventoryRecord.afnFulfillableQuantity = afnFulfillableQuantity;
-              await inventoryRecord.save(); // Save the updated record
+              inventoryRecord.reportDocumentId = reportDocumentId;
+              await inventoryRecord.save();
             }
           } catch (dbErr) {
             console.error('Error inserting data into database:', dbErr);

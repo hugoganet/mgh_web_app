@@ -33,6 +33,7 @@ async function requestFbaInventoryReport(
   const marketplaceIds = countryKeys.map(
     key => marketplaces[key].marketplaceId,
   );
+  const currencyCode = countryKeys.map(key => marketplaces[key].currencyCode);
 
   const config = {
     marketplaceIds: marketplaceIds,
@@ -54,9 +55,9 @@ async function requestFbaInventoryReport(
     );
 
     // const reportDocumentId =
-    //   'amzn1.spdoc.1.4.eu.0f9e82d9-228b-4100-be74-9ab6b130efc2.T3UYJ0G28GMMO3.2651'; // BE
+    // 'amzn1.spdoc.1.4.eu.4a226136-e5bb-44ff-9fe4-fa0ae1dde7be.T11LMVTFHAIXHG.2651'; // SE
+    // 'amzn1.spdoc.1.4.eu.0f9e82d9-228b-4100-be74-9ab6b130efc2.T3UYJ0G28GMMO3.2651'; // BE
     // 'amzn1.spdoc.1.4.eu.f1869d8e-0cc2-4f37-ac61-145dfeb94996.T1STUU7A5ISUK2.2651'; // FR
-    // 'amzn1.spdoc.1.4.eu.4a226136-e5bb-44ff-9fe4-fa0ae1dde7be.T11LMVTFHAIXHG.2651' // SE
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getDocumentUrl(

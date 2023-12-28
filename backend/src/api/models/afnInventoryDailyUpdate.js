@@ -36,6 +36,10 @@ module.exports = sequelize => {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
+      currencyCode: {
+        type: DataTypes.STRING(3),
+        allowNull: false,
+      },
       afnFulfillableQuantity: {
         type: DataTypes.INTEGER,
       },
