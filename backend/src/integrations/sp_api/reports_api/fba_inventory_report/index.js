@@ -55,8 +55,8 @@ async function requestFbaInventoryReport(
     // );
 
     const reportDocumentId =
-      'amzn1.spdoc.1.4.eu.9ed4dc89-edc8-4c0b-bc7b-6a03d06b096a.T16SFO17SP8LHA.2651'; // FR
-    //   'amzn1.spdoc.1.4.eu.3017b172-affc-453c-9675-9a3b66a69834.T1Z0MPL5LXOQTT.2651'; // SE
+      'amzn1.spdoc.1.4.eu.3017b172-affc-453c-9675-9a3b66a69834.T1Z0MPL5LXOQTT.2651'; // SE
+    // 'amzn1.spdoc.1.4.eu.9ed4dc89-edc8-4c0b-bc7b-6a03d06b096a.T16SFO17SP8LHA.2651'; // FR
     // 'amzn1.spdoc.1.4.eu.4a226136-e5bb-44ff-9fe4-fa0ae1dde7be.T11LMVTFHAIXHG.2651'; // SE
     // 'amzn1.spdoc.1.4.eu.0f9e82d9-228b-4100-be74-9ab6b130efc2.T3UYJ0G28GMMO3.2651'; // BE
 
@@ -85,13 +85,13 @@ async function requestFbaInventoryReport(
       reportType,
     );
 
-    await seedSellingPriceHistory();
+    // await seedSellingPriceHistory();
   } catch (error) {
     console.error('Error in requesting FBA Inventory report:', error);
   }
 }
 requestFbaInventoryReport(
-  ['france'],
+  ['sweden'],
   'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
   null,
   null,

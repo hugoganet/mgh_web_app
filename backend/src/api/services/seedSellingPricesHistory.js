@@ -15,12 +15,16 @@ const seedSellingPriceHistory = async () => {
         date: dateString,
       };
 
-      await db.SellingPriceHistory.upsert(record, {
-        where: {
-          skuId: update.skuId,
-          date: dateString,
-        },
-      });
+      if (update.afnFulfillableQuantity > 0) {
+        await db.SellingPriceHistory.upsert(record, {
+          where: {
+            skuId: update.skuId,
+            date: dateString,
+          },
+        });
+      } else {
+        continue;
+      }
     }
 
     console.log('SellingPriceHistory has been populated with recent data.');

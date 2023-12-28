@@ -36,6 +36,12 @@ module.exports = sequelize => {
       modelName: 'SellingPriceHistory',
       tableName: 'selling_prices_history',
       timestamps: false,
+      indexes: [
+        {
+          unique: true,
+          fields: ['sku_id', 'date'],
+        },
+      ],
     },
   );
 

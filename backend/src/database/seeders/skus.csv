@@ -4045,7 +4045,7 @@ skuId,sku,countryCode,fnsku,skuAcquisitionCostExc,skuAcquisitionCostInc,skuAfnTo
 ,"CHAD-05.23-5,2-B018QUNYY4",FR,null,5.15,6.18,0,null,EUR,0.00,0.00000,null,null,FALSE,null,2,0.03,1,FALSE
 ,"CHAD-05.23-4,02-B00SVAGH7G",FR,null,3.97,4.76,0,null,EUR,0.00,0.00000,null,null,FALSE,null,3,0.10,1,FALSE
 ,"CHAD-05.23-2,38-B08562JDXM",FR,null,2.33,2.80,1,null,EUR,null,null,null,null,FALSE,null,0,null,1,FALSE
-,"CHAD-05.23-4,86-B004GLGAXK",FR,null,4.81,5.77,0,null,EUR,0.00,0.00000,null,null,FALSE,null,8,0.24,1,FALSE
+,"CHAD-05.23-4,86-B004GLGAXK",FR,null,4.81,5.77,0,,EUR,0.00,0.00000,null,null,FALSE,null,8,0.24,1,FALSE
 ,"CHAD-05.23-4,86-B005PX7Z5U",FR,null,4.81,5.77,0,null,EUR,0.00,0.00000,null,null,FALSE,null,8,0.29,1,FALSE
 ,"CHAD-05.23-4,14-B0088VPCXI",FR,null,4.09,4.91,3,null,EUR,null,null,null,null,FALSE,null,0,null,1,FALSE
 ,"CHAD-05.23-3,34-B001CMT4V6",FR,null,3.29,3.95,0,null,EUR,0.00,0.00000,null,null,FALSE,null,1,0.01,1,FALSE

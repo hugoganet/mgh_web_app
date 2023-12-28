@@ -33,7 +33,7 @@ async function fetchAndProcessInventoryReport(
 ) {
   const countryCode = marketplaces[countryKeys[0]].countryCode;
   const currencyCode = marketplaces[countryKeys[0]].currencyCode;
-  const createdSkus = []; // Array to store newly created SKUs
+  const createdSkus = [];
 
   try {
     // Make a GET request to receive the file as a stream
@@ -51,6 +51,19 @@ async function fetchAndProcessInventoryReport(
       objectMode: true,
       transform(chunk, encoding, callback) {
         try {
+          // Check if 'product-name' contains quotes and escape them
+          if (chunk['product-name'] && chunk['product-name'].includes('"')) {
+            // Implement the escaping mechanism here. This is a simplistic example:
+            chunk['product-name'] = chunk['product-name'].replace(/"/g, '');
+            chunk['product-name'] = chunk['product-name'].replace(/-/g, ' ');
+          }
+          // console.log(chunk);
+          if (
+            chunk['sku'] === 'CHAD-05.23-4,86-B004GLGAXK' ||
+            chunk['sku'] === 'MORI-04.23-130-B07NW5LYCS'
+          ) {
+            console.log('Raw CSV row data for problematic SKU:', chunk);
+          }
           // Extract necessary data from the chunk and pass it downstream
           const skuData = {
             sku: chunk['sku'],
@@ -63,6 +76,9 @@ async function fetchAndProcessInventoryReport(
             ),
           };
           this.push(skuData);
+          if (skuData.sku == 'CHAD-05.23-4,86-B004GLGAXK') {
+            // console.log(skuData);
+          }
           callback();
         } catch (err) {
           callback(err);
