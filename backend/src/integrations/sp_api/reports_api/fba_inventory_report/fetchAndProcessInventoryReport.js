@@ -79,7 +79,7 @@ async function fetchAndProcessInventoryReport(
           };
           this.push(skuData);
           if (skuData.sku == 'CHAD-05.23-4,86-B004GLGAXK') {
-            // console.log(skuData);
+            // console.log(skuData.fnsku);
           }
           callback();
         } catch (err) {
@@ -128,7 +128,6 @@ async function fetchAndProcessInventoryReport(
                 skuIsTest: false,
               },
             });
-
             // If the record was created, find another SKU with the same sku to copy acquisition costs
             if (created) {
               const similarSku = await db.Sku.findOne({
@@ -137,6 +136,9 @@ async function fetchAndProcessInventoryReport(
                   countryCode: { [db.Sequelize.Op.ne]: countryCode }, // Not the same countryCode
                 },
               });
+              console.log(`created sku with skuId: ${skuRecord.skuId}
+              sku : ${sku}
+              countryCode : ${countryCode}`);
 
               // If a similar SKU is found, copy the acquisition cost values
               if (similarSku) {
@@ -144,7 +146,7 @@ async function fetchAndProcessInventoryReport(
                   similarSku.skuAcquisitionCostExc;
                 skuRecord.skuAcquisitionCostInc =
                   similarSku.skuAcquisitionCostInc;
-                await skuRecord.save(); // Save the updated values
+                await skuRecord.save();
               }
             }
 
@@ -157,6 +159,10 @@ async function fetchAndProcessInventoryReport(
             if (skuRecord) {
               checkSkuIsActive(skuRecord.skuId);
               updateAfnQuantity(skuRecord.skuId);
+            }
+
+            // Add fnsku to sku if not already present
+            if (skuRecord.fnsku == null) {
               addFnskuToSku(skuRecord.skuId, fnsku);
             }
 
