@@ -14,6 +14,7 @@ const {
   updateAfnQuantity,
 } = require('../../../../api/services/updateAfnQuantity.js');
 const { addFnskuToSku } = require('../../../../api/services/addFnskuToSku.js');
+const { preProcessCsvRow } = require('./preProcessCsvRow.js');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -52,35 +53,8 @@ async function fetchAndProcessInventoryReport(
       objectMode: true,
       transform(chunk, encoding, callback) {
         try {
-          // Check if 'product-name' contains quotes and escape them
-          if (chunk['product-name'] && chunk['product-name'].includes('"')) {
-            // Implement the escaping mechanism here. This is a simplistic example:
-            chunk['product-name'] = chunk['product-name'].replace(/"/g, '');
-            chunk['product-name'] = chunk['product-name'].replace(/-/g, ' ');
-          }
-          // console.log(chunk);
-          if (
-            chunk['sku'] === 'CHAD-05.23-4,86-B004GLGAXK' ||
-            chunk['sku'] === 'MORI-04.23-130-B07NW5LYCS'
-          ) {
-            console.log('Raw CSV row data for problematic SKU:', chunk);
-          }
-          // Extract necessary data from the chunk and pass it downstream
-          const skuData = {
-            sku: chunk['sku'],
-            countryCode: countryCode,
-            currencyCode: currencyCode,
-            fnsku: chunk['fnsku'],
-            actualPrice: parseFloat(chunk['your-price']),
-            afnFulfillableQuantity: parseInt(
-              chunk['afn-fulfillable-quantity'],
-              10,
-            ),
-          };
-          this.push(skuData);
-          if (skuData.sku == 'CHAD-05.23-4,86-B004GLGAXK') {
-            // console.log(skuData.fnsku);
-          }
+          const processedChunk = preProcessCsvRow(chunk);
+          this.push(processedChunk);
           callback();
         } catch (err) {
           callback(err);
@@ -91,108 +65,109 @@ async function fetchAndProcessInventoryReport(
     // Set up the data processing pipeline
     response.data
       .pipe(decompressionStream) // Decompress the data
-      .pipe(csvParser({ separator: '\t' })) // Parse CSV data
+      .pipe(csvParser({ separator: '\t', escape: '"', quote: '' })) // Parse CSV data
       .pipe(transformStream) // Transform each row
-      .on(
-        'data',
-        async ({
-          sku,
-          countryCode,
-          currencyCode,
-          fnsku,
-          actualPrice,
-          afnFulfillableQuantity,
-        }) => {
-          try {
-            // Find or create the SKU record in the database
-            const [skuRecord, created] = await db.Sku.findOrCreate({
-              where: { sku, countryCode },
-              defaults: {
+      .on('data', async chunk => {
+        try {
+          const sku = chunk['sku'];
+
+          // Find or create the SKU record in the database
+          const [skuRecord, created] = await db.Sku.findOrCreate({
+            where: { sku, countryCode },
+            defaults: {
+              sku,
+              countryCode,
+              fnsku: chunk['fnsku'],
+              skuAcquisitionCostExc: 0,
+              skuAcquisitionCostInc: 0,
+              skuAfnTotalQuantity: parseInt(
+                chunk['afn-fulfillable-quantity'],
+                10,
+              ),
+              skuAverageSellingPrice: parseFloat(chunk['your-price']),
+              currencyCode,
+              skuAverageNetMargin: null,
+              skuAverageNetMarginPercentage: null,
+              skuAverageReturnOnInvestmentRate: null,
+              skuAverageDailyReturnOnInvestmentRate: null,
+              isActive: false,
+              numberOfActiveDays: null,
+              numberOfUnitSold: 0,
+              skuAverageUnitSoldPerDay: null,
+              skuRestockAlertQuantity: 1,
+              skuIsTest: false,
+            },
+          });
+          // If the record was created, find another SKU with the same sku to copy acquisition costs
+          if (created) {
+            const similarSku = await db.Sku.findOne({
+              where: {
                 sku,
-                countryCode,
-                fnsku: fnsku,
-                skuAcquisitionCostExc: 0,
-                skuAcquisitionCostInc: 0,
-                skuAfnTotalQuantity: afnFulfillableQuantity,
-                skuAverageSellingPrice: actualPrice,
-                currencyCode,
-                skuAverageNetMargin: null,
-                skuAverageNetMarginPercentage: null,
-                skuAverageReturnOnInvestmentRate: null,
-                skuAverageDailyReturnOnInvestmentRate: null,
-                isActive: false,
-                numberOfActiveDays: null,
-                numberOfUnitSold: 0,
-                skuAverageUnitSoldPerDay: null,
-                skuRestockAlertQuantity: 1,
-                skuIsTest: false,
+                countryCode: { [db.Sequelize.Op.ne]: countryCode }, // Not the same countryCode
               },
             });
-            // If the record was created, find another SKU with the same sku to copy acquisition costs
-            if (created) {
-              const similarSku = await db.Sku.findOne({
-                where: {
-                  sku,
-                  countryCode: { [db.Sequelize.Op.ne]: countryCode }, // Not the same countryCode
-                },
-              });
-              console.log(`created sku with skuId: ${skuRecord.skuId}
-              sku : ${sku}
-              countryCode : ${countryCode}`);
+            // console.log(`created sku with skuId: ${skuRecord.skuId}
+            //   sku : ${sku}
+            //   countryCode : ${countryCode}`);
 
-              // If a similar SKU is found, copy the acquisition cost values
-              if (similarSku) {
-                skuRecord.skuAcquisitionCostExc =
-                  similarSku.skuAcquisitionCostExc;
-                skuRecord.skuAcquisitionCostInc =
-                  similarSku.skuAcquisitionCostInc;
-                await skuRecord.save();
-              }
+            // If a similar SKU is found, copy the acquisition cost values
+            if (similarSku) {
+              skuRecord.skuAcquisitionCostExc =
+                similarSku.skuAcquisitionCostExc;
+              skuRecord.skuAcquisitionCostInc =
+                similarSku.skuAcquisitionCostInc;
+              await skuRecord.save();
             }
-
-            // If SKU not found, log it as invalid
-            if (!skuRecord) {
-              createdSkus.push({ sku, countryCode });
-            }
-
-            // Check SKU activity and update AFN quantity if SKU exists
-            if (skuRecord) {
-              checkSkuIsActive(skuRecord.skuId);
-              updateAfnQuantity(skuRecord.skuId);
-            }
-
-            // Add fnsku to sku if not already present
-            if (skuRecord.fnsku == null) {
-              addFnskuToSku(skuRecord.skuId, fnsku);
-            }
-
-            // Attempt to find or create a corresponding AfnInventoryDailyUpdate record in the database
-            const [inventoryRecord, createdAfnInventoryRecord] =
-              await db.AfnInventoryDailyUpdate.findOrCreate({
-                where: { skuId: skuRecord.skuId },
-                defaults: {
-                  skuId: skuRecord.skuId,
-                  sku,
-                  countryCode,
-                  currencyCode,
-                  actualPrice,
-                  afnFulfillableQuantity,
-                  reportDocumentId,
-                },
-              });
-
-            // Update the fields if the record exists
-            if (!createdAfnInventoryRecord) {
-              inventoryRecord.actualPrice = actualPrice;
-              inventoryRecord.afnFulfillableQuantity = afnFulfillableQuantity;
-              inventoryRecord.reportDocumentId = reportDocumentId;
-              await inventoryRecord.save();
-            }
-          } catch (dbErr) {
-            console.error('Error inserting data into database:', dbErr);
           }
-        },
-      )
+
+          // If SKU not found, log it as invalid
+          if (!skuRecord) {
+            createdSkus.push({ sku, countryCode });
+          }
+
+          // Check SKU activity and update AFN quantity if SKU exists
+          if (skuRecord) {
+            checkSkuIsActive(skuRecord.skuId);
+            updateAfnQuantity(skuRecord.skuId);
+          }
+
+          // Add fnsku to sku if not already present
+          if (skuRecord.fnsku == null) {
+            addFnskuToSku(skuRecord.skuId, fnsku);
+          }
+
+          // Attempt to find or create a corresponding AfnInventoryDailyUpdate record in the database
+          const [inventoryRecord, createdAfnInventoryRecord] =
+            await db.AfnInventoryDailyUpdate.findOrCreate({
+              where: { skuId: skuRecord.skuId },
+              defaults: {
+                skuId: skuRecord.skuId,
+                sku,
+                countryCode,
+                currencyCode,
+                actualPrice: parseFloat(chunk['your-price']),
+                afnFulfillableQuantity: parseInt(
+                  chunk['afn-fulfillable-quantity'],
+                  10,
+                ),
+                reportDocumentId,
+              },
+            });
+
+          // Update the fields if the record exists
+          if (!createdAfnInventoryRecord) {
+            inventoryRecord.actualPrice = parseFloat(chunk['your-price']);
+            inventoryRecord.afnFulfillableQuantity = parseInt(
+              chunk['afn-fulfillable-quantity'],
+              10,
+            );
+            inventoryRecord.reportDocumentId = reportDocumentId;
+            await inventoryRecord.save();
+          }
+        } catch (dbErr) {
+          console.error('Error inserting data into database:', dbErr);
+        }
+      })
       .on('error', error => {
         console.error('Error processing data stream:', error);
       })
