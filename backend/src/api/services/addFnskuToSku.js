@@ -1,13 +1,6 @@
 const db = require('../models');
 
-/**
- * @function getAsinFromSkuId
- * @description Retrieves the ASIN associated with a given SKU ID.
- * @async
- * @param {int} skuId - The SKU ID to search for.
- * @return {Promise<string|null>} - A promise that resolves with the ASIN associated with the SKU ID, or null if no ASIN is found.
- */
-const getAsinFromSkuId = async skuId => {
+const a = async skuId => {
   try {
     const asinSkuRecord = await db.AsinSku.findOne({ where: { skuId } });
     if (!asinSkuRecord) {

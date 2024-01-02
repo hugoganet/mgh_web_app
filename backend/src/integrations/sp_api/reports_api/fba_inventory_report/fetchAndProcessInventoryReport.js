@@ -13,6 +13,7 @@ const {
 const {
   updateAfnQuantity,
 } = require('../../../../api/services/updateAfnQuantity.js');
+const { addFnskuToSku } = require('../../../../api/services/addFnskuToSku.js');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -69,6 +70,7 @@ async function fetchAndProcessInventoryReport(
             sku: chunk['sku'],
             countryCode: countryCode,
             currencyCode: currencyCode,
+            fnsku: chunk['fnsku'],
             actualPrice: parseFloat(chunk['your-price']),
             afnFulfillableQuantity: parseInt(
               chunk['afn-fulfillable-quantity'],
@@ -97,6 +99,7 @@ async function fetchAndProcessInventoryReport(
           sku,
           countryCode,
           currencyCode,
+          fnsku,
           actualPrice,
           afnFulfillableQuantity,
         }) => {
@@ -107,7 +110,7 @@ async function fetchAndProcessInventoryReport(
               defaults: {
                 sku,
                 countryCode,
-                fnsku: null,
+                fnsku: fnsku,
                 skuAcquisitionCostExc: 0,
                 skuAcquisitionCostInc: 0,
                 skuAfnTotalQuantity: afnFulfillableQuantity,
@@ -154,6 +157,7 @@ async function fetchAndProcessInventoryReport(
             if (skuRecord) {
               checkSkuIsActive(skuRecord.skuId);
               updateAfnQuantity(skuRecord.skuId);
+              addFnskuToSku(skuRecord.skuId, fnsku);
             }
 
             // Attempt to find or create a corresponding AfnInventoryDailyUpdate record in the database
