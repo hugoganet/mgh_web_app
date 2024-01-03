@@ -52,7 +52,8 @@ async function requestFbaInventoryReport(
     );
 
     // const reportDocumentId =
-    //   'amzn1.spdoc.1.4.eu.d723f827-9464-4b1b-87af-8ba52eeb02e0.T1CHOST40MSZ9.2651'; // FR
+    // 'amzn1.spdoc.1.4.eu.d723f827-9464-4b1b-87af-8ba52eeb02e0.T1CHOST40MSZ9.2651'; // FR
+    // 'amzn1.spdoc.1.4.eu.74da5974-ad1a-4d1b-beb8-06ed04ba3db8.T38UWFXP6YVSHX.2651'; // SE
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getDocumentUrl(

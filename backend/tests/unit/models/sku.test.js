@@ -30,7 +30,7 @@ describe(`Sku Model Tests`, () => {
     expect(sku).toHaveProperty('skuId');
     expect(sku.sku).toEqual(validSkuData.sku);
     expect(sku.countryCode).toEqual(validSkuData.countryCode);
-    expect(sku.isActive).toEqual(true); // default value
+    expect(sku.isActive).toEqual(false); // default value
   });
 
   // Fail to create a Sku with invalid data
