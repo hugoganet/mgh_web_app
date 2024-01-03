@@ -15,9 +15,6 @@ const addFnskuToSku = async (skuId, fnsku) => {
     }
 
     const updatedRecord = await skuRecord.update({ fnsku });
-    if (updatedRecord.skuId === 4047) {
-      console.log(updatedRecord);
-    }
     return updatedRecord;
   } catch (error) {
     console.error('Error updating FNSKU:', error);

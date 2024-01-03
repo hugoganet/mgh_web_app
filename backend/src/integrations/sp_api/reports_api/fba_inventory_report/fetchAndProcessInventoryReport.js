@@ -70,6 +70,12 @@ async function fetchAndProcessInventoryReport(
       .on('data', async chunk => {
         try {
           const sku = chunk['sku'];
+          const fnsku = chunk['fnsku'];
+          const skuAfnTotalQuantity = parseInt(
+            chunk['afn-fulfillable-quantity'],
+            10,
+          );
+          const skuAverageSellingPrice = parseFloat(chunk['your-price']);
 
           // Find or create the SKU record in the database
           const [skuRecord, created] = await db.Sku.findOrCreate({
@@ -77,14 +83,11 @@ async function fetchAndProcessInventoryReport(
             defaults: {
               sku,
               countryCode,
-              fnsku: chunk['fnsku'],
+              fnsku,
               skuAcquisitionCostExc: 0,
               skuAcquisitionCostInc: 0,
-              skuAfnTotalQuantity: parseInt(
-                chunk['afn-fulfillable-quantity'],
-                10,
-              ),
-              skuAverageSellingPrice: parseFloat(chunk['your-price']),
+              skuAfnTotalQuantity,
+              skuAverageSellingPrice,
               currencyCode,
               skuAverageNetMargin: null,
               skuAverageNetMarginPercentage: null,
@@ -145,23 +148,16 @@ async function fetchAndProcessInventoryReport(
                 sku,
                 countryCode,
                 currencyCode,
-                actualPrice: parseFloat(chunk['your-price']),
-                afnFulfillableQuantity: parseInt(
-                  chunk['afn-fulfillable-quantity'],
-                  10,
-                ),
+                actualPrice: skuAverageSellingPrice,
+                afnFulfillableQuantity: skuAfnTotalQuantity,
                 reportDocumentId,
               },
             });
-          // console.log(inventoryRecord);
 
-          // Update the fields if the record exists
+          // Update the fields in AfnInventoryDailyUpdate if the record exists
           if (!createdAfnInventoryRecord) {
-            inventoryRecord.actualPrice = parseFloat(chunk['your-price']);
-            inventoryRecord.afnFulfillableQuantity = parseInt(
-              chunk['afn-fulfillable-quantity'],
-              10,
-            );
+            inventoryRecord.actualPrice = skuAverageSellingPrice;
+            inventoryRecord.afnFulfillableQuantity = skuAfnTotalQuantity;
             inventoryRecord.reportDocumentId = reportDocumentId;
             await inventoryRecord.save();
           }
