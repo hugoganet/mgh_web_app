@@ -38,8 +38,8 @@ async function initializeDatabase({ forceSync = false } = {}) {
       'EanInSupplierOrder',
       'EanInDonation',
       'WarehouseStock',
-      // 'AfnInventoryDailyUpdate', // Commented out because I want to keep the data that has been collected so far
-      // 'SellingPriceHistory', // Commented out because I want to keep the data that has been collected so far
+      'AfnInventoryDailyUpdate', // Commented out because I want to keep the data that has been collected so far
+      'SellingPriceHistory', // Commented out because I want to keep the data that has been collected so far
       'FbaSaleProcessed',
     ];
 

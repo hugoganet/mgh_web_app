@@ -40,6 +40,7 @@ const eansInSuppliersOrdersRoutes = require('./api/routes/eansInSuppliersOrdersR
 const suppliersBrandCatalogRoutes = require('./api/routes/suppliersBrandCatalogRoutes');
 const eansInAsinsRoutes = require('./api/routes/eansInAsinsRoutes');
 const asinWarehouseQuantityRoutes = require('./api/routes/asinWarehouseQuantityRoutes');
+const afnInventoryDailyUpdatesRoutes = require('./api/routes/afnInventoryDailyUpdateRoutes');
 
 app.use(express.json()); // Enable parsing JSON bodies
 
@@ -102,6 +103,7 @@ app.use('/eansInSuppliersOrders', eansInSuppliersOrdersRoutes);
 app.use('/suppliersBrandCatalog', suppliersBrandCatalogRoutes);
 app.use('/eansInAsins', eansInAsinsRoutes);
 app.use('/asinWarehouseQuantity', asinWarehouseQuantityRoutes);
+app.use('/afnInventoryDailyUpdates', afnInventoryDailyUpdatesRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).send('Hello World!');

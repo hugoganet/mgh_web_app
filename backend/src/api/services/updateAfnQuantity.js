@@ -16,7 +16,7 @@ const updateAfnQuantity = async skuId => {
     });
 
     if (!latestUpdate) {
-      console.warn(`No afnInventoryDailyUpdate found for SKU ID: ${skuId}.`);
+      // console.warn(`No afnInventoryDailyUpdate found for SKU ID: ${skuId}.`);
       return;
     }
 

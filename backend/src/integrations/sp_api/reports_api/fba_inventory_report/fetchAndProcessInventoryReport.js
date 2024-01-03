@@ -153,6 +153,7 @@ async function fetchAndProcessInventoryReport(
                 reportDocumentId,
               },
             });
+          // console.log(inventoryRecord);
 
           // Update the fields if the record exists
           if (!createdAfnInventoryRecord) {

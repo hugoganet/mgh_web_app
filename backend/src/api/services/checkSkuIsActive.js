@@ -16,7 +16,7 @@ const checkSkuIsActive = async skuId => {
     });
 
     if (!latestUpdate) {
-      console.warn(`No afnInventoryDailyUpdate found for SKU ID: ${skuId}.`);
+      // console.warn(`No afnInventoryDailyUpdate found for SKU ID: ${skuId}.`);
       await db.Sku.update({ isActive: false }, { where: { skuId: skuId } });
       return;
     }

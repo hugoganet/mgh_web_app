@@ -33,7 +33,6 @@ async function requestFbaInventoryReport(
   const marketplaceIds = countryKeys.map(
     key => marketplaces[key].marketplaceId,
   );
-  const currencyCode = countryKeys.map(key => marketplaces[key].currencyCode);
 
   const config = {
     marketplaceIds: marketplaceIds,
@@ -44,18 +43,19 @@ async function requestFbaInventoryReport(
   };
 
   try {
-    // // Request report ID
-    // const reportIdResponse = await getReportId(config);
+    // Request report ID
+    const reportIdResponse = await getReportId(config);
 
-    // // Request report document ID
-    // const reportDocumentId = await getReportDocumentId(
-    //   reportIdResponse.reportId,
-    //   config.createLog,
-    //   config.reportType,
-    // );
+    // Request report document ID
+    const reportDocumentId = await getReportDocumentId(
+      reportIdResponse.reportId,
+      config.createLog,
+      config.reportType,
+    );
 
-    const reportDocumentId =
-      'amzn1.spdoc.1.4.eu.3017b172-affc-453c-9675-9a3b66a69834.T1Z0MPL5LXOQTT.2651'; // SE
+    // const reportDocumentId =
+    //     'amzn1.spdoc.1.4.eu.a2ae7f18-4f0b-4f17-8f46-98a9a915840f.TRHOX6I8AVL9M.2651'; // DE
+    //   'amzn1.spdoc.1.4.eu.3017b172-affc-453c-9675-9a3b66a69834.T1Z0MPL5LXOQTT.2651'; // SE
     // 'amzn1.spdoc.1.4.eu.9ed4dc89-edc8-4c0b-bc7b-6a03d06b096a.T16SFO17SP8LHA.2651'; // FR
     // 'amzn1.spdoc.1.4.eu.4a226136-e5bb-44ff-9fe4-fa0ae1dde7be.T11LMVTFHAIXHG.2651'; // SE
     // 'amzn1.spdoc.1.4.eu.0f9e82d9-228b-4100-be74-9ab6b130efc2.T3UYJ0G28GMMO3.2651'; // BE
@@ -91,7 +91,7 @@ async function requestFbaInventoryReport(
   }
 }
 requestFbaInventoryReport(
-  ['sweden'],
+  ['belgium'],
   'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
   null,
   null,
