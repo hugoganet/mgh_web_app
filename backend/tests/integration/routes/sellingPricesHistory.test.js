@@ -93,10 +93,19 @@ async function createSellingPriceHistory() {
  * @return {Object} Object containing selling price history data
  */
 function generateSellingPriceHistoryData() {
+  const randomSkuId = Math.floor(Math.random() * 2000) + 1; // Random SKU ID between 1 and 2000
+  const randomDate = new Date(
+    new Date(2020, 0, 1).getTime() +
+      Math.random() *
+        (new Date(2022, 11, 31).getTime() - new Date(2020, 0, 1).getTime()),
+  )
+    .toISOString()
+    .split('T')[0]; // Random date between 2020-01-01 and 2022-12-31
+
   return {
-    skuId: 1, // you will need to adjust these values based on a valid SKU you have
+    skuId: randomSkuId,
     dailyPrice: 10.99,
-    currencyCode: 'USD',
-    date: new Date().toISOString().split('T')[0], // Current date in YYYY-MM-DD format
+    currencyCode: 'EUR',
+    date: randomDate, // Random date in YYYY-MM-DD format
   };
 }
