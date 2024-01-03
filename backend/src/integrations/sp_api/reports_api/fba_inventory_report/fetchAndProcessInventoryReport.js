@@ -1,20 +1,12 @@
 const axios = require('axios');
 const csvParser = require('csv-parser');
 const { Transform } = require('stream'); // To work with streams
-const db = require('../../../../api/models/index'); // Database models
 const marketplaces = require('../../../../config/marketplaces.js'); // Marketplace configuration
-// const { logAndCollect } = require('../logs/logAndCollect.js'); // Logging function
 const {
   chooseDecompressionStream,
 } = require('../../chooseDecompressionStream.js');
-const {
-  checkSkuIsActive,
-} = require('../../../../api/services/checkSkuIsActive.js');
-const {
-  updateAfnQuantity,
-} = require('../../../../api/services/updateAfnQuantity.js');
-const { addFnskuToSku } = require('../../../../api/services/addFnskuToSku.js');
 const { preProcessCsvRow } = require('./preProcessCsvRow.js');
+const { processInventoryChunk } = require('./processInventoryChunk.js');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -35,7 +27,7 @@ async function fetchAndProcessInventoryReport(
 ) {
   const countryCode = marketplaces[countryKeys[0]].countryCode;
   const currencyCode = marketplaces[countryKeys[0]].currencyCode;
-  const createdSkus = [];
+  const processingPromises = [];
 
   try {
     // Make a GET request to receive the file as a stream
@@ -62,123 +54,31 @@ async function fetchAndProcessInventoryReport(
       },
     });
 
-    // Set up the data processing pipeline
     response.data
-      .pipe(decompressionStream) // Decompress the data
-      .pipe(csvParser({ separator: '\t', escape: '"', quote: '' })) // Parse CSV data
-      .pipe(transformStream) // Transform each row
-      .on('data', async chunk => {
+      .pipe(decompressionStream)
+      .pipe(csvParser({ separator: '\t', escape: '"', quote: '' }))
+      .pipe(transformStream)
+      .on('data', chunk => {
+        processingPromises.push(
+          processInventoryChunk(
+            chunk,
+            reportDocumentId,
+            countryCode,
+            currencyCode,
+            reportType,
+          ),
+        );
+      })
+      .on('end', async () => {
         try {
-          const sku = chunk['sku'];
-          const fnsku = chunk['fnsku'];
-          const skuAfnTotalQuantity = parseInt(
-            chunk['afn-fulfillable-quantity'],
-            10,
-          );
-          const skuAverageSellingPrice = parseFloat(chunk['your-price']);
-
-          // Find or create the SKU record in the database
-          const [skuRecord, created] = await db.Sku.findOrCreate({
-            where: { sku, countryCode },
-            defaults: {
-              sku,
-              countryCode,
-              fnsku,
-              skuAcquisitionCostExc: 0,
-              skuAcquisitionCostInc: 0,
-              skuAfnTotalQuantity,
-              skuAverageSellingPrice,
-              currencyCode,
-              skuAverageNetMargin: null,
-              skuAverageNetMarginPercentage: null,
-              skuAverageReturnOnInvestmentRate: null,
-              skuAverageDailyReturnOnInvestmentRate: null,
-              isActive: false,
-              numberOfActiveDays: null,
-              numberOfUnitSold: 0,
-              skuAverageUnitSoldPerDay: null,
-              skuRestockAlertQuantity: 1,
-              skuIsTest: false,
-            },
-          });
-          // If the record was created, find another SKU with the same sku to copy acquisition costs
-          if (created) {
-            const similarSku = await db.Sku.findOne({
-              where: {
-                sku,
-                countryCode: { [db.Sequelize.Op.ne]: countryCode }, // Not the same countryCode
-              },
-            });
-            // console.log(`created sku with skuId: ${skuRecord.skuId}
-            //   sku : ${sku}
-            //   countryCode : ${countryCode}`);
-
-            // If a similar SKU is found, copy the acquisition cost values
-            if (similarSku) {
-              skuRecord.skuAcquisitionCostExc =
-                similarSku.skuAcquisitionCostExc;
-              skuRecord.skuAcquisitionCostInc =
-                similarSku.skuAcquisitionCostInc;
-              await skuRecord.save();
-            }
-          }
-
-          // If SKU not found, log it as invalid
-          if (!skuRecord) {
-            createdSkus.push({ sku, countryCode });
-          }
-
-          // Check SKU activity and update AFN quantity if SKU exists
-          if (skuRecord) {
-            checkSkuIsActive(skuRecord.skuId);
-            updateAfnQuantity(skuRecord.skuId);
-          }
-
-          // Add fnsku to sku if not already present
-          if (skuRecord.fnsku == null) {
-            addFnskuToSku(skuRecord.skuId, fnsku);
-          }
-
-          // Attempt to find or create a corresponding AfnInventoryDailyUpdate record in the database
-          const [inventoryRecord, createdAfnInventoryRecord] =
-            await db.AfnInventoryDailyUpdate.findOrCreate({
-              where: { skuId: skuRecord.skuId },
-              defaults: {
-                skuId: skuRecord.skuId,
-                sku,
-                countryCode,
-                currencyCode,
-                actualPrice: skuAverageSellingPrice,
-                afnFulfillableQuantity: skuAfnTotalQuantity,
-                reportDocumentId,
-              },
-            });
-
-          // Update the fields in AfnInventoryDailyUpdate if the record exists
-          if (!createdAfnInventoryRecord) {
-            inventoryRecord.actualPrice = skuAverageSellingPrice;
-            inventoryRecord.afnFulfillableQuantity = skuAfnTotalQuantity;
-            inventoryRecord.reportDocumentId = reportDocumentId;
-            await inventoryRecord.save();
-          }
-        } catch (dbErr) {
-          console.error('Error inserting data into database:', dbErr);
+          await Promise.all(processingPromises);
+          console.log('Data processing completed');
+        } catch (error) {
+          console.error('Error processing data stream:', error);
         }
       })
       .on('error', error => {
         console.error('Error processing data stream:', error);
-      })
-      .on('end', () => {
-        // Log invalid SKUs at the end of processing
-        /*  if (createdSkus.length > 0) {
-          let tableString = 'Invalid SKUs:\nSKU\t\tCountryCode\n';
-          createdSkus.forEach(({ sku, countryCode }) => {
-            tableString += `${sku}\t\t${countryCode}\n`;
-          });
-          console.log(tableString);
-          logAndCollect(tableString, reportType);
-        } */
-        console.log('Data processing completed');
       });
   } catch (error) {
     console.error('Error fetching data:', error);
