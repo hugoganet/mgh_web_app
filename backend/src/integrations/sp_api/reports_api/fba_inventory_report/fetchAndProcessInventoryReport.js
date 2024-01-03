@@ -7,6 +7,7 @@ const {
 } = require('../../chooseDecompressionStream.js');
 const { preProcessCsvRow } = require('./preProcessCsvRow.js');
 const { processInventoryChunk } = require('./processInventoryChunk.js');
+const { seedSellingPriceHistory } = require('./seedSellingPricesHistory.js');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -73,6 +74,7 @@ async function fetchAndProcessInventoryReport(
         try {
           await Promise.all(processingPromises);
           console.log('Data processing completed');
+          await seedSellingPriceHistory();
         } catch (error) {
           console.error('Error processing data stream:', error);
         }
