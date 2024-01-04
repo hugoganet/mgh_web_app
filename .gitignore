@@ -31,3 +31,13 @@ backend/src/integrations/sp_api/reports_api/logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Add config.json file
+backend/src/config.json
+
+# Add seeders directory
+backend/src/database/seeders/
+
+# Temporary files
+*.tmp
+*.swp
