@@ -5,13 +5,9 @@
 backend/node_modules
 frontend/node_modules
 
-# .pnp and .pnp.js are specific to Yarn 2's Plug'n'Play feature, which aims to eliminate node_modules by installing packages in a single file.
-/.pnp
-.pnp.js
-
 # testing
 # Coverage directory is typically used to store code coverage reports, which are not necessary to be tracked in version control.
-/coverage
+backend/coverage
 
 # production
 # Build directory usually contains the compiled or build files, which are not necessary to be tracked as they are generated from source code.
@@ -33,7 +29,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Add config.json file
-backend/src/config.json
+backend/src/config/config.json
 
 # Add seeders directory
 backend/src/database/seeders/
