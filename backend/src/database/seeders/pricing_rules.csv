@@ -1,7 +1,0 @@
-pricingRuleIUd,pricingRuleName,pricingRuleDescription,pricingRuleMinimumRoi,pricingRuleMinimumMargin
-,Buy Box compétitive,"Match the Featured Offer price, when offers are in the same fulfilment channel. Continue automated pricing after updating prices elsewhere.
-Minimum ROI = 20% 
-Minimum margin = 1€",0.2,1.00
-,DESTOCKAGE,"Stay €0.01 below the lowest price, on all offers for the same ASIN and condition. Also compare with prices from retailers outside Amazon. Continue automated pricing after updating prices elsewhere.
-Minimum ROI = 0% 
-Minimum margin = 0€",0,0.00
