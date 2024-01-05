@@ -1,4 +1,4 @@
-const { spApiInstance } = require('../spApiConnector');
+const { spApiInstance } = require('../connection/spApiConnector');
 
 /**
  * Retrieves the URL of the report document from Amazon Selling Partner API.

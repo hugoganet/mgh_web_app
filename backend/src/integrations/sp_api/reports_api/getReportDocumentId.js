@@ -1,4 +1,4 @@
-const { spApiInstance } = require('../spApiConnector');
+const { spApiInstance } = require('../connection/spApiConnector');
 
 /**
  * Retrieves the report document ID for a given report ID from the Amazon Selling Partner API.

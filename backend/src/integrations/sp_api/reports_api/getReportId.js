@@ -1,4 +1,5 @@
-const { spApiInstance } = require('../spApiConnector');
+// const ApiRequestor = require('../connection/apiRequestor');
+const { spApiInstance } = require('../connection/spApiConnector');
 
 /**
  * Requests a report from the Amazon Selling Partner API and returns the report ID.
