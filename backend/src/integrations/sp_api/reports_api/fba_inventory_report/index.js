@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-// const { getReportId } = require('../getReportId');
 const { getReportDocumentId } = require('../getReportDocumentId');
 const { getDocumentUrl } = require('../getDocumentUrl');
 const {
@@ -10,7 +9,8 @@ const {
   downloadAndDecompressDocument,
 } = require('../downloadAndDecompressDocument');
 const { seedSellingPriceHistory } = require('./seedSellingPricesHistory');
-const ReportsManager = require('../reportsManager');
+// const ReportsManager = require('../reportsManager');
+const { createReport } = require('../operations/createReport.js');
 
 /**
  * Requests an FBA Inventory report from the Amazon Selling Partner API.
@@ -33,7 +33,7 @@ async function requestFbaInventoryReport(
     key => marketplaces[key].marketplaceId,
   );
   // Instantiate your reports manager
-  const reportsManager = new ReportsManager();
+  // const reportsManager = new ReportsManager();
 
   const config = {
     marketplaceIds: marketplaceIds,
@@ -44,20 +44,10 @@ async function requestFbaInventoryReport(
   };
 
   try {
-    // // Request report ID
-    // const reportIdResponse = await getReportId(config);
-
     // Step 1: Create Report to get ReportId
-    const reportIdResponse = await reportsManager.getReports({
-      reportType: reportType,
-      marketplaceIds: marketplaceIds,
-      dataStartTime: startDate,
-      dataEndTime: endDate,
-    });
+    const reportIdResponse = await createReport(config);
 
     console.log('reportIdResponse:', reportIdResponse);
-
-    // const reportId = reportIdResponse.reportId;
 
     // Request report document ID
     const reportDocumentId = await getReportDocumentId(
