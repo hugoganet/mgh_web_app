@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-const { getReportDocumentId } = require('../getReportDocumentId');
-const { getDocumentUrl } = require('../getDocumentUrl');
+const { getReport } = require('../operations/getReport.js');
+const { getReportDocument } = require('../operations/getReportDocument.js');
 const {
   fetchAndProcessInventoryReport,
 } = require('./fetchAndProcessInventoryReport');
@@ -49,19 +49,19 @@ async function requestFbaInventoryReport(
 
     console.log('reportIdResponse:', reportIdResponse);
 
-    // Request report document ID
-    const reportDocumentId = await getReportDocumentId(
-      reportIdResponse.reportId,
-      config.createLog,
-      config.reportType,
-    );
+    // Step 2 : Request report document ID
+    // const reportDocumentId = await getReport(
+    //   reportIdResponse.reportId,
+    //   config.createLog,
+    //   config.reportType,
+    // );
 
-    // const reportDocumentId =
+    const reportDocumentId =
+      'amzn1.spdoc.1.4.eu.8c39df68-32f0-47f5-98ce-9f7d876de460.TQLD0IKN0DQOV.2651'; // SE
     // 'amzn1.spdoc.1.4.eu.d723f827-9464-4b1b-87af-8ba52eeb02e0.T1CHOST40MSZ9.2651'; // FR
-    // 'amzn1.spdoc.1.4.eu.74da5974-ad1a-4d1b-beb8-06ed04ba3db8.T38UWFXP6YVSHX.2651'; // SE
 
     // Request report document URL
-    const { documentUrl, compressionAlgorithm } = await getDocumentUrl(
+    const { documentUrl, compressionAlgorithm } = await getReportDocument(
       reportDocumentId,
       config.createLog,
       config.reportType,

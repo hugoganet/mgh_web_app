@@ -1,5 +1,5 @@
-const { getReportId } = require('../getReportId');
-const { getReportDocumentId } = require('../getReportDocumentId');
+const { createReport } = require('../createReport');
+const { getReport } = require('../getReport');
 const { getDocumentUrl } = require('../getDocumentUrl');
 const { fetchAndProcessSalesReport } = require('./fetchAndProcessSalesReport');
 const {
@@ -38,10 +38,10 @@ async function requestFbaSalesReport(
 
   try {
     /*   // Request report ID
-    const reportIdResponse = await getReportId(config);
+    const reportIdResponse = await createReport(config);
 
     // Request report document ID
-    const reportDocumentId = await getReportDocumentId(
+    const reportDocumentId = await getReport(
       reportIdResponse.reportId,
       config.createLog,
       config.reportType,

@@ -1,16 +1,16 @@
-const { spApiInstance } = require('../connection/spApiConnector');
+const { spApiInstance } = require('../../connection/spApiConnector');
 
 /**
  * Retrieves the URL of the report document from Amazon Selling Partner API.
  *
  * @async
- * @function getDocumentUrl
+ * @function getReportDocument
  * @param {string} reportDocumentId - The report document ID.
  * @param {boolean} createLog - Whether to create a log file for the request.
  * @param {string} reportType - The type of report being requested.
  * @return {Promise<string>} - A promise that resolves to the URL of the report document.
  */
-async function getDocumentUrl(reportDocumentId, createLog, reportType) {
+async function getReportDocument(reportDocumentId, createLog, reportType) {
   const path = `/reports/2021-06-30/documents/${reportDocumentId}`;
 
   try {
@@ -37,4 +37,4 @@ async function getDocumentUrl(reportDocumentId, createLog, reportType) {
   }
 }
 
-module.exports = { getDocumentUrl };
+module.exports = { getReportDocument };

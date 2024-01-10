@@ -1,11 +1,8 @@
-const { spApiInstance } = require('../connection/spApiConnector');
+const { spApiInstance } = require('../../connection/spApiConnector');
 
 /**
- * Retrieves the report document ID for a given report ID from the Amazon Selling Partner API.
- * This function polls the API until the report is ready and the document ID is available.
- *
  * @async
- * @function getReportDocumentId
+ * @function getReport
  * @param {string} reportId - The unique identifier of the report for which the document ID is being fetched.
  * @param {boolean} createLog - Whether to create a log file for the request.
  * @param {string} reportType - The type of report being requested.
@@ -16,7 +13,7 @@ const { spApiInstance } = require('../connection/spApiConnector');
  *              is available, the function breaks out of the loop and logs the report document ID. This function
  *              should be used in sequence after requesting a report and obtaining a report ID.
  */
-async function getReportDocumentId(reportId, createLog, reportType) {
+async function getReport(reportId, createLog, reportType) {
   const path = `/reports/2021-06-30/reports/${reportId}`;
 
   let reportDocumentId = null;
@@ -56,4 +53,4 @@ async function getReportDocumentId(reportId, createLog, reportType) {
   return reportDocumentId; // Optional: Return the document ID for further processing
 }
 
-module.exports = { getReportDocumentId };
+module.exports = { getReport };
