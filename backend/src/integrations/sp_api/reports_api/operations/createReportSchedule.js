@@ -1,13 +1,12 @@
 const { spApiInstance } = require('../spApiConnector');
-const marketplaces = require('../../../config/marketplaces');
-const calculateNextReportCreationTime = require('./calculateNextReportCreationTime');
+const marketplaces = require('../../../../config/marketplaces');
+const calculateNextReportCreationTime = require('../../schedule_reports/calculateNextReportCreationTime');
 const { createDestination, createSubscription } = require('../amazonSqsSetup');
 const sqsArn = process.env.SQS_ARN;
 /**
- * Sets up a schedule for automatic report generation on Amazon SP API.
- *
  * @async
  * @function createReportSchedule
+ * @description This function sets up a schedule for automatic report generation on Amazon SP API.
  * @param {Object} config - Configuration parameters for the report schedule.
  * @param {array} config.marketplaceIds - The marketplace identifier for which the report is scheduled.
  * @param {string} config.reportType - The type of report being scheduled.
@@ -30,11 +29,12 @@ async function createReportSchedule(config) {
         period,
         nextReportCreationTime,
       },
-      true, // Enable logging of this request
+      true,
       reportType,
     );
 
-    return response.data.reportScheduleId; // Return the created schedule ID
+    console.log(response.data.reportScheduleId);
+    return response.data.reportScheduleId;
   } catch (error) {
     console.error('Error creating report schedule:', error);
     throw error;
@@ -67,3 +67,5 @@ createReportSchedule(config)
     );
   })
   .catch(error => console.error('Error in report scheduling process:', error));
+
+module.exports = { createReportSchedule };

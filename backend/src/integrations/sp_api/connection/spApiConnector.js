@@ -305,7 +305,7 @@ class SpApiConnector {
     const signature = this.getSignature(
       process.env.AWS_SECRET_KEY,
       date,
-      'eu-west-1',
+      process.env.AWS_REGION,
       'execute-api',
       this.createStringToSign(
         this.createCanonicalRequest(
@@ -317,7 +317,7 @@ class SpApiConnector {
           date,
         ),
         date,
-        'eu-west-1',
+        process.env.AWS_REGION,
         'execute-api',
       ),
     );
@@ -330,7 +330,7 @@ class SpApiConnector {
       Authorization: this.createAuthorizationHeader(
         process.env.AWS_ACCESS_KEY,
         date,
-        'eu-west-1',
+        process.env.AWS_REGION,
         'execute-api',
         signature,
       ),
