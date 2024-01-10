@@ -1,8 +1,7 @@
-const { spApiInstance } = require('../spApiConnector');
+const { spApiInstance } = require('../../connection/spApiConnector');
 const marketplaces = require('../../../../config/marketplaces');
 const calculateNextReportCreationTime = require('../../schedule_reports/calculateNextReportCreationTime');
-const { createDestination, createSubscription } = require('../amazonSqsSetup');
-const sqsArn = process.env.SQS_ARN;
+
 /**
  * @async
  * @function createReportSchedule
@@ -30,7 +29,7 @@ async function createReportSchedule(config) {
         nextReportCreationTime,
       },
       true,
-      reportType,
+      (apiOperation = 'createReportSchedule'),
     );
 
     console.log(response.data.reportScheduleId);
@@ -50,22 +49,6 @@ const config = {
   nextReportCreationTime: calculateNextReportCreationTime('14:00:00'),
 };
 
-createReportSchedule(config)
-  .then(scheduleId => {
-    console.log(`Report scheduled successfully. Schedule ID: ${scheduleId}`);
-    return createDestination(sqsArn); // Return the promise from createDestination
-  })
-  .then(destinationId => {
-    console.log(
-      `Destination created successfully. Destination ID: ${destinationId}`,
-    );
-    return createSubscription(destinationId, 'REPORT_PROCESSING_FINISHED'); // Return the promise from createSubscription
-  })
-  .then(subscriptionId => {
-    console.log(
-      `Subscription created successfully. Subscription ID: ${subscriptionId}`,
-    );
-  })
-  .catch(error => console.error('Error in report scheduling process:', error));
+createReportSchedule(config);
 
 module.exports = { createReportSchedule };

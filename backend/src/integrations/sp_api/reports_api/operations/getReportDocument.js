@@ -20,7 +20,7 @@ async function getReportDocument(reportDocumentId, createLog, reportType) {
       {},
       {},
       createLog,
-      reportType,
+      (apiOperation = 'getReportDocument'),
     );
 
     const parsedResponse = response.data;

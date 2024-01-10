@@ -189,7 +189,7 @@ class SpApiConnector {
    * @param {Object} [queryParams={}] - Query parameters to be appended to the URL.
    * @param {Object} [body={}] - The request body, relevant for POST and PUT methods.
    * @param {boolean} createLog - Whether to create a log of the request and response.
-   * @param {string} reportType - The type of report being requested.
+   * @param {string} apiOperation - The type of report being requested.
    * @return {Promise<Object>} - A promise that resolves to the response from the API call, or an error object if the request fails.
    * @throws {Error} - An error object if the request fails.
    * @description This function handles the construction and sending of requests to the Amazon Selling Partner API.
@@ -201,7 +201,7 @@ class SpApiConnector {
     queryParams = {},
     body = {},
     createLog,
-    reportType = null,
+    apiOperation,
   ) {
     let logMessage = '';
     try {
@@ -219,12 +219,13 @@ class SpApiConnector {
         accessToken,
         date,
       );
-
+      console.log(apiOperation);
       // Prepare log message for the request
       logMessage +=
         'Request Details:\n' +
         JSON.stringify(
           {
+            apiOperation,
             URL: fullUrl,
             Method: method,
             Headers: headers,
@@ -258,7 +259,7 @@ class SpApiConnector {
         );
 
       if (createLog) {
-        logAndCollect(logMessage, reportType);
+        logAndCollect(logMessage, apiOperation);
       }
 
       return axiosResponse;
@@ -285,7 +286,7 @@ class SpApiConnector {
       }
 
       if (createLog) {
-        logAndCollect(logMessage, reportType);
+        logAndCollect(logMessage, apiOperation);
       }
 
       throw error;

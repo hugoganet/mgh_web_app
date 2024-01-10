@@ -17,6 +17,7 @@ async function createReport(filters) {
     dataEndTime,
     createLog,
   } = filters;
+
   try {
     const response = await spApiInstance.sendRequest(
       method,
@@ -29,7 +30,7 @@ async function createReport(filters) {
         dataEndTime,
       },
       createLog,
-      reportType,
+      (apiOperation = 'createReport'),
     );
 
     return response.data;

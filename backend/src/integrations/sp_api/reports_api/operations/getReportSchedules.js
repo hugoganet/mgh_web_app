@@ -11,6 +11,7 @@ async function getReportSchedules(config) {
   const endpoint = '/reports/2021-06-30/schedule';
   const method = 'GET';
   const { reportType, createLog } = config;
+  console.log(`createlog ${createLog}`);
   try {
     const response = await spApiInstance.sendRequest(
       method,
@@ -20,9 +21,9 @@ async function getReportSchedules(config) {
         reportType,
       },
       createLog,
-      reportType,
+      (apiOperation = 'getReportSchedules'),
     );
-
+    console.log(response.data);
     return response.data;
   } catch (error) {
     throw error;
@@ -31,4 +32,8 @@ async function getReportSchedules(config) {
 
 module.exports = { getReportSchedules };
 
-getReportSchedules('GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA', false);
+config = {
+  reportType: 'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
+  createLog: true,
+};
+getReportSchedules(config);

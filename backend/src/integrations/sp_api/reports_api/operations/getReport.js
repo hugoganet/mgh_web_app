@@ -27,7 +27,7 @@ async function getReport(reportId, createLog, reportType) {
         {},
         {},
         createLog,
-        reportType,
+        (apiOperation = 'getReport'),
       );
 
       const parsedResponse = response.data;
