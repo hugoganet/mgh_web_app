@@ -1,20 +1,20 @@
 const { spApiInstance } = require('../../connection/spApiConnector');
 
 /**
- * @function getReportSchedule
+ * @function cancelReportSchedule
  * @description Returns report schedule details for the report schedule that you specify.
  * @async
  * @param {Object} config - config to apply when fetching reports.
  * @return {Promise<Object>} - ReportSchedule - Detailed information about a report schedule.
  */
-async function getReportSchedule(config) {
+async function cancelReportSchedule(config) {
   const { reportScheduleId, createLog } = config;
   const queryParams = {
     reportScheduleId,
   };
-  const apiOperation = 'getReportSchedule';
+  const apiOperation = 'cancelReportSchedule';
   const endpoint = `/reports/2021-06-30/schedules/${reportScheduleId}`;
-  const method = 'GET';
+  const method = 'DELETE';
 
   try {
     const response = await spApiInstance.sendRequest(
@@ -32,10 +32,10 @@ async function getReportSchedule(config) {
   }
 }
 
-module.exports = { getReportSchedule };
+module.exports = { cancelReportSchedule };
 
 config = {
   reportScheduleId: '50039019733',
   createLog: true,
 };
-getReportSchedule(config);
+cancelReportSchedule(config);
