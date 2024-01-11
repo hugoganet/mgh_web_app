@@ -207,11 +207,22 @@ class SpApiConnector {
     try {
       const accessToken = await this.getLWAToken();
       const date = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '');
-      const queryString = Object.entries(queryParams)
-        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-        .join('&');
 
-      const fullUrl = `https://sellingpartnerapi-eu.amazon.com${path}?${queryString}`;
+      // Only create queryString if there are query parameters
+      let queryString = '';
+      if (Object.keys(queryParams).length > 0) {
+        console.log(`queryParams: ${JSON.stringify(queryParams)}`);
+        queryString = Object.entries(queryParams)
+          .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+          .join('&');
+        queryString = '?' + queryString; // Prepend '?' to the queryString
+      }
+
+      // const queryString = Object.entries(queryParams)
+      //   .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+      //   .join('&');
+
+      const fullUrl = `https://sellingpartnerapi-eu.amazon.com${path}${queryString}`;
       const headers = this.createRequestHeaders(
         method,
         fullUrl,
