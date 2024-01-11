@@ -8,20 +8,22 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @return {Promise<Object>} - reportId
  */
 async function getReportSchedules(config) {
-  const endpoint = '/reports/2021-06-30/schedule';
+  const endpoint = '/reports/2021-06-30/schedules';
   const method = 'GET';
   const { reportType, createLog } = config;
-  console.log(`createlog ${createLog}`);
+  const apiOperation = 'getReportSchedules';
+  const queryParams = {
+    reportTypes: [reportType], // Ensure this is an array of string(s)
+  };
+
   try {
     const response = await spApiInstance.sendRequest(
       method,
       endpoint,
+      queryParams,
       {},
-      {
-        reportType,
-      },
       createLog,
-      (apiOperation = 'getReportSchedules'),
+      apiOperation,
     );
     console.log(response.data);
     return response.data;
@@ -33,7 +35,7 @@ async function getReportSchedules(config) {
 module.exports = { getReportSchedules };
 
 config = {
-  reportType: 'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
+  reportType: ['GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA'],
   createLog: true,
 };
 getReportSchedules(config);
