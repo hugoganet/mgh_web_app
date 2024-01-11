@@ -62,6 +62,49 @@ class SpApiConnector {
   }
 
   /**
+   * @async
+   * @function getGrantlessOperationToken
+   * @description Fetches a grantless operation access token using the provided credentials.
+   * @return {Promise<string>} A promise that resolves to the grantless operation access token.
+   */
+  async getGrantlessOperationToken() {
+    // Define the scope for grantless operations (e.g., "sellingpartnerapi::notifications")
+    const scope = 'sellingpartnerapi::notifications'; // Adjust the scope as needed
+
+    // Check if the existing grantless operation token is still valid
+    if (
+      this.grantlessAccessToken &&
+      new Date() < this.grantlessTokenExpiration
+    ) {
+      return this.grantlessAccessToken;
+    }
+
+    // Token is either null or expired, fetch a new one
+    const url = 'https://api.amazon.com/auth/o2/token';
+    const payload = {
+      grant_type: 'client_credentials',
+      scope: scope,
+      client_id: this.clientId,
+      client_secret: this.clientSecret,
+    };
+
+    try {
+      const response = await axios.post(url, payload);
+      this.grantlessAccessToken = response.data.access_token;
+
+      // Assuming the token is valid for 1 hour, set expiration 5 minutes earlier as a buffer
+      this.grantlessTokenExpiration = new Date(
+        new Date().getTime() + 55 * 60 * 1000,
+      );
+
+      return this.grantlessAccessToken;
+    } catch (error) {
+      console.error('Error fetching Grantless Operation Token:', error);
+      throw error;
+    }
+  }
+
+  /**
    * Creates a canonical request string for AWS signature version 4 signing process.
    *
    * @function createCanonicalRequest
@@ -190,6 +233,7 @@ class SpApiConnector {
    * @param {Object} [body={}] - The request body, relevant for POST and PUT methods.
    * @param {boolean} createLog - Whether to create a log of the request and response.
    * @param {string} apiOperation - The type of report being requested.
+   * @param {boolean} isGrantless - Whether the request is for a grantless operation.
    * @return {Promise<Object>} - A promise that resolves to the response from the API call, or an error object if the request fails.
    * @throws {Error} - An error object if the request fails.
    * @description This function handles the construction and sending of requests to the Amazon Selling Partner API.
@@ -202,10 +246,13 @@ class SpApiConnector {
     body = {},
     createLog,
     apiOperation,
+    isGrantless = false,
   ) {
     let logMessage = '';
     try {
-      const accessToken = await this.getLWAToken();
+      const accessToken = isGrantless
+        ? await this.getGrantlessOperationToken()
+        : await this.getLWAToken();
       const date = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '');
 
       // Only create queryString if there are query parameters
@@ -217,10 +264,6 @@ class SpApiConnector {
           .join('&');
         queryString = '?' + queryString; // Prepend '?' to the queryString
       }
-
-      // const queryString = Object.entries(queryParams)
-      //   .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-      //   .join('&');
 
       const fullUrl = `https://sellingpartnerapi-eu.amazon.com${path}${queryString}`;
       const headers = this.createRequestHeaders(

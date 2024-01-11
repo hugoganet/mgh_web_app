@@ -30,6 +30,7 @@ async function createDestination(destinationName) {
       payload,
       true, // Enable logging
       apiOperation,
+      true,
     );
 
     console.log('Destination created:', response.data);
