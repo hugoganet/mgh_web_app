@@ -1,0 +1,138 @@
+[2024-01-11T11:02:15.241Z] Request Details:
+{
+  "apiOperation": "getReportSchedule",
+  "URL": "https://sellingpartnerapi-eu.amazon.com/reports/2021-06-30/schedules/50039019733?reportScheduleId=50039019733",
+  "Method": "GET",
+  "Headers": {
+    "Content-Type": "application/json",
+    "User-Agent": "MyApp/1.0 (Platform=Node.js; Language=JavaScript)",
+    "x-amz-access-token": "Atza|IwEBIOl4fULpaMqmHj5I0VDJ6bA4ukqjkY4LBoRz2Bi4Rsf9XZDQaLHI7yazbztnZqt1ROmQMtfyzET8TQH9ici_lw7rili0rxbiD7NiOnRyXIJnNJ9uG4ymQRKiIiyNLIYk_6BFHYx1hpveQChU2p0kesk1mjSySCQ7QwLTiqqRfDSndJtu4AacIcSo5dbh27_hoiToBa_LQbjdNn1rgeb2q4740V8v___e8Pvj0-l9XvksxLJMvy_hg9O0zTd0ZR_ZEkml1D4iU2RALltiaaN1qlnOKu4c4o9cD82rAfabeo0pEaSVvYE_IvgwnDnv2Ui0Ybxnmocnt38tZnxXsxN9rTJzZXl5FZIKi5kV_ESW6SOvtg",
+    "x-amz-date": "20240111T110215Z",
+    "Authorization": "AWS4-HMAC-SHA256 Credential=AKIA4AOKR3QGGMGDNQ6E/20240111T110215Z/eu-west-3/execute-api/aws4_request, SignedHeaders=accept;host;x-amz-access-token;x-amz-date, Signature=829cbd2d7c5f8d5ca00e3dd494a58e9a2057d3859907ef5836ab874cec01e8d3"
+  },
+  "QueryParams": {
+    "reportScheduleId": "50039019733"
+  },
+  "Body": {}
+}
+
+Response Details:
+{
+  "Data": {
+    "reportType": "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA",
+    "marketplaceIds": [
+      "A13V1IB3VIYZZH"
+    ],
+    "period": "P1D",
+    "nextReportCreationTime": "2024-01-11T11:00:54+00:00",
+    "reportScheduleId": "50039019733"
+  },
+  "Status": 200,
+  "Headers": {
+    "server": "Server",
+    "date": "Thu, 11 Jan 2024 11:02:15 GMT",
+    "content-type": "application/json",
+    "content-length": "193",
+    "connection": "keep-alive",
+    "x-amz-rid": "EDRKCYHAEHFNTR3QJV5E",
+    "x-amzn-ratelimit-limit": "0.0222",
+    "x-amzn-requestid": "01d1073c-2b08-409b-b9ad-f19383e31434",
+    "x-amz-apigw-id": "OPF01d1073c2b08",
+    "x-amzn-trace-id": "Root=1-659fcab7-01d1073c2b08409b",
+    "vary": "Content-Type,Accept-Encoding,User-Agent",
+    "strict-transport-security": "max-age=47474747; includeSubDomains; preload"
+  }
+}
+
+[2024-01-11T15:57:24.724Z] Request Details:
+{
+  "apiOperation": "getReportSchedule",
+  "URL": "https://sellingpartnerapi-eu.amazon.com/reports/2021-06-30/schedules/50039019733?reportScheduleId=50039019733",
+  "Method": "GET",
+  "Headers": {
+    "Content-Type": "application/json",
+    "User-Agent": "MyApp/1.0 (Platform=Node.js; Language=JavaScript)",
+    "x-amz-access-token": "Atza|IwEBIPaRpLS83h_ZeJp28TSmcCtvcOiKJDKH3PoOqWjIrLhfIaTfdpYUAWL3LiXAh4Egl0EbPYJefaxstUweWD8WVTaiAyXmXOmkQgvTJRZSydsaIfGnRV-zbDFnjwwvTIBnaV35v0vUhCeP0DwT98nNSaa9lTMAeVWe7JvBxr1Bam5aqTQUxsXR-vE6nbKNwIbQ1xPR-hGcIV11aI8AEA-R12GO9Gd3n7pW9dekleOH0l9anGfqmvKxbFmRGsCkzfv151B_29Q2prfxXlVHj1vMbdji9FVsi1kWNnvbrsOr2VX60o-7n0nkRyisiwfQ9JVpUpbF2RKLh1pxj2suBt_Dm7J_DEWqNPNv5lWAo5kuObXm9g",
+    "x-amz-date": "20240111T155724Z",
+    "Authorization": "AWS4-HMAC-SHA256 Credential=AKIA4AOKR3QGGMGDNQ6E/20240111T155724Z/eu-west-3/execute-api/aws4_request, SignedHeaders=accept;host;x-amz-access-token;x-amz-date, Signature=882e81dc8274255e6e94fd7f39406edcef969eba87827dbdc049501f8713eef8"
+  },
+  "QueryParams": {
+    "reportScheduleId": "50039019733"
+  },
+  "Body": {}
+}
+
+Response Details:
+{
+  "Data": {
+    "reportType": "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA",
+    "marketplaceIds": [
+      "A13V1IB3VIYZZH"
+    ],
+    "period": "P1D",
+    "nextReportCreationTime": "2024-01-12T11:00:54+00:00",
+    "reportScheduleId": "50039019733"
+  },
+  "Status": 200,
+  "Headers": {
+    "server": "Server",
+    "date": "Thu, 11 Jan 2024 15:57:24 GMT",
+    "content-type": "application/json",
+    "content-length": "193",
+    "connection": "keep-alive",
+    "x-amz-rid": "WR4SM1JHN1KQD2JQXWT6",
+    "x-amzn-ratelimit-limit": "0.0222",
+    "x-amzn-requestid": "b2f7fdf1-6f53-4dd2-891f-a3aa44388461",
+    "x-amz-apigw-id": "OPFb2f7fdf16f53",
+    "x-amzn-trace-id": "Root=1-65a00fe4-b2f7fdf16f534dd2",
+    "vary": "Content-Type,Accept-Encoding,User-Agent",
+    "strict-transport-security": "max-age=47474747; includeSubDomains; preload"
+  }
+}
+
+[2024-01-11T16:46:16.200Z] Request Details:
+{
+  "apiOperation": "getReportSchedule",
+  "URL": "https://sellingpartnerapi-eu.amazon.com/reports/2021-06-30/schedules/50040019733?reportScheduleId=50040019733",
+  "Method": "GET",
+  "Headers": {
+    "Content-Type": "application/json",
+    "User-Agent": "MyApp/1.0 (Platform=Node.js; Language=JavaScript)",
+    "x-amz-access-token": "Atza|IwEBICQZ8S53aCGfbG8wSvvVACBDSG3r1fR8k3nmO9_06t3Dn7yEjhN1w0WrB1cZLTvi8jS_X3-ruH239xBPQwrg5qabP5OQ83J3EKfcT8yiY6PQ5Lvql6RA1e1HEj_Msv4Hlvh7xI7Bl_7BvgtChr6k4uN2Yusw_jhcabiAfl32_3-7QPsWT8fSxzJCBYMH0Bny97N5m2YLnIooa7Zy35XSETdYzx1fauvpq83Ai98h06YDu7QqKHBKHmCOQWg01O0-6Rqdf3C9LzGerQJ4Ua4uvEpX6OKOsFQw4Tqc85hUmnpPM73Pj33PZjYCFFwJYZN9xPDwIPHrmhGke4goNtlxJQtpFQTdBwQ_AtJ843yB-DrwTw",
+    "x-amz-date": "20240111T164615Z",
+    "Authorization": "AWS4-HMAC-SHA256 Credential=AKIA4AOKR3QGGMGDNQ6E/20240111T164615Z/eu-west-3/execute-api/aws4_request, SignedHeaders=accept;host;x-amz-access-token;x-amz-date, Signature=49bbac094c539e2eed10a8677f4060cea1a00ebb2819c2f6d2633ad4862bf85f"
+  },
+  "QueryParams": {
+    "reportScheduleId": "50040019733"
+  },
+  "Body": {}
+}
+
+Response Details:
+{
+  "Data": {
+    "reportType": "GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA",
+    "marketplaceIds": [
+      "A13V1IB3VIYZZH"
+    ],
+    "period": "P1D",
+    "nextReportCreationTime": "2024-01-11T16:45:41+00:00",
+    "reportScheduleId": "50040019733"
+  },
+  "Status": 200,
+  "Headers": {
+    "server": "Server",
+    "date": "Thu, 11 Jan 2024 16:46:16 GMT",
+    "content-type": "application/json",
+    "content-length": "193",
+    "connection": "keep-alive",
+    "x-amz-rid": "GEGNGHWSKC81BJ0HCZTR",
+    "x-amzn-ratelimit-limit": "0.0222",
+    "x-amzn-requestid": "2d7696fd-0200-465d-81e9-87cbfff55bdc",
+    "x-amz-apigw-id": "OPF2d7696fd0200",
+    "x-amzn-trace-id": "Root=1-65a01b58-2d7696fd0200465d",
+    "vary": "Content-Type,Accept-Encoding,User-Agent",
+    "strict-transport-security": "max-age=47474747; includeSubDomains; preload"
+  }
+}
+
