@@ -11,16 +11,19 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @return {Promise<string>} - A promise that resolves to the URL of the report document.
  */
 async function getReportDocument(reportDocumentId, createLog, reportType) {
-  const path = `/reports/2021-06-30/documents/${reportDocumentId}`;
+  const apiOperation = 'getReportDocument';
+  const endpoint = `/reports/2021-06-30/documents/${reportDocumentId}`;
+  const method = 'GET';
 
   try {
     const response = await spApiInstance.sendRequest(
-      'GET',
-      path,
+      method,
+      endpoint,
       {},
       {},
       createLog,
-      (apiOperation = 'getReportDocument'),
+      apiOperation,
+      false,
     );
 
     const parsedResponse = response.data;

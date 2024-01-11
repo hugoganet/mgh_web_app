@@ -8,8 +8,6 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @return {Promise<Object>} - reportId
  */
 async function createReport(filters) {
-  const endpoint = '/reports/2021-06-30/reports';
-  const method = 'POST';
   const {
     marketplaceIds = [],
     reportType,
@@ -17,6 +15,10 @@ async function createReport(filters) {
     dataEndTime,
     createLog,
   } = filters;
+
+  const apiOperation = 'createReport';
+  const endpoint = '/reports/2021-06-30/reports';
+  const method = 'POST';
 
   try {
     const response = await spApiInstance.sendRequest(
@@ -30,7 +32,8 @@ async function createReport(filters) {
         dataEndTime,
       },
       createLog,
-      (apiOperation = 'createReport'),
+      apiOperation,
+      false,
     );
 
     return response.data;

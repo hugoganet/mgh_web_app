@@ -8,13 +8,13 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @return {Promise<Object>} - reportId
  */
 async function getReportSchedules(config) {
-  const endpoint = '/reports/2021-06-30/schedules';
-  const method = 'GET';
   const { reportType, createLog } = config;
-  const apiOperation = 'getReportSchedules';
   const queryParams = {
     reportTypes: [reportType], // Ensure this is an array of string(s)
   };
+  const apiOperation = 'getReportSchedules';
+  const endpoint = '/reports/2021-06-30/schedules';
+  const method = 'GET';
 
   try {
     const response = await spApiInstance.sendRequest(
@@ -24,6 +24,7 @@ async function getReportSchedules(config) {
       {},
       createLog,
       apiOperation,
+      false,
     );
     console.log(response.data);
     return response.data;

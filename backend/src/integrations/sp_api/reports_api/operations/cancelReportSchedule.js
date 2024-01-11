@@ -24,6 +24,7 @@ async function cancelReportSchedule(config) {
       {},
       createLog,
       apiOperation,
+      false,
     );
     console.log(response.data);
     return response.data;
@@ -35,7 +36,7 @@ async function cancelReportSchedule(config) {
 module.exports = { cancelReportSchedule };
 
 config = {
-  reportScheduleId: '50039019733',
+  reportScheduleId: '50040019733',
   createLog: true,
 };
 cancelReportSchedule(config);

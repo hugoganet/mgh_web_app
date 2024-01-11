@@ -33,7 +33,6 @@ async function createDestination(destinationName) {
       true,
     );
 
-    console.log('Destination created:', response.data);
     return response.data;
   } catch (error) {
     console.error(
@@ -44,11 +43,11 @@ async function createDestination(destinationName) {
   }
 }
 
+module.exports = { createDestination };
+
 // Example usage
 const destinationName = 'MGHWebAppNotifications';
 
 createDestination(destinationName)
   .then(data => console.log('Create Destination Response:', data))
   .catch(error => console.error(error));
-
-module.exports = { createDestination };

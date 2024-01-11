@@ -15,12 +15,15 @@ const calculateNextReportCreationTime = require('../../schedule_reports/calculat
  */
 async function createReportSchedule(config) {
   const { marketplaceIds, reportType, period, nextReportCreationTime } = config;
-  const path = '/reports/2021-06-30/schedules';
+
+  const apiOperation = 'createReportSchedule';
+  const endpoint = '/reports/2021-06-30/schedules';
+  const method = 'POST';
 
   try {
     const response = await spApiInstance.sendRequest(
-      'POST',
-      path,
+      method,
+      endpoint,
       {}, // No query parameters for this request
       {
         reportType,
@@ -29,7 +32,8 @@ async function createReportSchedule(config) {
         nextReportCreationTime,
       },
       true,
-      (apiOperation = 'createReportSchedule'),
+      apiOperation,
+      false,
     );
 
     console.log(response.data.reportScheduleId);

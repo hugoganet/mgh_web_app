@@ -13,8 +13,10 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  *              is available, the function breaks out of the loop and logs the report document ID. This function
  *              should be used in sequence after requesting a report and obtaining a report ID.
  */
-async function getReport(reportId, createLog, reportType) {
-  const path = `/reports/2021-06-30/reports/${reportId}`;
+async function getReport(reportId, createLog) {
+  const apiOperation = 'getReport';
+  const endpoint = `/reports/2021-06-30/reports/${reportId}`;
+  const method = 'GET';
 
   let reportDocumentId = null;
   let response;
@@ -22,12 +24,13 @@ async function getReport(reportId, createLog, reportType) {
   while (reportDocumentId === null) {
     try {
       response = await spApiInstance.sendRequest(
-        'GET',
-        path,
+        method,
+        endpoint,
         {},
         {},
         createLog,
-        (apiOperation = 'getReport'),
+        apiOperation,
+        false,
       );
 
       const parsedResponse = response.data;
