@@ -4,9 +4,9 @@ const {
   DeleteMessageCommand,
 } = require('@aws-sdk/client-sqs');
 require('dotenv').config({ path: 'backend/.env' });
-// const {
-//   getReportDocument,
-// } = require('../../reports_api/operations/getReportDocument.js');
+const {
+  getReportDocument,
+} = require('../../reports_api/operations/getReportDocument.js');
 // const {
 //   fetchAndProcessInventoryReport,
 // } = require('../../reports_api/fba_inventory_report/fetchAndProcessInventoryReport.js');
@@ -33,7 +33,7 @@ async function receiveAndProcessNotifications() {
   const receiveParams = {
     QueueUrl: queueURL,
     MaxNumberOfMessages: 10, // Adjust as needed
-    WaitTimeSeconds: 20, // Long polling
+    WaitTimeSeconds: 5, // Long polling
     VisibilityTimeout: 10, // Adjust as needed
     MessageRetentionPeriod: 1209600, // 14 days
   };
@@ -60,14 +60,15 @@ async function receiveAndProcessNotifications() {
           const reportType =
             notification.payload.reportProcessingFinishedNotification
               .reportType;
-          // const { documentUrl, compressionAlgorithm } = await getReportDocument(
-          //   reportDocumentId,
-          //   true,
-          //   reportType,
-          // );
+
+          const { documentUrl, compressionAlgorithm } = await getReportDocument(
+            reportDocumentId,
+            true,
+            reportType,
+          );
 
           // TODO Get countryKeys before calling fetchAndProcessInventoryReport
-          const countryKeys = ['sweden'];
+          // const countryKeys = ['sweden'];
           // // Fetch CSV data and process into database
           // await fetchAndProcessInventoryReport(
           //   documentUrl,
@@ -80,13 +81,12 @@ async function receiveAndProcessNotifications() {
 
         // Add logic for other notification types as needed
 
-        // TODO Delete the processed message from the queue
-        // const deleteParams = {
-        //   QueueUrl: queueURL,
-        //   ReceiptHandle: message.ReceiptHandle,
-        // };
-        // const deleteCommand = new DeleteMessageCommand(deleteParams);
-        // await sqsClient.send(deleteCommand);
+        const deleteParams = {
+          QueueUrl: queueURL,
+          ReceiptHandle: message.ReceiptHandle,
+        };
+        const deleteCommand = new DeleteMessageCommand(deleteParams);
+        await sqsClient.send(deleteCommand);
       }
     }
   } catch (error) {
