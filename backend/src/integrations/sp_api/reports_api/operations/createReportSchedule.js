@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const { spApiInstance } = require('../../connection/spApiConnector');
 const marketplaces = require('../../../../config/marketplaces');
 const calculateNextReportCreationTime = require('../../schedule_reports/calculateNextReportCreationTime');
@@ -42,26 +43,24 @@ async function createReportSchedule(config) {
   }
 }
 
-// Example usage: Creating a daily report schedule for the France marketplace
-// This part of the code should be run only when you want to set up or update the report schedule.
-const config = {
-  marketplaceIds: [
-    marketplaces.unitedKingdom.marketplaceId,
-    marketplaces.france.marketplaceId,
-    marketplaces.germany.marketplaceId,
-    marketplaces.italy.marketplaceId,
-    marketplaces.spain.marketplaceId,
-    marketplaces.netherlands.marketplaceId,
-    marketplaces.sweden.marketplaceId,
-    marketplaces.poland.marketplaceId,
-    marketplaces.turkey.marketplaceId,
-    marketplaces.belgium.marketplaceId,
-  ],
-  reportType: 'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
-  period: 'P1D', // Daily report generation
-  nextReportCreationTime: calculateNextReportCreationTime('16:23:00'),
-};
-
-createReportSchedule(config);
-
 module.exports = { createReportSchedule };
+
+// const config = {
+//   marketplaceIds: [
+//     marketplaces.unitedKingdom.marketplaceId,
+//     // marketplaces.france.marketplaceId,
+//     // marketplaces.germany.marketplaceId,
+//     // marketplaces.italy.marketplaceId,
+//     // marketplaces.spain.marketplaceId,
+//     // marketplaces.netherlands.marketplaceId,
+//     // marketplaces.sweden.marketplaceId,
+//     // marketplaces.poland.marketplaceId,
+//     // marketplaces.turkey.marketplaceId,
+//     // marketplaces.belgium.marketplaceId,
+//   ],
+//   reportType: 'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
+//   period: 'P1D', // Daily report generation
+//   nextReportCreationTime: calculateNextReportCreationTime('02:00:00'),
+// };
+
+// createReportSchedule(config);
