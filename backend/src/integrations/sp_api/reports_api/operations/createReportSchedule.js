@@ -16,8 +16,6 @@ const calculateNextReportCreationTime = require('../../schedule_reports/calculat
 async function createReportSchedule(config) {
   const { marketplaceIds, reportType, period, nextReportCreationTime } = config;
 
-  console.log(nextReportCreationTime);
-
   const apiOperation = 'createReportSchedule';
   const endpoint = '/reports/2021-06-30/schedules';
   const method = 'POST';
@@ -61,7 +59,7 @@ const config = {
   ],
   reportType: 'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
   period: 'P1D', // Daily report generation
-  nextReportCreationTime: calculateNextReportCreationTime('01:00:00'),
+  nextReportCreationTime: calculateNextReportCreationTime('16:23:00'),
 };
 
 createReportSchedule(config);

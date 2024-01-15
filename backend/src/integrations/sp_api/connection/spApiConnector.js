@@ -258,7 +258,6 @@ class SpApiConnector {
       // Only create queryString if there are query parameters
       let queryString = '';
       if (Object.keys(queryParams).length > 0) {
-        console.log(`queryParams: ${JSON.stringify(queryParams)}`);
         queryString = Object.entries(queryParams)
           .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
           .join('&');
