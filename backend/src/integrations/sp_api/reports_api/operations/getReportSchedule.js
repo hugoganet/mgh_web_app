@@ -36,7 +36,7 @@ async function getReportSchedule(config) {
 module.exports = { getReportSchedule };
 
 config = {
-  reportScheduleId: '50001018108',
+  reportScheduleId: '50057019737',
   createLog: true,
 };
 getReportSchedule(config);

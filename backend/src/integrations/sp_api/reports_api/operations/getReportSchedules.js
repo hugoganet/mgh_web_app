@@ -27,10 +27,10 @@ async function getReportSchedules(config) {
       false,
     );
 
-    // const reportSchedules = response.data.reportSchedules;
-    // for (const reportSchedule of reportSchedules) {
-    //   console.log(reportSchedule);
-    // }
+    const reportSchedules = response.data.reportSchedules;
+    for (const reportSchedule of reportSchedules) {
+      console.log(reportSchedule);
+    }
 
     return response.data;
   } catch (error) {

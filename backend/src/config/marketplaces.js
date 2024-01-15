@@ -19,7 +19,7 @@ const marketplaces = {
     countryCode: 'IT',
     currencyCode: 'EUR',
   },
-  netherland: {
+  netherlands: {
     marketplaceId: 'A1805IZSGTT6HS',
     countryCode: 'NL',
     currencyCode: 'EUR',

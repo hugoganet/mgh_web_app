@@ -16,6 +16,8 @@ const calculateNextReportCreationTime = require('../../schedule_reports/calculat
 async function createReportSchedule(config) {
   const { marketplaceIds, reportType, period, nextReportCreationTime } = config;
 
+  console.log(nextReportCreationTime);
+
   const apiOperation = 'createReportSchedule';
   const endpoint = '/reports/2021-06-30/schedules';
   const method = 'POST';
@@ -27,7 +29,7 @@ async function createReportSchedule(config) {
       {}, // No query parameters for this request
       {
         reportType,
-        marketplaceIds: [marketplaceIds],
+        marketplaceIds: marketplaceIds,
         period,
         nextReportCreationTime,
       },
@@ -45,10 +47,21 @@ async function createReportSchedule(config) {
 // Example usage: Creating a daily report schedule for the France marketplace
 // This part of the code should be run only when you want to set up or update the report schedule.
 const config = {
-  marketplaceIds: marketplaces.unitedKingdom.marketplaceId,
+  marketplaceIds: [
+    marketplaces.unitedKingdom.marketplaceId,
+    marketplaces.france.marketplaceId,
+    marketplaces.germany.marketplaceId,
+    marketplaces.italy.marketplaceId,
+    marketplaces.spain.marketplaceId,
+    marketplaces.netherlands.marketplaceId,
+    marketplaces.sweden.marketplaceId,
+    marketplaces.poland.marketplaceId,
+    marketplaces.turkey.marketplaceId,
+    marketplaces.belgium.marketplaceId,
+  ],
   reportType: 'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
   period: 'P1D', // Daily report generation
-  nextReportCreationTime: calculateNextReportCreationTime('1:00:00'),
+  nextReportCreationTime: calculateNextReportCreationTime('01:00:00'),
 };
 
 createReportSchedule(config);
