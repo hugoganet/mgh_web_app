@@ -20,6 +20,7 @@ async function getReport(reportId, createLog) {
 
   let reportDocumentId = null;
   let response;
+  let parsedResponse;
 
   while (reportDocumentId === null) {
     try {
@@ -33,8 +34,7 @@ async function getReport(reportId, createLog) {
         false,
       );
 
-      const parsedResponse = response.data;
-      console.log(parsedResponse);
+      parsedResponse = response.data;
 
       if (parsedResponse.reportDocumentId) {
         reportDocumentId = parsedResponse.reportDocumentId;
@@ -54,7 +54,7 @@ async function getReport(reportId, createLog) {
     console.log('Report is not ready after multiple attempts.');
   }
 
-  return reportDocumentId;
+  return parsedResponse;
 }
 
 module.exports = { getReport };

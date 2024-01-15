@@ -11,6 +11,7 @@ const {
 //   fetchAndProcessInventoryReport,
 // } = require('../../reports_api/fba_inventory_report/fetchAndProcessInventoryReport.js');
 // const { getReportSchedules } = require('../../reports_api/operations/getReportSchedules.js');
+const { getReport } = require('../../reports_api/operations/getReport.js');
 
 // Initialize SQS client with the AWS region and credentials
 const sqsClient = new SQSClient({
@@ -60,12 +61,16 @@ async function receiveAndProcessNotifications() {
           const reportType =
             notification.payload.reportProcessingFinishedNotification
               .reportType;
+          const reportId =
+            notification.payload.reportProcessingFinishedNotification.reportId;
+          const response = await getReport(reportId, true, reportType);
+          console.log(response.marketplaceIds);
 
-          const { documentUrl, compressionAlgorithm } = await getReportDocument(
-            reportDocumentId,
-            true,
-            reportType,
-          );
+          // const { documentUrl, compressionAlgorithm } = await getReportDocument(
+          //   reportDocumentId,
+          //   true,
+          //   reportType,
+          // );
 
           // TODO Get countryKeys before calling fetchAndProcessInventoryReport
           // const countryKeys = ['sweden'];
