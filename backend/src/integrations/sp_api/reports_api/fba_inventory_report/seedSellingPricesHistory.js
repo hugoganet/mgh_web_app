@@ -10,8 +10,7 @@ const seedSellingPriceHistory = async () => {
   try {
     // Get all inventory updates
     const inventoryUpdates = await db.AfnInventoryDailyUpdate.findAll();
-    console.log(inventoryUpdates.length);
-    // console.log(inventoryUpdates);
+    // console.log(inventoryUpdates.length);
 
     for (const update of inventoryUpdates) {
       // Get the date of the update
@@ -33,9 +32,9 @@ const seedSellingPriceHistory = async () => {
             date: dateString,
           },
         });
-        console.log(
-          `Record with skuId : ${update.skuId}, inserted into SellingPriceHistory`,
-        );
+        // console.log(
+        //   `Record with skuId : ${update.skuId}, inserted into SellingPriceHistory`,
+        // );
       } else {
         continue;
       }

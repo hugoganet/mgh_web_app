@@ -35,8 +35,6 @@ async function createReportSchedule(config) {
       apiOperation,
       false,
     );
-
-    console.log(response.data.reportScheduleId);
     return response.data.reportScheduleId;
   } catch (error) {
     console.error('Error creating report schedule:', error);
@@ -47,10 +45,10 @@ async function createReportSchedule(config) {
 // Example usage: Creating a daily report schedule for the France marketplace
 // This part of the code should be run only when you want to set up or update the report schedule.
 const config = {
-  marketplaceIds: marketplaces.france.marketplaceId,
+  marketplaceIds: marketplaces.unitedKingdom.marketplaceId,
   reportType: 'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
   period: 'P1D', // Daily report generation
-  nextReportCreationTime: calculateNextReportCreationTime('14:00:00'),
+  nextReportCreationTime: calculateNextReportCreationTime('1:00:00'),
 };
 
 createReportSchedule(config);

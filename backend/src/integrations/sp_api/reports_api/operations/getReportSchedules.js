@@ -26,7 +26,12 @@ async function getReportSchedules(config) {
       apiOperation,
       false,
     );
-    console.log(response.data);
+
+    // const reportSchedules = response.data.reportSchedules;
+    // for (const reportSchedule of reportSchedules) {
+    //   console.log(reportSchedule);
+    // }
+
     return response.data;
   } catch (error) {
     throw error;

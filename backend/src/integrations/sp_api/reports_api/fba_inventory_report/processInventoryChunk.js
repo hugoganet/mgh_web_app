@@ -103,17 +103,17 @@ async function processInventoryChunk(
 
     // Update the fields in AfnInventoryDailyUpdate if the record exists
     if (!createdAfnInventoryRecord) {
-      console.log(
-        `Updating existing AfnInventoryDailyUpdate record for skuId: ${skuId}...`,
-      );
+      // console.log(
+      //   `Updating existing AfnInventoryDailyUpdate record for skuId: ${skuId}...`,
+      // );
       inventoryRecord.actualPrice = skuAverageSellingPrice;
       inventoryRecord.afnFulfillableQuantity = skuAfnTotalQuantity;
       inventoryRecord.reportDocumentId = reportDocumentId;
       await inventoryRecord.save();
     } else {
-      console.log(
-        `Creating new AfnInventoryDailyUpdate record for skuId: ${skuId}...`,
-      );
+      // console.log(
+      //   `Creating new AfnInventoryDailyUpdate record for skuId: ${skuId}...`,
+      // );
     }
 
     return inventoryRecord; // Return the updated or created inventory record

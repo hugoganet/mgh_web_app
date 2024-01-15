@@ -31,7 +31,7 @@ async function getReportDocument(reportDocumentId, createLog, reportType) {
     const compressionAlgorithm = parsedResponse.compressionAlgorithm;
     const reportDocumentId = parsedResponse.reportDocumentId;
 
-    console.log('Document URL:', documentUrl);
+    // console.log('Document URL from getReportDocument => ', documentUrl);
 
     return { documentUrl, compressionAlgorithm, reportDocumentId };
   } catch (error) {
