@@ -1,17 +1,24 @@
+require('dotenv').config({ path: 'backend/.env' });
+
 const {
   SQSClient,
   ReceiveMessageCommand,
   DeleteMessageCommand,
 } = require('@aws-sdk/client-sqs');
-require('dotenv').config({ path: 'backend/.env' });
+
 const {
   getReportDocument,
 } = require('../../reports_api/operations/getReportDocument.js');
-// const {
-//   fetchAndProcessInventoryReport,
-// } = require('../../reports_api/fba_inventory_report/fetchAndProcessInventoryReport.js');
-// const { getReportSchedules } = require('../../reports_api/operations/getReportSchedules.js');
+
+const {
+  fetchAndProcessInventoryReport,
+} = require('../../reports_api/fba_inventory_report/fetchAndProcessInventoryReport.js');
+
 const { getReport } = require('../../reports_api/operations/getReport.js');
+
+const {
+  getCountryNameFromMarketplaceId,
+} = require('../../../../utils/getCountryNameFromMarketplaceId.js');
 
 // Initialize SQS client with the AWS region and credentials
 const sqsClient = new SQSClient({
@@ -52,7 +59,7 @@ async function receiveAndProcessNotifications() {
         // Process the notification based on its type
         if (notification.notificationType === 'REPORT_PROCESSING_FINISHED') {
           console.log('REPORT_PROCESSING_FINISHED');
-          console.log(notification);
+          // console.log(notification);
           console.log('-------------------------------------');
 
           const reportDocumentId =
@@ -63,25 +70,32 @@ async function receiveAndProcessNotifications() {
               .reportType;
           const reportId =
             notification.payload.reportProcessingFinishedNotification.reportId;
+
           const response = await getReport(reportId, true, reportType);
-          console.log(response.marketplaceIds);
 
-          // const { documentUrl, compressionAlgorithm } = await getReportDocument(
-          //   reportDocumentId,
-          //   true,
-          //   reportType,
-          // );
+          const { documentUrl, compressionAlgorithm } = await getReportDocument(
+            reportDocumentId,
+            true,
+            reportType,
+          );
 
-          // TODO Get countryKeys before calling fetchAndProcessInventoryReport
-          // const countryKeys = ['sweden'];
-          // // Fetch CSV data and process into database
-          // await fetchAndProcessInventoryReport(
-          //   documentUrl,
-          //   compressionAlgorithm,
-          //   reportDocumentId,
-          //   countryKeys,
-          //   reportType,
-          // );
+          const countryKeys = getCountryNameFromMarketplaceId(
+            response.marketplaceIds[1],
+          );
+          // console.log(documentUrl);
+          // console.log(compressionAlgorithm);
+          // console.log(reportDocumentId);
+          // console.log(countryKeys);
+          // console.log(reportType);
+
+          // Fetch CSV data and process into database
+          await fetchAndProcessInventoryReport(
+            documentUrl,
+            compressionAlgorithm,
+            reportDocumentId,
+            [countryKeys],
+            reportType,
+          );
         }
 
         // Add logic for other notification types as needed
