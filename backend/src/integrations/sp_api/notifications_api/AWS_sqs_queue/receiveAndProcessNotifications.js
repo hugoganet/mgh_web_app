@@ -1,4 +1,5 @@
 require('dotenv').config({ path: 'backend/.env' });
+const { logAndCollect } = require('../../logs/logger');
 
 const {
   SQSClient,
@@ -34,10 +35,11 @@ const queueURL = process.env.SQS_QUEUE_URL;
 /**
  * @async
  * @function receiveAndProcessNotifications
+ * @param {function} createLog - The logger function
  * @description Receives and processes notifications from the SQS queue
  * @return {Promise}
  */
-async function receiveAndProcessNotifications() {
+async function receiveAndProcessNotifications(createLog = false) {
   const receiveParams = {
     QueueUrl: queueURL,
     MaxNumberOfMessages: 10, // Adjust as needed
@@ -45,6 +47,8 @@ async function receiveAndProcessNotifications() {
     VisibilityTimeout: 10, // Adjust as needed
     MessageRetentionPeriod: 1209600, // 14 days
   };
+  const apiOperation = 'ReceiveAndProcessNotifications';
+  let logMessage = '';
 
   try {
     const receiveCommand = new ReceiveMessageCommand(receiveParams);
@@ -54,13 +58,13 @@ async function receiveAndProcessNotifications() {
       for (const message of data.Messages) {
         const notification = JSON.parse(message.Body);
 
-        // console.log(notification);
-
         // Process the notification based on its type
         if (notification.notificationType === 'REPORT_PROCESSING_FINISHED') {
-          console.log('REPORT_PROCESSING_FINISHED');
-          // console.log(notification);
-          console.log('-------------------------------------');
+          logMessage += `Received notification 'REPORT_PROCESSING_FINISHED' : ${JSON.stringify(
+            notification,
+            null,
+            2,
+          )}\n`;
 
           const reportDocumentId =
             notification.payload.reportProcessingFinishedNotification
@@ -70,23 +74,18 @@ async function receiveAndProcessNotifications() {
               .reportType;
           const reportId =
             notification.payload.reportProcessingFinishedNotification.reportId;
-
           const response = await getReport(reportId, true, reportType);
-
           const { documentUrl, compressionAlgorithm } = await getReportDocument(
             reportDocumentId,
             true,
             reportType,
           );
-
           const countryKeys = getCountryNameFromMarketplaceId(
-            response.marketplaceIds[1],
+            response.marketplaceIds[0],
           );
-          // console.log(documentUrl);
-          // console.log(compressionAlgorithm);
-          // console.log(reportDocumentId);
-          // console.log(countryKeys);
-          // console.log(reportType);
+          logMessage += `Compression algorithm: ${compressionAlgorithm}
+          Document URL: ${documentUrl}
+          Country keys: ${countryKeys}/n`;
 
           // Fetch CSV data and process into database
           await fetchAndProcessInventoryReport(
@@ -98,19 +97,26 @@ async function receiveAndProcessNotifications() {
           );
         }
 
-        // Add logic for other notification types as needed
-
-        const deleteParams = {
+        /*         const deleteParams = {
           QueueUrl: queueURL,
           ReceiptHandle: message.ReceiptHandle,
         };
         const deleteCommand = new DeleteMessageCommand(deleteParams);
-        await sqsClient.send(deleteCommand);
+        await sqsClient.send(deleteCommand); */
       }
+    } else {
+      logMessage += 'No messages received.\n';
+    }
+    if (createLog) {
+      logAndCollect(logMessage, apiOperation);
     }
   } catch (error) {
     console.error('Error processing notifications:', error);
+    logMessage += `Error processing notifications: ${error}\n`;
+    if (createLog) {
+      logAndCollect(logMessage, apiOperation);
+    }
   }
 }
 
-receiveAndProcessNotifications();
+receiveAndProcessNotifications(true);

@@ -272,7 +272,7 @@ class SpApiConnector {
         accessToken,
         date,
       );
-      console.log(apiOperation);
+
       // Prepare log message for the request
       logMessage +=
         'Request Details:\n' +

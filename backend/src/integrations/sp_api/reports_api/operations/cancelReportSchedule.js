@@ -37,7 +37,7 @@ async function cancelReportSchedule(config) {
 module.exports = { cancelReportSchedule };
 
 config = {
-  reportScheduleId: '50040019733',
+  reportScheduleId: '50062019737',
   createLog: true,
 };
 cancelReportSchedule(config);
