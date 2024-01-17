@@ -56,53 +56,58 @@ async function receiveAndProcessNotifications(createLog = false) {
 
     if (data.Messages) {
       for (const message of data.Messages) {
-        const notification = JSON.parse(message.Body);
+        try {
+          const notification = JSON.parse(message.Body);
 
-        // Process the notification based on its type
-        if (notification.notificationType === 'REPORT_PROCESSING_FINISHED') {
-          logMessage += `Received notification 'REPORT_PROCESSING_FINISHED' : ${JSON.stringify(
-            notification,
-            null,
-            2,
-          )}\n`;
+          // Process the notification based on its type
+          if (notification.notificationType === 'REPORT_PROCESSING_FINISHED') {
+            logMessage += `Received notification 'REPORT_PROCESSING_FINISHED' : ${JSON.stringify(
+              notification,
+              null,
+              2,
+            )}\n`;
 
-          const reportDocumentId =
-            notification.payload.reportProcessingFinishedNotification
-              .reportDocumentId;
-          const reportType =
-            notification.payload.reportProcessingFinishedNotification
-              .reportType;
-          const reportId =
-            notification.payload.reportProcessingFinishedNotification.reportId;
-          const response = await getReport(reportId, true, reportType);
-          const { documentUrl, compressionAlgorithm } = await getReportDocument(
-            reportDocumentId,
-            true,
-            reportType,
-          );
-          const countryKeys = getCountryNameFromMarketplaceId(
-            response.marketplaceIds[0],
-          );
-          logMessage += `Compression algorithm: ${compressionAlgorithm}
+            const reportDocumentId =
+              notification.payload.reportProcessingFinishedNotification
+                .reportDocumentId;
+            const reportType =
+              notification.payload.reportProcessingFinishedNotification
+                .reportType;
+            const reportId =
+              notification.payload.reportProcessingFinishedNotification
+                .reportId;
+            const response = await getReport(reportId, true, reportType);
+            const { documentUrl, compressionAlgorithm } =
+              await getReportDocument(reportDocumentId, true, reportType);
+            const countryKeys = getCountryNameFromMarketplaceId(
+              response.marketplaceIds[0],
+            );
+            logMessage += `Compression algorithm: ${compressionAlgorithm}
           Document URL: ${documentUrl}
           Country keys: ${countryKeys}/n`;
 
-          // Fetch CSV data and process into database
-          await fetchAndProcessInventoryReport(
-            documentUrl,
-            compressionAlgorithm,
-            reportDocumentId,
-            [countryKeys],
-            reportType,
-          );
-        }
+            // Fetch CSV data and process into database
+            await fetchAndProcessInventoryReport(
+              documentUrl,
+              compressionAlgorithm,
+              reportDocumentId,
+              [countryKeys],
+              reportType,
+            );
+          }
 
-        /*         const deleteParams = {
-          QueueUrl: queueURL,
-          ReceiptHandle: message.ReceiptHandle,
-        };
-        const deleteCommand = new DeleteMessageCommand(deleteParams);
-        await sqsClient.send(deleteCommand); */
+          // Delete the message from the queue after processing
+
+          // const deleteParams = {
+          //   QueueUrl: queueURL,
+          //   ReceiptHandle: message.ReceiptHandle,
+          // };
+          // const deleteCommand = new DeleteMessageCommand(deleteParams);
+          // await sqsClient.send(deleteCommand);
+        } catch (error) {
+          console.error('Error processing notification:', error);
+          logMessage += `Error processing notification: ${error}\n`;
+        }
       }
     } else {
       logMessage += 'No messages received.\n';
