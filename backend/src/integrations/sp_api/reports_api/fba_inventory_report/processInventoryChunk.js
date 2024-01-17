@@ -29,12 +29,12 @@ async function processInventoryChunk(
   currencyCode,
   createLog = false,
 ) {
+  let logMessage = `Processing inventory chunk for SKU: ${chunk['sku']}\n`;
   try {
     const sku = chunk['sku'];
     const fnsku = chunk['fnsku'];
     const skuAfnTotalQuantity = parseInt(chunk['afn-fulfillable-quantity'], 10);
     const skuAverageSellingPrice = parseFloat(chunk['your-price']);
-    let logMessage = `Processing inventory chunk for SKU: ${sku}\n`;
 
     // Find or create the SKU record in the database
     const [skuRecord, created] = await db.Sku.findOrCreate({
@@ -63,65 +63,86 @@ async function processInventoryChunk(
 
     const skuId = skuRecord.skuId;
 
-    // If the record was created, find another SKU with the same sku to copy acquisition costs
     if (created) {
-      const similarSku = await db.Sku.findOne({
-        where: {
-          sku,
-          countryCode: { [db.Sequelize.Op.ne]: countryCode },
-        },
-      });
+      try {
+        const similarSku = await db.Sku.findOne({
+          where: {
+            sku,
+            countryCode: { [db.Sequelize.Op.ne]: countryCode },
+          },
+        });
 
-      if (similarSku) {
-        skuRecord.skuAcquisitionCostExc = similarSku.skuAcquisitionCostExc;
-        skuRecord.skuAcquisitionCostInc = similarSku.skuAcquisitionCostInc;
-        await skuRecord.save();
+        logMessage += `Created new SKU record: ${skuRecord.sku}\n`;
+
+        if (similarSku) {
+          skuRecord.skuAcquisitionCostExc = similarSku.skuAcquisitionCostExc;
+          skuRecord.skuAcquisitionCostInc = similarSku.skuAcquisitionCostInc;
+          await skuRecord.save();
+          logMessage += `Copied acquisition costs for new SKU record.\n`;
+        }
+      } catch (err) {
+        logMessage += `Error finding similar SKU or copying acquisition costs: ${err}\n`;
       }
     }
 
-    // Check SKU activity and update AFN quantity if SKU exists
-    if (skuRecord) {
-      checkSkuIsActive(skuId);
-      updateAfnQuantity(skuId);
+    try {
+      await checkSkuIsActive(skuId);
+      logMessage += `Checked SKU activity.\n`;
+    } catch (err) {
+      logMessage += `Error checking SKU activity: ${err}\n`;
     }
 
-    // Add fnsku to sku if not already present
-    if (skuRecord.fnsku == null) {
-      addFnskuToSku(skuId, fnsku);
+    try {
+      await updateAfnQuantity(skuId);
+      logMessage += `Updated AFN quantity.\n`;
+    } catch (err) {
+      logMessage += `Error updating AFN quantity: ${err}\n`;
+    }
+
+    try {
+      if (skuRecord.fnsku == null) {
+        await addFnskuToSku(skuId, fnsku);
+        logMessage += `Added fnsku to sku.\n`;
+      }
+    } catch (err) {
+      logMessage += `Error adding fnsku to sku: ${err}\n`;
     }
 
     // Attempt to find or create a corresponding AfnInventoryDailyUpdate record in the database
-    const [inventoryRecord, createdAfnInventoryRecord] =
-      await db.AfnInventoryDailyUpdate.findOrCreate({
-        where: { skuId: skuId },
-        defaults: {
-          skuId,
-          sku,
-          countryCode,
-          currencyCode,
-          actualPrice: skuAverageSellingPrice,
-          afnFulfillableQuantity: skuAfnTotalQuantity,
-          reportDocumentId,
-        },
-      });
+    try {
+      const [inventoryRecord, createdAfnInventoryRecord] =
+        await db.AfnInventoryDailyUpdate.findOrCreate({
+          where: { skuId: skuId },
+          defaults: {
+            skuId,
+            sku,
+            countryCode,
+            currencyCode,
+            actualPrice: skuAverageSellingPrice,
+            afnFulfillableQuantity: skuAfnTotalQuantity,
+            reportDocumentId,
+          },
+        });
 
-    // Update the fields in AfnInventoryDailyUpdate if the record exists
-    if (!createdAfnInventoryRecord) {
-      // console.log(
-      //   `Updating existing AfnInventoryDailyUpdate record for skuId: ${skuId}...`,
-      // );
-      inventoryRecord.actualPrice = skuAverageSellingPrice;
-      inventoryRecord.afnFulfillableQuantity = skuAfnTotalQuantity;
-      inventoryRecord.reportDocumentId = reportDocumentId;
-      await inventoryRecord.save();
-    } else {
-       logMessage += `Creating new AfnInventoryDailyUpdate record for skuId: ${skuId}...`,
+      if (!createdAfnInventoryRecord) {
+        inventoryRecord.actualPrice = skuAverageSellingPrice;
+        inventoryRecord.afnFulfillableQuantity = skuAfnTotalQuantity;
+        inventoryRecord.reportDocumentId = reportDocumentId;
+        await inventoryRecord.save();
+        logMessage += `Updated existing AfnInventoryDailyUpdate record for skuId: ${skuId}.\n`;
+      } else {
+        logMessage += `Created new AfnInventoryDailyUpdate record for skuId: ${skuId}.\n`;
+      }
+    } catch (err) {
+      logMessage += `Error finding or creating AfnInventoryDailyUpdate record: ${err}\n`;
     }
-
-    return inventoryRecord; // Return the updated or created inventory record
   } catch (error) {
     console.error('Error processing inventory chunk:', error);
-    throw error; // Re-throw the error to handle it in the calling function
+    logMessage += `Error processing inventory chunk: ${error}\n`;
+  }
+
+  if (createLog) {
+    logAndCollect(logMessage, 'ProcessInventoryChunk');
   }
 }
 

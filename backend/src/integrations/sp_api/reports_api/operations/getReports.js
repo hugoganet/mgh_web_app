@@ -56,7 +56,7 @@ const config = {
   reportTypes: ['GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA'],
   createLog: true,
   pageSize: 100,
-  // createdSince: '2024-01-15T00:00:00+00:00',
+  createdSince: '2024-01-15T00:00:00+00:00',
   processingStatuses: 'DONE',
 };
 getReports(config);
