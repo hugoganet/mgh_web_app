@@ -117,14 +117,14 @@ async function processInventoryChunk(
 
     // Perform various database operations on the SKU record
     try {
-      await checkSkuIsActive(skuId, true);
+      await checkSkuIsActive(skuId, createLog);
       logMessage += `Checked SKU activity for SKU ID: ${skuRecord.skuId}.\n`;
     } catch (err) {
       logMessage += `Error checking SKU activity: ${err}\n`;
     }
 
     try {
-      await updateAfnQuantity(skuId);
+      await updateAfnQuantity(skuId, createLog);
       logMessage += `Updated AFN quantity for SKU ID: ${skuRecord.skuId}.\n`;
     } catch (err) {
       logMessage += `Error updating AFN quantity: ${err}\n`;

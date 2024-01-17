@@ -15,18 +15,33 @@ const checkSkuIsActive = async (skuId, createLog = false) => {
   try {
     const latestUpdate = await db.AfnInventoryDailyUpdate.findOne({
       where: { skuId },
-      order: [['createdAt', 'DESC']],
     });
 
     if (!latestUpdate) {
-      logMessage += `No afnInventoryDailyUpdate found for SKU ID: ${skuId}. Setting SKU as inactive.\n`;
-      await db.Sku.update({ isActive: false }, { where: { skuId } });
+      logMessage += `No afnInventoryDailyUpdate found for SKU ID: ${skuId}. Setting SKU as inactive in skus table.\n`;
+      try {
+        await db.Sku.update({ isActive: false }, { where: { skuId } });
+      } catch (error) {
+        logMessage += `Error setting SKU (${skuId}) as inactive: ${error}\n`;
+        console.error('Error setting SKU as inactive:', error);
+      }
     } else {
       const isActive = latestUpdate.afnFulfillableQuantity >= 1;
+
       logMessage += `SKU ID: ${skuId} is determined to be ${
         isActive ? 'active' : 'inactive'
-      } based on fulfillable quantity.\n`;
-      await db.Sku.update({ isActive }, { where: { skuId } });
+      } based on fulfillable quantity. Updating in skus table.\n`;
+      try {
+        await db.Sku.update({ isActive }, { where: { skuId } });
+      } catch (error) {
+        logMessage += `Error setting SKU (${skuId}) as ${
+          isActive ? 'active' : 'inactive'
+        }: ${error}\n`;
+        console.error(
+          `Error setting SKU as ${isActive ? 'active' : 'inactive'}:`,
+          error,
+        );
+      }
     }
   } catch (error) {
     logMessage += `Error checking and updating SKU active status: ${error}\n`;

@@ -1,30 +1,44 @@
 const db = require('../models/index');
+const { logAndCollect } = require('../../integrations/sp_api/logs/logger');
 
 /**
- * Updates the SKU's total AFN quantity based on the latest entry from AfnInventoryDailyUpdate.
- *
+ * @description Updates the SKU's total AFN quantity based on the latest entry from AfnInventoryDailyUpdate.
+ * @function updateAfnQuantity
  * @async
  * @param {number} skuId - The ID of the SKU to update.
+ * @param {boolean} createLog - Whether to create a log of the process.
  * @return {Promise<void>} - The function doesn't return a value but updates the database.
  */
-const updateAfnQuantity = async skuId => {
+const updateAfnQuantity = async (skuId, createLog = false) => {
+  let logMessage = `Updating AFN quantity for SKU ID: ${skuId}\n`;
+
   try {
-    // Find the latest afnInventoryDailyUpdate for the sku
     const latestUpdate = await db.AfnInventoryDailyUpdate.findOne({
       where: { skuId },
-      order: [['createdAt', 'DESC']],
     });
 
     if (!latestUpdate) {
-      // console.warn(`No afnInventoryDailyUpdate found for SKU ID: ${skuId}.`);
-      return;
+      logMessage += `No AfnInventoryDailyUpdate found for SKU ID: ${skuId}. No update performed.\n`;
+    } else {
+      try {
+        const skuAfnTotalQuantity = latestUpdate.afnFulfillableQuantity;
+        await db.Sku.update({ skuAfnTotalQuantity }, { where: { skuId } });
+        logMessage += `Updated SKU AFN total quantity for SKU ID: ${skuId} to ${skuAfnTotalQuantity}.\n`;
+      } catch (updateError) {
+        logMessage += `Error updating SKU AFN total quantity in the database: ${updateError}\n`;
+        console.error(
+          'Error updating SKU AFN total quantity in the database:',
+          updateError,
+        );
+      }
     }
-
-    // Assume you're updating the total quantity field in the Sku table
-    const skuAfnTotalQuantity = latestUpdate.afnFulfillableQuantity;
-    await db.Sku.update({ skuAfnTotalQuantity }, { where: { skuId: skuId } });
   } catch (error) {
-    console.error('Error updating SKU AFN total quantity:', error);
+    logMessage += `Error finding latest AfnInventoryDailyUpdate: ${error}\n`;
+    console.error('Error finding latest AfnInventoryDailyUpdate:', error);
+  }
+
+  if (createLog) {
+    logAndCollect(logMessage, 'UpdateAfnQuantity');
   }
 };
 
