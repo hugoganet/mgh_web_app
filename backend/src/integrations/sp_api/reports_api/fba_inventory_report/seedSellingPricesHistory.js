@@ -1,46 +1,53 @@
 const db = require('../../../../api/models/index');
+const { logAndCollect } = require('../../logs/logger.js');
 
 /**
  * @function seedSellingPriceHistory
  * @description Populates the SellingPriceHistory table with recent data.
+ * @param {boolean} createLog - Whether to create a log of the process.
  * @async
  * @return {Promise<void>} - A promise that resolves when the SellingPriceHistory table has been populated with recent data.
  */
-const seedSellingPriceHistory = async () => {
+const seedSellingPriceHistory = async (createLog = false) => {
+  let logMessage = 'Starting to seed SellingPriceHistory.\n';
+
   try {
-    // Get all inventory updates
     const inventoryUpdates = await db.AfnInventoryDailyUpdate.findAll();
-    // console.log(inventoryUpdates.length);
+    logMessage += `Found ${inventoryUpdates.length} inventory updates.\n`;
 
     for (const update of inventoryUpdates) {
-      // Get the date of the update
-      const dateString = update.updatedAt.toISOString().split('T')[0];
+      try {
+        const dateString = update.updatedAt.toISOString().split('T')[0];
 
-      // Create a record to insert into the SellingPriceHistory table
-      const record = {
-        skuId: update.skuId,
-        dailyPrice: update.actualPrice,
-        currencyCode: update.currencyCode,
-        date: dateString,
-      };
-
-      // Only insert records with a positive quantity
-      if (update.afnFulfillableQuantity > 0) {
-        await db.SellingPriceHistory.upsert(record, {
-          where: {
+        if (update.afnFulfillableQuantity > 0) {
+          const record = {
             skuId: update.skuId,
+            dailyPrice: update.actualPrice,
+            currencyCode: update.currencyCode,
             date: dateString,
-          },
-        });
-        // console.log(
-        //   `Record with skuId : ${update.skuId}, inserted into SellingPriceHistory`,
-        // );
-      } else {
-        continue;
+          };
+
+          await db.SellingPriceHistory.upsert(record, {
+            where: { skuId: update.skuId, date: dateString },
+          });
+
+          logMessage += `Record for SKU ID: ${update.skuId} on ${dateString} inserted/updated in SellingPriceHistory.\n`;
+        }
+      } catch (innerError) {
+        logMessage += `Error processing record for SKU ID: ${update.skuId}: ${innerError}\n`;
+        console.error(
+          `Error processing record for SKU ID: ${update.skuId}:`,
+          innerError,
+        );
       }
     }
   } catch (error) {
+    logMessage += `Error seeding SellingPriceHistory: ${error}\n`;
     console.error('Error seeding SellingPriceHistory:', error);
+  } finally {
+    if (createLog) {
+      logAndCollect(logMessage, 'SeedSellingPriceHistory');
+    }
   }
 };
 

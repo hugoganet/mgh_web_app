@@ -81,8 +81,6 @@ async function requestFbaInventoryReport(
       reportType,
       config.createLog,
     );
-
-    // await seedSellingPriceHistory();
   } catch (error) {
     console.error('Error in requesting FBA Inventory report:', error);
   }

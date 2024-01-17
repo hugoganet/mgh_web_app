@@ -1,7 +1,7 @@
 const axios = require('axios');
 const csvParser = require('csv-parser');
 const { Transform } = require('stream'); // To work with streams
-const marketplaces = require('../../../../config/marketplaces.js'); // Marketplace configuration
+const marketplaces = require('../../../../config/marketplaces.js');
 const {
   chooseDecompressionStream,
 } = require('../../chooseDecompressionStream.js');
@@ -79,7 +79,7 @@ async function fetchAndProcessInventoryReport(
           await Promise.all(processingPromises);
           console.log('Data processing completed');
           logMessage += 'Data processing completed successfully.\n';
-          await seedSellingPriceHistory();
+          await seedSellingPriceHistory(createLog);
         } catch (error) {
           logMessage += `Error processing data stream: ${error}\n`;
           console.error('Error processing data stream:', error);
