@@ -132,7 +132,7 @@ async function processInventoryChunk(
 
     try {
       if (skuRecord.fnsku == null) {
-        await addFnskuToSku(skuId, fnsku);
+        await addFnskuToSku(skuId, fnsku, createLog);
         logMessage += `Added fnsku to SKU ID: ${skuRecord.skuId}.\n`;
       }
     } catch (err) {
