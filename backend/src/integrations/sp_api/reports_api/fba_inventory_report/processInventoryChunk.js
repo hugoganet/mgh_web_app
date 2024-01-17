@@ -29,7 +29,7 @@ async function processInventoryChunk(
   currencyCode,
   createLog = false,
 ) {
-  let logMessage = `Processing inventory chunk for SKU: ${chunk['sku']}\n`;
+  let logMessage = `Processing inventory chunk for SKU: ${chunk['sku']} on ${countryCode}\n`;
   try {
     const sku = chunk['sku'];
     const fnsku = chunk['fnsku'];
@@ -85,29 +85,6 @@ async function processInventoryChunk(
       }
     }
 
-    try {
-      await checkSkuIsActive(skuId);
-      logMessage += `Checked SKU activity.\n`;
-    } catch (err) {
-      logMessage += `Error checking SKU activity: ${err}\n`;
-    }
-
-    try {
-      await updateAfnQuantity(skuId);
-      logMessage += `Updated AFN quantity.\n`;
-    } catch (err) {
-      logMessage += `Error updating AFN quantity: ${err}\n`;
-    }
-
-    try {
-      if (skuRecord.fnsku == null) {
-        await addFnskuToSku(skuId, fnsku);
-        logMessage += `Added fnsku to sku.\n`;
-      }
-    } catch (err) {
-      logMessage += `Error adding fnsku to sku: ${err}\n`;
-    }
-
     // Attempt to find or create a corresponding AfnInventoryDailyUpdate record in the database
     try {
       const [inventoryRecord, createdAfnInventoryRecord] =
@@ -124,6 +101,7 @@ async function processInventoryChunk(
           },
         });
 
+      // If the record already existed, update the actualPrice and afnFulfillableQuantity fields
       if (!createdAfnInventoryRecord) {
         inventoryRecord.actualPrice = skuAverageSellingPrice;
         inventoryRecord.afnFulfillableQuantity = skuAfnTotalQuantity;
@@ -135,6 +113,30 @@ async function processInventoryChunk(
       }
     } catch (err) {
       logMessage += `Error finding or creating AfnInventoryDailyUpdate record: ${err}\n`;
+    }
+
+    // Perform various database operations on the SKU record
+    try {
+      await checkSkuIsActive(skuId, true);
+      logMessage += `Checked SKU activity for SKU ID: ${skuRecord.skuId}.\n`;
+    } catch (err) {
+      logMessage += `Error checking SKU activity: ${err}\n`;
+    }
+
+    try {
+      await updateAfnQuantity(skuId);
+      logMessage += `Updated AFN quantity for SKU ID: ${skuRecord.skuId}.\n`;
+    } catch (err) {
+      logMessage += `Error updating AFN quantity: ${err}\n`;
+    }
+
+    try {
+      if (skuRecord.fnsku == null) {
+        await addFnskuToSku(skuId, fnsku);
+        logMessage += `Added fnsku to SKU ID: ${skuRecord.skuId}.\n`;
+      }
+    } catch (err) {
+      logMessage += `Error adding fnsku to sku: ${err}\n`;
     }
   } catch (error) {
     console.error('Error processing inventory chunk:', error);
