@@ -93,6 +93,7 @@ async function receiveAndProcessNotifications(createLog = false) {
               reportDocumentId,
               [countryKeys],
               reportType,
+              true,
             );
           }
 

@@ -8,6 +8,7 @@ const {
 const { preProcessCsvRow } = require('./preProcessCsvRow.js');
 const { processInventoryChunk } = require('./processInventoryChunk.js');
 const { seedSellingPriceHistory } = require('./seedSellingPricesHistory.js');
+const { logAndCollect } = require('../../logs/logger.js');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -17,6 +18,7 @@ const { seedSellingPriceHistory } = require('./seedSellingPricesHistory.js');
  * @param {string} reportDocumentId - The document ID associated with the report.
  * @param {string[]} countryKeys - The country keys to associate with the report.
  * @param {string} reportType - The type of report being processed.
+ * @param {boolean} createLog - Whether to create a log of the process.
  * @return {Promise<void>} - A promise that resolves when the CSV file has been fetched and processed.
  */
 async function fetchAndProcessInventoryReport(
@@ -25,20 +27,20 @@ async function fetchAndProcessInventoryReport(
   reportDocumentId,
   countryKeys,
   reportType,
+  createLog = false,
 ) {
   const countryCode = marketplaces[countryKeys[0]].countryCode;
   const currencyCode = marketplaces[countryKeys[0]].currencyCode;
   const processingPromises = [];
+  let logMessage = `Starting fetchAndProcessInventoryReport for ReportDocumentId: ${reportDocumentId}\n`;
 
   try {
-    // Make a GET request to receive the file as a stream
     const response = await axios({
       method: 'get',
       url: url,
       responseType: 'stream',
     });
 
-    // Choose the appropriate decompression stream based on the algorithm
     const decompressionStream = chooseDecompressionStream(compressionAlgorithm);
 
     // Create a transform stream to process each row of CSV data
@@ -50,6 +52,7 @@ async function fetchAndProcessInventoryReport(
           this.push(processedChunk);
           callback();
         } catch (err) {
+          logMessage += `Error in transform stream: ${err}\n`;
           callback(err);
         }
       },
@@ -67,6 +70,7 @@ async function fetchAndProcessInventoryReport(
             countryCode,
             currencyCode,
             reportType,
+            createLog,
           ),
         );
       })
@@ -74,16 +78,23 @@ async function fetchAndProcessInventoryReport(
         try {
           await Promise.all(processingPromises);
           console.log('Data processing completed');
+          logMessage += 'Data processing completed successfully.\n';
           await seedSellingPriceHistory();
         } catch (error) {
+          logMessage += `Error processing data stream: ${error}\n`;
           console.error('Error processing data stream:', error);
         }
       })
       .on('error', error => {
+        logMessage += `Error processing data stream: ${error}\n`;
         console.error('Error processing data stream:', error);
       });
   } catch (error) {
+    logMessage += `Error fetching data: ${error}\n`;
     console.error('Error fetching data:', error);
+  }
+  if (createLog) {
+    logAndCollect(logMessage, 'FetchAndProcessInventoryReport');
   }
 }
 

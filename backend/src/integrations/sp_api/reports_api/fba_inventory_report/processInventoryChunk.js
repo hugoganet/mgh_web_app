@@ -6,6 +6,7 @@ const {
   updateAfnQuantity,
 } = require('../../../../api/services/updateAfnQuantity.js');
 const { addFnskuToSku } = require('../../../../api/services/addFnskuToSku.js');
+const { logAndCollect } = require('../../logs/logger.js');
 
 /**
  * @async
@@ -14,6 +15,7 @@ const { addFnskuToSku } = require('../../../../api/services/addFnskuToSku.js');
  * @param {string} reportDocumentId - The document ID of the report being processed.
  * @param {string} countryCode - The country code associated with the inventory data.
  * @param {string} currencyCode - The currency code associated with the inventory data.
+ * @param {boolean} createLog - Whether to create a log of the process.
  * @return {Promise<Object>} - A promise that resolves to the updated or created AfnInventoryDailyUpdate record.
  * @description This function takes a chunk of data from an inventory report CSV, processes it to extract
  *              necessary information, and performs various asynchronous database operations including
@@ -25,12 +27,14 @@ async function processInventoryChunk(
   reportDocumentId,
   countryCode,
   currencyCode,
+  createLog = false,
 ) {
   try {
     const sku = chunk['sku'];
     const fnsku = chunk['fnsku'];
     const skuAfnTotalQuantity = parseInt(chunk['afn-fulfillable-quantity'], 10);
     const skuAverageSellingPrice = parseFloat(chunk['your-price']);
+    let logMessage = `Processing inventory chunk for SKU: ${sku}\n`;
 
     // Find or create the SKU record in the database
     const [skuRecord, created] = await db.Sku.findOrCreate({
@@ -111,9 +115,7 @@ async function processInventoryChunk(
       inventoryRecord.reportDocumentId = reportDocumentId;
       await inventoryRecord.save();
     } else {
-      // console.log(
-      //   `Creating new AfnInventoryDailyUpdate record for skuId: ${skuId}...`,
-      // );
+       logMessage += `Creating new AfnInventoryDailyUpdate record for skuId: ${skuId}...`,
     }
 
     return inventoryRecord; // Return the updated or created inventory record
