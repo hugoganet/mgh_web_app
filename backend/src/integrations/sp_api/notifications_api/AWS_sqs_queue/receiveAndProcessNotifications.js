@@ -40,85 +40,99 @@ const queueURL = process.env.SQS_QUEUE_URL;
  * @return {Promise}
  */
 async function receiveAndProcessNotifications(createLog = false) {
-  const receiveParams = {
-    QueueUrl: queueURL,
-    MaxNumberOfMessages: 10, // Adjust as needed
-    WaitTimeSeconds: 5, // Long polling
-    VisibilityTimeout: 10, // Adjust as needed
-    MessageRetentionPeriod: 1209600, // 14 days
-  };
   const apiOperation = 'ReceiveAndProcessNotifications';
   let logMessage = '';
-
+  let data;
   try {
-    const receiveCommand = new ReceiveMessageCommand(receiveParams);
-    const data = await sqsClient.send(receiveCommand);
+    try {
+      const receiveCommand = new ReceiveMessageCommand({
+        QueueUrl: queueURL,
+        MaxNumberOfMessages: 10,
+        WaitTimeSeconds: 5,
+        VisibilityTimeout: 10,
+        MessageRetentionPeriod: 1209600,
+      });
+      data = await sqsClient.send(receiveCommand);
+    } catch (error) {
+      console.error('Error receiving SQS messages:', error);
+      logMessage += `Error receiving SQS messages: ${error}\n`;
+      return; // Exit the function early if unable to receive messages
+    }
 
-    if (data.Messages) {
+    if (data.Messages && data.Messages.length > 0) {
       for (const message of data.Messages) {
         try {
           const notification = JSON.parse(message.Body);
 
-          // Process the notification based on its type
           if (notification.notificationType === 'REPORT_PROCESSING_FINISHED') {
-            logMessage += `Received notification 'REPORT_PROCESSING_FINISHED' : ${JSON.stringify(
-              notification,
-              null,
-              2,
-            )}\n`;
+            logMessage += `Received 'REPORT_PROCESSING_FINISHED' notification.\n`;
 
-            const reportDocumentId =
-              notification.payload.reportProcessingFinishedNotification
-                .reportDocumentId;
-            const reportType =
-              notification.payload.reportProcessingFinishedNotification
-                .reportType;
-            const reportId =
-              notification.payload.reportProcessingFinishedNotification
-                .reportId;
-            const response = await getReport(reportId, true, reportType);
-            const { documentUrl, compressionAlgorithm } =
-              await getReportDocument(reportDocumentId, true, reportType);
+            let response;
+            let documentDetails;
+            try {
+              const reportDocumentId =
+                notification.payload.reportProcessingFinishedNotification
+                  .reportDocumentId;
+              const reportType =
+                notification.payload.reportProcessingFinishedNotification
+                  .reportType;
+              const reportId =
+                notification.payload.reportProcessingFinishedNotification
+                  .reportId;
+
+              response = await getReport(reportId, true, reportType);
+              documentDetails = await getReportDocument(
+                reportDocumentId,
+                true,
+                reportType,
+              );
+            } catch (reportError) {
+              console.error('Error processing report:', reportError);
+              logMessage += `Error processing report: ${reportError}\n`;
+              continue; // Move to the next notification
+            }
+
             const countryKeys = getCountryNameFromMarketplaceId(
               response.marketplaceIds[0],
             );
-            logMessage += `Compression algorithm: ${compressionAlgorithm}
-          Document URL: ${documentUrl}
-          Country keys: ${countryKeys}/n`;
+            logMessage += `Processing report for country: ${countryKeys}\n`;
 
-            // Fetch CSV data and process into database
-            await fetchAndProcessInventoryReport(
-              documentUrl,
-              compressionAlgorithm,
-              reportDocumentId,
-              [countryKeys],
-              reportType,
-              true,
-            );
+            try {
+              await fetchAndProcessInventoryReport(
+                documentDetails.documentUrl,
+                documentDetails.compressionAlgorithm,
+                reportDocumentId,
+                [countryKeys],
+                reportType,
+                true,
+              );
+            } catch (processError) {
+              console.error('Error processing inventory report:', processError);
+              logMessage += `Error processing inventory report: ${processError}\n`;
+            }
           }
 
-          // Delete the message from the queue after processing
-
+          // TODO: Uncomment and handle message deletion
           // const deleteParams = {
           //   QueueUrl: queueURL,
           //   ReceiptHandle: message.ReceiptHandle,
           // };
-          // const deleteCommand = new DeleteMessageCommand(deleteParams);
-          // await sqsClient.send(deleteCommand);
-        } catch (error) {
-          console.error('Error processing notification:', error);
-          logMessage += `Error processing notification: ${error}\n`;
+          // await sqsClient.send(new DeleteMessageCommand(deleteParams));
+        } catch (parseError) {
+          console.error('Error parsing SQS message:', parseError);
+          logMessage += `Error parsing SQS message: ${parseError}\n`;
         }
       }
     } else {
-      logMessage += 'No messages received.\n';
+      logMessage += 'No SQS messages received.\n';
     }
+  } catch (error) {
+    console.error('Error receiving and processing notifications:', error);
+    logMessage += `Error receiving and processing notifications: ${error}\n`;
     if (createLog) {
       logAndCollect(logMessage, apiOperation);
     }
-  } catch (error) {
-    console.error('Error processing notifications:', error);
-    logMessage += `Error processing notifications: ${error}\n`;
+  } finally {
     if (createLog) {
       logAndCollect(logMessage, apiOperation);
     }
