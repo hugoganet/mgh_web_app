@@ -61,61 +61,70 @@ async function receiveAndProcessNotifications(createLog = false) {
 
     if (data.Messages && data.Messages.length > 0) {
       for (const message of data.Messages) {
+        const notification = JSON.parse(message.Body);
+        const payload = notification.Payload || notification.payload;
+        const notificationType =
+          notification.notificationType || notification.NotificationType;
+
         try {
-          const notification = JSON.parse(message.Body);
-          const notificationType =
-            notification.notificationType || notification.NotificationType;
-
           if (notificationType === 'REPORT_PROCESSING_FINISHED') {
-            logMessage += `Received ${notificationType} notification : ${JSON.stringify(
-              notification,
-              null,
-              2,
-            )}\n`;
+            console.log(payload);
+            const reportDocumentId =
+              payload.reportProcessingFinishedNotification.reportDocumentId;
+            const reportType =
+              payload.reportProcessingFinishedNotification.reportType;
+            const reportId =
+              payload.reportProcessingFinishedNotification.reportId;
 
-            let response;
-            let documentDetails;
-            try {
-              const reportDocumentId =
-                notification.payload.reportProcessingFinishedNotification
-                  .reportDocumentId;
-              const reportType =
-                notification.payload.reportProcessingFinishedNotification
-                  .reportType;
-              const reportId =
-                notification.payload.reportProcessingFinishedNotification
-                  .reportId;
+            if (reportType === '_GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA_') {
+              logMessage += `Received ${notificationType} notification : ${JSON.stringify(
+                notification,
+                null,
+                2,
+              )}\n`;
 
-              response = await getReport(reportId, true, reportType);
-              console.log(response);
-              documentDetails = await getReportDocument(
-                reportDocumentId,
-                true,
-                reportType,
+              let response;
+              let documentDetails;
+              try {
+                response = await getReport(reportId, true, reportType);
+                documentDetails = await getReportDocument(
+                  reportDocumentId,
+                  true,
+                  reportType,
+                );
+              } catch (reportError) {
+                console.error('Error processing report:', reportError);
+                logMessage += `Error processing report: ${reportError}\n`;
+                continue; // Move to the next notification
+              }
+
+              const countryKeys = getCountryNameFromMarketplaceId(
+                response.marketplaceIds[0],
               );
-            } catch (reportError) {
-              console.error('Error processing report:', reportError);
-              logMessage += `Error processing report: ${reportError}\n`;
-              continue; // Move to the next notification
-            }
+              logMessage += `Processing report for country: ${countryKeys}\n`;
 
-            const countryKeys = getCountryNameFromMarketplaceId(
-              response.marketplaceIds[0],
-            );
-            logMessage += `Processing report for country: ${countryKeys}\n`;
-
-            try {
-              await fetchAndProcessInventoryReport(
-                documentDetails.documentUrl,
-                documentDetails.compressionAlgorithm,
-                documentDetails.reportDocumentId,
-                [countryKeys],
-                documentDetails.reportType,
-                true,
-              );
-            } catch (processError) {
-              console.error('Error processing inventory report:', processError);
-              logMessage += `Error processing inventory report: ${processError}\n`;
+              try {
+                await fetchAndProcessInventoryReport(
+                  documentDetails.documentUrl,
+                  documentDetails.compressionAlgorithm,
+                  documentDetails.reportDocumentId,
+                  [countryKeys],
+                  reportType,
+                  true,
+                );
+              } catch (processError) {
+                console.error(
+                  'Error processing inventory report:',
+                  processError,
+                );
+                logMessage += `Error processing inventory report: ${processError}\n`;
+              }
+            } else if (reportType === 'GET_AFN_INVENTORY_DATA') {
+              const deleteParams = {
+                QueueUrl: queueURL,
+                ReceiptHandle: message.ReceiptHandle,
+              };
+              await sqsClient.send(new DeleteMessageCommand(deleteParams));
             }
           }
 
