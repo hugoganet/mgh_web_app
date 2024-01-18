@@ -48,7 +48,7 @@ async function receiveAndProcessNotifications(createLog = false) {
       const receiveCommand = new ReceiveMessageCommand({
         QueueUrl: queueURL,
         MaxNumberOfMessages: 10,
-        WaitTimeSeconds: 5,
+        WaitTimeSeconds: 20,
         VisibilityTimeout: 10,
         MessageRetentionPeriod: 1209600,
       });
@@ -63,9 +63,15 @@ async function receiveAndProcessNotifications(createLog = false) {
       for (const message of data.Messages) {
         try {
           const notification = JSON.parse(message.Body);
+          const notificationType =
+            notification.notificationType || notification.NotificationType;
 
-          if (notification.notificationType === 'REPORT_PROCESSING_FINISHED') {
-            logMessage += `Received 'REPORT_PROCESSING_FINISHED' notification.\n`;
+          if (notificationType === 'REPORT_PROCESSING_FINISHED') {
+            logMessage += `Received ${notificationType} notification : ${JSON.stringify(
+              notification,
+              null,
+              2,
+            )}\n`;
 
             let response;
             let documentDetails;
@@ -81,6 +87,7 @@ async function receiveAndProcessNotifications(createLog = false) {
                   .reportId;
 
               response = await getReport(reportId, true, reportType);
+              console.log(response);
               documentDetails = await getReportDocument(
                 reportDocumentId,
                 true,
@@ -101,9 +108,9 @@ async function receiveAndProcessNotifications(createLog = false) {
               await fetchAndProcessInventoryReport(
                 documentDetails.documentUrl,
                 documentDetails.compressionAlgorithm,
-                reportDocumentId,
+                documentDetails.reportDocumentId,
                 [countryKeys],
-                reportType,
+                documentDetails.reportType,
                 true,
               );
             } catch (processError) {
@@ -112,12 +119,13 @@ async function receiveAndProcessNotifications(createLog = false) {
             }
           }
 
-          // TODO: Uncomment and handle message deletion
-          // const deleteParams = {
-          //   QueueUrl: queueURL,
-          //   ReceiptHandle: message.ReceiptHandle,
-          // };
-          // await sqsClient.send(new DeleteMessageCommand(deleteParams));
+          if (notificationType === 'ANY_OFFER_CHANGED') {
+            const deleteParams = {
+              QueueUrl: queueURL,
+              ReceiptHandle: message.ReceiptHandle,
+            };
+            await sqsClient.send(new DeleteMessageCommand(deleteParams));
+          }
         } catch (parseError) {
           console.error('Error parsing SQS message:', parseError);
           logMessage += `Error parsing SQS message: ${parseError}\n`;
