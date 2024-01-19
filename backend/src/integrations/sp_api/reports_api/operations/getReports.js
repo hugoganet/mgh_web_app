@@ -1,17 +1,18 @@
 const { spApiInstance } = require('../../connection/spApiConnector');
 
 /**
- * Retrieves report details based on specified filters.
+ * Retrieves report details based on specified filters and handles pagination using nextToken.
  * @async
  * @param {Object} config - Configuration for fetching reports.
- * @return {Promise<Object>} - Response containing report details.
+ * @param {Array} accumulatedReports - Accumulator for reports across multiple pages.
+ * @return {Promise<Object>} - Response containing all report details across pages.
  */
-async function getReports(config) {
+async function getReports(config, accumulatedReports = []) {
   const {
     reportTypes,
     processingStatuses,
     marketplaceIds,
-    pageSize,
+    pageSize = 100, // Default pageSize if not provided
     createdSince,
     createdUntil,
     nextToken,
@@ -22,7 +23,7 @@ async function getReports(config) {
     ...(reportTypes && { reportTypes }),
     ...(processingStatuses && { processingStatuses }),
     ...(marketplaceIds && { marketplaceIds }),
-    ...(pageSize && { pageSize }),
+    pageSize,
     ...(createdSince && { createdSince }),
     ...(createdUntil && { createdUntil }),
     ...(nextToken && { nextToken }),
@@ -43,15 +44,31 @@ async function getReports(config) {
       false,
     );
 
-    return response.data;
+    // Accumulate the reports
+    accumulatedReports.push(...response.data.reports);
+
+    // If there's a nextToken, call getReports recursively with the nextToken
+    if (response.data.nextToken) {
+      return getReports(
+        { ...config, nextToken: response.data.nextToken },
+        accumulatedReports,
+      );
+    }
+
+    // Return all accumulated reports when there are no more pages
+    return accumulatedReports;
   } catch (error) {
     console.error(`Error in getReports: ${error}`);
+    if (createLog) {
+      logAndCollect(`Error in getReports: ${error}`, apiOperation);
+    }
     throw error;
   }
 }
 
 module.exports = { getReports };
 
+// Example usage
 const config = {
   reportTypes: ['GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA'],
   createLog: true,
