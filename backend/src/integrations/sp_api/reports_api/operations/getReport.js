@@ -31,7 +31,7 @@ async function getReport(reportId, createLog) {
         {},
         createLog,
         apiOperation,
-        false,
+        (isGrantless = false),
       );
 
       parsedResponse = response.data;

@@ -223,7 +223,8 @@ class SpApiConnector {
   }
 
   /**
-   * Sends a request to the Amazon Selling Partner API with the specified method, path, and parameters.
+   * @description Sends a request to the Amazon Selling Partner API with the specified method, path, and parameters.
+   * This method initiates the request process and handles any necessary retries in case of rate limiting.
    *
    * @async
    * @function sendRequest
@@ -232,12 +233,10 @@ class SpApiConnector {
    * @param {Object} [queryParams={}] - Query parameters to be appended to the URL.
    * @param {Object} [body={}] - The request body, relevant for POST and PUT methods.
    * @param {boolean} createLog - Whether to create a log of the request and response.
-   * @param {string} apiOperation - The type of report being requested.
-   * @param {boolean} isGrantless - Whether the request is for a grantless operation.
-   * @return {Promise<Object>} - A promise that resolves to the response from the API call, or an error object if the request fails.
-   * @throws {Error} - An error object if the request fails.
-   * @description This function handles the construction and sending of requests to the Amazon Selling Partner API.
-   *              It handles the generation of the canonical request, signing the request, and setting the appropriate headers.
+   * @param {string} apiOperation - Description of the API operation being performed.
+   * @param {boolean} [isGrantless=false] - Indicates whether the request is for a grantless operation.
+   * @return {Promise<Object>} - A promise that resolves to the response from the API call.
+   * @throws {Error} - Throws an error if the request fails after the maximum number of retries.
    */
   async sendRequest(
     method,
@@ -248,6 +247,42 @@ class SpApiConnector {
     apiOperation,
     isGrantless = false,
   ) {
+    // Call the private method with an initial retryCount of 0
+    return this._sendRequestWithRetry(
+      method,
+      path,
+      queryParams,
+      body,
+      createLog,
+      apiOperation,
+      isGrantless,
+      0,
+    );
+  }
+
+  /**
+   * Sends a request to the Amazon Selling Partner API with exponential backoff for rate limiting.
+   * @async
+   * @param {string} method - HTTP method (GET, POST, etc.).
+   * @param {string} path - API endpoint path.
+   * @param {Object} [queryParams={}] - Query parameters.
+   * @param {Object} [body={}] - Request body for POST/PUT methods.
+   * @param {boolean} createLog - Flag to indicate if the request and response should be logged.
+   * @param {string} apiOperation - Identifier for the API operation.
+   * @param {boolean} [isGrantless=false] - Flag for grantless operations.
+   * @param {number} [retryCount=0] - Current retry attempt count.
+   * @return {Promise<Object>} Response from the API call.
+   */
+  async _sendRequestWithRetry(
+    method,
+    path,
+    queryParams,
+    body,
+    createLog,
+    apiOperation,
+    isGrantless,
+    retryCount,
+  ) {
     let logMessage = '';
     try {
       const accessToken = isGrantless
@@ -255,13 +290,13 @@ class SpApiConnector {
         : await this.getLWAToken();
       const date = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '');
 
-      // Only create queryString if there are query parameters
       let queryString = '';
       if (Object.keys(queryParams).length > 0) {
-        queryString = Object.entries(queryParams)
-          .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-          .join('&');
-        queryString = '?' + queryString; // Prepend '?' to the queryString
+        queryString =
+          '?' +
+          Object.entries(queryParams)
+            .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+            .join('&');
       }
 
       const fullUrl = `https://sellingpartnerapi-eu.amazon.com${path}${queryString}`;
@@ -273,7 +308,6 @@ class SpApiConnector {
         date,
       );
 
-      // Prepare log message for the request
       logMessage +=
         'Request Details:\n' +
         JSON.stringify(
@@ -298,7 +332,6 @@ class SpApiConnector {
         });
       }
 
-      // Append log message with response details
       logMessage +=
         '\n\nResponse Details:\n' +
         JSON.stringify(
@@ -314,35 +347,47 @@ class SpApiConnector {
       if (createLog) {
         logAndCollect(logMessage, apiOperation);
       }
-
       return axiosResponse;
     } catch (error) {
-      // Append log message with error details
-      logMessage += '\n\nError in sendRequest: ' + error.toString();
-      if (error.response) {
-        logMessage +=
-          '\nResponse Error Details:\n' +
-          JSON.stringify(
-            {
-              Data: error.response.data,
-              Status: error.response.status,
-              Headers: error.response.headers,
-            },
-            null,
-            2,
-          );
-      } else if (error.request) {
-        logMessage +=
-          '\nRequest Error Details:\n' + JSON.stringify(error.request, null, 2);
+      if (error.response && error.response.status === 429 && retryCount < 5) {
+        const delay = Math.pow(2, retryCount) * 1000;
+        await new Promise(resolve => setTimeout(resolve, delay));
+        return this._sendRequestWithRetry(
+          method,
+          path,
+          queryParams,
+          body,
+          createLog,
+          apiOperation,
+          isGrantless,
+          retryCount + 1,
+        );
       } else {
-        logMessage += '\nSetup Error: ' + error.message;
+        logMessage += '\n\nError in sendRequest: ' + error.toString();
+        if (error.response) {
+          logMessage +=
+            '\nResponse Error Details:\n' +
+            JSON.stringify(
+              {
+                Data: error.response.data,
+                Status: error.response.status,
+                Headers: error.response.headers,
+              },
+              null,
+              2,
+            );
+        } else if (error.request) {
+          logMessage +=
+            '\nRequest Error Details:\n' +
+            JSON.stringify(error.request, null, 2);
+        } else {
+          logMessage += '\nSetup Error: ' + error.message;
+        }
+        if (createLog) {
+          logAndCollect(logMessage, apiOperation);
+        }
+        throw error;
       }
-
-      if (createLog) {
-        logAndCollect(logMessage, apiOperation);
-      }
-
-      throw error;
     }
   }
 

@@ -42,19 +42,18 @@ async function requestFbaInventoryReport(
 
   try {
     // Step 1: Create Report to get ReportId
-    // const reportIdResponse = await createReport(config);
-
-    // console.log('reportIdResponse:', reportIdResponse);
+    const reportIdResponse = await createReport(config);
+    console.log('Report ID Response:', reportIdResponse);
 
     // Step 2 : Request report document ID
-    // const reportDocumentId = await getReport(
-    //   reportIdResponse.reportId,
-    //   config.createLog,
-    //   config.reportType,
-    // );
+    const reportDocumentId = await getReport(
+      reportIdResponse.reportId,
+      config.createLog,
+      config.reportType,
+    );
 
-    const reportDocumentId =
-      'amzn1.spdoc.1.4.eu.2b27c303-d7c0-41c9-abf9-6e62b656e19f.TY1M93LGOOVTG.2651'; // FR
+    // const reportDocumentId =
+    //   'amzn1.spdoc.1.4.eu.2b27c303-d7c0-41c9-abf9-6e62b656e19f.TY1M93LGOOVTG.2651'; // FR
     // 'amzn1.spdoc.1.4.eu.fe1e84d2-982c-489a-800f-32f400dae70e.TE9Q2KN2IWU7W.2651'; // UK
     // 'amzn1.spdoc.1.4.eu.f7b75d40-725b-48c2-bdf1-25c1d170fe1a.T1TJXQMEOP6F78.2651'; // PL
     // 'amzn1.spdoc.1.4.eu.20bef5ad-10c1-4918-bd6f-176bb3aa2ab6.T3H33HZYPR8D01.2651'; // SE
@@ -94,11 +93,12 @@ async function requestFbaInventoryReport(
     console.error('Error in requesting FBA Inventory report:', error);
   }
 }
+
+module.exports = { requestFbaInventoryReport };
+
 requestFbaInventoryReport(
   ['france'],
   'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
   null,
   null,
 );
-
-module.exports = { requestFbaInventoryReport };
