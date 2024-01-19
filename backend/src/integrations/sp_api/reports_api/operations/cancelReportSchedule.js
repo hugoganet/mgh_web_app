@@ -9,11 +9,7 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  */
 async function cancelReportSchedule(config) {
   const { reportScheduleId, createLog } = config;
-  // const queryParams = {
-  //   reportScheduleId,
-  // };
   const apiOperation = 'cancelReportSchedule';
-  // const endpoint = `/reports/2021-06-30/schedules/`;
   const endpoint = `/reports/2021-06-30/schedules/${reportScheduleId}`;
   const method = 'DELETE';
 
@@ -25,7 +21,7 @@ async function cancelReportSchedule(config) {
       {},
       createLog,
       apiOperation,
-      false,
+      (isGrantless = true),
     );
     console.log(response.data);
     return response.data;

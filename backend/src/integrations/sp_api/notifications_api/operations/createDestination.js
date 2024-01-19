@@ -30,7 +30,7 @@ async function createDestination(destinationName) {
       payload,
       true, // Enable logging
       apiOperation,
-      true,
+      (isGrantless = true),
     );
 
     return response.data;
@@ -46,7 +46,7 @@ async function createDestination(destinationName) {
 module.exports = { createDestination };
 
 // Example usage
-const destinationName = 'MGHWebAppNotifications';
+const destinationName = 'MGHWebAppNotificationsTest';
 
 createDestination(destinationName)
   .then(data => console.log('Create Destination Response:', data))
