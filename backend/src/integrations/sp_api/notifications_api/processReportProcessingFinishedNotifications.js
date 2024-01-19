@@ -33,6 +33,7 @@ async function processReportProcessingFinishedNotification(
       payload.reportProcessingFinishedNotification.reportDocumentId;
     const reportType = payload.reportProcessingFinishedNotification.reportType;
     const reportId = payload.reportProcessingFinishedNotification.reportId;
+    const notificationId = notification.notificationMetadata.notificationId;
 
     if (reportType === 'GET_FBA_MYI_ALL_INVENTORY_DATA') {
       logMessage += `Received ${reportType} notification : ${JSON.stringify(
@@ -74,18 +75,21 @@ async function processReportProcessingFinishedNotification(
         logMessage += `Error processing inventory report: ${processError}\n`;
       }
       try {
+        logMessage += `Deleting message with ReceiptHandle ${message.ReceiptHandle}\n`;
         const deleteMessage = deleteMessageCommand(message.ReceiptHandle);
         await sqsClient.send(deleteMessage);
+        logMessage += `Deleted ${notificationId} notification of type ${reportType} from queue\n`;
       } catch (error) {
-        logMessage += `Error deleting ${reportType} notification from queue : ${error}\n`;
+        logMessage += `Error deleting ${notificationId} notification of type ${reportType} from queue : ${error}\n`;
       }
     } else if (reportType === 'GET_AFN_INVENTORY_DATA') {
       try {
+        logMessage += `Deleting message with ReceiptHandle ${message.ReceiptHandle}\n`;
         const deleteMessage = deleteMessageCommand(message.ReceiptHandle);
         await sqsClient.send(deleteMessage);
-        logMessage += `Deleted ${reportType} notification from queue\n`;
+        logMessage += `Deleted ${notificationId} notification of type ${reportType} from queue\n`;
       } catch (error) {
-        logMessage += `Error deleting ${reportType} notification from queue : ${error}\n`;
+        logMessage += `Error deleting ${notificationId} notification of type ${reportType} from queue : ${error}\n`;
       }
     }
   } catch (error) {
