@@ -43,6 +43,7 @@ async function receiveAndProcessNotifications(createLog = false) {
           if (notificationType === 'ANY_OFFER_CHANGED') {
             const deleteMessage = deleteMessageCommand(message.ReceiptHandle);
             await sqsClient.send(deleteMessage);
+            logMessage += `Deleted ${notificationType} notification from queue\n`;
           }
         } catch (parseError) {
           console.error('Error parsing SQS message:', parseError);

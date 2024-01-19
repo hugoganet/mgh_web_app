@@ -9,9 +9,6 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  */
 async function getReportSchedule(config) {
   const { reportScheduleId, createLog } = config;
-  const queryParams = {
-    reportScheduleId,
-  };
   const apiOperation = 'getReportSchedule';
   const endpoint = `/reports/2021-06-30/schedules/${reportScheduleId}`;
   const method = 'GET';
@@ -20,7 +17,7 @@ async function getReportSchedule(config) {
     const response = await spApiInstance.sendRequest(
       method,
       endpoint,
-      queryParams,
+      {},
       {},
       createLog,
       apiOperation,
@@ -36,7 +33,7 @@ async function getReportSchedule(config) {
 module.exports = { getReportSchedule };
 
 config = {
-  reportScheduleId: '50057019737',
+  reportScheduleId: '50001018108',
   createLog: true,
 };
 getReportSchedule(config);

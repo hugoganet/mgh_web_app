@@ -34,8 +34,8 @@ async function processReportProcessingFinishedNotification(
     const reportType = payload.reportProcessingFinishedNotification.reportType;
     const reportId = payload.reportProcessingFinishedNotification.reportId;
 
-    if (reportType === '_GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA_') {
-      logMessage += `Received ${notificationType} notification : ${JSON.stringify(
+    if (reportType === 'GET_FBA_MYI_ALL_INVENTORY_DATA') {
+      logMessage += `Received ${reportType} notification : ${JSON.stringify(
         notification,
         null,
         2,
