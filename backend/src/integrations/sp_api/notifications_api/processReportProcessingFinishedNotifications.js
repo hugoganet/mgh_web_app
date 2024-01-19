@@ -73,10 +73,20 @@ async function processReportProcessingFinishedNotification(
         console.error('Error processing inventory report:', processError);
         logMessage += `Error processing inventory report: ${processError}\n`;
       }
+      try {
+        const deleteMessage = deleteMessageCommand(message.ReceiptHandle);
+        await sqsClient.send(deleteMessage);
+      } catch (error) {
+        logMessage += `Error deleting ${reportType} notification from queue : ${error}\n`;
+      }
     } else if (reportType === 'GET_AFN_INVENTORY_DATA') {
-      const deleteMessage = deleteMessageCommand(message.ReceiptHandle);
-      await sqsClient.send(deleteMessage);
-      logMessage += `Deleted ${reportType} notification from queue\n`;
+      try {
+        const deleteMessage = deleteMessageCommand(message.ReceiptHandle);
+        await sqsClient.send(deleteMessage);
+        logMessage += `Deleted ${reportType} notification from queue\n`;
+      } catch (error) {
+        logMessage += `Error deleting ${reportType} notification from queue : ${error}\n`;
+      }
     }
   } catch (error) {
     console.log(
