@@ -44,11 +44,18 @@ async function receiveAndProcessNotifications(createLog = false) {
             const notificationId =
               notification.NotificationMetadata.NotificationId;
             try {
-              const deleteMessage = deleteMessageCommand(message.ReceiptHandle);
+              const deleteMessage = deleteMessageCommand(
+                message.ReceiptHandle,
+                false,
+              );
               await sqsClient.send(deleteMessage);
-              logMessage += `Deleted ${notificationId} notification of type ${notificationType} from queue\n`;
-            } catch (deleteError) {
-              logMessage += `Error deleting ${notificationId} notification of type ${notificationType} from queue: ${deleteError}\n`;
+              logMessage += `Deleted ${notificationId} notification of type ${notificationType} and ReceiptHandle ${message.ReceiptHandle} from queue\n`;
+            } catch (error) {
+              logMessage += `Error deleting ${notificationId} notification of type ${notificationType} from queue : ${error}\n DeleteMessageCommand response: ${JSON.stringify(
+                deleteResponse,
+                null,
+                2,
+              )}\n`;
             }
           }
         } catch (parseError) {

@@ -6,7 +6,7 @@ const receiveMessage = new ReceiveMessageCommand({
   QueueUrl: queueURL,
   MaxNumberOfMessages: 10,
   WaitTimeSeconds: 20,
-  VisibilityTimeout: 300, // 5 minutes before the message is visible again in the queue
+  VisibilityTimeout: 5, // time in second before the message is visible again in the queue
   MessageRetentionPeriod: 1209600,
 });
 

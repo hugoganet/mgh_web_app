@@ -76,20 +76,42 @@ async function processReportProcessingFinishedNotification(
       }
       try {
         logMessage += `Deleting message with ReceiptHandle ${message.ReceiptHandle}\n`;
-        const deleteMessage = deleteMessageCommand(message.ReceiptHandle);
-        await sqsClient.send(deleteMessage);
-        logMessage += `Deleted ${notificationId} notification of type ${reportType} from queue\n`;
+        const deleteMessage = deleteMessageCommand(
+          message.ReceiptHandle,
+          false,
+        );
+        const deleteResponse = await sqsClient.send(deleteMessage);
+        logMessage += `Deleted ${notificationId} notification of type ${reportType} from queue\n DeleteMessageCommand response: ${JSON.stringify(
+          deleteResponse,
+          null,
+          2,
+        )}\n`;
       } catch (error) {
-        logMessage += `Error deleting ${notificationId} notification of type ${reportType} from queue : ${error}\n`;
+        logMessage += `Error deleting ${notificationId} notification of type ${reportType} from queue : ${error}\n DeleteMessageCommand response: ${JSON.stringify(
+          deleteResponse,
+          null,
+          2,
+        )}\n`;
       }
     } else if (reportType === 'GET_AFN_INVENTORY_DATA') {
       try {
         logMessage += `Deleting message with ReceiptHandle ${message.ReceiptHandle}\n`;
-        const deleteMessage = deleteMessageCommand(message.ReceiptHandle);
-        await sqsClient.send(deleteMessage);
-        logMessage += `Deleted ${notificationId} notification of type ${reportType} from queue\n`;
+        const deleteMessage = deleteMessageCommand(
+          message.ReceiptHandle,
+          false,
+        );
+        const deleteResponse = await sqsClient.send(deleteMessage);
+        logMessage += `Deleted ${notificationId} notification of type ${reportType} from queue\n DeleteMessageCommand response: ${JSON.stringify(
+          deleteResponse,
+          null,
+          2,
+        )}\n`;
       } catch (error) {
-        logMessage += `Error deleting ${notificationId} notification of type ${reportType} from queue : ${error}\n`;
+        logMessage += `Error deleting ${notificationId} notification of type ${reportType} from queue : ${error} DeleteMessageCommand response: ${JSON.stringify(
+          deleteResponse,
+          null,
+          2,
+        )}\n`;
       }
     }
   } catch (error) {
