@@ -25,7 +25,7 @@ async function getSubscription(
       {}, // Empty body for GET request
       createLog,
       apiOperation,
-      false,
+      (isGrantless = false),
     );
 
     console.log(response.data);

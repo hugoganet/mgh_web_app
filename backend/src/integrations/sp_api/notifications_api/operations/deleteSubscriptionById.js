@@ -24,7 +24,7 @@ async function deleteSubscriptionById(
       {}, // Empty body for DELETE request
       createLog,
       apiOperation,
-      true,
+      (isGrantless = true),
     );
 
     console.log('Subscription deleted successfully:', response.data);
