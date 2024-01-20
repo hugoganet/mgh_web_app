@@ -21,7 +21,7 @@ async function cancelReportSchedule(config) {
       {},
       createLog,
       apiOperation,
-      (isGrantless = true),
+      (isGrantless = false),
     );
     console.log(response.data);
     return response.data;
