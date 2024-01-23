@@ -5,7 +5,7 @@ const marketplaces = require('../../../../config/marketplaces.js');
 const {
   chooseDecompressionStream,
 } = require('../../chooseDecompressionStream.js');
-const { preProcessCsvRow } = require('./preProcessCsvRow.js');
+const { preProcessCsvRow } = require('../../preProcessCsvRow.js');
 const { processInventoryChunk } = require('./processInventoryChunk.js');
 const { seedSellingPriceHistory } = require('./seedSellingPricesHistory.js');
 const { logAndCollect } = require('../../logs/logger.js');
@@ -77,24 +77,25 @@ async function fetchAndProcessInventoryReport(
       .on('end', async () => {
         try {
           await Promise.all(processingPromises);
-          console.log('Data processing completed');
-          logMessage += 'Data processing completed successfully.\n';
+          console.log('Inventory data processing completed');
+          logMessage += 'Inventory data processing completed successfully.\n';
           await seedSellingPriceHistory(createLog);
         } catch (error) {
-          logMessage += `Error processing data stream: ${error}\n`;
-          console.error('Error processing data stream:', error);
+          logMessage += `Error processing inventory data stream: ${error}\n`;
+          console.error('Error processing inventory data stream:', error);
         }
       })
       .on('error', error => {
-        logMessage += `Error processing data stream: ${error}\n`;
-        console.error('Error processing data stream:', error);
+        logMessage += `Error processing inventory data stream: ${error}\n`;
+        console.error('Error processing inventory data stream:', error);
       });
   } catch (error) {
-    logMessage += `Error fetching data: ${error}\n`;
-    console.error('Error fetching data:', error);
-  }
-  if (createLog) {
-    logAndCollect(logMessage, 'FetchAndProcessInventoryReport');
+    logMessage += `Error fetching inventory data: ${error}\n`;
+    console.error('Error fetching inventory data:', error);
+  } finally {
+    if (createLog) {
+      logAndCollect(logMessage, 'FetchAndProcessInventoryReport');
+    }
   }
 }
 

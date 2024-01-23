@@ -35,6 +35,7 @@ async function createReport(filters) {
       apiOperation,
       (isGrantless = false),
     );
+    console.log(response.data);
     return response.data;
   } catch (error) {
     throw error;

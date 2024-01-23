@@ -1,6 +1,7 @@
-const { createReport } = require('../createReport');
-const { getReport } = require('../getReport');
-const { getDocumentUrl } = require('../getDocumentUrl');
+/* eslint-disable no-unused-vars */
+const { createReport } = require('../operations/createReport');
+const { getReport } = require('../operations/getReport');
+const { getReportDocument } = require('../operations/getReportDocument');
 const { fetchAndProcessSalesReport } = require('./fetchAndProcessSalesReport');
 const {
   downloadAndDecompressDocument,
@@ -37,34 +38,37 @@ async function requestFbaSalesReport(
   };
 
   try {
-    /*   // Request report ID
-    const reportIdResponse = await createReport(config);
+    // // Request report ID
+    // const reportIdResponse = await createReport(config);
 
-    // Request report document ID
-    const reportDocumentId = await getReport(
-      reportIdResponse.reportId,
-      config.createLog,
-      config.reportType,
-    ); */
+    // // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
+    // await new Promise(resolve => setTimeout(resolve, 60000 * 2));
+
+    // // Request report document ID
+    // const reportDocumentId = await getReport(
+    //   reportIdResponse.reportId,
+    //   config.createLog,
+    //   config.reportType,
+    // );
 
     const reportDocumentId =
-      'amzn1.spdoc.1.4.eu.d13319d3-08f1-4258-91a1-1012a2b9b910.T6SL13GP8HJUL.2511';
+      'amzn1.spdoc.1.4.eu.16c2a3bb-7246-484e-9fc7-b45e64bb3958.T198MMEP8AX7GM.2511';
 
     // Request report document URL
-    const { documentUrl, compressionAlgorithm } = await getDocumentUrl(
+    const { documentUrl, compressionAlgorithm } = await getReportDocument(
       reportDocumentId,
       config.createLog,
       config.reportType,
     );
 
-    downloadAndDecompressDocument(
-      documentUrl,
-      compressionAlgorithm,
-      reportType,
-      countryKeys,
-      config.dataStartTime,
-      config.dataEndTime,
-    );
+    // downloadAndDecompressDocument(
+    //   documentUrl,
+    //   compressionAlgorithm,
+    //   reportType,
+    //   countryKeys,
+    //   config.dataStartTime,
+    //   config.dataEndTime,
+    // );
 
     // Fetch CSV data and process into database
     await fetchAndProcessSalesReport(
@@ -72,9 +76,10 @@ async function requestFbaSalesReport(
       compressionAlgorithm,
       reportDocumentId,
       reportType,
+      config.createLog,
     );
   } catch (error) {
-    console.error('Error in requesting FBA Inventory report:', error);
+    console.error('Error in requesting FBA sales report:', error);
   }
 }
 requestFbaSalesReport(

@@ -282,7 +282,7 @@ module.exports = db => {
     onUpdate: 'CASCADE',
   });
   Sku.hasMany(FbaSaleProcessed, {
-    foreignKey: 'sku',
+    foreignKey: 'skuId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
@@ -487,7 +487,7 @@ module.exports = db => {
 
   // Associations for FbaSaleProcessed
   FbaSaleProcessed.belongsTo(Sku, {
-    foreignKey: 'sku',
+    foreignKey: 'skuId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });

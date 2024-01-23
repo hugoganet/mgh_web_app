@@ -45,7 +45,7 @@ async function requestFbaInventoryReport(
     const reportIdResponse = await createReport(config);
 
     // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
-    await new Promise(resolve => setTimeout(resolve, 120000));
+    await new Promise(resolve => setTimeout(resolve, 60000 * 2));
 
     // Step 2 : Request report document ID
     const reportDocumentId = await getReport(
