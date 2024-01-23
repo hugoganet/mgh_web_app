@@ -19,7 +19,6 @@ const getFbaFeeType = async skuId => {
       console.warn(`No minimumSellingPriceRecord found for SKU ID: ${skuId}`);
       return null;
     }
-
     return minimumSellingPriceRecord.enrolledInPanEu
       ? 'fbaFeeLocalAndPanEu'
       : 'fbaFeeEfn';

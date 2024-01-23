@@ -88,6 +88,7 @@ async function processSalesChunk(
     // Construct the record for database insertion
     const record = {
       skuId,
+      countryCode,
       amazonSalesId: salesData.amazonSalesId,
       salesShipCountryCode: salesData.salesShipCountryCode,
       salesItemCurrency: salesData.salesItemCurrency,
