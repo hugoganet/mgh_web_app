@@ -7,9 +7,11 @@ const {
 } = require('../../../../api/services/getAsinFromSkuId');
 const {
   calculateGrossMargin,
+  calculateGrossMarginPercentage,
 } = require('../../../../utils/calculateGrossMargin.js');
 const {
   calculateNetMargin,
+  calculateNetMarginPercentage,
 } = require('../../../../utils/calculateNetMargin.js');
 const { calculateRoi } = require('../../../../utils/calculateRoi.js');
 const {
@@ -60,25 +62,47 @@ async function processSalesChunk(
     const salesFbaFeeType = await getFbaFeeType(skuId);
     const salesFbaFees = await getFbaFees(asinId);
 
-    // TODO get those data :
-    // salesGrossMarginPerItem
-    // salesGrossMarginPercentagePerItem
-    // salesNetMarginPerItem
-    // salesNetMarginPercentagePerItem
+    const salesSellingPriceExcPerItem =
+      salesData.salesItemSellingPriceExc / salesData.salesSkuQuantity;
 
     const salesFbaFee =
       salesFbaFees[salesFbaFeeType] * salesData.salesSkuQuantity;
-    const salesCogsTotal =
+
+    const salesFbaFeePerItem = salesFbaFees[salesFbaFeeType];
+
+    const salesCogsPerItem = skuRecord.skuAcquisitionCostExc;
+
+    const salesCogs =
       skuRecord.skuAcquisitionCostExc * salesData.salesSkuQuantity;
+
     const salesGrossMarginTotal = calculateGrossMargin(
-      salesCogsTotal,
+      salesCogs,
       salesData.salesItemSellingPriceExc,
     );
+
+    const salesGrossMarginPerItem =
+      salesGrossMarginTotal / salesData.salesSkuQuantity;
+
+    const salesGrossMarginPercentagePerItem = calculateGrossMarginPercentage(
+      salesCogsPerItem,
+      salesSellingPriceExcPerItem,
+    );
+
     const salesNetMarginTotal = calculateNetMargin(
-      salesCogsTotal,
+      salesCogs,
       salesData.salesItemSellingPriceExc,
       salesFbaFee,
     );
+
+    const salesNetMarginPerItem =
+      salesNetMarginTotal / salesData.salesSkuQuantity;
+
+    const salesNetMarginPercentagePerItem = calculateNetMarginPercentage(
+      salesCogsPerItem,
+      salesSellingPriceExcPerItem,
+      salesFbaFeePerItem,
+    );
+
     const salesRoiPerItem = calculateRoi(
       skuRecord.skuAcquisitionCostExc,
       salesNetMarginTotal / salesData.salesSkuQuantity,
@@ -96,13 +120,13 @@ async function processSalesChunk(
       salesSkuQuantity: salesData.salesSkuQuantity,
       salesFbaFee,
       salesPurchaseDate: salesData.salesPurchaseDate,
-      salesCogsTotal,
+      salesCogs,
       salesGrossMarginTotal,
-      // salesGrossMarginPerItem,
-      // salesGrossMarginPercentagePerItem,
+      salesGrossMarginPerItem,
+      salesGrossMarginPercentagePerItem,
       salesNetMarginTotal,
-      // salesNetMarginPerItem,
-      // salesNetMarginPercentagePerItem,
+      salesNetMarginPerItem,
+      salesNetMarginPercentagePerItem,
       salesRoiPerItem,
       reportDocumentId,
     };
