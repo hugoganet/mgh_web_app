@@ -41,9 +41,9 @@ async function processSalesChunk(
       amazonSalesId: chunk['amazon-order-id'],
       salesShipCountryCode: chunk['ship-country'],
       salesItemCurrency: chunk['currency'],
-      salesItemSellingPriceExc: chunk['item-price'],
-      salesItemTax: chunk['item-tax'],
-      salesSkuQuantity: chunk['quantity-shipped'],
+      salesItemSellingPriceExc: parseFloat(chunk['item-price']),
+      salesItemTax: parseFloat(chunk['item-tax']),
+      salesSkuQuantity: parseInt(chunk['quantity-shipped'], 10),
       salesPurchaseDate: chunk['purchase-date'],
     };
 
@@ -61,7 +61,6 @@ async function processSalesChunk(
     const salesFbaFees = await getFbaFees(asinId);
 
     // TODO get those data :
-    // salesItemVatRate
     // salesGrossMarginPerItem
     // salesGrossMarginPercentagePerItem
     // salesNetMarginPerItem
@@ -92,7 +91,6 @@ async function processSalesChunk(
       amazonSalesId: salesData.amazonSalesId,
       salesShipCountryCode: salesData.salesShipCountryCode,
       salesItemCurrency: salesData.salesItemCurrency,
-      // salesItemVatRate,
       salesItemSellingPriceExc: salesData.salesItemSellingPriceExc,
       salesItemTax: salesData.salesItemTax,
       salesSkuQuantity: salesData.salesSkuQuantity,
