@@ -6,15 +6,19 @@ const { logAndCollect } = require('../sp_api/logs/logger');
  * @function fetchHistoricalExchangeRates
  * @description Fetches historical exchange rates from the Exchange Rates API
  * @param {date} date - The date for which to fetch the exchange rates (YYYY-MM-DD)
- * @param {string} symbols
+ * @param {string} currencyCode - The currency code for which to fetch the exchange rates
  * @param {boolean} createLog - Whether to create a log of the process
  * @return {Promise<Object>} - A promise that resolves to an object with the currency codes as keys and their exchange rates as values
  */
-async function fetchHistoricalExchangeRates(date, symbols, createLog = false) {
-  let logMessage = `Fetching historical exchange rates for date ${date} with symbols: ${symbols}\n`;
+async function fetchHistoricalExchangeRates(
+  date,
+  currencyCode,
+  createLog = false,
+) {
+  let logMessage = `Fetching historical exchange rates for date ${date} with currencyCode: ${currencyCode}\n`;
   const apiKey = process.env.EXCHANGE_RATES_API_KEY;
   const baseCurrency = 'EUR';
-  const url = `http://api.exchangeratesapi.io/v1/${date}?access_key=${apiKey}&base=${baseCurrency}&symbols=${symbols}`;
+  const url = `http://api.exchangeratesapi.io/v1/${date}?access_key=${apiKey}&base=${baseCurrency}&symbols=${currencyCode}`;
 
   try {
     logMessage += `Request Details:\nURL: ${url}\n`;
@@ -61,6 +65,3 @@ async function fetchHistoricalExchangeRates(date, symbols, createLog = false) {
 }
 
 module.exports = { fetchHistoricalExchangeRates };
-
-// Example call to test logging
-fetchHistoricalExchangeRates('2013-12-24', 'SEK,PLN,TRY,GBP', true);

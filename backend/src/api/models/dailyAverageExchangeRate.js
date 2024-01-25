@@ -16,12 +16,16 @@ module.exports = sequelize => {
         allowNull: false,
         autoIncrement: true,
       },
-      currency: {
+      currencyCode: {
         type: DataTypes.STRING(3),
         allowNull: false,
       },
       rateToEur: {
         type: DataTypes.DECIMAL(10, 5),
+        allowNull: false,
+      },
+      date: {
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
     },
@@ -30,6 +34,12 @@ module.exports = sequelize => {
       modelName: 'DailyAverageExchangeRate',
       tableName: 'daily_average_exchange_rates',
       timestamps: true,
+      indexes: [
+        {
+          unique: true,
+          fields: ['currency_code', 'date'],
+        },
+      ],
     },
   );
 

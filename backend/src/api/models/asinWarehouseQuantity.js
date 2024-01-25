@@ -26,7 +26,6 @@ module.exports = sequelize => {
       createdAt: false,
       updatedAt: false,
       freezeTableName: true,
-      underscored: true,
     },
   );
 

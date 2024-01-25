@@ -71,13 +71,11 @@ module.exports = sequelize => {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0,
-        // This field requires custom logic or a database trigger
       },
       asinAverageUnitSoldPerDay: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
         defaultValue: 0.0,
-        // This field requires custom logic or a database trigger
       },
       isBatteryRequired: {
         type: DataTypes.BOOLEAN,

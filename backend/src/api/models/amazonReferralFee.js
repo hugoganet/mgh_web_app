@@ -54,7 +54,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'AmazonReferralFee',
       tableName: 'amazon_referral_fees',
-      timestamps: false, // Assuming you do not have created_at and updated_at fields
+      timestamps: false,
     },
   );
 
