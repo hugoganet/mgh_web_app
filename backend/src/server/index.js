@@ -10,7 +10,7 @@ const isTest = process.env.NODE_ENV === 'test';
     console.log('Initializing database...');
     await initializeDatabase({ forceSync: true });
   } else {
-    await initializeDatabase();
+    await initializeDatabase({ forceSync: true });
   }
 
   app.listen(PORT, () => {

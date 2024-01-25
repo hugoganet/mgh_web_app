@@ -41,6 +41,7 @@ async function initializeDatabase({ forceSync = false } = {}) {
       'AfnInventoryDailyUpdate', // Commented out because I want to keep the data that has been collected so far
       'SellingPriceHistory', // Commented out because I want to keep the data that has been collected so far
       'FbaSaleProcessed',
+      'DailyAverageExchangeRate',
     ];
 
     // Synchronize each model in order
@@ -51,10 +52,7 @@ async function initializeDatabase({ forceSync = false } = {}) {
     }
 
     if (forceSync) {
-      // Run seeding
       await runSeeding(db);
-
-      // Recreate SQL views if necessary
       await createSqlViews(db);
     }
 
