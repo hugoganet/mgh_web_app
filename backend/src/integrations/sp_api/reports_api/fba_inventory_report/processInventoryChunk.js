@@ -27,7 +27,7 @@ async function processInventoryChunk(
   reportDocumentId,
   countryCode,
   currencyCode,
-  createLog = true,
+  createLog = false,
 ) {
   let logMessage = `Processing inventory chunk for SKU: ${chunk['sku']} on ${countryCode}\n`;
   try {

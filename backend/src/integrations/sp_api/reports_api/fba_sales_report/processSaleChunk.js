@@ -23,21 +23,26 @@ const {
  * @async
  * @param {Object} chunk - A chunk of CSV data representing a row in the sales report.
  * @param {string} reportDocumentId - The document ID of the report being processed.
- * @param {string} reportType - The type of report being processed.
  * @param {boolean} createLog - Whether to create a log of the process.
  * @return {Promise<void>} - A promise that resolves when the sales data chunk is processed.
  */
-async function processSalesChunk(
-  chunk,
-  reportDocumentId,
-  reportType,
-  createLog = false,
-) {
+async function processSalesChunk(chunk, reportDocumentId, createLog = false) {
   let logMessage = `Processing sales chunk for SKU: ${chunk['sku']}\n`;
   try {
-    const countryCode = await mapSalesChannelToCountryCode(
-      chunk['sales-channel'],
-    );
+    let countryCode;
+    let asinId;
+    let salesFbaFeeType;
+    let salesFbaFees;
+
+    try {
+      countryCode = await mapSalesChannelToCountryCode(chunk['sales-channel']);
+    } catch (err) {
+      logMessage += `Error mapping sales channel (${chunk['sales-channel']}) to country code: ${err.message}\n`;
+      throw new Error(
+        `Error mapping sales channel to country code: ${err.message}`,
+      );
+    }
+
     const sku = chunk['sku'];
     const salesData = {
       amazonSalesId: chunk['amazon-order-id'],
@@ -46,43 +51,93 @@ async function processSalesChunk(
       salesItemSellingPriceExc: parseFloat(chunk['item-price']),
       salesItemTax: parseFloat(chunk['item-tax']),
       salesSkuQuantity: parseInt(chunk['quantity-shipped'], 10),
-      salesPurchaseDate: chunk['purchase-date'],
+      salesPurchaseDate: new Date(chunk['purchase-date']),
     };
 
-    const skuRecord = await db.Sku.findOne({ where: { sku, countryCode } });
-
-    if (!skuRecord) {
-      logMessage += `Invalid SKU: ${sku}\n`;
-      if (createLog) logAndCollect(logMessage, reportType);
-      return;
-    }
+    // Find or create the SKU record in the database
+    const [skuRecord, created] = await db.Sku.findOrCreate({
+      where: { sku, countryCode },
+      defaults: {
+        sku,
+        countryCode,
+        fnsku: null,
+        skuAcquisitionCostExc: 0,
+        skuAcquisitionCostInc: 0,
+        skuAfnTotalQuantity,
+        skuAverageSellingPrice,
+        currencyCode,
+        skuAverageNetMargin: null,
+        skuAverageNetMarginPercentage: null,
+        skuAverageReturnOnInvestmentRate: null,
+        skuAverageDailyReturnOnInvestmentRate: null,
+        isActive: false,
+        numberOfActiveDays: null,
+        numberOfUnitSold: 0,
+        skuAverageUnitSoldPerDay: null,
+        skuRestockAlertQuantity: 1,
+        skuIsTest: false,
+      },
+    });
 
     const skuId = skuRecord.skuId;
-    const asinId = await getAsinFromSkuId(skuId);
-    const salesFbaFeeType = await getFbaFeeType(skuId);
-    const salesFbaFees = await getFbaFees(asinId);
+
+    if (created) {
+      try {
+        const similarSku = await db.Sku.findOne({
+          where: {
+            sku,
+            countryCode: { [db.Sequelize.Op.ne]: countryCode },
+          },
+        });
+        logMessage += `Created new SKU record: ${skuRecord.sku}\n`;
+        if (similarSku) {
+          skuRecord.skuAcquisitionCostExc = similarSku.skuAcquisitionCostExc;
+          skuRecord.skuAcquisitionCostInc = similarSku.skuAcquisitionCostInc;
+          try {
+            await skuRecord.save();
+            logMessage += `Copied acquisition costs for new SKU record.\n`;
+          } catch (err) {
+            logMessage += `Error saving new SKU record: ${err.message}\n`;
+          }
+        }
+      } catch (err) {
+        logMessage += `Error finding similar SKU or copying acquisition costs: ${err}\n`;
+      }
+    }
+
+    try {
+      asinId = await getAsinFromSkuId(skuId);
+    } catch (err) {
+      logMessage += `Error fetching ASIN from SKU ID: ${err.message}\n`;
+    }
+    try {
+      salesFbaFeeType = await getFbaFeeType(skuId);
+    } catch (err) {
+      logMessage += `Error fetching FBA fee type: ${err.message}\n`;
+    }
+    try {
+      salesFbaFees = await getFbaFees(asinId);
+    } catch (err) {
+      logMessage += `Error fetching FBA fees: ${err.message}\n`;
+    }
 
     const salesSellingPriceExcPerItem =
       salesData.salesItemSellingPriceExc / salesData.salesSkuQuantity;
 
     const salesFbaFee =
       salesFbaFees[salesFbaFeeType] * salesData.salesSkuQuantity;
-
     const salesFbaFeePerItem = salesFbaFees[salesFbaFeeType];
-
-    const salesCogsPerItem = skuRecord.skuAcquisitionCostExc;
 
     const salesCogs =
       skuRecord.skuAcquisitionCostExc * salesData.salesSkuQuantity;
+    const salesCogsPerItem = skuRecord.skuAcquisitionCostExc;
 
     const salesGrossMarginTotal = calculateGrossMargin(
       salesCogs,
       salesData.salesItemSellingPriceExc,
     );
-
     const salesGrossMarginPerItem =
       salesGrossMarginTotal / salesData.salesSkuQuantity;
-
     const salesGrossMarginPercentagePerItem = calculateGrossMarginPercentage(
       salesCogsPerItem,
       salesSellingPriceExcPerItem,
@@ -93,10 +148,8 @@ async function processSalesChunk(
       salesData.salesItemSellingPriceExc,
       salesFbaFee,
     );
-
     const salesNetMarginPerItem =
       salesNetMarginTotal / salesData.salesSkuQuantity;
-
     const salesNetMarginPercentagePerItem = calculateNetMarginPercentage(
       salesCogsPerItem,
       salesSellingPriceExcPerItem,
@@ -131,15 +184,19 @@ async function processSalesChunk(
       reportDocumentId,
     };
 
-    await db.FbaSaleProcessed.create(record);
-
-    logMessage += `Processed sales chunk for SKU: ${sku}\n`;
+    try {
+      await db.FbaSaleProcessed.create(record);
+    } catch (err) {
+      logMessage += `Error creating FbaSaleProcessed record: ${err.message}\n`;
+      throw new Error(`Error creating FbaSaleProcessed record: ${err.message}`);
+    }
+    logMessage += `Processed sales chunk for SKU: ${sku} done\n`;
   } catch (error) {
-    logMessage += `Error processing sales chunk: ${error}\n`;
+    logMessage += `Error processing sales chunk: ${error.message}\n`;
     console.error('Error processing sales chunk:', error);
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, reportType);
+      logAndCollect(logMessage, 'ProcessSalesChunk');
     }
   }
 }

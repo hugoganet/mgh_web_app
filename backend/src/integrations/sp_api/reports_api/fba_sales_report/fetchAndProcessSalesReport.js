@@ -56,7 +56,7 @@ async function fetchAndProcessSalesReport(
       .pipe(transformStream)
       .on('data', chunk => {
         processingPromises.push(
-          processSalesChunk(chunk, reportDocumentId, reportType, createLog),
+          processSalesChunk(chunk, reportDocumentId, createLog),
         );
       })
       .on('end', async () => {
