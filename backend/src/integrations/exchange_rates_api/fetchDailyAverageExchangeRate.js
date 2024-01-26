@@ -6,14 +6,14 @@ const {
 } = require('./saveHistoricalExchangeRates');
 
 /**
- * @function fetchHistoricalExchangeRates
+ * @function fetchDailyAverageExchangeRate
  * @description Fetches historical exchange rates from the Exchange Rates API
  * @param {date} date - The date for which to fetch the exchange rates (YYYY-MM-DD)
  * @param {string} currencyCode - The currency code for which to fetch the exchange rates
  * @param {boolean} createLog - Whether to create a log of the process
  * @return {Promise<Object>} - A promise that resolves to an object with the currency codes as keys and their exchange rates as values
  */
-async function fetchHistoricalExchangeRates(
+async function fetchDailyAverageExchangeRate(
   date,
   currencyCode,
   createLog = false,
@@ -66,11 +66,9 @@ async function fetchHistoricalExchangeRates(
     return null;
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'fetchHistoricalExchangeRates');
+      logAndCollect(logMessage, 'fetchDailyAverageExchangeRate');
     }
   }
 }
 
-module.exports = { fetchHistoricalExchangeRates };
-
-fetchHistoricalExchangeRates('2024-01-25', 'SEK, GBP, TRY, PLN', true);
+module.exports = { fetchDailyAverageExchangeRate };
