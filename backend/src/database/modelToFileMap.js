@@ -29,6 +29,7 @@ const modelToFileMap = {
   WarehouseStock: 'warehouses_stock.csv',
   ProductAndAmzReferralFeeCategory:
     'product_and_amz_referral_fees_categories.csv',
+  DailyAverageExchangeRate: 'daily_average_exchange_rates.csv',
 };
 
 module.exports = modelToFileMap;

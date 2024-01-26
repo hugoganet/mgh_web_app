@@ -93,6 +93,7 @@ async function runSeeding(db) {
       'EanInSupplierOrder',
       'EanInDonation',
       'WarehouseStock',
+      'DailyAverageExchangeRate',
     ];
 
     // Sequentially seed each table

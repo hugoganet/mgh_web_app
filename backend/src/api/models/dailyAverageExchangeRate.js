@@ -25,7 +25,7 @@ module.exports = sequelize => {
         allowNull: false,
       },
       date: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         allowNull: false,
       },
     },
@@ -33,7 +33,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'DailyAverageExchangeRate',
       tableName: 'daily_average_exchange_rates',
-      timestamps: true,
+      timestamps: false,
       indexes: [
         {
           unique: true,
