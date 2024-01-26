@@ -1,6 +1,9 @@
 require('dotenv').config({ path: 'backend/.env' });
 const axios = require('axios');
 const { logAndCollect } = require('../sp_api/logs/logger');
+const {
+  saveHistoricalExchangeRates,
+} = require('./saveHistoricalExchangeRates');
 
 /**
  * @function fetchHistoricalExchangeRates
@@ -32,7 +35,11 @@ async function fetchHistoricalExchangeRates(
       null,
       2,
     )}\n`;
-    return response.data.rates;
+
+    // Save the exchange rates to the database
+    if (response.data && response.data.rates) {
+      await saveHistoricalExchangeRates(response.data.rates, date, true);
+    }
   } catch (error) {
     logMessage += `Error: ${error.message}\n`;
     if (error.response) {
@@ -65,3 +72,5 @@ async function fetchHistoricalExchangeRates(
 }
 
 module.exports = { fetchHistoricalExchangeRates };
+
+fetchHistoricalExchangeRates('2024-01-25', 'SEK, GBP, TRY, PLN', true);
