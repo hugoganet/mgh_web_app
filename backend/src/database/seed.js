@@ -93,7 +93,7 @@ async function runSeeding(db) {
       'EanInSupplierOrder',
       'EanInDonation',
       'WarehouseStock',
-      'DailyAverageExchangeRate',
+      // 'DailyAverageExchangeRate', // Commented out because to avoid an error because it is commented out in intialize.js
     ];
 
     // Sequentially seed each table

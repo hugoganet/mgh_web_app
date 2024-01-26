@@ -41,7 +41,7 @@ async function initializeDatabase({ forceSync = false } = {}) {
       'AfnInventoryDailyUpdate', // Commented out because I want to keep the data that has been collected so far
       'SellingPriceHistory', // Commented out because I want to keep the data that has been collected so far
       'FbaSaleProcessed',
-      'DailyAverageExchangeRate',
+      // 'DailyAverageExchangeRate', // Commented out because I want to keep the data that has been collected so far
     ];
 
     // Synchronize each model in order
