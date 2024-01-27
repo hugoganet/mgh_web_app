@@ -1,4 +1,6 @@
-require('dotenv').config({ path: 'backend/.env' });
+require('dotenv').config({
+  path: '/Users/hugoganet/Code/projet_MGH/mgh_web_app/backend/.env',
+});
 const axios = require('axios');
 const { logAndCollect } = require('../sp_api/logs/logger');
 const {

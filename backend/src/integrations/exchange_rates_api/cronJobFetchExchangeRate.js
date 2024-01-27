@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/opt/homebrew/bin/node
 
 const {
   fetchDailyAverageExchangeRate,
