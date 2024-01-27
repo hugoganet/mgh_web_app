@@ -17,6 +17,7 @@ const { calculateRoi } = require('../../../../utils/calculateRoi.js');
 const {
   mapSalesChannelToCountryCode,
 } = require('../../../../utils/mapSalesChannelToCountryCode.js');
+const { convertToEur } = require('../../../../utils/convertToEur');
 
 /**
  * Processes a chunk of sales data from the CSV file.
@@ -54,33 +55,18 @@ async function processSalesChunk(chunk, reportDocumentId, createLog = false) {
       salesPurchaseDate: new Date(chunk['purchase-date']),
     };
 
-    // Find or create the SKU record in the database
-    const [skuRecord, created] = await db.Sku.findOrCreate({
-      where: { sku, countryCode },
-      defaults: {
-        sku,
-        countryCode,
-        fnsku: null,
-        skuAcquisitionCostExc: 0,
-        skuAcquisitionCostInc: 0,
-        skuAfnTotalQuantity,
-        skuAverageSellingPrice,
-        skuAverageNetMargin: null,
-        skuAverageNetMarginPercentage: null,
-        skuAverageReturnOnInvestmentRate: null,
-        skuAverageDailyReturnOnInvestmentRate: null,
-        isActive: false,
-        numberOfActiveDays: null,
-        numberOfUnitSold: 0,
-        skuAverageUnitSoldPerDay: null,
-        skuRestockAlertQuantity: 1,
-        skuIsTest: false,
-      },
-    });
+    let convertedSellingPrice = salesData.salesItemSellingPriceExc;
+    if (salesData.salesItemCurrency !== 'EUR') {
+      convertedSellingPrice = await convertToEur(
+        salesData.salesItemSellingPriceExc,
+        salesData.salesItemCurrency,
+        salesData.salesPurchaseDate,
+      );
+    }
 
-    const skuId = skuRecord.skuId;
+    let skuRecord = await db.Sku.findOne({ where: { sku, countryCode } });
 
-    if (created) {
+    if (!skuRecord) {
       try {
         const similarSku = await db.Sku.findOne({
           where: {
@@ -88,21 +74,37 @@ async function processSalesChunk(chunk, reportDocumentId, createLog = false) {
             countryCode: { [db.Sequelize.Op.ne]: countryCode },
           },
         });
-        logMessage += `Created new SKU record: ${skuRecord.sku}\n`;
+        logMessage += `Created new SKU record: ${skuRecord.sku} for ${countryCode}\n`;
         if (similarSku) {
-          skuRecord.skuAcquisitionCostExc = similarSku.skuAcquisitionCostExc;
-          skuRecord.skuAcquisitionCostInc = similarSku.skuAcquisitionCostInc;
-          try {
-            await skuRecord.save();
-            logMessage += `Copied acquisition costs for new SKU record.\n`;
-          } catch (err) {
-            logMessage += `Error saving new SKU record: ${err.message}\n`;
-          }
+          skuAcquisitionCostExc = similarSku.skuAcquisitionCostExc;
+          skuAcquisitionCostInc = similarSku.skuAcquisitionCostInc;
         }
       } catch (err) {
         logMessage += `Error finding similar SKU or copying acquisition costs: ${err}\n`;
       }
+      // create new SKU record
+      skuRecord = await db.Sku.create({
+        sku,
+        countryCode,
+        fnsku: null,
+        skuAcquisitionCostExc,
+        skuAcquisitionCostInc,
+        skuAfnTotalQuantity,
+        skuAverageSellingPrice: convertedSellingPrice,
+        skuAverageNetMargin: null,
+        skuAverageNetMarginPercentage: null,
+        skuAverageReturnOnInvestmentRate: null,
+        skuAverageDailyReturnOnInvestmentRate: null,
+        isActive: true,
+        numberOfActiveDays: 1,
+        numberOfUnitSold: 0,
+        skuAverageUnitSoldPerDay: salesData.salesSkuQuantity,
+        skuRestockAlertQuantity: 1,
+        skuIsTest: false,
+      });
     }
+
+    const skuId = skuRecord.skuId;
 
     try {
       asinId = await getAsinFromSkuId(skuId);
