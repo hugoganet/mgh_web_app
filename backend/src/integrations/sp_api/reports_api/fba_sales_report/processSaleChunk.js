@@ -65,7 +65,6 @@ async function processSalesChunk(chunk, reportDocumentId, createLog = false) {
         skuAcquisitionCostInc: 0,
         skuAfnTotalQuantity,
         skuAverageSellingPrice,
-        currencyCode,
         skuAverageNetMargin: null,
         skuAverageNetMarginPercentage: null,
         skuAverageReturnOnInvestmentRate: null,
