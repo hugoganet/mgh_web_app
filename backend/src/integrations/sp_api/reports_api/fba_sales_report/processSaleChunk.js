@@ -67,41 +67,45 @@ async function processSalesChunk(chunk, reportDocumentId, createLog = false) {
     let skuRecord = await db.Sku.findOne({ where: { sku, countryCode } });
 
     if (!skuRecord) {
+      logMessage += `SKU record not found for ${sku} in ${countryCode}\n`;
       try {
+        logMessage += `Looking for similar SKU record for ${sku} not in ${countryCode}\n`;
         const similarSku = await db.Sku.findOne({
           where: {
             sku,
             countryCode: { [db.Sequelize.Op.ne]: countryCode },
           },
         });
-        logMessage += `Created new SKU record: ${skuRecord.sku} for ${countryCode}\n`;
+        logMessage += `Created new SKU record: ${sku} for ${countryCode}\n`;
         if (similarSku) {
           skuAcquisitionCostExc = similarSku.skuAcquisitionCostExc;
           skuAcquisitionCostInc = similarSku.skuAcquisitionCostInc;
+          skuAfnTotalQuantity = similarSku.skuAfnTotalQuantity;
         }
+        // create new SKU record
+        skuRecord = await db.Sku.create({
+          sku,
+          countryCode,
+          fnsku: null,
+          skuAcquisitionCostExc,
+          skuAcquisitionCostInc,
+          skuAfnTotalQuantity,
+          skuAverageSellingPrice: convertedSellingPrice,
+          skuAverageNetMargin: null,
+          skuAverageNetMarginPercentage: null,
+          skuAverageReturnOnInvestmentRate: null,
+          skuAverageDailyReturnOnInvestmentRate: null,
+          isActive: true,
+          numberOfActiveDays: 1,
+          numberOfUnitSold: 0,
+          skuAverageUnitSoldPerDay: salesData.salesSkuQuantity,
+          skuRestockAlertQuantity: 1,
+          skuIsTest: false,
+        });
       } catch (err) {
-        logMessage += `Error finding similar SKU or copying acquisition costs: ${err}\n`;
+        logMessage += `Error finding similar SKU or creating new SKU: ${err}\n`;
+        throw err; // rethrow the error to be caught by the outer try-catch
       }
-      // create new SKU record
-      skuRecord = await db.Sku.create({
-        sku,
-        countryCode,
-        fnsku: null,
-        skuAcquisitionCostExc,
-        skuAcquisitionCostInc,
-        skuAfnTotalQuantity,
-        skuAverageSellingPrice: convertedSellingPrice,
-        skuAverageNetMargin: null,
-        skuAverageNetMarginPercentage: null,
-        skuAverageReturnOnInvestmentRate: null,
-        skuAverageDailyReturnOnInvestmentRate: null,
-        isActive: true,
-        numberOfActiveDays: 1,
-        numberOfUnitSold: 0,
-        skuAverageUnitSoldPerDay: salesData.salesSkuQuantity,
-        skuRestockAlertQuantity: 1,
-        skuIsTest: false,
-      });
     }
 
     const skuId = skuRecord.skuId;
@@ -194,7 +198,7 @@ async function processSalesChunk(chunk, reportDocumentId, createLog = false) {
     logMessage += `Processed sales chunk for SKU: ${sku} done\n`;
   } catch (error) {
     logMessage += `Error processing sales chunk: ${error.message}\n`;
-    console.error('Error processing sales chunk:', error);
+    // console.error('Error processing sales chunk:', error);
   } finally {
     if (createLog) {
       logAndCollect(logMessage, 'ProcessSalesChunk');

@@ -10,6 +10,7 @@ const db = require('../../api/models/index');
  */
 async function saveHistoricalExchangeRates(ratesData, date, createLog = false) {
   let logMessage = `Saving historical exchange rates for date ${date}\n`;
+  const now = new Date();
   try {
     for (const [currencyCode, rateToEur] of Object.entries(ratesData)) {
       await db.DailyAverageExchangeRate.upsert({
@@ -17,7 +18,10 @@ async function saveHistoricalExchangeRates(ratesData, date, createLog = false) {
         rateToEur,
         date,
       });
-      logMessage += `Saved exchange rate for ${currencyCode} on ${date}: ${rateToEur}\n`;
+      logMessage += `${now} : Saved exchange rate for ${currencyCode} on ${date}: ${rateToEur}\n`;
+      console.log(
+        `${now} : Saved exchange rate for ${currencyCode} on ${date}: ${rateToEur}`,
+      );
     }
   } catch (error) {
     logMessage += `Error saving exchange rates to database: ${error}\n`;

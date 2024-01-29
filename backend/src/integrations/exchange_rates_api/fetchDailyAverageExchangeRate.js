@@ -74,3 +74,5 @@ async function fetchDailyAverageExchangeRate(
 }
 
 module.exports = { fetchDailyAverageExchangeRate };
+
+// fetchDailyAverageExchangeRate('2024-01-28', 'GBP,SEK,PLN,TRY', true);
