@@ -18,9 +18,6 @@ async function saveHistoricalExchangeRates(ratesData, date, createLog = false) {
         date,
       });
       logMessage += `Saved exchange rate for ${currencyCode} on ${date}: ${rateToEur}\n`;
-      console.log(
-        `Saved exchange rate for ${currencyCode} on ${date}: ${rateToEur}`,
-      );
     }
   } catch (error) {
     logMessage += `Error saving exchange rates to database: ${error}\n`;

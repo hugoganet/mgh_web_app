@@ -38,7 +38,7 @@ async function getReport(reportId, createLog) {
 
       if (parsedResponse.reportDocumentId) {
         reportDocumentId = parsedResponse.reportDocumentId;
-        // console.log('Report Document ID fetched:', reportDocumentId);
+        console.log('Report Document ID fetched:', reportDocumentId);
         break;
       } else {
         console.log('Waiting for report to be ready...');
@@ -54,7 +54,7 @@ async function getReport(reportId, createLog) {
     console.log('Report is not ready after multiple attempts.');
   }
 
-  return parsedResponse;
+  return parsedResponse.reportDocumentId;
 }
 
 module.exports = { getReport };

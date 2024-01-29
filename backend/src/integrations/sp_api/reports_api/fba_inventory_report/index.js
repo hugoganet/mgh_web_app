@@ -41,21 +41,22 @@ async function requestFbaInventoryReport(
   };
 
   try {
-    // Step 1: Create Report to get ReportId
-    const reportIdResponse = await createReport(config);
+    // // Step 1: Create Report to get ReportId
+    // const reportIdResponse = await createReport(config);
 
-    // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
-    await new Promise(resolve => setTimeout(resolve, 60000 * 2));
+    // // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
+    // await new Promise(resolve => setTimeout(resolve, 60000 * 2));
 
-    // Step 2 : Request report document ID
-    const reportDocumentId = await getReport(
-      reportIdResponse.reportId,
-      config.createLog,
-      config.reportType,
-    );
+    // // Step 2 : Request report document ID
+    // const reportDocumentId = await getReport(
+    //   reportIdResponse.reportId,
+    //   config.createLog,
+    //   config.reportType,
+    // );
 
-    // const reportDocumentId =
-    //   'amzn1.spdoc.1.4.eu.2b27c303-d7c0-41c9-abf9-6e62b656e19f.TY1M93LGOOVTG.2651'; // FR
+    const reportDocumentId =
+      'amzn1.spdoc.1.4.eu.b2a04f6a-4f6b-4e5e-aeee-4358f249e382.TMJISGFM4QT0U.2651'; // FR
+    //  'amzn1.spdoc.1.4.eu.2b27c303-d7c0-41c9-abf9-6e62b656e19f.TY1M93LGOOVTG.2651'; // FR
     // 'amzn1.spdoc.1.4.eu.fe1e84d2-982c-489a-800f-32f400dae70e.TE9Q2KN2IWU7W.2651'; // UK
     // 'amzn1.spdoc.1.4.eu.f7b75d40-725b-48c2-bdf1-25c1d170fe1a.T1TJXQMEOP6F78.2651'; // PL
     // 'amzn1.spdoc.1.4.eu.20bef5ad-10c1-4918-bd6f-176bb3aa2ab6.T3H33HZYPR8D01.2651'; // SE
