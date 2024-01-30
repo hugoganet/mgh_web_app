@@ -46,7 +46,7 @@ module.exports = db => {
   });
   Asin.belongsTo(
     ProductTaxCategory,
-    { targetKey: 'productTaxCategoryId', foreignKey: 'productTaxCategoryName' },
+    { targetKey: 'productTaxCategoryId' },
     { onDelete: 'NO ACTION', onUpdate: 'CASCADE' },
   );
   Asin.belongsTo(Country, {
@@ -235,7 +235,6 @@ module.exports = db => {
   ProductTaxCategory.hasMany(Asin, {
     foreignKey: 'productTaxCategoryId',
     sourceKey: 'productTaxCategoryId',
-    foreignKey: 'productTaxCategoryName',
   });
 
   // Associations for VatRatePerCountry
