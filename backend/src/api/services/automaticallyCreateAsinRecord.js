@@ -14,6 +14,9 @@ const {
 const {
   automaticallyCreateEanInAsinRecord,
 } = require('./automaticallyCreateEanInAsinRecord');
+const {
+  automaticallyCreateFbaFeesRecord,
+} = require('./automaticallyCreateFbaFeesRecord');
 
 /**
  * @description This function creates an ASIN record in the database if it does not exist.
@@ -124,10 +127,27 @@ async function automaticallyCreateAsinRecord(
             createLog,
           );
         }
+        logMessage += `EAN in ASIN record created successfully.\n`;
       } catch (error) {
         logMessage += `Error automatically creating EAN in ASIN record: ${error}\n`;
         throw new Error(
           `Error automatically creating EAN in ASIN record: ${error}`,
+        );
+      }
+      try {
+        await automaticallyCreateFbaFeesRecord(
+          height,
+          width,
+          length,
+          weight,
+          newAsin.asinId,
+          createLog,
+        );
+        logMessage += `FBA fees record created successfully.\n`;
+      } catch (error) {
+        logMessage += `Error automatically creating FBA fees record: ${error}\n`;
+        throw new Error(
+          `Error automatically creating FBA fees record: ${error}`,
         );
       }
     } catch (error) {
