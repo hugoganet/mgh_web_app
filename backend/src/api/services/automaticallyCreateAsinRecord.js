@@ -7,6 +7,9 @@ const {
   getCountryCodeFromMarketplaceId,
 } = require('../../utils/getCountryCodeFromMarketplaceId');
 const { logAndCollect } = require('../../integrations/sp_api/logs/logger');
+const {
+  getProductCategoryRankId,
+} = require('../services/getProductCategoryRankId');
 
 async function automaticallyCreateAsinRecord(
   asin,
@@ -28,7 +31,6 @@ async function automaticallyCreateAsinRecord(
 
     if (similarAsin) {
       const asinData = similarAsin.toJSON();
-      console.log(asinData);
       logMessage += `Found similar asin in ${
         asinData.countryCode
       } : ${JSON.stringify(asinData, '', 2)}\n`;
@@ -42,14 +44,15 @@ async function automaticallyCreateAsinRecord(
       console.error(error);
     }
 
+    let salesRank;
     if (
       catalogItem &&
       catalogItem.salesRanks &&
       catalogItem.salesRanks.length > 0
     ) {
       const salesRanksData = catalogItem.salesRanks[0];
-      if (salesRanksData.ranks && salesRanks.ranks.length > 0) {
-        const salesRank = salesRanksData.ranks[0].ranks;
+      if (salesRanksData.ranks && salesRanksData.ranks.length > 0) {
+        salesRank = salesRanksData.ranks[0].rank;
         console.log(salesRank);
       } else {
         console.log('No ranks data available');
@@ -62,6 +65,7 @@ async function automaticallyCreateAsinRecord(
       similarAsin.productCategoryId,
       countryCode,
       salesRank,
+      true,
     );
 
     asinRecord = {
@@ -102,9 +106,8 @@ module.exports = {
 // const asin = 'B09NZD9S1M';
 // const marketplaceIds = 'A33AVAJ2PDY3EV';
 
-// ASIN test for France
 const asin = 'B005LH2FA0';
 // const asin = 'B08YNZHB8S'; // composed of 2 EANS
-const marketplaceIds = 'A33AVAJ2PDY3EV';
+const marketplaceIds = 'A1PA6795UKMFR9'; // DE
 
 automaticallyCreateAsinRecord(asin, marketplaceIds, true);
