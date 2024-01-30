@@ -6,15 +6,14 @@ const {
   getCountryCodeFromMarketplaceId,
 } = require('../../utils/getCountryCodeFromMarketplaceId');
 const { logAndCollect } = require('../../integrations/sp_api/logs/logger');
-const {
-  getProductCategoryRankId,
-} = require('../services/getProductCategoryRankId');
-const {
-  getProductTaxCategoryName,
-} = require('../services/getProductTaxCategoryName');
+const { getProductCategoryRankId } = require('./getProductCategoryRankId');
+const { getProductTaxCategoryName } = require('./getProductTaxCategoryName');
 const {
   mapSalesChannelOrCountryCode,
 } = require('../../utils/mapSalesChannelOrCountryCode');
+const {
+  automaticallyCreateEanInAsinRecord,
+} = require('./automaticallyCreateEanInAsinRecord');
 
 /**
  * @description This function creates an ASIN record in the database if it does not exist.
@@ -28,7 +27,7 @@ async function automaticallyCreateAsinRecord(
   marketplaceIds,
   createLog = false,
 ) {
-  let logMessage = 'Starting automaticallyCreateAsinRecord\n';
+  let logMessage = `Starting automaticallyCreateAsinRecord for asin : ${asin}\n`;
   try {
     const countryCode = getCountryCodeFromMarketplaceId(marketplaceIds);
     logMessage += `Country code resolved: ${countryCode}\n`;
@@ -41,7 +40,7 @@ async function automaticallyCreateAsinRecord(
     });
 
     if (similarAsin) {
-      logMessage += `Found similar asin in ${similarAsin.countryCode}\n`;
+      logMessage += `Found similar asin in ${similarAsin.countryCode} with asinId : ${similarAsin.asinId}\n`;
     }
 
     let catalogItem;
@@ -117,6 +116,20 @@ async function automaticallyCreateAsinRecord(
     try {
       const newAsin = await db.Asin.create(asinRecord);
       logMessage += `ASIN record created successfully with id : ${newAsin.asinId}.\n`;
+      try {
+        if (similarAsin) {
+          await automaticallyCreateEanInAsinRecord(
+            similarAsin.asinId,
+            newAsin.asinId,
+            createLog,
+          );
+        }
+      } catch (error) {
+        logMessage += `Error automatically creating EAN in ASIN record: ${error}\n`;
+        throw new Error(
+          `Error automatically creating EAN in ASIN record: ${error}`,
+        );
+      }
     } catch (error) {
       logMessage += `Error creating ASIN record in the database: ${error}\n`;
       throw new Error(`Error creating ASIN record in the database: ${error}`);
