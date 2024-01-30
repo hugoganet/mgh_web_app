@@ -65,7 +65,7 @@ async function automaticallyCreateAsinRecord(
       similarAsin.productCategoryId,
       countryCode,
       salesRank,
-      true,
+      false,
     );
 
     asinRecord = {

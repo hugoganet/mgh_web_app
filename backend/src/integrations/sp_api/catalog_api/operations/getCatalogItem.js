@@ -46,10 +46,3 @@ async function getCatalogItem(asin, marketplaceIds, createLog = false) {
 }
 
 module.exports = { getCatalogItem };
-
-// Example usage
-const asin = 'B005LH2FA0';
-const marketplaceIds = 'A13V1IB3VIYZZH';
-getCatalogItem(asin, marketplaceIds, true)
-  .then(itemDetails => console.log(itemDetails))
-  .catch(error => console.error(error));
