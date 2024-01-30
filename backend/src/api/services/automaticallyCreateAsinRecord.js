@@ -10,6 +10,9 @@ const { logAndCollect } = require('../../integrations/sp_api/logs/logger');
 const {
   getProductCategoryRankId,
 } = require('../services/getProductCategoryRankId');
+const {
+  getProductTaxCategoryName,
+} = require('../services/getProductTaxCategoryName');
 
 async function automaticallyCreateAsinRecord(
   asin,
@@ -68,16 +71,41 @@ async function automaticallyCreateAsinRecord(
       false,
     );
 
+    const productTaxCategoryName = await getProductTaxCategoryName(
+      similarAsin.productTaxCategoryId,
+    );
+
+    // find the productTaxCategoryId with the productTaxCategoryName and the countryCode
+    const productTaxCategoryId = await db.ProductTaxCategory.findOne({
+      where: {
+        productTaxCategoryName,
+        countryCode,
+      },
+    });
+
+    const urlImage = catalogItem.images[0].images[0].link;
+
+    const asinName = catalogItem.summaries[0].itemName;
+
+    // To get the Amazon URL of the product, you would typically construct it using the ASIN and the marketplace domain.
+    const marketplaceId = catalogItem.summaries[0].marketplaceId;
+    let urlAmazon;
+
+    // Example of constructing the URL for Amazon Germany (DE) marketplace
+    if (marketplaceId === 'A1PA6795UKMFR9') {
+      urlAmazon = `https://www.amazon.de/dp/${catalogItem.asin}`;
+    }
+
     asinRecord = {
-      asin: asin,
+      asin,
       countryCode,
       productCategoryId: similarAsin.productCategoryId,
       productCategoryRankId,
-      productTaxCategoryId: 1,
-      asinPreparation: 'test',
-      urlAmazon: 'test',
-      urlImage: 'test',
-      asinName: 'test',
+      productTaxCategoryId,
+      asinPreparation: similarAsin.asinPreparation,
+      urlAmazon,
+      urlImage,
+      asinName,
       asinNumberOfActiveSku: 1,
       asinAverageUnitSoldPerDay: 1,
       isBatteryRequired: false,
