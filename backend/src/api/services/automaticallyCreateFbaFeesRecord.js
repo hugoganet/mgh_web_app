@@ -1,5 +1,6 @@
 const db = require('../models/index');
 const { logAndCollect } = require('../../integrations/sp_api/logs/logger');
+const { getPriceGridFbaFeeId } = require('./getPriceGridFbaFeeId');
 
 /**
  * @description This function creates an EAN in ASIN record in the database if it does not exist.
@@ -24,18 +25,35 @@ async function automaticallyCreateFbaFeesRecord(
 ) {
   let logMessage = `Starting automaticallyCreateFbaFeesRecord for newly created asinId : ${newlyCreatedAsinId}.\n`;
   try {
-    const fbaFeesRecord = await db.FbaFee.create({
-      where: {
+    const priceGridFbaFeeId = await getPriceGridFbaFeeId(
+      packageLength,
+      packageWidth,
+      packageHeight,
+      packageWeight,
+      countryCode,
+    );
+    if (priceGridFbaFeeId !== null) {
+      logMessage += `Successfully got priceGridFbaFeeId: ${priceGridFbaFeeId}\n`;
+
+      const fbaFeesRecord = await db.FbaFee.create({
         asinId: newlyCreatedAsinId,
         packageLength,
         packageWidth,
         packageHeight,
         packageWeight,
         priceGridFbaFeeId,
-      },
-    });
+      });
+      logMessage += `Successfully created fbaFeesRecord: ${JSON.stringify(
+        fbaFeesRecord,
+      )}\n`;
+    } else {
+      logMessage += `Could not get priceGridFbaFeeId for newly created asinId: ${newlyCreatedAsinId}\n`;
+    }
   } catch (error) {
-    logMessage += `Error creating fbaFeesRecord: ${error}\n`;
+    logMessage += `Error in automaticallyCreateFbaFeesRecord: ${error.message}\n`;
+    throw new Error(
+      `Error in automaticallyCreateFbaFeesRecord: ${error.message}`,
+    );
   } finally {
     if (createLog) {
       logAndCollect(logMessage, 'automaticallyCreateFbaFeesRecord');
