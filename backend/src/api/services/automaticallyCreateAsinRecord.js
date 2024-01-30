@@ -115,8 +115,8 @@ async function automaticallyCreateAsinRecord(
     };
 
     try {
-      await db.Asin.create(asinRecord);
-      logMessage += 'ASIN record created successfully.\n';
+      const newAsin = await db.Asin.create(asinRecord);
+      logMessage += `ASIN record created successfully with id : ${newAsin.asinId}.\n`;
     } catch (error) {
       logMessage += `Error creating ASIN record in the database: ${error}\n`;
       throw new Error(`Error creating ASIN record in the database: ${error}`);
