@@ -47,3 +47,5 @@ async function mapSalesChannelOrCountryCode(input, mapType, createLog = false) {
 }
 
 module.exports = { mapSalesChannelOrCountryCode };
+
+mapSalesChannelOrCountryCode('TR', 'countryCodeToMarketplaceDomain', true);
