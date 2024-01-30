@@ -92,6 +92,12 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'Asin',
       tableName: 'asins',
+      indexes: [
+        {
+          unique: true,
+          fields: ['asin', 'country_code'],
+        },
+      ],
     },
   );
 
