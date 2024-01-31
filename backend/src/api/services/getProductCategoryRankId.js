@@ -1,5 +1,5 @@
 const db = require('../models/index');
-const { logAndCollect } = require('../../integrations/sp_api/logs/logger');
+const { logAndCollect } = require('../../utils/logger');
 
 /**
  * Retrieves the product category rank ID based on category ID, country code, and sales rank.

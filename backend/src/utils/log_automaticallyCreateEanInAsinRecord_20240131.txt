@@ -1,0 +1,5 @@
+[2024-01-31T19:47:45.618Z] Starting automaticallyCreateEanInAsinRecord for newly created asinId : 2925.
+similarAsinId : 2757 is compososed with : 1 of 5012583206682
+Created new eanInAsinRecord with id : 2926
+
+

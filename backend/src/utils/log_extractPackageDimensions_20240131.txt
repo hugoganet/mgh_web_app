@@ -1,0 +1,3685 @@
+[2024-01-31T19:29:47.112Z] Starting extractPackageDimensions for catalogItem : {
+  "asin": "B07DYYGK7V",
+  "attributes": {
+    "item_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.15,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "bullet_point": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Limed Styling Gel för kanter 150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Icke oljig",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Inga vita rester",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Testad på afro och texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Gör ditt babyhår släta och håller spetsen på plats",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_quantity": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "scent": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Lime",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_description": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra lim stylinggel för kanter 150 ml. Expertkanter kontroll, oljig, inga vita rester, testad på afro, texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "brand": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Got2B",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_expiration_dated_product": [
+      {
+        "value": true,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "package_level": [
+      {
+        "value": "unit",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "number_of_items": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_dimensions": [
+      {
+        "length": {
+          "unit": "centimeters",
+          "value": 5
+        },
+        "width": {
+          "unit": "centimeters",
+          "value": 7.8
+        },
+        "height": {
+          "unit": "centimeters",
+          "value": 15.5
+        },
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "size": [
+      {
+        "language_tag": "sv_SE",
+        "value": "150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "liquid_volume": [
+      {
+        "unit": "milliliters",
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "fc_shelf_life": [
+      {
+        "unit": "days",
+        "value": 900,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "part_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "contains_liquid_contents": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.18,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "manufacturer": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf & Henkel",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "recommended_browse_nodes": [
+      {
+        "value": "20638478031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "value": "20638007031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "model_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "supplier_declared_dg_hz_regulation": [
+      {
+        "value": "not_applicable",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_heat_sensitive": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_benefit": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Utslätande",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_name": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "list_price": [
+      {
+        "currency": "SEK",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_required": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_site_launch_date": [
+      {
+        "value": "2018-07-12T09:56:55.491Z",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "target_audience_keyword": [
+      {
+        "language_tag": "sv_SE",
+        "value": "unisex",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "unit_count": [
+      {
+        "type": {
+          "language_tag": "sv_SE",
+          "value": "milliliter"
+        },
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_included": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ]
+  },
+  "images": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "images": [
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        }
+      ]
+    }
+  ],
+  "productTypes": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "productType": "BODY_CARE_PRODUCT"
+    }
+  ],
+  "ranks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "salesRanks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "summaries": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "brandName": "Got2B",
+      "browseNode": "20638478031",
+      "itemName": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+      "manufacturer": "Schwarzkopf & Henkel",
+      "modelNumber": "2386539",
+      "sizeName": "150 ml"
+    }
+  ]
+}
+Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:31:17.419Z] Starting extractPackageDimensions for catalogItem : {
+  "asin": "B07DYYGK7V",
+  "attributes": {
+    "item_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.15,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "bullet_point": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Limed Styling Gel för kanter 150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Icke oljig",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Inga vita rester",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Testad på afro och texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Gör ditt babyhår släta och håller spetsen på plats",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_quantity": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "scent": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Lime",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_description": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra lim stylinggel för kanter 150 ml. Expertkanter kontroll, oljig, inga vita rester, testad på afro, texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "brand": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Got2B",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_expiration_dated_product": [
+      {
+        "value": true,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "package_level": [
+      {
+        "value": "unit",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "number_of_items": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_dimensions": [
+      {
+        "length": {
+          "unit": "centimeters",
+          "value": 5
+        },
+        "width": {
+          "unit": "centimeters",
+          "value": 7.8
+        },
+        "height": {
+          "unit": "centimeters",
+          "value": 15.5
+        },
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "size": [
+      {
+        "language_tag": "sv_SE",
+        "value": "150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "liquid_volume": [
+      {
+        "unit": "milliliters",
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "fc_shelf_life": [
+      {
+        "unit": "days",
+        "value": 900,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "part_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "contains_liquid_contents": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.18,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "manufacturer": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf & Henkel",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "recommended_browse_nodes": [
+      {
+        "value": "20638478031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "value": "20638007031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "model_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "supplier_declared_dg_hz_regulation": [
+      {
+        "value": "not_applicable",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_heat_sensitive": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_benefit": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Utslätande",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_name": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "list_price": [
+      {
+        "currency": "SEK",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_required": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_site_launch_date": [
+      {
+        "value": "2018-07-12T09:56:55.491Z",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "target_audience_keyword": [
+      {
+        "language_tag": "sv_SE",
+        "value": "unisex",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "unit_count": [
+      {
+        "type": {
+          "language_tag": "sv_SE",
+          "value": "milliliter"
+        },
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_included": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ]
+  },
+  "images": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "images": [
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        }
+      ]
+    }
+  ],
+  "productTypes": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "productType": "BODY_CARE_PRODUCT"
+    }
+  ],
+  "ranks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "salesRanks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "summaries": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "brandName": "Got2B",
+      "browseNode": "20638478031",
+      "itemName": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+      "manufacturer": "Schwarzkopf & Henkel",
+      "modelNumber": "2386539",
+      "sizeName": "150 ml"
+    }
+  ]
+}
+Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:31:35.696Z] Starting extractPackageDimensions for catalogItem : {
+  "asin": "B07DYYGK7V",
+  "attributes": {
+    "item_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.15,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "bullet_point": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Limed Styling Gel för kanter 150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Icke oljig",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Inga vita rester",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Testad på afro och texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Gör ditt babyhår släta och håller spetsen på plats",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_quantity": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "scent": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Lime",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_description": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra lim stylinggel för kanter 150 ml. Expertkanter kontroll, oljig, inga vita rester, testad på afro, texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "brand": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Got2B",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_expiration_dated_product": [
+      {
+        "value": true,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "package_level": [
+      {
+        "value": "unit",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "number_of_items": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_dimensions": [
+      {
+        "length": {
+          "unit": "centimeters",
+          "value": 5
+        },
+        "width": {
+          "unit": "centimeters",
+          "value": 7.8
+        },
+        "height": {
+          "unit": "centimeters",
+          "value": 15.5
+        },
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "size": [
+      {
+        "language_tag": "sv_SE",
+        "value": "150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "liquid_volume": [
+      {
+        "unit": "milliliters",
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "fc_shelf_life": [
+      {
+        "unit": "days",
+        "value": 900,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "part_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "contains_liquid_contents": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.18,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "manufacturer": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf & Henkel",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "recommended_browse_nodes": [
+      {
+        "value": "20638478031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "value": "20638007031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "model_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "supplier_declared_dg_hz_regulation": [
+      {
+        "value": "not_applicable",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_heat_sensitive": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_benefit": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Utslätande",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_name": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "list_price": [
+      {
+        "currency": "SEK",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_required": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_site_launch_date": [
+      {
+        "value": "2018-07-12T09:56:55.491Z",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "target_audience_keyword": [
+      {
+        "language_tag": "sv_SE",
+        "value": "unisex",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "unit_count": [
+      {
+        "type": {
+          "language_tag": "sv_SE",
+          "value": "milliliter"
+        },
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_included": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ]
+  },
+  "images": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "images": [
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        }
+      ]
+    }
+  ],
+  "productTypes": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "productType": "BODY_CARE_PRODUCT"
+    }
+  ],
+  "ranks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "salesRanks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "summaries": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "brandName": "Got2B",
+      "browseNode": "20638478031",
+      "itemName": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+      "manufacturer": "Schwarzkopf & Henkel",
+      "modelNumber": "2386539",
+      "sizeName": "150 ml"
+    }
+  ]
+}
+Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:35:06.857Z] Starting extractPackageDimensions for catalogItem : {
+  "asin": "B07DYYGK7V",
+  "attributes": {
+    "item_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.15,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "bullet_point": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Limed Styling Gel för kanter 150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Icke oljig",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Inga vita rester",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Testad på afro och texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Gör ditt babyhår släta och håller spetsen på plats",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_quantity": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "scent": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Lime",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_description": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra lim stylinggel för kanter 150 ml. Expertkanter kontroll, oljig, inga vita rester, testad på afro, texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "brand": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Got2B",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_expiration_dated_product": [
+      {
+        "value": true,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "package_level": [
+      {
+        "value": "unit",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "number_of_items": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_dimensions": [
+      {
+        "length": {
+          "unit": "centimeters",
+          "value": 5
+        },
+        "width": {
+          "unit": "centimeters",
+          "value": 7.8
+        },
+        "height": {
+          "unit": "centimeters",
+          "value": 15.5
+        },
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "size": [
+      {
+        "language_tag": "sv_SE",
+        "value": "150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "liquid_volume": [
+      {
+        "unit": "milliliters",
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "fc_shelf_life": [
+      {
+        "unit": "days",
+        "value": 900,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "part_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "contains_liquid_contents": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.18,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "manufacturer": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf & Henkel",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "recommended_browse_nodes": [
+      {
+        "value": "20638478031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "value": "20638007031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "model_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "supplier_declared_dg_hz_regulation": [
+      {
+        "value": "not_applicable",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_heat_sensitive": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_benefit": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Utslätande",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_name": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "list_price": [
+      {
+        "currency": "SEK",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_required": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_site_launch_date": [
+      {
+        "value": "2018-07-12T09:56:55.491Z",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "target_audience_keyword": [
+      {
+        "language_tag": "sv_SE",
+        "value": "unisex",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "unit_count": [
+      {
+        "type": {
+          "language_tag": "sv_SE",
+          "value": "milliliter"
+        },
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_included": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ]
+  },
+  "images": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "images": [
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        }
+      ]
+    }
+  ],
+  "productTypes": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "productType": "BODY_CARE_PRODUCT"
+    }
+  ],
+  "ranks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "salesRanks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "summaries": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "brandName": "Got2B",
+      "browseNode": "20638478031",
+      "itemName": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+      "manufacturer": "Schwarzkopf & Henkel",
+      "modelNumber": "2386539",
+      "sizeName": "150 ml"
+    }
+  ]
+}
+Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:35:49.289Z] Starting extractPackageDimensions for catalogItem : {
+  "asin": "B07DYYGK7V",
+  "attributes": {
+    "item_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.15,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "bullet_point": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Limed Styling Gel för kanter 150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Icke oljig",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Inga vita rester",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Testad på afro och texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Gör ditt babyhår släta och håller spetsen på plats",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_quantity": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "scent": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Lime",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_description": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra lim stylinggel för kanter 150 ml. Expertkanter kontroll, oljig, inga vita rester, testad på afro, texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "brand": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Got2B",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_expiration_dated_product": [
+      {
+        "value": true,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "package_level": [
+      {
+        "value": "unit",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "number_of_items": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_dimensions": [
+      {
+        "length": {
+          "unit": "centimeters",
+          "value": 5
+        },
+        "width": {
+          "unit": "centimeters",
+          "value": 7.8
+        },
+        "height": {
+          "unit": "centimeters",
+          "value": 15.5
+        },
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "size": [
+      {
+        "language_tag": "sv_SE",
+        "value": "150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "liquid_volume": [
+      {
+        "unit": "milliliters",
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "fc_shelf_life": [
+      {
+        "unit": "days",
+        "value": 900,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "part_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "contains_liquid_contents": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.18,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "manufacturer": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf & Henkel",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "recommended_browse_nodes": [
+      {
+        "value": "20638478031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "value": "20638007031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "model_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "supplier_declared_dg_hz_regulation": [
+      {
+        "value": "not_applicable",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_heat_sensitive": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_benefit": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Utslätande",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_name": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "list_price": [
+      {
+        "currency": "SEK",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_required": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_site_launch_date": [
+      {
+        "value": "2018-07-12T09:56:55.491Z",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "target_audience_keyword": [
+      {
+        "language_tag": "sv_SE",
+        "value": "unisex",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "unit_count": [
+      {
+        "type": {
+          "language_tag": "sv_SE",
+          "value": "milliliter"
+        },
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_included": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ]
+  },
+  "images": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "images": [
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        }
+      ]
+    }
+  ],
+  "productTypes": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "productType": "BODY_CARE_PRODUCT"
+    }
+  ],
+  "ranks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "salesRanks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "summaries": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "brandName": "Got2B",
+      "browseNode": "20638478031",
+      "itemName": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+      "manufacturer": "Schwarzkopf & Henkel",
+      "modelNumber": "2386539",
+      "sizeName": "150 ml"
+    }
+  ]
+}
+Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:37:14.484Z] Starting extractPackageDimensions for catalogItem : {
+  "asin": "B07DYYGK7V",
+  "attributes": {
+    "item_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.15,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "bullet_point": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Limed Styling Gel för kanter 150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Icke oljig",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Inga vita rester",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Testad på afro och texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Gör ditt babyhår släta och håller spetsen på plats",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_quantity": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "scent": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Lime",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_description": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra lim stylinggel för kanter 150 ml. Expertkanter kontroll, oljig, inga vita rester, testad på afro, texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "brand": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Got2B",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_expiration_dated_product": [
+      {
+        "value": true,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "package_level": [
+      {
+        "value": "unit",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "number_of_items": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_dimensions": [
+      {
+        "length": {
+          "unit": "centimeters",
+          "value": 5
+        },
+        "width": {
+          "unit": "centimeters",
+          "value": 7.8
+        },
+        "height": {
+          "unit": "centimeters",
+          "value": 15.5
+        },
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "size": [
+      {
+        "language_tag": "sv_SE",
+        "value": "150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "liquid_volume": [
+      {
+        "unit": "milliliters",
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "fc_shelf_life": [
+      {
+        "unit": "days",
+        "value": 900,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "part_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "contains_liquid_contents": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.18,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "manufacturer": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf & Henkel",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "recommended_browse_nodes": [
+      {
+        "value": "20638478031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "value": "20638007031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "model_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "supplier_declared_dg_hz_regulation": [
+      {
+        "value": "not_applicable",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_heat_sensitive": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_benefit": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Utslätande",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_name": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "list_price": [
+      {
+        "currency": "SEK",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_required": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_site_launch_date": [
+      {
+        "value": "2018-07-12T09:56:55.491Z",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "target_audience_keyword": [
+      {
+        "language_tag": "sv_SE",
+        "value": "unisex",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "unit_count": [
+      {
+        "type": {
+          "language_tag": "sv_SE",
+          "value": "milliliter"
+        },
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_included": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ]
+  },
+  "images": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "images": [
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        }
+      ]
+    }
+  ],
+  "productTypes": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "productType": "BODY_CARE_PRODUCT"
+    }
+  ],
+  "ranks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "salesRanks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "summaries": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "brandName": "Got2B",
+      "browseNode": "20638478031",
+      "itemName": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+      "manufacturer": "Schwarzkopf & Henkel",
+      "modelNumber": "2386539",
+      "sizeName": "150 ml"
+    }
+  ]
+}
+Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:38:00.291Z] Starting extractPackageDimensions for catalogItem : {
+  "asin": "B07DYYGK7V",
+  "attributes": {
+    "item_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.15,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "bullet_point": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Limed Styling Gel för kanter 150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Icke oljig",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Inga vita rester",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Testad på afro och texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Gör ditt babyhår släta och håller spetsen på plats",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_quantity": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "scent": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Lime",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_description": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra lim stylinggel för kanter 150 ml. Expertkanter kontroll, oljig, inga vita rester, testad på afro, texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "brand": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Got2B",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_expiration_dated_product": [
+      {
+        "value": true,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "package_level": [
+      {
+        "value": "unit",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "number_of_items": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_dimensions": [
+      {
+        "length": {
+          "unit": "centimeters",
+          "value": 5
+        },
+        "width": {
+          "unit": "centimeters",
+          "value": 7.8
+        },
+        "height": {
+          "unit": "centimeters",
+          "value": 15.5
+        },
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "size": [
+      {
+        "language_tag": "sv_SE",
+        "value": "150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "liquid_volume": [
+      {
+        "unit": "milliliters",
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "fc_shelf_life": [
+      {
+        "unit": "days",
+        "value": 900,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "part_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "contains_liquid_contents": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.18,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "manufacturer": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf & Henkel",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "recommended_browse_nodes": [
+      {
+        "value": "20638478031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "value": "20638007031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "model_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "supplier_declared_dg_hz_regulation": [
+      {
+        "value": "not_applicable",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_heat_sensitive": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_benefit": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Utslätande",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_name": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "list_price": [
+      {
+        "currency": "SEK",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_required": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_site_launch_date": [
+      {
+        "value": "2018-07-12T09:56:55.491Z",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "target_audience_keyword": [
+      {
+        "language_tag": "sv_SE",
+        "value": "unisex",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "unit_count": [
+      {
+        "type": {
+          "language_tag": "sv_SE",
+          "value": "milliliter"
+        },
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_included": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ]
+  },
+  "images": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "images": [
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        }
+      ]
+    }
+  ],
+  "productTypes": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "productType": "BODY_CARE_PRODUCT"
+    }
+  ],
+  "ranks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "salesRanks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "summaries": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "brandName": "Got2B",
+      "browseNode": "20638478031",
+      "itemName": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+      "manufacturer": "Schwarzkopf & Henkel",
+      "modelNumber": "2386539",
+      "sizeName": "150 ml"
+    }
+  ]
+}
+Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:38:45.715Z] Starting extractPackageDimensions for catalogItem : {
+  "asin": "B07DYYGK7V",
+  "attributes": {
+    "item_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.15,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "bullet_point": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Limed Styling Gel för kanter 150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Icke oljig",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Inga vita rester",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Testad på afro och texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Gör ditt babyhår släta och håller spetsen på plats",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_quantity": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "scent": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Lime",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_description": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra lim stylinggel för kanter 150 ml. Expertkanter kontroll, oljig, inga vita rester, testad på afro, texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "brand": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Got2B",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_expiration_dated_product": [
+      {
+        "value": true,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "package_level": [
+      {
+        "value": "unit",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "number_of_items": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_dimensions": [
+      {
+        "length": {
+          "unit": "centimeters",
+          "value": 5
+        },
+        "width": {
+          "unit": "centimeters",
+          "value": 7.8
+        },
+        "height": {
+          "unit": "centimeters",
+          "value": 15.5
+        },
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "size": [
+      {
+        "language_tag": "sv_SE",
+        "value": "150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "liquid_volume": [
+      {
+        "unit": "milliliters",
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "fc_shelf_life": [
+      {
+        "unit": "days",
+        "value": 900,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "part_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "contains_liquid_contents": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.18,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "manufacturer": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf & Henkel",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "recommended_browse_nodes": [
+      {
+        "value": "20638478031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "value": "20638007031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "model_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "supplier_declared_dg_hz_regulation": [
+      {
+        "value": "not_applicable",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_heat_sensitive": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_benefit": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Utslätande",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_name": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "list_price": [
+      {
+        "currency": "SEK",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_required": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_site_launch_date": [
+      {
+        "value": "2018-07-12T09:56:55.491Z",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "target_audience_keyword": [
+      {
+        "language_tag": "sv_SE",
+        "value": "unisex",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "unit_count": [
+      {
+        "type": {
+          "language_tag": "sv_SE",
+          "value": "milliliter"
+        },
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_included": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ]
+  },
+  "images": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "images": [
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        }
+      ]
+    }
+  ],
+  "productTypes": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "productType": "BODY_CARE_PRODUCT"
+    }
+  ],
+  "ranks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "salesRanks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "summaries": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "brandName": "Got2B",
+      "browseNode": "20638478031",
+      "itemName": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+      "manufacturer": "Schwarzkopf & Henkel",
+      "modelNumber": "2386539",
+      "sizeName": "150 ml"
+    }
+  ]
+}
+Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:38:59.229Z] Starting extractPackageDimensions for catalogItem : {
+  "asin": "B07DYYGK7V",
+  "attributes": {
+    "item_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.15,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "bullet_point": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Limed Styling Gel för kanter 150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Icke oljig",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Inga vita rester",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Testad på afro och texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Gör ditt babyhår släta och håller spetsen på plats",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_quantity": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "scent": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Lime",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_description": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra lim stylinggel för kanter 150 ml. Expertkanter kontroll, oljig, inga vita rester, testad på afro, texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "brand": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Got2B",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_expiration_dated_product": [
+      {
+        "value": true,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "package_level": [
+      {
+        "value": "unit",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "number_of_items": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_dimensions": [
+      {
+        "length": {
+          "unit": "centimeters",
+          "value": 5
+        },
+        "width": {
+          "unit": "centimeters",
+          "value": 7.8
+        },
+        "height": {
+          "unit": "centimeters",
+          "value": 15.5
+        },
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "size": [
+      {
+        "language_tag": "sv_SE",
+        "value": "150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "liquid_volume": [
+      {
+        "unit": "milliliters",
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "fc_shelf_life": [
+      {
+        "unit": "days",
+        "value": 900,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "part_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "contains_liquid_contents": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.18,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "manufacturer": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf & Henkel",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "recommended_browse_nodes": [
+      {
+        "value": "20638478031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "value": "20638007031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "model_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "supplier_declared_dg_hz_regulation": [
+      {
+        "value": "not_applicable",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_heat_sensitive": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_benefit": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Utslätande",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_name": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "list_price": [
+      {
+        "currency": "SEK",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_required": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_site_launch_date": [
+      {
+        "value": "2018-07-12T09:56:55.491Z",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "target_audience_keyword": [
+      {
+        "language_tag": "sv_SE",
+        "value": "unisex",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "unit_count": [
+      {
+        "type": {
+          "language_tag": "sv_SE",
+          "value": "milliliter"
+        },
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_included": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ]
+  },
+  "images": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "images": [
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        }
+      ]
+    }
+  ],
+  "productTypes": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "productType": "BODY_CARE_PRODUCT"
+    }
+  ],
+  "ranks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "salesRanks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "summaries": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "brandName": "Got2B",
+      "browseNode": "20638478031",
+      "itemName": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+      "manufacturer": "Schwarzkopf & Henkel",
+      "modelNumber": "2386539",
+      "sizeName": "150 ml"
+    }
+  ]
+}
+Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:47:45.592Z] Starting extractPackageDimensions for catalogItem : {
+  "asin": "B07DYYGK7V",
+  "attributes": {
+    "item_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.15,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "bullet_point": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Limed Styling Gel för kanter 150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Icke oljig",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Inga vita rester",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Testad på afro och texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "language_tag": "sv_SE",
+        "value": "Gör ditt babyhår släta och håller spetsen på plats",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_quantity": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "scent": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Lime",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_description": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra lim stylinggel för kanter 150 ml. Expertkanter kontroll, oljig, inga vita rester, testad på afro, texturerat hår",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "brand": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Got2B",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_expiration_dated_product": [
+      {
+        "value": true,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "package_level": [
+      {
+        "value": "unit",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "number_of_items": [
+      {
+        "value": 1,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_dimensions": [
+      {
+        "length": {
+          "unit": "centimeters",
+          "value": 5
+        },
+        "width": {
+          "unit": "centimeters",
+          "value": 7.8
+        },
+        "height": {
+          "unit": "centimeters",
+          "value": 15.5
+        },
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "size": [
+      {
+        "language_tag": "sv_SE",
+        "value": "150 ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "liquid_volume": [
+      {
+        "unit": "milliliters",
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "fc_shelf_life": [
+      {
+        "unit": "days",
+        "value": 900,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "part_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "contains_liquid_contents": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_package_weight": [
+      {
+        "unit": "kilograms",
+        "value": 0.18,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "manufacturer": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf & Henkel",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "recommended_browse_nodes": [
+      {
+        "value": "20638478031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      },
+      {
+        "value": "20638007031",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "model_number": [
+      {
+        "value": "2386539",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "supplier_declared_dg_hz_regulation": [
+      {
+        "value": "not_applicable",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "is_heat_sensitive": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_benefit": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Utslätande",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "item_name": [
+      {
+        "language_tag": "sv_SE",
+        "value": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "list_price": [
+      {
+        "currency": "SEK",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_required": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "product_site_launch_date": [
+      {
+        "value": "2018-07-12T09:56:55.491Z",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "target_audience_keyword": [
+      {
+        "language_tag": "sv_SE",
+        "value": "unisex",
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "unit_count": [
+      {
+        "type": {
+          "language_tag": "sv_SE",
+          "value": "milliliter"
+        },
+        "value": 150,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ],
+    "batteries_included": [
+      {
+        "value": false,
+        "marketplace_id": "A2NODRKZP88ZB9"
+      }
+    ]
+  },
+  "images": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "images": [
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "MAIN",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT01",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/41jEfYm52eL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT02",
+          "link": "https://m.media-amazon.com/images/I/61LCD7S8obL.jpg",
+          "height": 2048,
+          "width": 1560
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL.jpg",
+          "height": 500,
+          "width": 381
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/41aLBETEbwL._SL75_.jpg",
+          "height": 75,
+          "width": 57
+        },
+        {
+          "variant": "PT03",
+          "link": "https://m.media-amazon.com/images/I/711wNpvvvUL.jpg",
+          "height": 2048,
+          "width": 1560
+        }
+      ]
+    }
+  ],
+  "productTypes": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "productType": "BODY_CARE_PRODUCT"
+    }
+  ],
+  "ranks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "salesRanks": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "ranks": [
+        {
+          "title": "Skönhet",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty",
+          "value": 6537,
+          "rank": 6537
+        },
+        {
+          "title": "Geler för hårstyling",
+          "link": "https://www.amazon.se/gp/bestsellers/beauty/20638478031",
+          "value": 73,
+          "rank": 73
+        }
+      ]
+    }
+  ],
+  "summaries": [
+    {
+      "marketplaceId": "A2NODRKZP88ZB9",
+      "brandName": "Got2B",
+      "browseNode": "20638478031",
+      "itemName": "Schwarzkopf Got2b Ultra Glued Styling Gel - 150ml",
+      "manufacturer": "Schwarzkopf & Henkel",
+      "modelNumber": "2386539",
+      "sizeName": "150 ml"
+    }
+  ]
+}
+Package dimensions and weight resolved: {
+  "packageLength": 5,
+  "packageWidth": 7.8,
+  "packageHeight": 15.5,
+  "packageWeight": 180
+}.
+
+

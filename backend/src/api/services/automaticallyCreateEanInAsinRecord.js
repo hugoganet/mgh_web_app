@@ -1,5 +1,5 @@
 const db = require('../models/index');
-const { logAndCollect } = require('../../integrations/sp_api/logs/logger');
+const { logAndCollect } = require('../../utils/logger');
 
 /**
  * @description This function creates an EAN in ASIN record in the database if it does not exist.

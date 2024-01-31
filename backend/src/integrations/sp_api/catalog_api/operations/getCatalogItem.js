@@ -1,5 +1,5 @@
 const { spApiInstance } = require('../../connection/spApiConnector');
-const { logAndCollect } = require('../../logs/logger');
+const { logAndCollect } = require('../../../../utils/logger');
 
 /**
  * Retrieves catalog item details for the specified ASIN and marketplace.

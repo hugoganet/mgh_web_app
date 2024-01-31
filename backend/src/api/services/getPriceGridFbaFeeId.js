@@ -1,5 +1,5 @@
 const db = require('../models');
-const { logAndCollect } = require('../../integrations/sp_api/logs/logger');
+const { logAndCollect } = require('../../utils/logger');
 
 /**
  * @function getPriceGridFbaFeeId

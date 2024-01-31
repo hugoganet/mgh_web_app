@@ -5,7 +5,7 @@ const {
 const {
   getCountryCodeFromMarketplaceId,
 } = require('../../utils/getCountryCodeFromMarketplaceId');
-const { logAndCollect } = require('../../integrations/sp_api/logs/logger');
+const { logAndCollect } = require('../../utils/logger');
 const { getProductCategoryRankId } = require('./getProductCategoryRankId');
 const { getProductTaxCategoryName } = require('./getProductTaxCategoryName');
 const {
@@ -17,6 +17,7 @@ const {
 const {
   automaticallyCreateFbaFeesRecord,
 } = require('./automaticallyCreateFbaFeesRecord');
+const { extractPackageDimensions } = require('./extractPackageDimensions');
 
 /**
  * @description This function creates an ASIN record in the database if it does not exist.
@@ -44,15 +45,27 @@ async function automaticallyCreateAsinRecord(
 
     if (similarAsin) {
       logMessage += `Found similar asin in ${similarAsin.countryCode} with asinId : ${similarAsin.asinId}\n`;
+    } else {
+      console.log("No similar asin found. Can't automatically create an ASIN");
+      logMessage += `No similar asin found. Can't automatically create an ASIN\n`;
+      return;
     }
 
     let catalogItem;
     try {
       catalogItem = await getCatalogItem(asin, marketplaceIds, createLog);
+      // logMessage += `Catalog item fetched successfully ${JSON.stringify(
+      //   catalogItem,
+      //   '',
+      //   2,
+      // )}.\n`;
     } catch (error) {
       logMessage += `Error fetching catalog item: ${error}\n`;
       throw new Error(`Error fetching catalog item: ${error}`);
     }
+    // Extract package dimensions and weight
+    const { packageLength, packageWidth, packageHeight, packageWeight } =
+      extractPackageDimensions(catalogItem, createLog);
 
     let salesRank = 0;
     if (catalogItem?.salesRanks?.[0]?.ranks?.[0]?.rank) {
@@ -60,11 +73,22 @@ async function automaticallyCreateAsinRecord(
     }
     logMessage += `Sales rank resolved: ${salesRank}\n`;
 
-    const productCategoryRankId = await getProductCategoryRankId(
-      similarAsin?.productCategoryId,
-      countryCode,
-      salesRank,
-    );
+    let productCategoryRankId;
+    if (
+      countryCode !== 'FR' ||
+      countryCode !== 'DE' ||
+      countryCode !== 'IT' ||
+      countryCode !== 'ES'
+    ) {
+      productCategoryRankId = null;
+    } else {
+      productCategoryRankId = await getProductCategoryRankId(
+        similarAsin?.productCategoryId,
+        countryCode,
+        salesRank,
+      );
+    }
+
     const productTaxCategoryName = await getProductTaxCategoryName(
       similarAsin?.productTaxCategoryId,
     );
@@ -91,7 +115,6 @@ async function automaticallyCreateAsinRecord(
         `Error mapping country code to marketplace domain: ${error}`,
       );
     }
-
     let urlAmazon;
     if (marketplaceDomain) {
       marketplaceDomain = marketplaceDomain.toLowerCase();
@@ -136,12 +159,13 @@ async function automaticallyCreateAsinRecord(
       }
       try {
         await automaticallyCreateFbaFeesRecord(
-          height,
-          width,
-          length,
-          weight,
-          newAsin.asinId,
-          createLog,
+          packageLength,
+          packageWidth,
+          packageHeight,
+          packageWeight,
+          newlyCreatedAsinId,
+          countryCode,
+          (createLog = false),
         );
         logMessage += `FBA fees record created successfully.\n`;
       } catch (error) {
@@ -169,6 +193,13 @@ module.exports = {
 };
 
 // Test with sample ASINs
-const asin = 'B005LH2FA0';
-const marketplaceIds = 'A1PA6795UKMFR9';
+// const asin = 'B005LH2FA0';
+// const marketplaceIds = 'A1PA6795UKMFR9'; // DE
+// const marketplaceIds = 'A1RKKUPIHCS9HS'; // ES
+// const marketplaceIds = 'A1F83G8C2ARO7P'; // UK
+const asin = 'B07DYYGK7V';
+const marketplaceIds = 'A2NODRKZP88ZB9'; // SE
+
+// const asin = 'B0CM25Y89L';
+// const marketplaceIds = 'A33AVAJ2PDY3EV'; // TR
 automaticallyCreateAsinRecord(asin, marketplaceIds, true);

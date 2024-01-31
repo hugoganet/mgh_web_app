@@ -1,0 +1,83 @@
+[2024-01-31T19:25:23.283Z] Starting automaticallyCreateAsinRecord for asin : B07DYYGK7V
+Country code resolved: SE
+Found similar asin in FR with asinId : 2757
+Overall error in automaticallyCreateAsinRecord: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:28:25.256Z] Starting automaticallyCreateAsinRecord for asin : B07DYYGK7V
+Country code resolved: SE
+Found similar asin in FR with asinId : 2757
+Overall error in automaticallyCreateAsinRecord: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:29:47.114Z] Starting automaticallyCreateAsinRecord for asin : B07DYYGK7V
+Country code resolved: SE
+Found similar asin in FR with asinId : 2757
+Overall error in automaticallyCreateAsinRecord: Error: Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:31:17.422Z] Starting automaticallyCreateAsinRecord for asin : B07DYYGK7V
+Country code resolved: SE
+Found similar asin in FR with asinId : 2757
+Overall error in automaticallyCreateAsinRecord: Error: Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:31:35.699Z] Starting automaticallyCreateAsinRecord for asin : B07DYYGK7V
+Country code resolved: SE
+Found similar asin in FR with asinId : 2757
+Overall error in automaticallyCreateAsinRecord: Error: Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:35:06.859Z] Starting automaticallyCreateAsinRecord for asin : B07DYYGK7V
+Country code resolved: SE
+Found similar asin in FR with asinId : 2757
+Overall error in automaticallyCreateAsinRecord: Error: Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:35:49.291Z] Starting automaticallyCreateAsinRecord for asin : B07DYYGK7V
+Country code resolved: SE
+Found similar asin in FR with asinId : 2757
+Overall error in automaticallyCreateAsinRecord: Error: Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:37:14.487Z] Starting automaticallyCreateAsinRecord for asin : B07DYYGK7V
+Country code resolved: SE
+Found similar asin in FR with asinId : 2757
+Overall error in automaticallyCreateAsinRecord: Error: Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:38:00.293Z] Starting automaticallyCreateAsinRecord for asin : B07DYYGK7V
+Country code resolved: SE
+Found similar asin in FR with asinId : 2757
+Overall error in automaticallyCreateAsinRecord: Error: Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:38:45.719Z] Starting automaticallyCreateAsinRecord for asin : B07DYYGK7V
+Country code resolved: SE
+Found similar asin in FR with asinId : 2757
+Overall error in automaticallyCreateAsinRecord: Error: Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:38:59.232Z] Starting automaticallyCreateAsinRecord for asin : B07DYYGK7V
+Country code resolved: SE
+Found similar asin in FR with asinId : 2757
+Overall error in automaticallyCreateAsinRecord: Error: Error extracting package dimensions: Error: Package length unit not supported: undefined
+
+
+[2024-01-31T19:47:30.522Z] Starting automaticallyCreateAsinRecord for asin : B07DYYGK7V
+Country code resolved: SE
+Found similar asin in FR with asinId : 2757
+Overall error in automaticallyCreateAsinRecord: ReferenceError: extractPackageDimensions is not defined
+
+
+[2024-01-31T19:47:45.619Z] Starting automaticallyCreateAsinRecord for asin : B07DYYGK7V
+Country code resolved: SE
+Found similar asin in FR with asinId : 2757
+Sales rank resolved: 6537
+ASIN record created successfully with id : 2925.
+EAN in ASIN record created successfully.
+Error automatically creating FBA fees record: ReferenceError: newlyCreatedAsinId is not defined
+Error creating ASIN record in the database: Error: Error automatically creating FBA fees record: ReferenceError: newlyCreatedAsinId is not defined
+Overall error in automaticallyCreateAsinRecord: Error: Error creating ASIN record in the database: Error: Error automatically creating FBA fees record: ReferenceError: newlyCreatedAsinId is not defined
+
+

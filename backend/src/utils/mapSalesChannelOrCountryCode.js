@@ -1,5 +1,5 @@
 const db = require('../api/models/index');
-const { logAndCollect } = require('../integrations/sp_api/logs/logger');
+const { logAndCollect } = require('../utils/logger');
 
 /**
  * Maps sales channel to country code or country code to marketplace domain.

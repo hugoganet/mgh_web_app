@@ -30,6 +30,7 @@ module.exports = sequelize => {
       },
       productCategoryId: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         references: {
           model: 'product_categories',
           key: 'product_category_id',
@@ -37,7 +38,7 @@ module.exports = sequelize => {
       },
       productCategoryRankId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'product_categories_ranks',
           key: 'product_category_rank_id',

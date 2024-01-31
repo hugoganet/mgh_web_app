@@ -1,7 +1,7 @@
 require('dotenv').config({ path: 'backend/.env' });
 const axios = require('axios');
 const crypto = require('crypto');
-const { logAndCollect } = require('../logs/logger');
+const { logAndCollect } = require('../../../utils/logger');
 
 /**
  * @class SpApiConnector
