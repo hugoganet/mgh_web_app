@@ -108,6 +108,7 @@ async function automaticallyCreateAsinRecord(
       marketplaceDomain = await mapSalesChannelOrCountryCode(
         countryCode,
         'countryCodeToMarketplaceDomain',
+        (createLog = false),
       );
     } catch (error) {
       logMessage += `Error mapping country code to marketplace domain: ${error}\n`;
@@ -147,7 +148,7 @@ async function automaticallyCreateAsinRecord(
           await automaticallyCreateEanInAsinRecord(
             similarAsin.asinId,
             newAsin.asinId,
-            createLog,
+            (createLog = false),
           );
         }
         logMessage += `EAN in ASIN record created successfully.\n`;

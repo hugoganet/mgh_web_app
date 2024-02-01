@@ -8,16 +8,10 @@ const { logAndCollect } = require('../../utils/logger');
  * @return {Object} - An object containing the package dimensions and weight.
  */
 function extractPackageDimensions(catalogItem, createLog = false) {
-  const dimensions = catalogItem.attributes.item_package_dimensions?.[0];
-  console.log(dimensions);
-  const weightData = catalogItem.attributes.item_package_weight?.[0];
-  console.log(weightData);
-  let logMessage = `Starting extractPackageDimensions for catalogItem : ${JSON.stringify(
-    catalogItem,
-    '',
-    2,
-  )}\n`;
+  let logMessage = `Starting extractPackageDimensions for ASIN: ${catalogItem.asin}\n`;
 
+  const dimensions = catalogItem.attributes.item_package_dimensions?.[0];
+  const weightData = catalogItem.attributes.item_package_weight?.[0];
   let packageLength;
   let packageWidth;
   let packageHeight;
