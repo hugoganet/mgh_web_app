@@ -98,7 +98,7 @@ async function automaticallyCreateAsinRecord(
       countryCode,
       (createLog = false),
     );
-    console.log(catalogItem?.batteries_required?.value);
+
     const asinRecord = {
       asin,
       countryCode,
@@ -111,8 +111,8 @@ async function automaticallyCreateAsinRecord(
       asinName: catalogItem.summaries[0].itemName,
       asinNumberOfActiveSku: 1,
       asinAverageUnitSoldPerDay: 1,
-      isBatteryRequired: false,
-      isHazmat: false,
+      isBatteryRequired: similarAsin?.isBatteryRequired,
+      isHazmat: similarAsin?.isHazmat,
     };
 
     try {
@@ -173,8 +173,14 @@ module.exports = {
 // const marketplaceIds = 'A1PA6795UKMFR9'; // DE
 // const marketplaceIds = 'A1RKKUPIHCS9HS'; // ES
 // const marketplaceIds = 'A1F83G8C2ARO7P'; // UK
-const asin = 'B07DYYGK7V';
-const marketplaceIds = 'A2NODRKZP88ZB9'; // SE
+
+// exemple Parrot DE
+const asin = 'B07HS6PBJX';
+const marketplaceIds = 'A1PA6795UKMFR9'; // DE
+
+// // exemple Schwarzkopf SE
+// const asin = 'B07DYYGK7V';
+// const marketplaceIds = 'A2NODRKZP88ZB9'; // SE
 
 // const asin = 'B0CM25Y89L';
 // const marketplaceIds = 'A33AVAJ2PDY3EV'; // TR
