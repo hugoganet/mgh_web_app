@@ -55,11 +55,11 @@ async function requestFbaInventoryReport(
     // );
 
     const reportDocumentId =
-      'amzn1.spdoc.1.4.eu.b2a04f6a-4f6b-4e5e-aeee-4358f249e382.TMJISGFM4QT0U.2651'; // FR
-    //  'amzn1.spdoc.1.4.eu.2b27c303-d7c0-41c9-abf9-6e62b656e19f.TY1M93LGOOVTG.2651'; // FR
-    // 'amzn1.spdoc.1.4.eu.fe1e84d2-982c-489a-800f-32f400dae70e.TE9Q2KN2IWU7W.2651'; // UK
-    // 'amzn1.spdoc.1.4.eu.f7b75d40-725b-48c2-bdf1-25c1d170fe1a.T1TJXQMEOP6F78.2651'; // PL
-    // 'amzn1.spdoc.1.4.eu.20bef5ad-10c1-4918-bd6f-176bb3aa2ab6.T3H33HZYPR8D01.2651'; // SE
+      // 'amzn1.spdoc.1.4.eu.f7b75d40-725b-48c2-bdf1-25c1d170fe1a.T1TJXQMEOP6F78.2651'; // PL
+      // 'amzn1.spdoc.1.4.eu.fe1e84d2-982c-489a-800f-32f400dae70e.TE9Q2KN2IWU7W.2651'; // UK
+      // 'amzn1.spdoc.1.4.eu.b2a04f6a-4f6b-4e5e-aeee-4358f249e382.TMJISGFM4QT0U.2651'; // FR
+      //  'amzn1.spdoc.1.4.eu.2b27c303-d7c0-41c9-abf9-6e62b656e19f.TY1M93LGOOVTG.2651'; // FR
+      'amzn1.spdoc.1.4.eu.20bef5ad-10c1-4918-bd6f-176bb3aa2ab6.T3H33HZYPR8D01.2651'; // SE
     // 'amzn1.spdoc.1.4.eu.676049ac-e8f9-482a-844b-cbbe8e669026.T23JVIUV5OOZBA.2651'; // BE
     // 'amzn1.spdoc.1.4.eu.9cb48e16-ccb9-404f-8b8f-7eee1fdb49a0.T3297N0K75JAE1.2651'; // NL
     // 'amzn1.spdoc.1.4.eu.b3576b9a-3942-4672-8516-f94fb3a3c426.T2M2KT4WLMZ2CG.2651'; // ES
@@ -100,7 +100,7 @@ async function requestFbaInventoryReport(
 module.exports = { requestFbaInventoryReport };
 
 requestFbaInventoryReport(
-  ['france'],
+  ['sweden'],
   'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
   null,
   null,

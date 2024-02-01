@@ -77,7 +77,9 @@ async function fetchAndProcessInventoryReport(
       .on('end', async () => {
         try {
           await Promise.all(processingPromises);
-          console.log('Inventory data processing completed');
+          console.log(
+            'Inventory data processing completed in fetchAndProcessInventoryReport.',
+          );
           logMessage += 'Inventory data processing completed successfully.\n';
           await seedSellingPriceHistory(createLog);
         } catch (error) {

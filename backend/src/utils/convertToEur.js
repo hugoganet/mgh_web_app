@@ -33,7 +33,6 @@ async function convertToEur(amount, currency, date) {
 
     // If an exchange rate is found, return the amount * exchangeRate
     if (exchangeRateRecord) {
-      console.log(amount * exchangeRateRecord.rateToEur);
       return amount * exchangeRateRecord.rateToEur;
     } else {
       throw new Error(`Exchange rate not found for ${currency} on ${date}`);

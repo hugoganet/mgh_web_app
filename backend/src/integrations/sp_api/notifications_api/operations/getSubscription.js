@@ -22,7 +22,7 @@ async function getSubscription(
       method,
       endpoint,
       queryParams,
-      {}, // Empty body for GET request
+      {},
       createLog,
       apiOperation,
       (isGrantless = false),
@@ -39,6 +39,6 @@ async function getSubscription(
 module.exports = { getSubscription };
 
 // Example usage
-const notificationType = 'ANY_OFFER_CHANGED';
-const payloadVersion = '1.0'; // Optional
+const notificationType = 'REPORT_PROCESSING_FINISHED';
+const payloadVersion = null;
 getSubscription(notificationType, payloadVersion, true);

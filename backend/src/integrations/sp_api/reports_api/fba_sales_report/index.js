@@ -38,21 +38,22 @@ async function requestFbaSalesReport(
   };
 
   try {
-    // Request report ID
-    const reportIdResponse = await createReport(config);
+    // // Request report ID
+    // const reportIdResponse = await createReport(config);
 
-    // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
-    await new Promise(resolve => setTimeout(resolve, 60000 * 2));
+    // // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
+    // await new Promise(resolve => setTimeout(resolve, 60000 * 2));
 
-    // Request report document ID
-    const reportDocumentId = await getReport(
-      reportIdResponse.reportId,
-      config.createLog,
-      config.reportType,
-    );
+    // // Request report document ID
+    // const reportDocumentId = await getReport(
+    //   reportIdResponse.reportId,
+    //   config.createLog,
+    //   config.reportType,
+    // );
 
-    // const reportDocumentId =
-    //   'amzn1.spdoc.1.4.eu.16c2a3bb-7246-484e-9fc7-b45e64bb3958.T198MMEP8AX7GM.2511';
+    const reportDocumentId =
+      //   'amzn1.spdoc.1.4.eu.16c2a3bb-7246-484e-9fc7-b45e64bb3958.T198MMEP8AX7GM.2511';
+      'amzn1.spdoc.1.4.eu.34ae866d-96fc-4a6c-bc48-15e9f890db00.T9FOQTE3NV954.2511';
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getReportDocument(
@@ -83,9 +84,9 @@ async function requestFbaSalesReport(
   }
 }
 requestFbaSalesReport(
-  ['france'],
+  ['france'], // this doesn't matter, the report is for all marketplaces
   'GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL',
-  '2023-01-01',
+  '2023-12-01',
   '2023-12-31',
 );
 

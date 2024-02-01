@@ -20,8 +20,8 @@ async function deleteSubscriptionById(
     const response = await spApiInstance.sendRequest(
       method,
       endpoint,
-      {}, // Empty queryParams for DELETE request
-      {}, // Empty body for DELETE request
+      {},
+      {},
       createLog,
       apiOperation,
       (isGrantless = true),
@@ -38,6 +38,6 @@ async function deleteSubscriptionById(
 module.exports = { deleteSubscriptionById };
 
 // Example usage
-const notificationType = 'ANY_OFFER_CHANGED';
-const subscriptionId = 'fb7fb667-38c2-41ee-b9d2-77b80b9039ce';
+const notificationType = 'REPORT_PROCESSING_FINISHED';
+const subscriptionId = '7fb53ffd-6d7c-40bb-87bb-82d32f4c714a';
 deleteSubscriptionById(notificationType, subscriptionId, true);

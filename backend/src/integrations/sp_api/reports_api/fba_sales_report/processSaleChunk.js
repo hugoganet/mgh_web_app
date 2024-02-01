@@ -70,20 +70,21 @@ async function processSalesChunk(chunk, reportDocumentId, createLog = false) {
     let skuRecord = await db.Sku.findOne({ where: { sku, countryCode } });
 
     if (!skuRecord) {
-      logMessage += `SKU record not found for ${sku} in ${countryCode}\n`;
+      logMessage += `SKU record not found for SKU: ${sku} on ${countryCode}, looking for similar SKU with another countryCode\n`;
       try {
-        logMessage += `Looking for similar SKU record for ${sku} not in ${countryCode}\n`;
         const similarSku = await db.Sku.findOne({
           where: {
             sku,
             countryCode: { [db.Sequelize.Op.ne]: countryCode },
           },
         });
-        logMessage += `Created new SKU record: ${sku} for ${countryCode}\n`;
         if (similarSku) {
+          logMessage += `Found similar SKU: ${similarSku.sku} on ${similarSku.countryCode}, copying acquisition costs\n`;
           skuAcquisitionCostExc = similarSku.skuAcquisitionCostExc;
           skuAcquisitionCostInc = similarSku.skuAcquisitionCostInc;
           skuAfnTotalQuantity = similarSku.skuAfnTotalQuantity;
+        } else {
+          logMessage += `No similar SKU found, exiting the script\n`;
         }
         // create new SKU record
         skuRecord = await db.Sku.create({
@@ -105,6 +106,11 @@ async function processSalesChunk(chunk, reportDocumentId, createLog = false) {
           skuRestockAlertQuantity: 1,
           skuIsTest: false,
         });
+        logMessage += `Created new SKU record: ${JSON.stringify(
+          skuRecord,
+          '',
+          2,
+        )}\n`;
       } catch (err) {
         logMessage += `Error finding similar SKU or creating new SKU: ${err}\n`;
         throw err; // rethrow the error to be caught by the outer try-catch

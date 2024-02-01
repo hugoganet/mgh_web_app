@@ -7,6 +7,7 @@ const {
 } = require('../../../../api/services/updateAfnQuantity.js');
 const { addFnskuToSku } = require('../../../../api/services/addFnskuToSku.js');
 const { logAndCollect } = require('../../../../utils/logger');
+const { convertToEur } = require('../../../../utils/convertToEur.js');
 
 /**
  * @async
@@ -35,19 +36,21 @@ async function processInventoryChunk(
     const fnsku = chunk['fnsku'];
     const skuAfnTotalQuantity = parseInt(chunk['afn-fulfillable-quantity'], 10);
     const skuAverageSellingPrice = parseFloat(chunk['your-price']);
+    const today = new Date().toISOString().split('T')[0]; // Results in "YYYY-MM-DD"
 
     let convertedSellingPrice = skuAverageSellingPrice;
     if (currencyCode !== 'EUR') {
       convertedSellingPrice = await convertToEur(
         skuAverageSellingPrice,
         currencyCode,
-        salesData.salesPurchaseDate,
+        today,
       );
     }
 
     let skuRecord = await db.Sku.findOne({ where: { sku, countryCode } });
 
     if (!skuRecord) {
+      logMessage += `SKU record not found for SKU: ${sku} on ${countryCode}, looking for similar SKU with another countryCode\n`;
       try {
         const similarSku = await db.Sku.findOne({
           where: {
@@ -55,34 +58,43 @@ async function processInventoryChunk(
             countryCode: { [db.Sequelize.Op.ne]: countryCode },
           },
         });
-        logMessage += `Created new SKU record: ${skuRecord.sku} for ${countryCode}\n`;
         if (similarSku) {
           skuAcquisitionCostExc = similarSku.skuAcquisitionCostExc;
           skuAcquisitionCostInc = similarSku.skuAcquisitionCostInc;
+          logMessage += `Found similar SKU: ${similarSku.sku} on ${similarSku.countryCode}, copying acquisition costs\n`;
+        } else {
+          logMessage += `No similar SKU found, exiting the script\n`;
+          return;
         }
+        // create new SKU record
+        skuRecord = await db.Sku.create({
+          sku,
+          countryCode,
+          fnsku: null,
+          skuAcquisitionCostExc,
+          skuAcquisitionCostInc,
+          skuAfnTotalQuantity,
+          skuAverageSellingPrice: convertedSellingPrice,
+          skuAverageNetMargin: null,
+          skuAverageNetMarginPercentage: null,
+          skuAverageReturnOnInvestmentRate: null,
+          skuAverageDailyReturnOnInvestmentRate: null,
+          isActive: true,
+          numberOfActiveDays: 1,
+          numberOfUnitSold: 0,
+          skuAverageUnitSoldPerDay: 0,
+          skuRestockAlertQuantity: 1,
+          skuIsTest: false,
+        });
+        logMessage += `Created new SKU record: ${JSON.stringify(
+          skuRecord,
+          '',
+          2,
+        )}\n`;
       } catch (err) {
         logMessage += `Error finding similar SKU or copying acquisition costs: ${err}\n`;
+        throw err;
       }
-      // create new SKU record
-      skuRecord = await db.Sku.create({
-        sku,
-        countryCode,
-        fnsku: null,
-        skuAcquisitionCostExc,
-        skuAcquisitionCostInc,
-        skuAfnTotalQuantity,
-        skuAverageSellingPrice: convertedSellingPrice,
-        skuAverageNetMargin: null,
-        skuAverageNetMarginPercentage: null,
-        skuAverageReturnOnInvestmentRate: null,
-        skuAverageDailyReturnOnInvestmentRate: null,
-        isActive: true,
-        numberOfActiveDays: 1,
-        numberOfUnitSold: 0,
-        skuAverageUnitSoldPerDay: salesData.salesSkuQuantity,
-        skuRestockAlertQuantity: 1,
-        skuIsTest: false,
-      });
     }
 
     const skuId = skuRecord.skuId;
@@ -143,10 +155,10 @@ async function processInventoryChunk(
   } catch (error) {
     console.error('Error processing inventory chunk:', error);
     logMessage += `Error processing inventory chunk: ${error}\n`;
-  }
-
-  if (createLog) {
-    logAndCollect(logMessage, 'ProcessInventoryChunk');
+  } finally {
+    if (createLog) {
+      logAndCollect(logMessage, 'processInventoryChunk');
+    }
   }
 }
 
