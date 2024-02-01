@@ -1,5 +1,5 @@
 const db = require('../../../../api/models/index');
-const { logAndCollect } = require('../../logs/logger.js');
+const { logAndCollect } = require('../../../../utils/logger');
 const { getFbaFeeType } = require('../../../../api/services/getFbaFeeType');
 const { getFbaFees } = require('../../../../api/services/getFbaFees');
 const {

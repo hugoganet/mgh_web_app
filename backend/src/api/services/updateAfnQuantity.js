@@ -1,5 +1,5 @@
 const db = require('../models/index');
-const { logAndCollect } = require('../../integrations/sp_api/logs/logger');
+const { logAndCollect } = require('../../utils/logger');
 
 /**
  * @description Updates the SKU's total AFN quantity based on the latest entry from AfnInventoryDailyUpdate.

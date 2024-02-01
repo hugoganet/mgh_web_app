@@ -38,21 +38,21 @@ async function requestFbaSalesReport(
   };
 
   try {
-    // // Request report ID
-    // const reportIdResponse = await createReport(config);
+    // Request report ID
+    const reportIdResponse = await createReport(config);
 
-    // // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
-    // await new Promise(resolve => setTimeout(resolve, 60000 * 2));
+    // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
+    await new Promise(resolve => setTimeout(resolve, 60000 * 2));
 
-    // // Request report document ID
-    // const reportDocumentId = await getReport(
-    //   reportIdResponse.reportId,
-    //   config.createLog,
-    //   config.reportType,
-    // );
+    // Request report document ID
+    const reportDocumentId = await getReport(
+      reportIdResponse.reportId,
+      config.createLog,
+      config.reportType,
+    );
 
-    const reportDocumentId =
-      'amzn1.spdoc.1.4.eu.16c2a3bb-7246-484e-9fc7-b45e64bb3958.T198MMEP8AX7GM.2511';
+    // const reportDocumentId =
+    //   'amzn1.spdoc.1.4.eu.16c2a3bb-7246-484e-9fc7-b45e64bb3958.T198MMEP8AX7GM.2511';
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getReportDocument(
@@ -61,14 +61,14 @@ async function requestFbaSalesReport(
       config.reportType,
     );
 
-    // downloadAndDecompressDocument(
-    //   documentUrl,
-    //   compressionAlgorithm,
-    //   reportType,
-    //   countryKeys,
-    //   config.dataStartTime,
-    //   config.dataEndTime,
-    // );
+    downloadAndDecompressDocument(
+      documentUrl,
+      compressionAlgorithm,
+      reportType,
+      countryKeys,
+      config.dataStartTime,
+      config.dataEndTime,
+    );
 
     // Fetch CSV data and process into database
     await fetchAndProcessSalesReport(
@@ -85,8 +85,8 @@ async function requestFbaSalesReport(
 requestFbaSalesReport(
   ['france'],
   'GET_AMAZON_FULFILLED_SHIPMENTS_DATA_GENERAL',
-  '2023-09-15',
-  '2023-10-15',
+  '2023-01-01',
+  '2023-12-31',
 );
 
 module.exports = { requestFbaSalesReport };

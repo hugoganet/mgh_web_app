@@ -6,7 +6,7 @@ const {
   updateAfnQuantity,
 } = require('../../../../api/services/updateAfnQuantity.js');
 const { addFnskuToSku } = require('../../../../api/services/addFnskuToSku.js');
-const { logAndCollect } = require('../../logs/logger.js');
+const { logAndCollect } = require('../../../../utils/logger');
 
 /**
  * @async

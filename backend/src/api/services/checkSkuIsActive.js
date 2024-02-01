@@ -1,5 +1,5 @@
 const db = require('../models/index');
-const { logAndCollect } = require('../../integrations/sp_api/logs/logger');
+const { logAndCollect } = require('../../utils/logger');
 
 /**
  * @description Checks if a SKU is active based on the latest afnInventoryDailyUpdate's afnFulfillableQuantity. Sets the SKU's isActive status in the Sku table accordingly.

@@ -1,4 +1,4 @@
-const { logAndCollect } = require('../sp_api/logs/logger');
+const { logAndCollect } = require('../../utils/logger');
 const db = require('../../api/models/index');
 
 /**

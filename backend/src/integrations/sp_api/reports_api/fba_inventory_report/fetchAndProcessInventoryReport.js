@@ -8,7 +8,7 @@ const {
 const { preProcessCsvRow } = require('../../preProcessCsvRow.js');
 const { processInventoryChunk } = require('./processInventoryChunk.js');
 const { seedSellingPriceHistory } = require('./seedSellingPricesHistory.js');
-const { logAndCollect } = require('../../logs/logger.js');
+const { logAndCollect } = require('../../../../utils/logger');
 
 /**
  * Fetches and processes a CSV file from a given URL.

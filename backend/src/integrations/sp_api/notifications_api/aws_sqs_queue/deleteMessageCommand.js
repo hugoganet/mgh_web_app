@@ -1,6 +1,6 @@
 require('dotenv').config({ path: 'backend/.env' });
 const { DeleteMessageCommand } = require('@aws-sdk/client-sqs');
-const { logAndCollect } = require('../../logs/logger');
+const { logAndCollect } = require('../../../../utils/logger');
 const queueURL = process.env.SQS_QUEUE_URL;
 
 /**

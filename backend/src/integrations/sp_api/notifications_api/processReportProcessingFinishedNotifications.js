@@ -8,7 +8,7 @@ const { getReport } = require('../reports_api/operations/getReport.js');
 const {
   getCountryNameFromMarketplaceId,
 } = require('../../../utils/getCountryNameFromMarketplaceId.js');
-const { logAndCollect } = require('../logs/logger.js');
+const { logAndCollect } = require('../../../utils/logger');
 const {
   deleteMessageCommand,
 } = require('./aws_sqs_queue/deleteMessageCommand.js');

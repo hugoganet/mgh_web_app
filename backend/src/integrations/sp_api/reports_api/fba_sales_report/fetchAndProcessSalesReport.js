@@ -6,7 +6,7 @@ const {
 } = require('../../chooseDecompressionStream.js');
 const { preProcessCsvRow } = require('../../preProcessCsvRow.js');
 const { processSalesChunk } = require('./processSaleChunk.js'); // New module for processing chunks
-const { logAndCollect } = require('../../logs/logger.js');
+const { logAndCollect } = require('../../../../utils/logger');
 
 /**
  * Fetches and processes a CSV file from a given URL.
