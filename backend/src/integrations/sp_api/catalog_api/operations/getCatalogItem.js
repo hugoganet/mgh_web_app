@@ -10,6 +10,7 @@ const { logAndCollect } = require('../../../../utils/logger');
  * @return {Promise<Object>} - The catalog item details.
  */
 async function getCatalogItem(asin, marketplaceIds, createLog = false) {
+  let logMessage = `Starting getCatalogItem for asin : ${asin}\n`;
   const includedData = [
     'attributes',
     'productTypes',
@@ -34,14 +35,22 @@ async function getCatalogItem(asin, marketplaceIds, createLog = false) {
       apiOperation,
       false,
     );
-
+    logMessage += `Catalog item fetched successfully ${JSON.stringify(
+      response.data,
+      '',
+      2,
+    )}.\n`;
     return response.data;
   } catch (error) {
     console.error(`Error in getCatalogItem: ${error}`);
     if (createLog) {
-      logAndCollect(`Error in getCatalogItem: ${error}`, apiOperation);
+      logAndCollect(logMessage, apiOperation);
     }
-    throw error;
+    throw new Error(`Error in getCatalogItem: ${error}`);
+  } finally {
+    if (createLog) {
+      logAndCollect(logMessage, apiOperation);
+    }
   }
 }
 
