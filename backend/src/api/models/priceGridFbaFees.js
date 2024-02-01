@@ -46,6 +46,10 @@ module.exports = sequelize => {
       fbaFeeEfn: {
         type: DataTypes.DECIMAL(10, 2),
       },
+      currencyCode: {
+        type: DataTypes.CHAR(3),
+        allowNull: false,
+      },
     },
     {
       sequelize,

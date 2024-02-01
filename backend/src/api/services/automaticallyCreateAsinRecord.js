@@ -134,16 +134,25 @@ async function automaticallyCreateAsinRecord(
         );
       }
       try {
-        await automaticallyCreateFbaFeesRecord(
-          packageLength,
-          packageWidth,
-          packageHeight,
-          packageWeight,
-          (newlyCreatedAsinId = newAsin.asinId),
-          countryCode,
-          (createLog = false),
-        );
-        logMessage += `FBA fees record created successfully.\n`;
+        if (
+          countryCode === 'FR' ||
+          countryCode === 'DE' ||
+          countryCode === 'IT' ||
+          countryCode === 'ES' ||
+          countryCode === 'NL' ||
+          countryCode === 'BE'
+        ) {
+          await automaticallyCreateFbaFeesRecord(
+            packageLength,
+            packageWidth,
+            packageHeight,
+            packageWeight,
+            (newlyCreatedAsinId = newAsin.asinId),
+            countryCode,
+            (createLog = false),
+          );
+          logMessage += `FBA fees record created successfully.\n`;
+        }
       } catch (error) {
         logMessage += `Error automatically creating FBA fees record: ${error}\n`;
         throw new Error(
