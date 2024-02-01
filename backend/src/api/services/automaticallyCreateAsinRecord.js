@@ -100,29 +100,11 @@ async function automaticallyCreateAsinRecord(
       },
     });
 
-    const urlImage = catalogItem.images[0].images[0].link;
-    const asinName = catalogItem.summaries[0].itemName;
-
-    let marketplaceDomain;
-    try {
-      marketplaceDomain = await mapSalesChannelOrCountryCode(
-        countryCode,
-        'countryCodeToMarketplaceDomain',
-        (createLog = false),
-      );
-    } catch (error) {
-      logMessage += `Error mapping country code to marketplace domain: ${error}\n`;
-      throw new Error(
-        `Error mapping country code to marketplace domain: ${error}`,
-      );
-    }
-    let urlAmazon;
-    if (marketplaceDomain) {
-      marketplaceDomain = marketplaceDomain.toLowerCase();
-      urlAmazon = `https://${marketplaceDomain}/dp/${asin}`;
-    } else {
-      logMessage += `Marketplace domain not found for country code ${countryCode}\n`;
-    }
+    const urlAmazon = await createUrlAmazon(
+      asin,
+      countryCode,
+      (createLog = false),
+    );
 
     const asinRecord = {
       asin,
@@ -132,8 +114,8 @@ async function automaticallyCreateAsinRecord(
       productTaxCategoryId: productTaxCategoryId?.productTaxCategoryId,
       asinPreparation: similarAsin?.asinPreparation,
       urlAmazon,
-      urlImage,
-      asinName,
+      urlImage: catalogItem.images[0].images[0].link,
+      asinName: catalogItem.summaries[0].itemName,
       asinNumberOfActiveSku: 1,
       asinAverageUnitSoldPerDay: 1,
       isBatteryRequired: false,
