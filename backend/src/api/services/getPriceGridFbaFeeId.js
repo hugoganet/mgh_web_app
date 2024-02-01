@@ -21,7 +21,7 @@ async function getPriceGridFbaFeeId(
   countryCode,
   createLog = false,
 ) {
-  let logMessage = `Getting FBA fee ID for package dimensions: ${packageLength}x${packageWidth}x${packageHeight} and weight: ${packageWeight} for country code: ${countryCode}\n`;
+  let logMessage = `Getting FBA fee ID for package dimensions : ${packageLength}(lenght) x ${packageWidth}(width) x ${packageHeight}(height) and weight: ${packageWeight} for country code: ${countryCode}\n`;
   try {
     // Fetch all FBA fee grid data for the given country code
     const fbaFeeData = await db.PriceGridFbaFee.findAll({
@@ -75,7 +75,7 @@ async function getPriceGridFbaFeeId(
     return null;
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'GetPriceGridFbaFeeId');
+      logAndCollect(logMessage, 'getPriceGridFbaFeeId');
     }
   }
 }

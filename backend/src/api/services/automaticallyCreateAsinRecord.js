@@ -93,11 +93,7 @@ async function automaticallyCreateAsinRecord(
       },
     });
 
-    const urlAmazon = await createUrlAmazon(
-      asin,
-      countryCode,
-      (createLog = false),
-    );
+    const urlAmazon = await createUrlAmazon(asin, countryCode, createLog);
 
     const asinRecord = {
       asin,
@@ -123,7 +119,7 @@ async function automaticallyCreateAsinRecord(
           await automaticallyCreateEanInAsinRecord(
             similarAsin.asinId,
             newAsin.asinId,
-            (createLog = false),
+            createLog,
           );
         }
         logMessage += `EAN in ASIN record created successfully.\n`;
@@ -134,14 +130,7 @@ async function automaticallyCreateAsinRecord(
         );
       }
       try {
-        if (
-          countryCode === 'FR' ||
-          countryCode === 'DE' ||
-          countryCode === 'IT' ||
-          countryCode === 'ES' ||
-          countryCode === 'NL' ||
-          countryCode === 'BE'
-        ) {
+        if (countryCode !== 'TR') {
           await automaticallyCreateFbaFeesRecord(
             packageLength,
             packageWidth,
@@ -149,7 +138,7 @@ async function automaticallyCreateAsinRecord(
             packageWeight,
             (newlyCreatedAsinId = newAsin.asinId),
             countryCode,
-            (createLog = false),
+            createLog,
           );
           logMessage += `FBA fees record created successfully.\n`;
         }
@@ -183,13 +172,13 @@ module.exports = {
 // const marketplaceIds = 'A1RKKUPIHCS9HS'; // ES
 // const marketplaceIds = 'A1F83G8C2ARO7P'; // UK
 
-// exemple Parrot DE
-const asin = 'B07HS6PBJX';
-const marketplaceIds = 'A1PA6795UKMFR9'; // DE
+// // exemple Parrot DE
+// const asin = 'B07HS6PBJX';
+// const marketplaceIds = 'A1PA6795UKMFR9'; // DE
 
-// // exemple Schwarzkopf SE
-// const asin = 'B07DYYGK7V';
-// const marketplaceIds = 'A2NODRKZP88ZB9'; // SE
+// exemple Schwarzkopf SE
+const asin = 'B07DYYGK7V';
+const marketplaceIds = 'A2NODRKZP88ZB9'; // SE
 
 // const asin = 'B0CM25Y89L';
 // const marketplaceIds = 'A33AVAJ2PDY3EV'; // TR

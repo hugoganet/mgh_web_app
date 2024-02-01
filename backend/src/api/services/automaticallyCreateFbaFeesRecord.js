@@ -31,6 +31,7 @@ async function automaticallyCreateFbaFeesRecord(
       packageHeight,
       packageWeight,
       countryCode,
+      createLog,
     );
     if (priceGridFbaFeeId !== null) {
       logMessage += `Successfully got priceGridFbaFeeId: ${priceGridFbaFeeId}\n`;
