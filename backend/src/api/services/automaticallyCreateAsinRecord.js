@@ -9,15 +9,13 @@ const { logAndCollect } = require('../../utils/logger');
 const { getProductCategoryRankId } = require('./getProductCategoryRankId');
 const { getProductTaxCategoryName } = require('./getProductTaxCategoryName');
 const {
-  mapSalesChannelOrCountryCode,
-} = require('../../utils/mapSalesChannelOrCountryCode');
-const {
   automaticallyCreateEanInAsinRecord,
 } = require('./automaticallyCreateEanInAsinRecord');
 const {
   automaticallyCreateFbaFeesRecord,
 } = require('./automaticallyCreateFbaFeesRecord');
 const { extractPackageDimensions } = require('./extractPackageDimensions');
+const { createUrlAmazon } = require('./createUrlAmazon');
 
 /**
  * @description This function creates an ASIN record in the database if it does not exist.
@@ -54,16 +52,11 @@ async function automaticallyCreateAsinRecord(
     let catalogItem;
     try {
       catalogItem = await getCatalogItem(asin, marketplaceIds, createLog);
-      // logMessage += `Catalog item fetched successfully ${JSON.stringify(
-      //   catalogItem,
-      //   '',
-      //   2,
-      // )}.\n`;
     } catch (error) {
       logMessage += `Error fetching catalog item: ${error}\n`;
       throw new Error(`Error fetching catalog item: ${error}`);
     }
-    // Extract package dimensions and weight
+
     const { packageLength, packageWidth, packageHeight, packageWeight } =
       extractPackageDimensions(catalogItem, createLog);
 
@@ -105,7 +98,7 @@ async function automaticallyCreateAsinRecord(
       countryCode,
       (createLog = false),
     );
-
+    console.log(catalogItem?.batteries_required?.value);
     const asinRecord = {
       asin,
       countryCode,

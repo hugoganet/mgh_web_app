@@ -1,6 +1,6 @@
 const {
   mapSalesChannelOrCountryCode,
-} = require('./mapSalesChannelOrCountryCode');
+} = require('../../utils/mapSalesChannelOrCountryCode');
 
 /**
  * @description Creates an Amazon URL based on the ASIN and country code
