@@ -2,32 +2,31 @@ const fs = require('fs');
 const path = require('path');
 
 /**
- * Logs a message to a specific API log file based on report type and local timestamp.
+ * Logs a message to a specific API log file within a date-specific directory.
  *
  * @param {string} message - The message to log.
  * @param {string} reportType - The report type, used in naming the log file.
  */
 function logAndCollect(message, reportType) {
-  // Get the current time
   const now = new Date();
-  const offset = now.getTimezoneOffset() * 60000; // Convert offset to milliseconds
+  const offset = now.getTimezoneOffset() * 60000;
   const localISOTime = new Date(now - offset).toISOString();
 
-  // Extracting the date for the log file name
   const formattedDate = localISOTime.slice(0, 10).replace(/-/g, '');
 
+  const logDirectoryName = path.join(
+    '/Users/hugoganet/Code/MGHWebApp/mgh_web_app/backend/src/integrations/sp_api/logs',
+    formattedDate,
+  );
   const logFileName = `log_${reportType}_${formattedDate}.txt`;
-  const logFilePath = path.join(__dirname, logFileName);
+  const logFilePath = path.join(logDirectoryName, logFileName);
 
-  // Ensure the 'logs' directory exists
-  if (!fs.existsSync(path.dirname(logFilePath))) {
-    fs.mkdirSync(path.dirname(logFilePath), { recursive: true });
+  if (!fs.existsSync(logDirectoryName)) {
+    fs.mkdirSync(logDirectoryName, { recursive: true });
   }
 
-  // Formatted log message with ISO-like date
   const logMessage = `[${localISOTime}] ${message}\n\n`;
 
-  // Append the message to the log file
   fs.appendFileSync(logFilePath, logMessage, 'utf8');
 }
 

@@ -163,7 +163,7 @@ async function automaticallyCreateAsinRecord(
           packageWidth,
           packageHeight,
           packageWeight,
-          newlyCreatedAsinId,
+          (newlyCreatedAsinId = newAsin.asinId),
           countryCode,
           (createLog = false),
         );
