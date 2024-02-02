@@ -3,8 +3,8 @@ const {
   getCatalogItem,
 } = require('../../integrations/sp_api/catalog_api/operations/getCatalogItem');
 const {
-  getCountryCodeFromMarketplaceId,
-} = require('../../utils/getCountryCodeFromMarketplaceId');
+  convertMarketplaceIdentifier,
+} = require('../../utils/convertMarketplaceIdentifier');
 const { logAndCollect } = require('../../utils/logger');
 const { getProductCategoryRankId } = require('./getProductCategoryRankId');
 const { getProductTaxCategoryName } = require('./getProductTaxCategoryName');
@@ -31,7 +31,10 @@ async function automaticallyCreateAsinRecord(
 ) {
   let logMessage = `Starting automaticallyCreateAsinRecord for asin : ${asin}\n`;
   try {
-    const countryCode = getCountryCodeFromMarketplaceId(marketplaceIds);
+    const countryCode = convertMarketplaceIdentifier(
+      marketplaceIds,
+      'marketplaceIdToCountryCode',
+    );
     logMessage += `Country code resolved: ${countryCode}\n`;
 
     const similarAsin = await db.Asin.findOne({
