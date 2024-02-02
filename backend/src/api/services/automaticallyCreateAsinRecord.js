@@ -18,25 +18,71 @@ const { extractPackageDimensions } = require('./extractPackageDimensions');
 const { createUrlAmazon } = require('./createUrlAmazon');
 
 /**
- * @description This function creates an ASIN record in the database if it does not exist.
- * @function automaticallyCreateAsinRecord
- * @param {string} asin - ASIN to create a record for
- * @param {string} marketplaceIds - Marketplace ID to create a record for
- * @param {boolean} createLog - Whether to create a log for this operation
+ * Creates an ASIN record in the database if it does not exist.
+ * @async
+ * @param {string} asin - The ASIN to create a record for.
+ * @param {string} [marketplaceId] - Optional Marketplace ID associated with the ASIN.
+ * @param {string} [countryCode] - Optional country code associated with the ASIN.
+ * @param {boolean} createLog - Whether to create a log for this operation.
+ * @throws Will throw an error if neither marketplaceId nor countryCode is provided.
  */
 async function automaticallyCreateAsinRecord(
   asin,
-  marketplaceIds,
+  marketplaceId = null,
+  countryCode = null,
   createLog = false,
 ) {
   let logMessage = `Starting automaticallyCreateAsinRecord for asin : ${asin}\n`;
-  try {
-    const countryCode = convertMarketplaceIdentifier(
-      marketplaceIds,
+
+  // If neither marketplaceId nor countryCode is provided, quit the function and log an error.
+  if (!marketplaceId && !countryCode) {
+    const errorMessage =
+      'Error: Both marketplaceId and countryCode cannot be null.';
+    logMessage += errorMessage + '\n';
+    console.error(errorMessage);
+    if (createLog) {
+      logAndCollect(logMessage, 'automaticallyCreateAsinRecord');
+    }
+    return;
+  }
+
+  // If marketplaceId is provided, get the countryCode.
+  if (!countryCode && marketplaceId) {
+    countryCode = convertMarketplaceIdentifier(
+      marketplaceId,
       'marketplaceIdToCountryCode',
     );
-    logMessage += `Country code resolved: ${countryCode}\n`;
+    if (!countryCode) {
+      const errorMessage = `Could not find country code for marketplaceId: ${marketplaceId}`;
+      logMessage += errorMessage + '\n';
+      console.error(errorMessage);
+      if (createLog) {
+        logAndCollect(logMessage, 'automaticallyCreateAsinRecord');
+      }
+      throw new Error(errorMessage);
+    }
+    logMessage += `Resolved country code from marketplaceId ${marketplaceId}: ${countryCode}\n`;
+  } // If countryCode is provided, get the marketplaceId.
+  else if (!marketplaceId && countryCode) {
+    marketplaceId = convertMarketplaceIdentifier(
+      countryCode,
+      'countryCodeToMarketplaceId',
+    );
+    if (!marketplaceId) {
+      const errorMessage = `Could not find marketplaceId for country code: ${countryCode}`;
+      logMessage += errorMessage + '\n';
+      console.error(errorMessage);
+      if (createLog) {
+        logAndCollect(logMessage, 'automaticallyCreateAsinRecord');
+      }
+      throw new Error(errorMessage);
+    }
+    logMessage += `Resolved marketplaceId from country code ${countryCode}: ${marketplaceId}\n`;
+  }
 
+  try {
+    // console.log(countryCode);
+    console.log(marketplaceId);
     const similarAsin = await db.Asin.findOne({
       where: {
         asin,
@@ -54,7 +100,7 @@ async function automaticallyCreateAsinRecord(
 
     let catalogItem;
     try {
-      catalogItem = await getCatalogItem(asin, marketplaceIds, createLog);
+      catalogItem = await getCatalogItem(asin, marketplaceId, createLog);
     } catch (error) {
       logMessage += `Error fetching catalog item: ${error}\n`;
       throw new Error(`Error fetching catalog item: ${error}`);
@@ -171,18 +217,20 @@ module.exports = {
 
 // Test with sample ASINs
 // const asin = 'B005LH2FA0';
-// const marketplaceIds = 'A1PA6795UKMFR9'; // DE
-// const marketplaceIds = 'A1RKKUPIHCS9HS'; // ES
-// const marketplaceIds = 'A1F83G8C2ARO7P'; // UK
+// const marketplaceId = 'A1PA6795UKMFR9'; // DE
+// const marketplaceId = 'A1RKKUPIHCS9HS'; // ES
+// const marketplaceId = 'A1F83G8C2ARO7P'; // UK
 
 // // exemple Parrot DE
 // const asin = 'B07HS6PBJX';
-// const marketplaceIds = 'A1PA6795UKMFR9'; // DE
+// const marketplaceId = 'A1PA6795UKMFR9'; // DE
 
 // exemple Schwarzkopf SE
 const asin = 'B07DYYGK7V';
-const marketplaceIds = 'A2NODRKZP88ZB9'; // SE
+const countryCode = 'SE';
+const marketplaceId = null; // SE
+// const marketplaceId = 'A2NODRKZP88ZB9'; // SE
 
 // const asin = 'B0CM25Y89L';
-// const marketplaceIds = 'A33AVAJ2PDY3EV'; // TR
-automaticallyCreateAsinRecord(asin, marketplaceIds, true);
+// const marketplaceId = 'A33AVAJ2PDY3EV'; // TR
+automaticallyCreateAsinRecord(asin, marketplaceId, countryCode, true);
