@@ -27,7 +27,7 @@ async function fetchAndProcessInventoryReport(
   reportDocumentId,
   countryKeys,
   reportType,
-  createLog = false,
+  createLog,
 ) {
   const countryCode = marketplaces[countryKeys[0]].countryCode;
   const currencyCode = marketplaces[countryKeys[0]].currencyCode;
@@ -69,7 +69,6 @@ async function fetchAndProcessInventoryReport(
             reportDocumentId,
             countryCode,
             currencyCode,
-            reportType,
             createLog,
           ),
         );
@@ -80,23 +79,33 @@ async function fetchAndProcessInventoryReport(
           console.log(
             'Inventory data processing completed in fetchAndProcessInventoryReport.',
           );
-          logMessage += 'Inventory data processing completed successfully.\n';
+          logMessage +=
+            'Inventory data processing completed successfully in fetchAndProcessInventoryReport.\n';
           await seedSellingPriceHistory(createLog);
         } catch (error) {
-          logMessage += `Error processing inventory data stream: ${error}\n`;
-          console.error('Error processing inventory data stream:', error);
+          logMessage += `Error processing inventory data stream in fetchAndProcessInventoryReport: ${error}\n`;
+          console.error(
+            'Error processing inventory data stream in fetchAndProcessInventoryReport:',
+            error,
+          );
         }
       })
       .on('error', error => {
-        logMessage += `Error processing inventory data stream: ${error}\n`;
-        console.error('Error processing inventory data stream:', error);
+        logMessage += `Error processing inventory data stream in fetchAndProcessInventoryReport: ${error}\n`;
+        console.error(
+          'Error processing inventory data stream in fetchAndProcessInventoryReport:',
+          error,
+        );
       });
   } catch (error) {
-    logMessage += `Error fetching inventory data: ${error}\n`;
-    console.error('Error fetching inventory data:', error);
+    logMessage += `Error fetching inventory data in fetchAndProcessInventoryReport: ${error}\n`;
+    console.error(
+      'Error fetching inventory data in fetchAndProcessInventoryReport:',
+      error,
+    );
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'FetchAndProcessInventoryReport');
+      logAndCollect(logMessage, 'fetchAndProcessInventoryReport');
     }
   }
 }

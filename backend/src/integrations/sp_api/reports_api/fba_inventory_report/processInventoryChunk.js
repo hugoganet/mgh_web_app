@@ -8,6 +8,9 @@ const {
 const { addFnskuToSku } = require('../../../../api/services/addFnskuToSku.js');
 const { logAndCollect } = require('../../../../utils/logger');
 const { convertToEur } = require('../../../../utils/convertToEur.js');
+const {
+  automaticallyCreateAsinRecord,
+} = require('../../../../api/services/automaticallyCreateAsinRecord.js');
 
 /**
  * @async
@@ -28,12 +31,13 @@ async function processInventoryChunk(
   reportDocumentId,
   countryCode,
   currencyCode,
-  createLog = false,
+  createLog,
 ) {
   let logMessage = `Processing inventory chunk for SKU: ${chunk['sku']} on ${countryCode}\n`;
   try {
     const sku = chunk['sku'];
     const fnsku = chunk['fnsku'];
+    const asin = chunk['asin'];
     const skuAfnTotalQuantity = parseInt(chunk['afn-fulfillable-quantity'], 10);
     const skuAverageSellingPrice = parseFloat(chunk['your-price']);
     const today = new Date().toISOString().split('T')[0]; // Results in "YYYY-MM-DD"
@@ -94,6 +98,29 @@ async function processInventoryChunk(
       } catch (err) {
         logMessage += `Error finding similar SKU or copying acquisition costs: ${err}\n`;
         throw err;
+      }
+
+      // If the SKU record has just been created, check if an ASIN exist for this marketplace.
+      let associatedAsin = await db.Asin.findOne({
+        where: {
+          asin,
+          countryCode,
+        },
+      });
+      if (!associatedAsin) {
+        try {
+          logMessage += `No associated ASIN found for ${asin} in ${countryCode}, creating one\n`;
+          associatedAsin = automaticallyCreateAsinRecord(
+            asin,
+            (marketplaceId = null),
+            countryCode,
+            createLog,
+          );
+        } catch (err) {
+          logMessage += `Error creating associated ASIN: ${err}\n`;
+          throw err;
+        }
+        // TODO : create AsinSku record
       }
     }
 

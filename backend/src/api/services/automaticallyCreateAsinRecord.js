@@ -81,8 +81,6 @@ async function automaticallyCreateAsinRecord(
   }
 
   try {
-    // console.log(countryCode);
-    console.log(marketplaceId);
     const similarAsin = await db.Asin.findOne({
       where: {
         asin,
@@ -225,12 +223,12 @@ module.exports = {
 // const asin = 'B07HS6PBJX';
 // const marketplaceId = 'A1PA6795UKMFR9'; // DE
 
-// exemple Schwarzkopf SE
-const asin = 'B07DYYGK7V';
-const countryCode = 'SE';
-const marketplaceId = null; // SE
+// // exemple Schwarzkopf SE
+// const asin = 'B07DYYGK7V';
+// const countryCode = 'SE';
+// const marketplaceId = null; // SE
 // const marketplaceId = 'A2NODRKZP88ZB9'; // SE
 
 // const asin = 'B0CM25Y89L';
 // const marketplaceId = 'A33AVAJ2PDY3EV'; // TR
-automaticallyCreateAsinRecord(asin, marketplaceId, countryCode, true);
+// automaticallyCreateAsinRecord(asin, marketplaceId, countryCode, true);

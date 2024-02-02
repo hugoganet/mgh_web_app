@@ -5,11 +5,11 @@ const { logAndCollect } = require('../../../../utils/logger');
  * Retrieves catalog item details for the specified ASIN and marketplace.
  * @async
  * @param {string} asin - The ASIN of the catalog item.
- * @param {string} marketplaceIds - The marketplace identifier.
+ * @param {string} marketplaceId - The marketplace identifier.
  * @param {boolean} createLog - Whether to create a log of the process.
  * @return {Promise<Object>} - The catalog item details.
  */
-async function getCatalogItem(asin, marketplaceIds, createLog = false) {
+async function getCatalogItem(asin, marketplaceId, createLog = false) {
   let logMessage = `Starting getCatalogItem for asin : ${asin}\n`;
   const includedData = [
     'attributes',
@@ -21,7 +21,7 @@ async function getCatalogItem(asin, marketplaceIds, createLog = false) {
   const apiOperation = 'getCatalogItem';
   const endpoint = `/catalog/2020-12-01/items/${asin}`;
   const queryParams = {
-    marketplaceIds: marketplaceIds,
+    marketplaceIds: marketplaceId,
     includedData: includedData.join(','),
   };
 
@@ -43,9 +43,8 @@ async function getCatalogItem(asin, marketplaceIds, createLog = false) {
     return response.data;
   } catch (error) {
     console.error(`Error in getCatalogItem: ${error}`);
-    if (createLog) {
-      logAndCollect(logMessage, apiOperation);
-    }
+    logMessage += `Error in getCatalogItem: ${error}\n`;
+    logMessage += response;
     throw new Error(`Error in getCatalogItem: ${error}`);
   } finally {
     if (createLog) {
