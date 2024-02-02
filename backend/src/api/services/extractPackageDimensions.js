@@ -32,10 +32,19 @@ function extractPackageDimensions(catalogItem, createLog = false) {
       packageHeight = dimensions?.height?.value;
     }
 
-    if (weightData?.unit !== 'kilograms' && weightData?.unit !== 'grams') {
+    if (
+      weightData?.unit !== 'kilograms' &&
+      weightData?.unit !== 'grams' &&
+      weightData?.unit !== 'pounds' &&
+      weightData?.unit !== 'ounces'
+    ) {
       throw new Error(`Package weight unit not supported: ${weightData?.unit}`);
     } else if (weightData?.unit === 'kilograms') {
       packageWeight = weightData?.value * 1000;
+    } else if (weightData?.unit === 'pounds') {
+      packageWeight = weightData?.value * 453.592;
+    } else if (weightData?.unit === 'ounces') {
+      packageWeight = weightData?.value * 28.3495;
     } else {
       packageWeight = weightData?.value;
     }
