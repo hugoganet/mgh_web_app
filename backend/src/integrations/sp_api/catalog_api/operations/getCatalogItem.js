@@ -44,7 +44,6 @@ async function getCatalogItem(asin, marketplaceId, createLog = false) {
   } catch (error) {
     console.error(`Error in getCatalogItem: ${error}`);
     logMessage += `Error in getCatalogItem: ${error}\n`;
-    logMessage += response;
     throw new Error(`Error in getCatalogItem: ${error}`);
   } finally {
     if (createLog) {

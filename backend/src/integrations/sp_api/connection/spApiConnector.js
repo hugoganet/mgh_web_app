@@ -2,6 +2,7 @@ require('dotenv').config({ path: 'backend/.env' });
 const axios = require('axios');
 const crypto = require('crypto');
 const { logAndCollect } = require('../../../utils/logger');
+const Bottleneck = require('bottleneck');
 
 /**
  * @class SpApiConnector
@@ -20,6 +21,14 @@ class SpApiConnector {
     this.refreshToken = refreshToken;
     this.accessToken = null;
     this.tokenExpiration = null;
+
+    // Initialize a global Bottleneck Group manager
+    this.limiterGroup = new Bottleneck.Group({
+      // Default settings for all limiters created by this group
+      maxConcurrent: 1, // Adjust based on the general case if needed
+      highWater: 0, // Disable pre-emptive queueing
+      strategy: Bottleneck.strategy.LEAK, // Strategy to handle overflowing requests
+    });
   }
 
   /**
@@ -221,176 +230,6 @@ class SpApiConnector {
   hmac(key, message) {
     return crypto.createHmac('sha256', key).update(message).digest();
   }
-
-  /**
-   * @description Sends a request to the Amazon Selling Partner API with the specified method, path, and parameters.
-   * This method initiates the request process and handles any necessary retries in case of rate limiting.
-   *
-   * @async
-   * @function sendRequest
-   * @param {string} method - The HTTP method for the request (e.g., 'GET', 'POST').
-   * @param {string} path - The API path for the request.
-   * @param {Object} [queryParams={}] - Query parameters to be appended to the URL.
-   * @param {Object} [body={}] - The request body, relevant for POST and PUT methods.
-   * @param {boolean} createLog - Whether to create a log of the request and response.
-   * @param {string} apiOperation - Description of the API operation being performed.
-   * @param {boolean} [isGrantless=false] - Indicates whether the request is for a grantless operation.
-   * @return {Promise<Object>} - A promise that resolves to the response from the API call.
-   * @throws {Error} - Throws an error if the request fails after the maximum number of retries.
-   */
-  async sendRequest(
-    method,
-    path,
-    queryParams = {},
-    body = {},
-    createLog,
-    apiOperation,
-    isGrantless = false,
-  ) {
-    // Call the private method with an initial retryCount of 0
-    return this._sendRequestWithRetry(
-      method,
-      path,
-      queryParams,
-      body,
-      createLog,
-      apiOperation,
-      isGrantless,
-      0,
-    );
-  }
-
-  /**
-   * Sends a request to the Amazon Selling Partner API with exponential backoff for rate limiting.
-   * @async
-   * @param {string} method - HTTP method (GET, POST, etc.).
-   * @param {string} path - API endpoint path.
-   * @param {Object} [queryParams={}] - Query parameters.
-   * @param {Object} [body={}] - Request body for POST/PUT methods.
-   * @param {boolean} createLog - Flag to indicate if the request and response should be logged.
-   * @param {string} apiOperation - Identifier for the API operation.
-   * @param {boolean} [isGrantless=false] - Flag for grantless operations.
-   * @param {number} [retryCount=0] - Current retry attempt count.
-   * @return {Promise<Object>} Response from the API call.
-   */
-  async _sendRequestWithRetry(
-    method,
-    path,
-    queryParams,
-    body,
-    createLog,
-    apiOperation,
-    isGrantless,
-    retryCount,
-  ) {
-    let logMessage = '';
-    try {
-      const accessToken = isGrantless
-        ? await this.getGrantlessOperationToken()
-        : await this.getLWAToken();
-      const date = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '');
-
-      let queryString = '';
-      if (Object.keys(queryParams).length > 0) {
-        queryString =
-          '?' +
-          Object.entries(queryParams)
-            .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-            .join('&');
-      }
-
-      const fullUrl = `https://sellingpartnerapi-eu.amazon.com${path}${queryString}`;
-      const headers = this.createRequestHeaders(
-        method,
-        fullUrl,
-        queryString,
-        accessToken,
-        date,
-      );
-
-      logMessage +=
-        'Request Details:\n' +
-        JSON.stringify(
-          {
-            apiOperation,
-            URL: fullUrl,
-            Method: method,
-            Headers: headers,
-            QueryParams: queryParams,
-            Body: body,
-          },
-          null,
-          2,
-        );
-
-      let axiosResponse;
-      if (method === 'GET') {
-        axiosResponse = await axios.get(fullUrl, { headers });
-      } else {
-        axiosResponse = await axios[method.toLowerCase()](fullUrl, body, {
-          headers,
-        });
-      }
-
-      logMessage +=
-        '\n\nResponse Details:\n' +
-        JSON.stringify(
-          {
-            Data: axiosResponse.data,
-            Status: axiosResponse.status,
-            Headers: axiosResponse.headers,
-          },
-          null,
-          2,
-        );
-
-      if (createLog) {
-        logAndCollect(logMessage, apiOperation);
-      }
-      return axiosResponse;
-    } catch (error) {
-      if (error.response && error.response.status === 429 && retryCount < 5) {
-        const delay = Math.pow(2, retryCount) * 1000;
-        await new Promise(resolve => setTimeout(resolve, delay));
-        return this._sendRequestWithRetry(
-          method,
-          path,
-          queryParams,
-          body,
-          createLog,
-          apiOperation,
-          isGrantless,
-          retryCount + 1,
-        );
-      } else {
-        logMessage += '\n\nError in sendRequest: ' + error.toString();
-        if (error.response) {
-          logMessage +=
-            '\nResponse Error Details:\n' +
-            JSON.stringify(
-              {
-                Data: error.response.data,
-                Status: error.response.status,
-                Headers: error.response.headers,
-              },
-              null,
-              2,
-            );
-        } else if (error.request) {
-          logMessage +=
-            '\nRequest Error Details:\n' +
-            JSON.stringify(error.request, null, 2);
-        } else {
-          logMessage += '\nSetup Error: ' + error.message;
-        }
-        if (createLog) {
-          logAndCollect(logMessage, apiOperation);
-        }
-        throw error;
-      }
-    }
-  }
-
   /**
    * Creates headers for the request.
    * @param {string} method - The HTTP method for the request.
@@ -434,6 +273,181 @@ class SpApiConnector {
         signature,
       ),
     };
+  }
+
+  /**
+   * @description Sends a request to the Amazon Selling Partner API with dynamic rate limiting.
+   * @async
+   * @param {string} method - The HTTP method for the request.
+   * @param {string} path - The API path for the request.
+   * @param {Object} queryParams - Query parameters.
+   * @param {Object} body - The request body.
+   * @param {boolean} createLog - Whether to log the request and response.
+   * @param {string} apiOperation - The API operation being performed.
+   * @param {boolean} isGrantless - Indicates grantless operation.
+   * @param {Object} rateLimitConfig - Configuration for rate limiting { rate: Number, burst: Number }.
+   * @return {Promise<Object>} - The API response.
+   */
+  async sendRequest(
+    method,
+    path,
+    queryParams = {},
+    body = {},
+    createLog,
+    apiOperation,
+    isGrantless = false,
+    rateLimitConfig = { rate: 1, burst: 5 },
+  ) {
+    // Initialize or retrieve a limiter for the specific API operation with its Rate and Burst values
+    const limiter = this.limiterGroup.key(`${apiOperation}`, () => ({
+      reservoir: rateLimitConfig.burst, // Number of tokens in the reservoir
+      reservoirRefreshAmount: rateLimitConfig.burst, // Max tokens to regenerate to
+      reservoirRefreshInterval: (1000 / rateLimitConfig.rate) * 1000, // Interval for regenerating tokens in ms
+    }));
+
+    // Schedule the request through the limiter
+    return limiter.schedule(() =>
+      this._sendRequestWithRetry(
+        method,
+        path,
+        queryParams,
+        body,
+        createLog,
+        apiOperation,
+        isGrantless,
+        0, // Initial retry count
+      ),
+    );
+  }
+
+  /**
+   * Sends a request to the Amazon Selling Partner API with exponential backoff for rate limiting.
+   * @async
+   * @param {string} method - HTTP method (GET, POST, etc.).
+   * @param {string} path - API endpoint path.
+   * @param {Object} [queryParams={}] - Query parameters.
+   * @param {Object} [body={}] - Request body for POST/PUT methods.
+   * @param {boolean} createLog - Flag to indicate if the request and response should be logged.
+   * @param {string} apiOperation - Identifier for the API operation.
+   * @param {boolean} [isGrantless=false] - Flag for grantless operations.
+   * @param {number} [retryCount=0] - Current retry attempt count.
+   * @param {Object} [rateLimitConfig={ rate: 1, burst: 5 }] - Configuration for rate limiting.
+   * @return {Promise<Object>} Response from the API call.
+   */
+  async _sendRequestWithRetry(
+    method,
+    path,
+    queryParams,
+    body,
+    createLog,
+    apiOperation,
+    isGrantless,
+    retryCount,
+  ) {
+    let logMessage = '';
+    try {
+      // Check if access token is needed and fetch it
+      const accessToken = isGrantless
+        ? await this.getGrantlessOperationToken()
+        : await this.getLWAToken();
+      const date = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '');
+
+      // Prepare the full URL and headers for the request
+      const queryString =
+        Object.keys(queryParams).length > 0
+          ? '?' +
+            Object.entries(queryParams)
+              .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+              .join('&')
+          : '';
+      const fullUrl = `https://sellingpartnerapi-eu.amazon.com${path}${queryString}`;
+      const headers = this.createRequestHeaders(
+        method,
+        fullUrl,
+        queryString,
+        accessToken,
+        date,
+      );
+
+      // Log the request details
+      logMessage +=
+        'Request Details:\n' +
+        JSON.stringify(
+          {
+            apiOperation,
+            URL: fullUrl,
+            Method: method,
+            Headers: headers,
+            QueryParams: queryParams,
+            Body: body,
+          },
+          null,
+          2,
+        );
+
+      // Perform the actual request using axios
+      const axiosResponse = await axios({
+        method: method,
+        url: fullUrl,
+        headers: headers,
+        data: body,
+      });
+
+      // Log the response details
+      logMessage +=
+        '\n\nResponse Details:\n' +
+        JSON.stringify(
+          {
+            Data: axiosResponse.data,
+            Status: axiosResponse.status,
+            Headers: axiosResponse.headers,
+          },
+          null,
+          2,
+        );
+
+      if (createLog) {
+        logAndCollect(logMessage, apiOperation);
+      }
+      return axiosResponse.data;
+    } catch (error) {
+      // Retry logic for handling 429 errors with exponential backoff
+      if (error.response && error.response.status === 429 && retryCount < 5) {
+        const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff formula
+        await new Promise(resolve => setTimeout(resolve, delay));
+        return this._sendRequestWithRetry(
+          method,
+          path,
+          queryParams,
+          body,
+          createLog,
+          apiOperation,
+          isGrantless,
+          retryCount + 1,
+          rateLimitConfig, // Pass the rate limit configuration for retries
+        );
+      } else {
+        // Log the error
+        logMessage += '\n\nError in _sendRequestWithRetry: ' + error.toString();
+        if (error.response) {
+          logMessage +=
+            '\nResponse Error Details:\n' +
+            JSON.stringify(
+              {
+                Data: error.response.data,
+                Status: error.response.status,
+                Headers: error.response.headers,
+              },
+              null,
+              2,
+            );
+        }
+        if (createLog) {
+          logAndCollect(logMessage, apiOperation);
+        }
+        throw error; // Rethrow the error after logging
+      }
+    }
   }
 }
 
