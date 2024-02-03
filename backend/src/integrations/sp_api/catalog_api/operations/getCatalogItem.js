@@ -10,7 +10,7 @@ const { logAndCollect } = require('../../../../utils/logger');
  * @return {Promise<Object>} - The catalog item details.
  */
 async function getCatalogItem(asin, marketplaceId, createLog = false) {
-  let logMessage = `Starting getCatalogItem for asin : ${asin}\n`;
+  let logMessage;
   const includedData = [
     'attributes',
     'productTypes',
@@ -36,11 +36,7 @@ async function getCatalogItem(asin, marketplaceId, createLog = false) {
       false,
       (rateLimitConfig = { rate: 2, burst: 2 }),
     );
-    logMessage += `Catalog item fetched successfully ${JSON.stringify(
-      response.data,
-      '',
-      2,
-    )}.\n`;
+    logMessage += `Catalog item fetched successfully \n`;
     return response.data;
   } catch (error) {
     console.error(`Error in getCatalogItem: ${error}`);
