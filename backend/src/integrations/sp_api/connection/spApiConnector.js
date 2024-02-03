@@ -298,6 +298,7 @@ class SpApiConnector {
     isGrantless = false,
     rateLimitConfig = { rate: 1, burst: 5 },
   ) {
+    let logMessage;
     // Initialize or retrieve a limiter for the specific API operation with its Rate and Burst values
     const limiter = this.limiterGroup.key(`${apiOperation}`, () => ({
       reservoir: rateLimitConfig.burst, // Number of tokens in the reservoir
@@ -305,19 +306,28 @@ class SpApiConnector {
       reservoirRefreshInterval: (1000 / rateLimitConfig.rate) * 1000, // Interval for regenerating tokens in ms
     }));
 
-    // Schedule the request through the limiter
-    return limiter.schedule(() =>
-      this._sendRequestWithRetry(
-        method,
-        path,
-        queryParams,
-        body,
-        createLog,
-        apiOperation,
-        isGrantless,
-        0, // Initial retry count
-      ),
-    );
+    try {
+      // Schedule the request through the limiter
+      return limiter.schedule(() =>
+        this._sendRequestWithRetry(
+          method,
+          path,
+          queryParams,
+          body,
+          createLog,
+          apiOperation,
+          isGrantless,
+          0, // Initial retry count
+        ),
+      );
+    } catch (error) {
+      logMessage += `Error scheduling request through limiters: ${error}`;
+      console.error(logMessage);
+    } finally {
+      if (createLog) {
+        logAndCollect(logMessage, apiOperation);
+      }
+    }
   }
 
   /**
@@ -331,7 +341,6 @@ class SpApiConnector {
    * @param {string} apiOperation - Identifier for the API operation.
    * @param {boolean} [isGrantless=false] - Flag for grantless operations.
    * @param {number} [retryCount=0] - Current retry attempt count.
-   * @param {Object} [rateLimitConfig={ rate: 1, burst: 5 }] - Configuration for rate limiting.
    * @return {Promise<Object>} Response from the API call.
    */
   async _sendRequestWithRetry(
@@ -346,20 +355,20 @@ class SpApiConnector {
   ) {
     let logMessage = '';
     try {
-      // Check if access token is needed and fetch it
       const accessToken = isGrantless
         ? await this.getGrantlessOperationToken()
         : await this.getLWAToken();
       const date = new Date().toISOString().replace(/[:-]|\.\d{3}/g, '');
 
-      // Prepare the full URL and headers for the request
-      const queryString =
-        Object.keys(queryParams).length > 0
-          ? '?' +
-            Object.entries(queryParams)
-              .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-              .join('&')
-          : '';
+      let queryString = '';
+      if (Object.keys(queryParams).length > 0) {
+        queryString =
+          '?' +
+          Object.entries(queryParams)
+            .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+            .join('&');
+      }
+
       const fullUrl = `https://sellingpartnerapi-eu.amazon.com${path}${queryString}`;
       const headers = this.createRequestHeaders(
         method,
@@ -369,7 +378,6 @@ class SpApiConnector {
         date,
       );
 
-      // Log the request details
       logMessage +=
         'Request Details:\n' +
         JSON.stringify(
@@ -385,15 +393,15 @@ class SpApiConnector {
           2,
         );
 
-      // Perform the actual request using axios
-      const axiosResponse = await axios({
-        method: method,
-        url: fullUrl,
-        headers: headers,
-        data: body,
-      });
+      let axiosResponse;
+      if (method === 'GET') {
+        axiosResponse = await axios.get(fullUrl, { headers });
+      } else {
+        axiosResponse = await axios[method.toLowerCase()](fullUrl, body, {
+          headers,
+        });
+      }
 
-      // Log the response details
       logMessage +=
         '\n\nResponse Details:\n' +
         JSON.stringify(
@@ -409,11 +417,10 @@ class SpApiConnector {
       if (createLog) {
         logAndCollect(logMessage, apiOperation);
       }
-      return axiosResponse.data;
+      return axiosResponse;
     } catch (error) {
-      // Retry logic for handling 429 errors with exponential backoff
       if (error.response && error.response.status === 429 && retryCount < 5) {
-        const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff formula
+        const delay = Math.pow(2, retryCount) * 1000;
         await new Promise(resolve => setTimeout(resolve, delay));
         return this._sendRequestWithRetry(
           method,
@@ -424,11 +431,9 @@ class SpApiConnector {
           apiOperation,
           isGrantless,
           retryCount + 1,
-          rateLimitConfig, // Pass the rate limit configuration for retries
         );
       } else {
-        // Log the error
-        logMessage += '\n\nError in _sendRequestWithRetry: ' + error.toString();
+        logMessage += '\n\nError in sendRequest: ' + error.toString();
         if (error.response) {
           logMessage +=
             '\nResponse Error Details:\n' +
@@ -441,11 +446,17 @@ class SpApiConnector {
               null,
               2,
             );
+        } else if (error.request) {
+          logMessage +=
+            '\nRequest Error Details:\n' +
+            JSON.stringify(error.request, null, 2);
+        } else {
+          logMessage += '\nSetup Error: ' + error.message;
         }
         if (createLog) {
           logAndCollect(logMessage, apiOperation);
         }
-        throw error; // Rethrow the error after logging
+        throw error;
       }
     }
   }
