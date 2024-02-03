@@ -34,6 +34,7 @@ async function getCatalogItem(asin, marketplaceId, createLog = false) {
       createLog,
       apiOperation,
       false,
+      (rateLimitConfig = { rate: 2, burst: 2 }),
     );
     logMessage += `Catalog item fetched successfully ${JSON.stringify(
       response.data,

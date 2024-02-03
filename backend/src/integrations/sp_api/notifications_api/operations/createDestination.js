@@ -28,9 +28,10 @@ async function createDestination(destinationName) {
       endpoint,
       {}, // No queryParams for POST
       payload,
-      true, // Enable logging
+      createLog,
       apiOperation,
       (isGrantless = true),
+      (rateLimitConfig = { rate: 1, burst: 5 }),
     );
 
     return response.data;

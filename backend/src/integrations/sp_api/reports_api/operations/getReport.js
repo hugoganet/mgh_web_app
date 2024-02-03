@@ -32,6 +32,7 @@ async function getReport(reportId, createLog) {
         createLog,
         apiOperation,
         (isGrantless = false),
+        (rateLimitConfig = { rate: 2, burst: 15 }),
       );
 
       parsedResponse = response.data;

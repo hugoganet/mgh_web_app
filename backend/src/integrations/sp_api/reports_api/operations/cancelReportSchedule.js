@@ -22,6 +22,7 @@ async function cancelReportSchedule(config) {
       createLog,
       apiOperation,
       (isGrantless = false),
+      (rateLimitConfig = { rate: 0.0222, burst: 10 }),
     );
     console.log(response.data);
     return response.data;

@@ -21,7 +21,8 @@ async function getReportSchedule(config) {
       {},
       createLog,
       apiOperation,
-      false,
+      (isGrantless = false),
+      (rateLimitConfig = { rate: 0.0222, burst: 10 }),
     );
     console.log(response.data);
     return response.data;

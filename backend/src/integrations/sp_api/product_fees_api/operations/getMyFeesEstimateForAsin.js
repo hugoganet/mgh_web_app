@@ -46,6 +46,7 @@ async function getMyFeesEstimateForAsin(params) {
       createLog,
       apiOperation,
       (isGrantless = false),
+      (rateLimitConfig = { rate: 1, burst: 2 }),
     );
     return response.data;
   } catch (error) {

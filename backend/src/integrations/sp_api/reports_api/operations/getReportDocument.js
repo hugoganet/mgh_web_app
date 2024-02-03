@@ -24,6 +24,7 @@ async function getReportDocument(reportDocumentId, createLog, reportType) {
       createLog,
       apiOperation,
       false,
+      (rateLimitConfig = { rate: 0.0167, burst: 15 }),
     );
 
     const parsedResponse = response.data;

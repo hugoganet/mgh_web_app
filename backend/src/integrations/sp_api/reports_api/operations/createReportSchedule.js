@@ -32,9 +32,10 @@ async function createReportSchedule(config) {
         period,
         nextReportCreationTime,
       },
-      true,
+      createLog,
       apiOperation,
-      false,
+      (isGrantless = false),
+      (rateLimitConfig = { rate: 0.0222, burst: 10 }),
     );
     return response.data.reportScheduleId;
   } catch (error) {

@@ -37,7 +37,8 @@ async function createSubscription(config) {
       body,
       createLog,
       apiOperation,
-      false,
+      (isGrantless = true),
+      (rateLimitConfig = { rate: 1, burst: 5 }),
     );
 
     console.log(response.data);

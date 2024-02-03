@@ -34,6 +34,7 @@ async function createReport(filters) {
       createLog,
       apiOperation,
       (isGrantless = false),
+      (rateLimitConfig = { rate: 0.0167, burst: 15 }),
     );
     console.log(response.data);
     return response.data;

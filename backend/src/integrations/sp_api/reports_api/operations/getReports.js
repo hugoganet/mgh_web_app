@@ -42,6 +42,7 @@ async function getReports(config, accumulatedReports = []) {
       createLog,
       apiOperation,
       false,
+      (rateLimitConfig = { rate: 0.0222, burst: 10 }),
     );
 
     // Accumulate the reports
