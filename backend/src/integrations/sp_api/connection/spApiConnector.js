@@ -26,8 +26,8 @@ class SpApiConnector {
     this.limiterGroup = new Bottleneck.Group({
       // Default settings for all limiters created by this group
       maxConcurrent: 1, // Adjust based on the general case if needed
-      highWater: 0, // Disable pre-emptive queueing
-      strategy: Bottleneck.strategy.LEAK, // Strategy to handle overflowing requests
+      // highWater: 0, // Disable pre-emptive queueing
+      // strategy: Bottleneck.strategy., // Strategy to handle overflowing requests
     });
   }
 
@@ -298,17 +298,19 @@ class SpApiConnector {
     isGrantless = false,
     rateLimitConfig = { rate: 1, burst: 5 },
   ) {
-    let logMessage;
-    // Initialize or retrieve a limiter for the specific API operation with its Rate and Burst values
-    const limiter = this.limiterGroup.key(`${apiOperation}`, () => ({
-      reservoir: rateLimitConfig.burst, // Number of tokens in the reservoir
-      reservoirRefreshAmount: rateLimitConfig.burst, // Max tokens to regenerate to
-      reservoirRefreshInterval: (1000 / rateLimitConfig.rate) * 1000, // Interval for regenerating tokens in ms
+    let logMessage = `Sending request to ${apiOperation} API operation with rate limit: ${rateLimitConfig.rate} requests per second and burst of ${rateLimitConfig.burst} requests.\n`;
+
+    // Retrieve an existing limiter or create a new one with dynamic settings based on rateLimitConfig
+    const limiter = this.limiterGroup.key(apiOperation, () => ({
+      reservoir: rateLimitConfig.burst,
+      reservoirRefreshAmount: rateLimitConfig.burst,
+      reservoirRefreshInterval: (1000 / rateLimitConfig.rate) * 1000, // Convert rate to milliseconds
+      minTime: (1 / rateLimitConfig.rate) * 1000, // Minimum time between dispatches
     }));
 
-    try {
-      // Schedule the request through the limiter
-      return limiter.schedule(() =>
+    // Schedule the request through the limiter
+    return limiter
+      .schedule(() =>
         this._sendRequestWithRetry(
           method,
           path,
@@ -319,15 +321,20 @@ class SpApiConnector {
           isGrantless,
           0, // Initial retry count
         ),
-      );
-    } catch (error) {
-      logMessage += `Error scheduling request through limiters: ${error}`;
-      console.error(logMessage);
-    } finally {
-      if (createLog) {
-        logAndCollect(logMessage, apiOperation);
-      }
-    }
+      )
+      .then(response => {
+        // Successful request handling
+        logMessage += 'Request successfully completed.\n';
+        return response; // Return the successful response
+      })
+      .catch(error => {
+        // Error handling
+        logMessage += `Error during request: ${error}\n`;
+        if (createLog) {
+          logAndCollect(logMessage, apiOperation);
+        }
+        throw error; // Re-throw the error to be handled by the caller
+      });
   }
 
   /**

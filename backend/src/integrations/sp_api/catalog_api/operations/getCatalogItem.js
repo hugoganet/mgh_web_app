@@ -10,7 +10,7 @@ const { logAndCollect } = require('../../../../utils/logger');
  * @return {Promise<Object>} - The catalog item details.
  */
 async function getCatalogItem(asin, marketplaceId, createLog = false) {
-  let logMessage;
+  let logMessage = `Fetching catalog item for ASIN: ${asin} and marketplaceId: ${marketplaceId} \n`;
   const includedData = [
     'attributes',
     'productTypes',
