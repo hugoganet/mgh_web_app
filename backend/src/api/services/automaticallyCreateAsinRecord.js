@@ -195,8 +195,10 @@ async function automaticallyCreateAsinRecord(
           `Error automatically creating FBA fees record: ${error}`,
         );
       }
+      return newAsin;
     } catch (error) {
-      logMessage += `Error creating ASIN record in the database: ${error}\n`;
+      logMessage += `Error creating ASIN record in the database: ${error}
+      asinRecord : ${JSON.stringify(asinRecord, '', 2)}\n`;
       throw new Error(`Error creating ASIN record in the database: ${error}`);
     }
   } catch (error) {

@@ -99,7 +99,6 @@ async function processInventoryChunk(
         logMessage += `Error finding similar SKU or copying acquisition costs: ${err}\n`;
         throw err;
       }
-
       // If the SKU record has just been created, check if an ASIN exist for this marketplace.
       let associatedAsin = await db.Asin.findOne({
         where: {
@@ -107,10 +106,12 @@ async function processInventoryChunk(
           countryCode,
         },
       });
-      if (!associatedAsin) {
+      if (associatedAsin) {
+        logMessage += `Associated ASIN found for ${asin} in ${countryCode}, creating AsinSku record\n`;
+      } else {
         try {
           logMessage += `No associated ASIN found for ${asin} in ${countryCode}, creating one\n`;
-          associatedAsin = automaticallyCreateAsinRecord(
+          associatedAsin = await automaticallyCreateAsinRecord(
             asin,
             (marketplaceId = null),
             countryCode,
@@ -121,6 +122,16 @@ async function processInventoryChunk(
           throw err;
         }
         // TODO : create AsinSku record
+        try {
+          logMessage += `Creating AsinSku record for asin: ${asin} and sku: ${sku} in ${countryCode}\n`;
+          await db.AsinSku.create({
+            asinId: associatedAsin.asinId,
+            skuId: skuRecord.skuId,
+          });
+        } catch (err) {
+          logMessage += `Error creating AsinSku record in processInventoryChunk : ${err}\n`;
+          throw err;
+        }
       }
     }
 
