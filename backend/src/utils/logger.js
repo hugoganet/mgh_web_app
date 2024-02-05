@@ -7,7 +7,7 @@ const path = require('path');
  * @param {string} message - The message to log.
  * @param {string} reportType - The report type, used in naming the log file.
  */
-function logAndCollect(message, reportType) {
+function logger(message, reportType) {
   const now = new Date();
   const offset = now.getTimezoneOffset() * 60000;
   const localISOTime = new Date(now - offset).toISOString();
@@ -30,4 +30,4 @@ function logAndCollect(message, reportType) {
   fs.appendFileSync(logFilePath, logMessage, 'utf8');
 }
 
-module.exports = { logAndCollect };
+module.exports = { logger };

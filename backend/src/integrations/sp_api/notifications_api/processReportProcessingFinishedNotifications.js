@@ -8,7 +8,7 @@ const { getReport } = require('../reports_api/operations/getReport.js');
 const {
   getCountryNameFromMarketplaceId,
 } = require('../../../utils/getCountryNameFromMarketplaceId.js');
-const { logAndCollect } = require('../../../utils/logger');
+const { logger } = require('../../../utils/logger');
 const {
   deleteMessageCommand,
 } = require('./aws_sqs_queue/deleteMessageCommand.js');
@@ -122,7 +122,7 @@ async function processReportProcessingFinishedNotification(
     logMessage += `Overall error in processReportProcessingFinishedNotification: ${error}\n`;
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, apiOperation);
+      logger(logMessage, apiOperation);
     }
   }
 }

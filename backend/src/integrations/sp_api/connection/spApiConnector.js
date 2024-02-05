@@ -1,7 +1,7 @@
 require('dotenv').config({ path: 'backend/.env' });
 const axios = require('axios');
 const crypto = require('crypto');
-const { logAndCollect } = require('../../../utils/logger');
+const { logger } = require('../../../utils/logger');
 const Bottleneck = require('bottleneck');
 
 /**
@@ -331,7 +331,7 @@ class SpApiConnector {
         // Error handling
         logMessage += `Error during request: ${error}\n`;
         if (createLog) {
-          logAndCollect(logMessage, apiOperation);
+          logger(logMessage, apiOperation);
         }
         throw error; // Re-throw the error to be handled by the caller
       });
@@ -422,7 +422,7 @@ class SpApiConnector {
         );
 
       if (createLog) {
-        logAndCollect(logMessage, apiOperation);
+        logger(logMessage, apiOperation);
       }
       return axiosResponse;
     } catch (error) {
@@ -461,7 +461,7 @@ class SpApiConnector {
           logMessage += '\nSetup Error: ' + error.message;
         }
         if (createLog) {
-          logAndCollect(logMessage, apiOperation);
+          logger(logMessage, apiOperation);
         }
         throw error;
       }

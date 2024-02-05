@@ -1,5 +1,5 @@
 const { spApiInstance } = require('../../connection/spApiConnector');
-const { logAndCollect } = require('../../../../utils/logger');
+const { logger } = require('../../../../utils/logger');
 
 /**
  * Retrieves catalog item details for the specified ASIN and marketplace.
@@ -44,7 +44,7 @@ async function getCatalogItem(asin, marketplaceId, createLog = false) {
     throw new Error(`Error in getCatalogItem: ${error}`);
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, apiOperation);
+      logger(logMessage, apiOperation);
     }
   }
 }

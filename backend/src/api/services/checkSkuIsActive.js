@@ -1,5 +1,5 @@
 const db = require('../models/index');
-const { logAndCollect } = require('../../utils/logger');
+const { logger } = require('../../utils/logger');
 
 /**
  * @description Checks if a SKU is active based on the latest afnInventoryDailyUpdate's afnFulfillableQuantity. Sets the SKU's isActive status in the Sku table accordingly.
@@ -49,7 +49,7 @@ const checkSkuIsActive = async (skuId, createLog = false) => {
   }
 
   if (createLog) {
-    logAndCollect(logMessage, 'CheckSkuIsActive');
+    logger(logMessage, 'CheckSkuIsActive');
   }
 };
 

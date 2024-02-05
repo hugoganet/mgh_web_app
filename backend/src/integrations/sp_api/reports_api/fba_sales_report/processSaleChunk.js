@@ -1,5 +1,5 @@
 const db = require('../../../../api/models/index');
-const { logAndCollect } = require('../../../../utils/logger');
+const { logger } = require('../../../../utils/logger');
 const { getFbaFeeType } = require('../../../../api/services/getFbaFeeType');
 const { getFbaFees } = require('../../../../api/services/getFbaFees');
 const {
@@ -210,7 +210,7 @@ async function processSalesChunk(chunk, reportDocumentId, createLog = false) {
     // console.error('Error processing sales chunk:', error);
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'ProcessSalesChunk');
+      logger(logMessage, 'ProcessSalesChunk');
     }
   }
 }

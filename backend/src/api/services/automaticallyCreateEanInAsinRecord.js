@@ -1,5 +1,5 @@
 const db = require('../models/index');
-const { logAndCollect } = require('../../utils/logger');
+const { logger } = require('../../utils/logger');
 
 /**
  * @description This function creates an EAN in ASIN record in the database if it does not exist.
@@ -37,7 +37,7 @@ async function automaticallyCreateEanInAsinRecord(
     logMessage += `Error fetching asin record: ${error}\n`;
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'automaticallyCreateEanInAsinRecord');
+      logger(logMessage, 'automaticallyCreateEanInAsinRecord');
     }
   }
 }

@@ -1,5 +1,5 @@
 require('dotenv').config({ path: 'backend/.env' });
-const { logAndCollect } = require('../utils/logger');
+const { logger } = require('../utils/logger');
 const { sqsClient } = require('./aws_sqs_queue/sqsClient.js');
 const { receiveMessage } = require('./aws_sqs_queue/receiveMessageCommand.js');
 const {
@@ -71,7 +71,7 @@ async function receiveAndProcessNotifications(createLog = false) {
     logMessage += `Error receiving and processing notifications: ${error}\n`;
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, apiOperation);
+      logger(logMessage, apiOperation);
     }
   }
 }

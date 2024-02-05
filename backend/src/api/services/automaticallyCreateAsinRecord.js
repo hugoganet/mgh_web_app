@@ -5,7 +5,7 @@ const {
 const {
   convertMarketplaceIdentifier,
 } = require('../../utils/convertMarketplaceIdentifier');
-const { logAndCollect } = require('../../utils/logger');
+const { logger } = require('../../utils/logger');
 const { getProductCategoryRankId } = require('./getProductCategoryRankId');
 const { getProductTaxCategoryName } = require('./getProductTaxCategoryName');
 const {
@@ -41,7 +41,7 @@ async function automaticallyCreateAsinRecord(
     logMessage += errorMessage + '\n';
     console.error(errorMessage);
     if (createLog) {
-      logAndCollect(logMessage, 'automaticallyCreateAsinRecord');
+      logger(logMessage, 'automaticallyCreateAsinRecord');
     }
     return;
   }
@@ -57,7 +57,7 @@ async function automaticallyCreateAsinRecord(
       logMessage += errorMessage + '\n';
       console.error(errorMessage);
       if (createLog) {
-        logAndCollect(logMessage, 'automaticallyCreateAsinRecord');
+        logger(logMessage, 'automaticallyCreateAsinRecord');
       }
       throw new Error(errorMessage);
     }
@@ -73,7 +73,7 @@ async function automaticallyCreateAsinRecord(
       logMessage += errorMessage + '\n';
       console.error(errorMessage);
       if (createLog) {
-        logAndCollect(logMessage, 'automaticallyCreateAsinRecord');
+        logger(logMessage, 'automaticallyCreateAsinRecord');
       }
       throw new Error(errorMessage);
     }
@@ -206,7 +206,7 @@ async function automaticallyCreateAsinRecord(
     console.error('Error automaticallyCreateAsinRecord:', error);
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'automaticallyCreateAsinRecord');
+      logger(logMessage, 'automaticallyCreateAsinRecord');
     }
   }
 }

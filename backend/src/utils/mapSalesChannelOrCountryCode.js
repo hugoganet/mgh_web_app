@@ -1,5 +1,5 @@
 const db = require('../api/models/index');
-const { logAndCollect } = require('../utils/logger');
+const { logger } = require('../utils/logger');
 
 /**
  * Maps sales channel to country code or country code to marketplace domain.
@@ -41,7 +41,7 @@ async function mapSalesChannelOrCountryCode(input, mapType, createLog = false) {
     return null;
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'mapSalesChannelOrCountryCode');
+      logger(logMessage, 'mapSalesChannelOrCountryCode');
     }
   }
 }

@@ -41,18 +41,18 @@ async function requestFbaInventoryReport(
   };
 
   try {
-    // // Step 1: Create Report to get ReportId
-    // const reportIdResponse = await createReport(config);
+    // Step 1: Create Report to get ReportId
+    const reportIdResponse = await createReport(config);
 
-    // // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
-    // await new Promise(resolve => setTimeout(resolve, 60000 * 2));
+    // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
+    await new Promise(resolve => setTimeout(resolve, 60000 * 2));
 
-    // // Step 2 : Request report document ID
-    // const reportDocumentId = await getReport(
-    //   reportIdResponse.reportId,
-    //   config.createLog,
-    //   config.reportType,
-    // );
+    // Step 2 : Request report document ID
+    const reportDocumentId = await getReport(
+      reportIdResponse.reportId,
+      config.createLog,
+      config.reportType,
+    );
 
     const reportDocumentId =
       // 'amzn1.spdoc.1.4.eu.f7b75d40-725b-48c2-bdf1-25c1d170fe1a.T1TJXQMEOP6F78.2651'; // PL
@@ -74,14 +74,14 @@ async function requestFbaInventoryReport(
       config.reportType,
     );
 
-    // downloadAndDecompressDocument(
-    //   documentUrl,
-    //   compressionAlgorithm,
-    //   reportType,
-    //   countryKeys,
-    //   config.dataStartTime,
-    //   config.dataEndTime,
-    // );
+    downloadAndDecompressDocument(
+      documentUrl,
+      compressionAlgorithm,
+      reportType,
+      countryKeys,
+      config.dataStartTime,
+      config.dataEndTime,
+    );
 
     // Fetch CSV data and process into database
     await fetchAndProcessInventoryReport(

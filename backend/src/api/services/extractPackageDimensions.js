@@ -1,4 +1,4 @@
-const { logAndCollect } = require('../../utils/logger');
+const { logger } = require('../../utils/logger');
 
 /**
  * Extracts the package dimensions from a catalog item.
@@ -64,7 +64,7 @@ function extractPackageDimensions(catalogItem, createLog = false) {
     throw new Error(`Error extracting package dimensions: ${error}`);
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'extractPackageDimensions');
+      logger(logMessage, 'extractPackageDimensions');
     }
   }
   return {

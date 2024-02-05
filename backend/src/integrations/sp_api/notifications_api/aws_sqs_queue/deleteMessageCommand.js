@@ -1,6 +1,6 @@
 require('dotenv').config({ path: 'backend/.env' });
 const { DeleteMessageCommand } = require('@aws-sdk/client-sqs');
-const { logAndCollect } = require('../../../../utils/logger');
+const { logger } = require('../../../../utils/logger');
 const queueURL = process.env.SQS_QUEUE_URL;
 
 /**
@@ -22,7 +22,7 @@ const deleteMessageCommand = (receiptHandle, createLog = false) => {
     throw error;
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'DeleteMessageCommand');
+      logger(logMessage, 'DeleteMessageCommand');
     }
   }
 };

@@ -1,5 +1,5 @@
 const db = require('../models/index');
-const { logAndCollect } = require('../../utils/logger');
+const { logger } = require('../../utils/logger');
 
 /**
  * @description Updates the SKU's total AFN quantity based on the latest entry from AfnInventoryDailyUpdate.
@@ -38,7 +38,7 @@ const updateAfnQuantity = async (skuId, createLog = false) => {
   }
 
   if (createLog) {
-    logAndCollect(logMessage, 'UpdateAfnQuantity');
+    logger(logMessage, 'UpdateAfnQuantity');
   }
 };
 

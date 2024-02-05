@@ -61,7 +61,7 @@ async function getReports(config, accumulatedReports = []) {
   } catch (error) {
     console.error(`Error in getReports: ${error}`);
     if (createLog) {
-      logAndCollect(`Error in getReports: ${error}`, apiOperation);
+      logger(`Error in getReports: ${error}`, apiOperation);
     }
     throw error;
   }

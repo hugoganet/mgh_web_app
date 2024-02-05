@@ -1,5 +1,5 @@
 const db = require('../models/index');
-const { logAndCollect } = require('../../utils/logger');
+const { logger } = require('../../utils/logger');
 
 /**
  * Retrieves the product category rank ID based on category ID, country code, and sales rank.
@@ -39,7 +39,7 @@ async function getProductCategoryRankId(
     return null;
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'getProductCategoryRankId');
+      logger(logMessage, 'getProductCategoryRankId');
     }
   }
 }

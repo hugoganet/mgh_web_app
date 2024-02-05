@@ -6,7 +6,7 @@ const {
   updateAfnQuantity,
 } = require('../../../../api/services/updateAfnQuantity.js');
 const { addFnskuToSku } = require('../../../../api/services/addFnskuToSku.js');
-const { logAndCollect } = require('../../../../utils/logger');
+const { logger } = require('../../../../utils/logger');
 const { convertToEur } = require('../../../../utils/convertToEur.js');
 const {
   automaticallyCreateAsinRecord,
@@ -100,38 +100,44 @@ async function processInventoryChunk(
         throw err;
       }
       // If the SKU record has just been created, check if an ASIN exist for this marketplace.
+      logMessage += `Checking if an ASIN record exists for ${asin} in ${countryCode} before creating one.\n`;
       let associatedAsin = await db.Asin.findOne({
         where: {
           asin,
           countryCode,
         },
       });
+      // TODO : Find out why the associatedAsin is not found
       if (associatedAsin) {
         logMessage += `Associated ASIN found for ${asin} in ${countryCode}, creating AsinSku record\n`;
       } else {
         try {
-          logMessage += `No associated ASIN found for ${asin} in ${countryCode}, creating one\n`;
           associatedAsin = await automaticallyCreateAsinRecord(
             asin,
             (marketplaceId = null),
             countryCode,
             createLog,
           );
+          logMessage += `No associated ASIN found for ${asin} in ${countryCode}, creating one : ${JSON.stringify(
+            associatedAsin,
+            '',
+            2,
+          )}\n`;
         } catch (err) {
           logMessage += `Error creating associated ASIN: ${err}\n`;
           throw err;
         }
-        // TODO : create AsinSku record
-        try {
-          logMessage += `Creating AsinSku record for asin: ${asin} and sku: ${sku} in ${countryCode}\n`;
-          await db.AsinSku.create({
-            asinId: associatedAsin.asinId,
-            skuId: skuRecord.skuId,
-          });
-        } catch (err) {
-          logMessage += `Error creating AsinSku record in processInventoryChunk : ${err}\n`;
-          throw err;
-        }
+      }
+      // Create AsinSku record
+      try {
+        logMessage += `Creating AsinSku record for asin: ${asin} and sku: ${sku} in ${countryCode}\n`;
+        await db.AsinSku.create({
+          asinId: associatedAsin.asinId,
+          skuId: skuRecord.skuId,
+        });
+      } catch (err) {
+        logMessage += `Error creating AsinSku record in processInventoryChunk : ${err}\n`;
+        throw err;
       }
     }
 
@@ -195,7 +201,7 @@ async function processInventoryChunk(
     logMessage += `Error processing inventory chunk: ${error}\n`;
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'processInventoryChunk');
+      logger(logMessage, 'processInventoryChunk');
     }
   }
 }

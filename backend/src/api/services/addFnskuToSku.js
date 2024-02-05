@@ -1,5 +1,5 @@
 const db = require('../models');
-const { logAndCollect } = require('../../utils/logger');
+const { logger } = require('../../utils/logger');
 
 /**
  * Updates the FNSKU for a given SKU record in the database.
@@ -31,7 +31,7 @@ const addFnskuToSku = async (skuId, fnsku, createLog = false) => {
     throw error;
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'AddFnskuToSku');
+      logger(logMessage, 'AddFnskuToSku');
     }
   }
 };

@@ -8,7 +8,7 @@ const {
 const { preProcessCsvRow } = require('../../preProcessCsvRow.js');
 const { processInventoryChunk } = require('./processInventoryChunk.js');
 const { seedSellingPriceHistory } = require('./seedSellingPricesHistory.js');
-const { logAndCollect } = require('../../../../utils/logger');
+const { logger } = require('../../../../utils/logger');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -105,7 +105,7 @@ async function fetchAndProcessInventoryReport(
     );
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'fetchAndProcessInventoryReport');
+      logger(logMessage, 'fetchAndProcessInventoryReport');
     }
   }
 }

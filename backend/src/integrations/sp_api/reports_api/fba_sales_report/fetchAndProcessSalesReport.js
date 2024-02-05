@@ -6,7 +6,7 @@ const {
 } = require('../../chooseDecompressionStream.js');
 const { preProcessCsvRow } = require('../../preProcessCsvRow.js');
 const { processSalesChunk } = require('./processSaleChunk.js'); // New module for processing chunks
-const { logAndCollect } = require('../../../../utils/logger');
+const { logger } = require('../../../../utils/logger');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -78,7 +78,7 @@ async function fetchAndProcessSalesReport(
     console.error('Error fetching sales data:', error);
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'FetchAndProcessSalesReport');
+      logger(logMessage, 'FetchAndProcessSalesReport');
     }
   }
 }

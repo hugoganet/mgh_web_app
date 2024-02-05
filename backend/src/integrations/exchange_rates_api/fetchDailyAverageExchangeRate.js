@@ -2,7 +2,7 @@ require('dotenv').config({
   path: '/Users/hugoganet/Code/projet_MGH/mgh_web_app/backend/.env',
 });
 const axios = require('axios');
-const { logAndCollect } = require('../../utils/logger');
+const { logger } = require('../../utils/logger');
 const {
   saveHistoricalExchangeRates,
 } = require('./saveHistoricalExchangeRates');
@@ -68,7 +68,7 @@ async function fetchDailyAverageExchangeRate(
     return null;
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'fetchDailyAverageExchangeRate');
+      logger(logMessage, 'fetchDailyAverageExchangeRate');
     }
   }
 }

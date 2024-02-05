@@ -1,4 +1,4 @@
-const { logAndCollect } = require('../../utils/logger');
+const { logger } = require('../../utils/logger');
 const db = require('../../api/models/index');
 
 /**
@@ -28,7 +28,7 @@ async function saveHistoricalExchangeRates(ratesData, date, createLog = false) {
     console.error('Error saving exchange rates to database:', error);
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'SaveHistoricalExchangeRates');
+      logger(logMessage, 'SaveHistoricalExchangeRates');
     }
   }
 }

@@ -1,5 +1,5 @@
 const db = require('../models');
-const { logAndCollect } = require('../../utils/logger');
+const { logger } = require('../../utils/logger');
 
 /**
  * @function getPriceGridFbaFeeId
@@ -75,7 +75,7 @@ async function getPriceGridFbaFeeId(
     return null;
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'getPriceGridFbaFeeId');
+      logger(logMessage, 'getPriceGridFbaFeeId');
     }
   }
 }

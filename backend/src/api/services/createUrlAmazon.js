@@ -31,7 +31,7 @@ async function createUrlAmazon(asin, countryCode, createLog = false) {
     throw new Error(`Error in createUrlAmazon. Url not created ${error}`);
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'createUrlAmazon');
+      logger(logMessage, 'createUrlAmazon');
     }
   }
   return urlAmazon;

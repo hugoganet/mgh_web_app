@@ -1,5 +1,5 @@
 const db = require('../../../../api/models/index');
-const { logAndCollect } = require('../../../../utils/logger');
+const { logger } = require('../../../../utils/logger');
 
 /**
  * @function seedSellingPriceHistory
@@ -46,7 +46,7 @@ const seedSellingPriceHistory = async (createLog = false) => {
     console.error('Error seeding SellingPriceHistory:', error);
   } finally {
     if (createLog) {
-      logAndCollect(logMessage, 'SeedSellingPriceHistory');
+      logger(logMessage, 'SeedSellingPriceHistory');
     }
   }
 };
