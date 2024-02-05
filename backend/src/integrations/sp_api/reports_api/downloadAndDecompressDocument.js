@@ -4,12 +4,13 @@ const path = require('path');
 const zlib = require('zlib');
 const { pipeline } = require('stream/promises');
 const { PassThrough } = require('stream');
+const { logger } = require('../../../utils/logger');
 
 /**
  * Downloads and decompresses a document from a given URL.
  * @async
  * @function downloadAndDecompressDocument
- * @param {string} url - The URL of the document to download.
+ * @param {string} documentUrl - The URL of the document to download.
  * @param {string} compressionAlgorithm - The compression algorithm used on the document (e.g., 'GZIP').
  * @param {string} reportType - The type of report being downloaded.
  * @param {string} countryCode - The country code associated with the report.
@@ -20,23 +21,23 @@ const { PassThrough } = require('stream');
  *              and saves it to the specified directory with a formatted name.
  */
 async function downloadAndDecompressDocument(
-  url,
+  documentUrl,
   compressionAlgorithm,
   reportType,
   countryCode,
   dataStartTime,
   dataEndTime,
-  outputPath = 'backend/src/integrations/sp_api/reports_api/downloads/',
 ) {
+  outputPath = 'backend/src/integrations/sp_api/reports_api/downloads/';
+  let logMessage = `Starting downloadAndDecompressDocument for ${documentUrl}\n`;
   try {
     // Send a GET request to the URL and receive the response as a stream
     const response = await axios({
       method: 'get',
-      url: url,
+      url: documentUrl,
       responseType: 'stream',
     });
 
-    // Usage in downloadAndDecompressDocument
     const fileName = formatFileName(
       reportType,
       countryCode,
@@ -44,8 +45,6 @@ async function downloadAndDecompressDocument(
       dataEndTime,
     );
 
-    console.log('outputPath:', outputPath);
-    console.log('fileName:', fileName);
     // Create the full path for the output file
     const outputFilePath = path.join(outputPath, fileName);
 
@@ -75,12 +74,16 @@ async function downloadAndDecompressDocument(
       fs.createWriteStream(outputFilePath), // Write the resulting data to a file
     );
 
-    // Log the successful download and decompression
     console.log(`Document downloaded and decompressed to ${outputFilePath}`);
+    logMessage = `Document downloaded and decompressed to ${outputFilePath}`;
   } catch (error) {
-    // Log any errors encountered during the process
+    logMessage = `Error downloading or decompressing document: ${error}`;
     console.error(`Error downloading or decompressing document: ${error}`);
     throw error;
+  } finally {
+    if (createLog) {
+      logger(logMessage, logContext);
+    }
   }
 }
 

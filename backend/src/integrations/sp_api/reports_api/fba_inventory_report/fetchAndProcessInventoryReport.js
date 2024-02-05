@@ -13,31 +13,34 @@ const { logger } = require('../../../../utils/logger');
 /**
  * Fetches and processes a CSV file from a given URL.
  * @async
- * @param {string} url - The URL of the CSV file.
+ * @param {string} documentUrl - The URL of the CSV file.
  * @param {string|null} compressionAlgorithm - The compression algorithm used (e.g., 'GZIP'), or null if uncompressed.
  * @param {string} reportDocumentId - The document ID associated with the report.
- * @param {string[]} countryKeys - The country keys to associate with the report.
- * @param {string} reportType - The type of report being processed.
+ * @param {string[]} country - The country keys to associate with the report.
+ * @param {string} logContext - The context for the log message.
  * @param {boolean} createLog - Whether to create a log of the process.
  * @return {Promise<void>} - A promise that resolves when the CSV file has been fetched and processed.
  */
 async function fetchAndProcessInventoryReport(
-  url,
+  documentUrl,
   compressionAlgorithm,
   reportDocumentId,
-  countryKeys,
-  reportType,
+  country,
+  logContext,
   createLog,
 ) {
-  const countryCode = marketplaces[countryKeys[0]].countryCode;
-  const currencyCode = marketplaces[countryKeys[0]].currencyCode;
+  const countryCode = marketplaces[country[0]].countryCode;
+  const currencyCode = marketplaces[country[0]].currencyCode;
   const processingPromises = [];
   let logMessage = `Starting fetchAndProcessInventoryReport for ReportDocumentId: ${reportDocumentId}\n`;
+  if (createLog) {
+    logger(logMessage, logContext);
+  }
 
   try {
     const response = await axios({
       method: 'get',
-      url: url,
+      url: documentUrl,
       responseType: 'stream',
     });
 
@@ -105,7 +108,7 @@ async function fetchAndProcessInventoryReport(
     );
   } finally {
     if (createLog) {
-      logger(logMessage, 'fetchAndProcessInventoryReport');
+      logger(logMessage, logContext);
     }
   }
 }

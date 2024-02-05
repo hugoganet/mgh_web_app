@@ -279,9 +279,10 @@ class SpApiConnector {
    * @description Sends a request to the Amazon Selling Partner API with dynamic rate limiting.
    * @async
    * @param {string} method - The HTTP method for the request.
-   * @param {string} path - The API path for the request.
+   * @param {string} endpoint - The API endpoint for the request.
    * @param {Object} queryParams - Query parameters.
    * @param {Object} body - The request body.
+   * @param {string} logContext - The context for logging.
    * @param {boolean} createLog - Whether to log the request and response.
    * @param {string} apiOperation - The API operation being performed.
    * @param {boolean} isGrantless - Indicates grantless operation.
@@ -290,9 +291,10 @@ class SpApiConnector {
    */
   async sendRequest(
     method,
-    path,
+    endpoint,
     queryParams = {},
     body = {},
+    logContext,
     createLog,
     apiOperation,
     isGrantless = false,
@@ -313,9 +315,10 @@ class SpApiConnector {
       .schedule(() =>
         this._sendRequestWithRetry(
           method,
-          path,
+          endpoint,
           queryParams,
           body,
+          logContext,
           createLog,
           apiOperation,
           isGrantless,
@@ -324,14 +327,14 @@ class SpApiConnector {
       )
       .then(response => {
         // Successful request handling
-        logMessage += 'Request successfully completed.\n';
+        logMessage += 'Request successfully schedule.\n';
         return response; // Return the successful response
       })
       .catch(error => {
         // Error handling
-        logMessage += `Error during request: ${error}\n`;
+        logMessage += `Error scheduling the request: ${error}\n`;
         if (createLog) {
-          logger(logMessage, apiOperation);
+          logger(logMessage, logContext);
         }
         throw error; // Re-throw the error to be handled by the caller
       });
@@ -341,9 +344,10 @@ class SpApiConnector {
    * Sends a request to the Amazon Selling Partner API with exponential backoff for rate limiting.
    * @async
    * @param {string} method - HTTP method (GET, POST, etc.).
-   * @param {string} path - API endpoint path.
+   * @param {string} endpoint - API endpoint endpoint.
    * @param {Object} [queryParams={}] - Query parameters.
    * @param {Object} [body={}] - Request body for POST/PUT methods.
+   * @param {string} logContext - Identifier for the log context.
    * @param {boolean} createLog - Flag to indicate if the request and response should be logged.
    * @param {string} apiOperation - Identifier for the API operation.
    * @param {boolean} [isGrantless=false] - Flag for grantless operations.
@@ -352,15 +356,16 @@ class SpApiConnector {
    */
   async _sendRequestWithRetry(
     method,
-    path,
+    endpoint,
     queryParams,
     body,
+    logContext,
     createLog,
     apiOperation,
     isGrantless,
     retryCount,
   ) {
-    let logMessage = '';
+    let logMessage = `Sending request to ${apiOperation} API operation with retry attempt ${retryCount}.\n`;
     try {
       const accessToken = isGrantless
         ? await this.getGrantlessOperationToken()
@@ -376,7 +381,7 @@ class SpApiConnector {
             .join('&');
       }
 
-      const fullUrl = `https://sellingpartnerapi-eu.amazon.com${path}${queryString}`;
+      const fullUrl = `https://sellingpartnerapi-eu.amazon.com${endpoint}${queryString}`;
       const headers = this.createRequestHeaders(
         method,
         fullUrl,
@@ -420,18 +425,15 @@ class SpApiConnector {
           null,
           2,
         );
-
-      if (createLog) {
-        logger(logMessage, apiOperation);
-      }
       return axiosResponse;
     } catch (error) {
       if (error.response && error.response.status === 429 && retryCount < 5) {
         const delay = Math.pow(2, retryCount) * 1000;
         await new Promise(resolve => setTimeout(resolve, delay));
+        logMessage += `Rate limited: Retrying request after ${delay}ms\n`;
         return this._sendRequestWithRetry(
           method,
-          path,
+          endpoint,
           queryParams,
           body,
           createLog,
@@ -460,10 +462,11 @@ class SpApiConnector {
         } else {
           logMessage += '\nSetup Error: ' + error.message;
         }
-        if (createLog) {
-          logger(logMessage, apiOperation);
-        }
         throw error;
+      }
+    } finally {
+      if (createLog) {
+        logger(logMessage, logContext);
       }
     }
   }

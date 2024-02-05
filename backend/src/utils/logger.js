@@ -5,9 +5,9 @@ const path = require('path');
  * Logs a message to a specific API log file within a date-specific directory.
  *
  * @param {string} message - The message to log.
- * @param {string} reportType - The report type, used in naming the log file.
+ * @param {string} LogContext - The LogContext of the log message.
  */
-function logger(message, reportType) {
+function logger(message, LogContext) {
   const now = new Date();
   const offset = now.getTimezoneOffset() * 60000;
   const localISOTime = new Date(now - offset).toISOString();
@@ -18,7 +18,7 @@ function logger(message, reportType) {
     '/Users/hugoganet/Code/MGHWebApp/mgh_web_app/backend/src/integrations/sp_api/logs',
     formattedDate,
   );
-  const logFileName = `log_${reportType}_${formattedDate}.txt`;
+  const logFileName = `log_${LogContext}_${formattedDate}.txt`;
   const logFilePath = path.join(logDirectoryName, logFileName);
 
   if (!fs.existsSync(logDirectoryName)) {
