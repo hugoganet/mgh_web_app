@@ -5,15 +5,18 @@ const { logger } = require('../../../../utils/logger');
  * @function seedSellingPriceHistory
  * @description Populates the SellingPriceHistory table with recent data.
  * @param {boolean} createLog - Whether to create a log of the process.
+ * @param {string} logContext - The context for the log message.
  * @async
  * @return {Promise<void>} - A promise that resolves when the SellingPriceHistory table has been populated with recent data.
  */
-const seedSellingPriceHistory = async (createLog = false) => {
-  let logMessage = 'Starting to seed SellingPriceHistory.\n';
+async function seedSellingPriceHistory(
+  createLog = false,
+  logContext = 'seedSellingPriceHistory',
+) {
+  let logMessage = '';
 
   try {
     const inventoryUpdates = await db.AfnInventoryDailyUpdate.findAll();
-    logMessage += `Found ${inventoryUpdates.length} inventory updates.\n`;
 
     for (const update of inventoryUpdates) {
       try {
@@ -46,10 +49,10 @@ const seedSellingPriceHistory = async (createLog = false) => {
     console.error('Error seeding SellingPriceHistory:', error);
   } finally {
     if (createLog) {
-      logger(logMessage, 'SeedSellingPriceHistory');
+      logger(logMessage, logContext);
     }
   }
-};
+}
 
 module.exports = {
   seedSellingPriceHistory,

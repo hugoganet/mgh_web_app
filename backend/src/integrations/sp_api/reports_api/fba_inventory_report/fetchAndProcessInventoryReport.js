@@ -84,7 +84,7 @@ async function fetchAndProcessInventoryReport(
           );
           logMessage +=
             'Inventory data processing completed successfully in fetchAndProcessInventoryReport.\n';
-          await seedSellingPriceHistory(createLog);
+          await seedSellingPriceHistory(createLog, logContext);
         } catch (error) {
           logMessage += `Error processing inventory data stream in fetchAndProcessInventoryReport: ${error}\n`;
           console.error(
