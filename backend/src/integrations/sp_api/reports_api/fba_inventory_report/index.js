@@ -78,24 +78,24 @@ async function requestFbaInventoryReport(
       logContext,
     );
 
-    downloadAndDecompressDocument(
-      documentUrl,
-      compressionAlgorithm,
-      reportType,
-      countryCode,
-      dataStartTime,
-      dataEndTime,
-    );
-
-    // // Fetch CSV data and process into database
-    // await fetchAndProcessInventoryReport(
+    // downloadAndDecompressDocument(
     //   documentUrl,
     //   compressionAlgorithm,
-    //   reportDocumentId,
-    //   country,
-    //   logContext,
-    //   createLog,
+    //   reportType,
+    //   countryCode,
+    //   dataStartTime,
+    //   dataEndTime,
     // );
+
+    // Fetch CSV data and process into database
+    await fetchAndProcessInventoryReport(
+      documentUrl,
+      compressionAlgorithm,
+      reportDocumentId,
+      country,
+      logContext,
+      createLog,
+    );
     logMessage += `Finished fetching and processing inventory report for ${country} in index.js\n`;
   } catch (error) {
     console.error('Overall error in requesting FBA Inventory report:', error);
