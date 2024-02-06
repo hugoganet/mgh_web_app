@@ -182,6 +182,7 @@ async function automaticallyCreateAsinRecord(
             (newlyCreatedAsinId = newAsin.asinId),
             countryCode,
             createLog,
+            logContext,
           );
           logMessage += `FBA fees record created successfully.\n`;
         }

@@ -12,6 +12,7 @@ const { getPriceGridFbaFeeId } = require('./getPriceGridFbaFeeId');
  * @param {number} newlyCreatedAsinId - asinId of the newly created asin
  * @param {string} countryCode - country code of the newly created asin
  * @param {boolean} createLog - Whether to create a log for this operation
+ * @param {string} logContext - The context for the log message
  * @return {Promise<void>}
  */
 async function automaticallyCreateFbaFeesRecord(
@@ -22,8 +23,9 @@ async function automaticallyCreateFbaFeesRecord(
   newlyCreatedAsinId,
   countryCode,
   createLog = false,
+  logContext = 'automaticallyCreateFbaFeesRecord',
 ) {
-  let logMessage = `Starting automaticallyCreateFbaFeesRecord for newly created asinId : ${newlyCreatedAsinId}.\n`;
+  let logMessage = '';
   try {
     const priceGridFbaFeeId = await getPriceGridFbaFeeId(
       packageLength,
@@ -32,10 +34,9 @@ async function automaticallyCreateFbaFeesRecord(
       packageWeight,
       countryCode,
       createLog,
+      logContext,
     );
     if (priceGridFbaFeeId !== null) {
-      logMessage += `Successfully got priceGridFbaFeeId: ${priceGridFbaFeeId}\n`;
-
       const fbaFeesRecord = await db.FbaFee.create({
         asinId: newlyCreatedAsinId,
         packageLength,
@@ -44,20 +45,21 @@ async function automaticallyCreateFbaFeesRecord(
         packageWeight,
         priceGridFbaFeeId,
       });
-      logMessage += `Successfully created fbaFeesRecord: ${JSON.stringify(
-        fbaFeesRecord,
-      )}\n`;
+      logMessage += `Successfully created fbaFeesRecord for asinId: ${newlyCreatedAsinId} with id: ${fbaFeesRecord.fbaFeeId}\n`;
     } else {
-      logMessage += `Could not get priceGridFbaFeeId for newly created asinId: ${newlyCreatedAsinId}\n`;
+      logMessage += `Could not get priceGridFbaFeeId for asinId: ${newlyCreatedAsinId}\n`;
     }
   } catch (error) {
+    console.log(
+      `Error creating fbaFeesRecord for asinId:${newlyCreatedAsinId}`,
+    );
     logMessage += `Error in automaticallyCreateFbaFeesRecord: ${error.message}\n`;
     throw new Error(
       `Error in automaticallyCreateFbaFeesRecord: ${error.message}`,
     );
   } finally {
     if (createLog) {
-      logger(logMessage, 'automaticallyCreateFbaFeesRecord');
+      logger(logMessage, logContext);
     }
   }
 }

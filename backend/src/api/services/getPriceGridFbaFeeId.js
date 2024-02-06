@@ -5,12 +5,13 @@ const { logger } = require('../../utils/logger');
  * @function getPriceGridFbaFeeId
  * @description Get the FBA fee ID for a given package dimensions and weight
  * @async
- * @param {int} packageLength
- * @param {int} packageWidth
- * @param {int} packageHeight
- * @param {int} packageWeight
- * @param {string} countryCode
- * @param {boolean} createLog
+ * @param {int} packageLength - The length of the package
+ * @param {int} packageWidth - The width of the package
+ * @param {int} packageHeight - The height of the package
+ * @param {int} packageWeight - The weight of the package
+ * @param {string} countryCode - The country code for which to get the FBA fee ID
+ * @param {boolean} createLog - Whether to create a log for this operation
+ * @param {string} logContext - The context for the log message
  * @return{Promise<int|null>} - A promise that resolves to the FBA fee ID for a given package dimensions and weight
  */
 async function getPriceGridFbaFeeId(
@@ -20,13 +21,19 @@ async function getPriceGridFbaFeeId(
   packageWeight,
   countryCode,
   createLog = false,
+  logContext = 'getPriceGridFbaFeeId',
 ) {
-  let logMessage = `Getting FBA fee ID for package dimensions : ${packageLength}(lenght) x ${packageWidth}(width) x ${packageHeight}(height) and weight: ${packageWeight} for country code: ${countryCode}\n`;
+  let logMessage = '';
   try {
     // Fetch all FBA fee grid data for the given country code
     const fbaFeeData = await db.PriceGridFbaFee.findAll({
       where: { countryCode: countryCode },
     });
+
+    if (!fbaFeeData.length) {
+      logMessage += `No FBA fee data found for country code: ${countryCode}\n`;
+      return null;
+    }
 
     // Variables to hold the maximum category for each dimension
     let maxCategoryLength = null;
@@ -75,7 +82,7 @@ async function getPriceGridFbaFeeId(
     return null;
   } finally {
     if (createLog) {
-      logger(logMessage, 'getPriceGridFbaFeeId');
+      logger(logMessage, logContext);
     }
   }
 }
