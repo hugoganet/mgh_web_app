@@ -24,6 +24,7 @@ const { createUrlAmazon } = require('./createUrlAmazon');
  * @param {string} [marketplaceId] - Optional Marketplace ID associated with the ASIN.
  * @param {string} [countryCode] - Optional country code associated with the ASIN.
  * @param {boolean} createLog - Whether to create a log for this operation.
+ * @param {string} logContext - The context for the log message.
  * @throws Will throw an error if neither marketplaceId nor countryCode is provided.
  */
 async function automaticallyCreateAsinRecord(
@@ -31,9 +32,8 @@ async function automaticallyCreateAsinRecord(
   marketplaceId = null,
   countryCode = null,
   createLog = false,
+  logContext,
 ) {
-  let logMessage = `Starting automaticallyCreateAsinRecord for asin : ${asin}\n`;
-
   // If neither marketplaceId nor countryCode is provided, quit the function and log an error.
   if (!marketplaceId && !countryCode) {
     const errorMessage =
