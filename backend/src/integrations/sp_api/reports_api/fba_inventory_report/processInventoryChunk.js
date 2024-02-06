@@ -35,7 +35,7 @@ async function processInventoryChunk(
   createLog,
   logContext,
 ) {
-  let logMessage = `Processing inventory chunk for SKU: ${chunk['sku']} on ${countryCode}\n`;
+  let logMessage = ``;
   try {
     const sku = chunk['sku'];
     const fnsku = chunk['fnsku'];
@@ -50,6 +50,8 @@ async function processInventoryChunk(
         skuAverageSellingPrice,
         currencyCode,
         today,
+        createLog,
+        logContext,
       );
     }
 
@@ -92,17 +94,11 @@ async function processInventoryChunk(
           skuRestockAlertQuantity: 1,
           skuIsTest: false,
         });
-        logMessage += `Created new SKU record: ${JSON.stringify(
-          skuRecord,
-          '',
-          2,
-        )}\n`;
+        logMessage += `Created new SKU record with id: ${skuRecord.skuId} for SKU: ${sku} on ${countryCode}\n`;
       } catch (err) {
         logMessage += `Error finding similar SKU or copying acquisition costs: ${err}\n`;
         throw err;
       }
-
-      logMessage += `Checking if an ASIN record exists for ${asin} in ${countryCode} before creating one.\n`;
       let associatedAsin = await db.Asin.findOne({
         where: {
           asin,
@@ -111,25 +107,16 @@ async function processInventoryChunk(
       });
       // TODO : Find out why the associatedAsin is not found
       if (associatedAsin) {
-        logMessage += `Associated ASIN found, creating AsinSku record\n`;
-      } else {
-        try {
-          associatedAsin = await automaticallyCreateAsinRecord(
-            asin,
-            (marketplaceId = null),
-            countryCode,
-            createLog,
-            logContext,
-          );
-          logMessage += `No associated ASIN found, creating one : ${JSON.stringify(
-            associatedAsin,
-            '',
-            2,
-          )}\n`;
-        } catch (err) {
-          logMessage += `Error creating associated ASIN: ${err}\n`;
-          throw err;
-        }
+        logMessage += `Associated ASIN found for ${asin} in ${countryCode}, creating AsinSku record\n`;
+      } else if (!associatedAsin) {
+        associatedAsin = await automaticallyCreateAsinRecord(
+          asin,
+          (marketplaceId = null),
+          countryCode,
+          createLog,
+          logContext,
+        );
+        logMessage += `No associated ASIN found for ASIN: ${asin} in ${countryCode}, created one with id: ${associatedAsin.asinId} \n`;
       }
       // Create AsinSku record
       try {
@@ -139,8 +126,9 @@ async function processInventoryChunk(
           skuId: skuRecord.skuId,
         });
       } catch (err) {
+        console.log('Error creating AsinSku record in processInventoryChunk :');
         logMessage += `Error creating AsinSku record in processInventoryChunk : ${err}\n`;
-        throw err;
+        throw new Error(err);
       }
     }
 
