@@ -135,6 +135,8 @@ async function automaticallyCreateAsinRecord(
         similarAsin?.productCategoryId,
         countryCode,
         salesRank,
+        createLog,
+        logContext,
       );
     }
 

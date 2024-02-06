@@ -7,6 +7,7 @@ const { logger } = require('../../utils/logger');
  * @param {string} countryCode - The country code.
  * @param {number} salesRank - The sales rank.
  * @param {boolean} createLog - Whether to create a log of the process.
+ * @param {string} logContext - The context for the log message.
  * @return {Promise<number|null>} The product category rank ID, or null if not found.
  */
 async function getProductCategoryRankId(
@@ -14,8 +15,8 @@ async function getProductCategoryRankId(
   countryCode,
   salesRank,
   createLog = false,
+  logContext = 'getProductCategoryRankId',
 ) {
-  let logMessage = 'Starting getProductCategoryRankId\n';
   try {
     // Find the record where salesRank is less than or equal to rankingThreshold
     const record = await db.ProductCategoryRank.findOne({
@@ -31,16 +32,13 @@ async function getProductCategoryRankId(
       ],
     });
 
-    logMessage += `Found productCategoryRankId : ${record.productCategoryRankId}\n`;
     return record ? record.productCategoryRankId : null;
   } catch (error) {
-    console.error(`Error in getProductCategoryRankId: ${error}`);
-    logMessage += `Error in getProductCategoryRankId: ${error}\n`;
-    return null;
-  } finally {
     if (createLog) {
-      logger(logMessage, 'getProductCategoryRankId');
+      logger(`Error in getProductCategoryRankId: ${error}\n`, logContext);
     }
+    console.error(`Error in getProductCategoryRankId`);
+    throw new Error(`Error in getProductCategoryRankId: ${error.message}`);
   }
 }
 
