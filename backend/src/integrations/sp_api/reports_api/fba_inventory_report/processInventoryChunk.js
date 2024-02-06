@@ -173,7 +173,7 @@ async function processInventoryChunk(
     }
 
     try {
-      await updateAfnQuantity(skuId, createLog);
+      await updateAfnQuantity(skuId, createLog, logContext);
       logMessage += `Updated AFN quantity for SKU ID: ${skuRecord.skuId}.\n`;
     } catch (err) {
       logMessage += `Error updating AFN quantity: ${err}\n`;

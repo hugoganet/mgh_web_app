@@ -7,10 +7,15 @@ const { logger } = require('../../utils/logger');
  * @async
  * @param {number} skuId - The ID of the SKU to update.
  * @param {boolean} createLog - Whether to create a log of the process.
+ * @param {string} logContext - The context for the log message.
  * @return {Promise<void>} - The function doesn't return a value but updates the database.
  */
-const updateAfnQuantity = async (skuId, createLog = false) => {
-  let logMessage = `Updating AFN quantity for SKU ID: ${skuId}\n`;
+async function updateAfnQuantity(
+  skuId,
+  createLog = false,
+  logContext = 'updateAfnQuantity',
+) {
+  let logMessage = ``;
 
   try {
     const latestUpdate = await db.AfnInventoryDailyUpdate.findOne({
@@ -35,12 +40,12 @@ const updateAfnQuantity = async (skuId, createLog = false) => {
   } catch (error) {
     logMessage += `Error finding latest AfnInventoryDailyUpdate: ${error}\n`;
     console.error('Error finding latest AfnInventoryDailyUpdate:', error);
+  } finally {
+    if (createLog) {
+      logger(logMessage, logContext);
+    }
   }
-
-  if (createLog) {
-    logger(logMessage, 'UpdateAfnQuantity');
-  }
-};
+}
 
 module.exports = {
   updateAfnQuantity,
