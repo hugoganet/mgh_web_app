@@ -166,7 +166,7 @@ async function processInventoryChunk(
 
     // Perform various database operations on the SKU record
     try {
-      await checkSkuIsActive(skuId, createLog);
+      await checkSkuIsActive(skuId, createLog, logContext);
       logMessage += `Checked SKU activity for SKU ID: ${skuRecord.skuId}.\n`;
     } catch (err) {
       logMessage += `Error checking SKU activity: ${err}\n`;

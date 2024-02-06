@@ -7,11 +7,14 @@ const { logger } = require('../../utils/logger');
  * @async
  * @param {number} skuId - The ID of the SKU to check.
  * @param {boolean} createLog - Whether to create a log of the process.
+ * @param {string} logContext - The context for the log message.
  * @return {Promise<void>} - The function doesn't return a value but updates the database.
  */
-const checkSkuIsActive = async (skuId, createLog = false) => {
-  let logMessage = `Checking if SKU (ID: ${skuId}) is active.\n`;
-
+async function checkSkuIsActive(
+  skuId,
+  createLog = false,
+  logContext = 'checkSkuIsActive',
+) {
   try {
     const latestUpdate = await db.AfnInventoryDailyUpdate.findOne({
       where: { skuId },
@@ -22,7 +25,7 @@ const checkSkuIsActive = async (skuId, createLog = false) => {
       try {
         await db.Sku.update({ isActive: false }, { where: { skuId } });
       } catch (error) {
-        logMessage += `Error setting SKU (${skuId}) as inactive: ${error}\n`;
+        logMessage += `Error setting SKU with id: ${skuId} as inactive: ${error}\n`;
         console.error('Error setting SKU as inactive:', error);
       }
     } else {
@@ -46,12 +49,12 @@ const checkSkuIsActive = async (skuId, createLog = false) => {
   } catch (error) {
     logMessage += `Error checking and updating SKU active status: ${error}\n`;
     console.error('Error checking and updating SKU active status:', error);
+  } finally {
+    if (createLog) {
+      logger(logMessage, logContext);
+    }
   }
-
-  if (createLog) {
-    logger(logMessage, 'CheckSkuIsActive');
-  }
-};
+}
 
 module.exports = {
   checkSkuIsActive,
