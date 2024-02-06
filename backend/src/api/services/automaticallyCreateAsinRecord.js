@@ -34,19 +34,15 @@ async function automaticallyCreateAsinRecord(
   createLog = false,
   logContext = 'automaticallyCreateAsinRecord',
 ) {
-  // Early validation if both marketplaceId and countryCode are missing
-  if (!marketplaceId && !countryCode) {
-    const errorMessage =
-      'Error: Both marketplaceId and countryCode cannot be null.';
-    console.error(errorMessage);
-    if (createLog) {
-      logger(errorMessage, logContext);
-    }
-    return;
-  }
-
   try {
+    if (!marketplaceId && !countryCode) {
+      logMessage = +'Error: Both marketplaceId and countryCode cannot be null.';
+      console.error(errorMessage);
+      throw new Error(logMessage);
+    }
+
     let conversionResult;
+
     if (marketplaceId) {
       conversionResult = convertMarketplaceIdentifier(
         marketplaceId,
@@ -75,7 +71,9 @@ async function automaticallyCreateAsinRecord(
     } else {
       console.log("No similar asin found. Can't automatically create an ASIN");
       logMessage += `No similar asin found. Can't automatically create an ASIN\n`;
-      return;
+      throw new Error(
+        "No similar asin found. Can't automatically create an ASIN",
+      );
     }
 
     let catalogItem;
@@ -87,18 +85,20 @@ async function automaticallyCreateAsinRecord(
         logContext,
       );
     } catch (error) {
+      console.error(`Error fetching catalog item`);
       logMessage += `Error fetching catalog item: ${error}\n`;
       throw new Error(`Error fetching catalog item: ${error}`);
     }
 
     const { packageLength, packageWidth, packageHeight, packageWeight } =
-      extractPackageDimensions(catalogItem, createLog);
+      extractPackageDimensions(catalogItem, createLog, logContext);
 
     let salesRank = 0;
     if (catalogItem?.salesRanks?.[0]?.ranks?.[0]?.rank) {
       salesRank = catalogItem.salesRanks[0].ranks[0].rank;
+    } else {
+      logMessage += `No sales rank found for ASIN: ${asin}\n`;
     }
-    logMessage += `Sales rank resolved: ${salesRank}\n`;
 
     let productCategoryRankId;
     if (
@@ -131,12 +131,7 @@ async function automaticallyCreateAsinRecord(
       },
     });
 
-    const urlAmazon = await createUrlAmazon(
-      asin,
-      countryCode,
-      createLog,
-      logContext,
-    );
+    const urlAmazon = createUrlAmazon(asin, countryCode, createLog, logContext);
 
     const asinRecord = {
       asin,
@@ -167,6 +162,7 @@ async function automaticallyCreateAsinRecord(
         }
         logMessage += `EAN in ASIN record created successfully.\n`;
       } catch (error) {
+        console.error('Error automatically creating EAN in ASIN record:');
         logMessage += `Error automatically creating EAN in ASIN record: ${error}\n`;
         throw new Error(
           `Error automatically creating EAN in ASIN record: ${error}`,

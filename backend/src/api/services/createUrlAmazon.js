@@ -12,7 +12,7 @@ const { logger } = require('../../utils/logger');
  * @param {string} logContext - The context for the log message
  * @return {string} - Amazon URL
  */
-async function createUrlAmazon(
+function createUrlAmazon(
   asin,
   countryCode,
   createLog = false,
