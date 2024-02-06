@@ -1,6 +1,6 @@
 countryCode,countryName,countryMarketplaceDomain
 AT,Austria,
-BE,Belgium,Amazon.com.be
+BE,Belgium,amazon.com.be
 BG,Bulgaria,
 HR,Croatia,
 CY,Cyprus,
@@ -8,25 +8,25 @@ CZ,Czech Republic,
 DK,Denmark,
 EE,Estonia,
 FI,Finland,
-FR,France,Amazon.fr
-DE,Germany,Amazon.de
-GB,Great Britain,Amazon.co.uk
+FR,France,amazon.fr
+DE,Germany,amazon.de
+GB,Great Britain,amazon.co.uk
 GR,Greece,
 HU,Hungary,
 IE,Ireland,
-IT,Italy,Amazon.it
+IT,Italy,amazon.it
 LV,Latvia,
 LT,Lithuania,
 LU,Luxembourg,
 MT,Malta,
-NL,Netherlands,Amazon.nl
-PL,Poland,Amazon.pl
+NL,Netherlands,amazon.nl
+PL,Poland,amazon.pl
 PT,Portugal,
 RO,Romania,
 SK,Slovakia,
 SI,Slovenia,
-ES,Spain,Amazon.es
-TR,Turkey,Amazon.com.tr
-SE,Sweden,Amazon.se
+ES,Spain,amazon.es
+TR,Turkey,amazon.com.tr
+SE,Sweden,amazon.se
 CH,Switzerland,
-UK,United Kingdom,Amazon.co.uk
+UK,United Kingdom,amazon.co.uk

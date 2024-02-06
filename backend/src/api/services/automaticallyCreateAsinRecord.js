@@ -48,9 +48,8 @@ async function automaticallyCreateAsinRecord(
 
   // If marketplaceId is provided, get the countryCode.
   if (!countryCode && marketplaceId) {
-    countryCode = convertMarketplaceIdentifier(
+    {countryCode} = convertMarketplaceIdentifier(
       marketplaceId,
-      'marketplaceIdToCountryCode',
       true,
       logContext,
     );
@@ -66,9 +65,8 @@ async function automaticallyCreateAsinRecord(
     logMessage += `Resolved country code from marketplaceId ${marketplaceId}: ${countryCode}\n`;
   } // If countryCode is provided, get the marketplaceId.
   else if (!marketplaceId && countryCode) {
-    marketplaceId = convertMarketplaceIdentifier(
+    {marketplaceId} = convertMarketplaceIdentifier(
       countryCode,
-      'countryCodeToMarketplaceId',
       true,
       logContext,
     );
@@ -153,7 +151,12 @@ async function automaticallyCreateAsinRecord(
       },
     });
 
-    const urlAmazon = await createUrlAmazon(asin, countryCode, createLog);
+    const urlAmazon = await createUrlAmazon(
+      asin,
+      countryCode,
+      createLog,
+      logContext,
+    );
 
     const asinRecord = {
       asin,

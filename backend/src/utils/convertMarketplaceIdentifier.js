@@ -1,13 +1,13 @@
-const marketplaces = require('../config/marketplaces');
+const marketplaces = require('../config/marketplaces'); // Adjust the path as necessary
 const { logger } = require('./logger');
 
 /**
- * Retrieves the country code from a given marketplaceId or the marketplaceId from a given country code.
- * @param {string} identifier - The marketplaceId or countryCode for which the conversion is needed.
- * @param {string} type - The type of conversion to perform ('marketplaceIdToCountryCode' or 'countryCodeToMarketplaceId').
+ * Converts between marketplace identifiers, country codes, and sales channels.
+ * @param {string} identifier - The identifier to be converted (marketplaceId, countryCode, or domain).
+ * @param {'marketplaceIdToCountryCode' | 'marketplaceIdToCurrencyCode' | 'marketplaceIdToDomain' | 'countryCodeToMarketplaceId' | 'countryCodeToDomain' | } type - The type of conversion to perform. Can be 'marketplaceIdToCountryCode', 'countryCodeToMarketplaceId', 'salesChannelToCountryCode', or 'countryCodeToSalesChannel'.
  * @param {boolean} createLog - Whether to create a log of the process.
  * @param {string} logContext - The context for the log message.
- * @return {string|null} - The converted value (country code or marketplaceId) or null if not found.
+ * @return {string|null} - The converted value or null if not found.
  */
 function convertMarketplaceIdentifier(
   identifier,
@@ -15,56 +15,45 @@ function convertMarketplaceIdentifier(
   createLog = false,
   logContext = 'convertMarketplaceIdentifier',
 ) {
-  if (
-    !identifier ||
-    !['marketplaceIdToCountryCode', 'countryCodeToMarketplaceId'].includes(type)
-  ) {
-    const logMessage = `Invalid identifier or type provided: ${identifier}, ${type}`;
-    console.error(logMessage);
-    if (createLog) {
-      logger(logMessage, logContext);
-    }
-    return null;
+  let identifierType;
+  if (identifier.includes('.')) {
+    identifierType = 'domain';
+  } else if (identifier.length === 2) {
+    identifierType = 'countryCode';
+  } else {
+    identifierType = 'marketplaceId';
   }
+  let result = null;
 
   try {
-    let result = null;
-
-    // Iterate through the country objects within the marketplaces object
-    Object.keys(marketplaces).forEach(countryKey => {
-      const country = marketplaces[countryKey];
-      if (
-        type === 'marketplaceIdToCountryCode' &&
-        country.marketplaceId === identifier
-      ) {
-        result = country.countryCode;
-      } else if (
-        type === 'countryCodeToMarketplaceId' &&
-        country.countryCode === identifier
-      ) {
-        result = country.marketplaceId;
-      }
-    });
-
-    if (result === null) {
-      const logMessage = `No matching value found for identifier: ${identifier} with type: ${type}`;
-      console.error(logMessage);
-      if (createLog) {
-        logger(logMessage, logContext);
-      }
+    const marketplace = Object.values(marketplaces).find(
+      m => m[identifierType] === identifier,
+    );
+    if (!marketplace) {
+      throw new Error(`No match found for identifier: ${identifier}`);
     }
 
+    result = {
+      countryCode: marketplace.countryCode,
+      marketplaceId: marketplace.marketplaceId,
+      currencyCode: marketplace.currencyCode,
+      domain: marketplace.domain,
+    };
+
+    console.log(`Result: `, result);
     return result;
   } catch (error) {
-    const logMessage = `Error in convertMarketplaceIdentifier: ${error.message}`;
-    console.error(logMessage);
+    console.error(`Error in convertMarketplaceIdentifier`);
+    const errorMessage = `Error in convertMarketplaceIdentifier: ${error.message}`;
     if (createLog) {
-      logger(logMessage, logContext);
+      logger(errorMessage, logContext);
     }
-    throw error;
+    throw new Error(errorMessage);
   }
 }
 
 module.exports = {
   convertMarketplaceIdentifier,
 };
+
+convertMarketplaceIdentifier('FR', 'domainToMarketplaceId', true);

@@ -1,6 +1,7 @@
 const {
   mapSalesChannelOrCountryCode,
 } = require('../../utils/mapSalesChannelOrCountryCode');
+const { logger } = require('../../utils/logger');
 
 /**
  * @description Creates an Amazon URL based on the ASIN and country code
@@ -10,7 +11,12 @@ const {
  * @param {boolean} createLog - Whether to create a log for this operation
  * @return {string} - Amazon URL
  */
-async function createUrlAmazon(asin, countryCode, createLog = false) {
+async function createUrlAmazon(
+  asin,
+  countryCode,
+  createLog = false,
+  logContext = 'createUrlAmazon',
+) {
   let marketplaceDomain;
   let urlAmazon;
 
@@ -19,6 +25,7 @@ async function createUrlAmazon(asin, countryCode, createLog = false) {
       countryCode,
       'countryCodeToMarketplaceDomain',
       (createLog = false),
+      logContext,
     );
     if (marketplaceDomain) {
       marketplaceDomain = marketplaceDomain.toLowerCase();

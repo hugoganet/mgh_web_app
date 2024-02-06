@@ -1,48 +1,53 @@
-const db = require('../api/models/index');
+const marketplaces = require('../config/marketplaces'); // Adjust the path as necessary
 const { logger } = require('../utils/logger');
 
 /**
- * Maps sales channel to country code or country code to marketplace domain.
+ * Maps sales channel to country code or country code to marketplace domain using the marketplaces object.
  * @param {string} input - The sales channel domain or country code.
  * @param {'salesChannelToCountryCode' | 'countryCodeToMarketplaceDomain'} mapType - The type of mapping.
  * @param {boolean} createLog - Whether to create a log entry.
- * @return {Promise<string|null>} - The corresponding country code or marketplace domain, or null if not found.
+ * @param {string} logContext - The context for the log message.
+ * @return {string|null} - The corresponding country code or marketplace domain, or null if not found.
  */
-async function mapSalesChannelOrCountryCode(input, mapType, createLog = false) {
-  let logMessage = 'Starting mapSalesChannelOrCountryCode\n';
+async function mapSalesChannelOrCountryCode(
+  input,
+  mapType,
+  createLog = false,
+  logContext = 'mapSalesChannelOrCountryCode',
+) {
+  let result = null;
+
   try {
-    let query = {};
-
-    if (mapType === 'salesChannelToCountryCode') {
-      query = { countryMarketplaceDomain: input };
-    } else if (mapType === 'countryCodeToMarketplaceDomain') {
-      query = { countryCode: input };
-    } else {
-      throw new Error('Invalid mapType parameter');
-    }
-
-    const countryRecord = await db.Country.findOne({ where: query });
-
-    if (countryRecord) {
-      if (mapType === 'salesChannelToCountryCode') {
-        logMessage += `Found country code ${countryRecord.countryCode} for sales channel ${input}\n`;
-        return countryRecord.countryCode;
-      } else {
-        logMessage += `Found marketplace domain ${countryRecord.countryMarketplaceDomain} for country code ${input}\n`;
-        return countryRecord.countryMarketplaceDomain;
+    Object.values(marketplaces).forEach(marketplace => {
+      if (
+        mapType === 'salesChannelToCountryCode' &&
+        marketplace.domain === input
+      ) {
+        result = marketplace.countryCode;
+      } else if (
+        mapType === 'countryCodeToMarketplaceDomain' &&
+        marketplace.countryCode === input
+      ) {
+        result = marketplace.domain;
       }
-    } else {
-      logMessage += `No country record found for ${input}\n`;
-      return null;
+    });
+
+    if (!result) {
+      throw new Error(
+        `Mapping not found for input: ${input} with mapType: ${mapType}`,
+      );
     }
+    console.log(`Result: ${result}`);
+    return result;
   } catch (error) {
-    logMessage += `Error in mapSalesChannelOrCountryCode: ${error}\n`;
-    console.error('Error in mapSalesChannelOrCountryCode:', error);
-    return null;
-  } finally {
     if (createLog) {
-      logger(logMessage, 'mapSalesChannelOrCountryCode');
+      logger(
+        `Error in mapSalesChannelOrCountryCode: ${error.message}\n`,
+        logContext,
+      );
     }
+    console.error(`Error in mapSalesChannelOrCountryCode: ${error.message}`);
+    throw new Error(`Error in mapSalesChannelOrCountryCode: ${error.message}`);
   }
 }
 
