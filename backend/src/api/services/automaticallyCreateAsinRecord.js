@@ -142,6 +142,8 @@ async function automaticallyCreateAsinRecord(
 
     const productTaxCategoryName = await getProductTaxCategoryName(
       similarAsin?.productTaxCategoryId,
+      createLog,
+      logContext,
     );
 
     const productTaxCategoryId = await db.ProductTaxCategory.findOne({
