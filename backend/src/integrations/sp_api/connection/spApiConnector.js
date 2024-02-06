@@ -230,6 +230,7 @@ class SpApiConnector {
   hmac(key, message) {
     return crypto.createHmac('sha256', key).update(message).digest();
   }
+
   /**
    * Creates headers for the request.
    * @param {string} method - The HTTP method for the request.
@@ -427,21 +428,26 @@ class SpApiConnector {
         );
       return axiosResponse;
     } catch (error) {
-      if (error.response && error.response.status === 429 && retryCount < 5) {
-        const delay = Math.pow(2, retryCount) * 1000;
-        await new Promise(resolve => setTimeout(resolve, delay));
-        logMessage += `Rate limited: Retrying request after ${delay}ms\n`;
-        return this._sendRequestWithRetry(
-          method,
-          endpoint,
-          queryParams,
-          body,
-          logContext,
-          createLog,
-          apiOperation,
-          isGrantless,
-          retryCount + 1,
-        );
+      // Check if the error response has a status of 429 (Too Many Requests)
+      if (error.response && error.response.status === 429) {
+        let retryAfter = 2000; // Default retry after 2 seconds if no header is found
+        if (error.response.headers['retry-after']) {
+          retryAfter = parseInt(error.response.headers['retry-after']) * 1000; // Convert to milliseconds if provided in seconds
+        }
+        if (retryCount < 5) {
+          await new Promise(resolve => setTimeout(resolve, retryAfter));
+          return this._sendRequestWithRetry(
+            method,
+            endpoint,
+            queryParams,
+            body,
+            logContext,
+            createLog,
+            apiOperation,
+            isGrantless,
+            retryCount + 1,
+          );
+        }
       } else {
         logMessage += '\n\nError in sendRequest: ' + error.toString();
         if (error.response) {
