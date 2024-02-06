@@ -15,25 +15,23 @@ async function updateAfnQuantity(
   createLog = false,
   logContext = 'updateAfnQuantity',
 ) {
-  let logMessage = ``;
-
   try {
     const latestUpdate = await db.AfnInventoryDailyUpdate.findOne({
       where: { skuId },
     });
 
     if (!latestUpdate) {
-      logMessage += `No AfnInventoryDailyUpdate found for SKU ID: ${skuId}. No update performed.\n`;
+      throw new Error(
+        `No AfnInventoryDailyUpdate found for SKU ID: ${skuId}. No update performed.\n`,
+      );
     } else {
       try {
         const skuAfnTotalQuantity = latestUpdate.afnFulfillableQuantity;
         await db.Sku.update({ skuAfnTotalQuantity }, { where: { skuId } });
-        logMessage += `Updated SKU AFN total quantity for SKU ID: ${skuId} to ${skuAfnTotalQuantity}.\n`;
       } catch (updateError) {
-        logMessage += `Error updating SKU AFN total quantity in the database: ${updateError}\n`;
-        console.error(
-          'Error updating SKU AFN total quantity in the database:',
-          updateError,
+        console.error('Error updating SKU AFN total quantity in the database:');
+        throw new Error(
+          `Error updating SKU AFN total quantity in the database: ${updateError}\n`,
         );
       }
     }
