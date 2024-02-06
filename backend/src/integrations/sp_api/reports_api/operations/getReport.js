@@ -43,11 +43,10 @@ async function getReport(reportId, createLog, logContext) {
         await new Promise(resolve => setTimeout(resolve, 60000 * 5)); // Wait for 5 minutes
       }
     } catch (error) {
-      const logMessage = `Error while fetching report document ID: ${error}\n`;
       if (createLog) {
-        logger(logMessage, logContext);
+        logger(`Error in getReport: ${error}\n`, logContext);
       }
-      console.error(`Error while fetching report document ID: ${error}`);
+      console.error(`Error in getReport`);
       throw error;
     }
   }

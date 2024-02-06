@@ -44,10 +44,10 @@ async function createReport(
     );
     return response.data;
   } catch (error) {
-    const logMessage = `Error in ${apiOperation} API operation: ${error}\n`;
     if (createLog) {
-      logger(logMessage, logContext);
+      logger(`Error in createReport: ${error}\n`, logContext);
     }
+    console.error(`Error in createReport`);
     throw error;
   }
 }

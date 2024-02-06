@@ -10,7 +10,6 @@ const { logger } = require('../../../../utils/logger');
  * @return {Promise<Object>} - The catalog item details.
  */
 async function getCatalogItem(asin, marketplaceId, createLog = false) {
-  let logMessage = `Fetching catalog item for ASIN: ${asin} and marketplaceId: ${marketplaceId} \n`;
   const includedData = [
     'attributes',
     'productTypes',
@@ -20,6 +19,7 @@ async function getCatalogItem(asin, marketplaceId, createLog = false) {
   ];
   const apiOperation = 'getCatalogItem';
   const endpoint = `/catalog/2020-12-01/items/${asin}`;
+  const method = 'GET';
   const queryParams = {
     marketplaceIds: marketplaceId,
     includedData: includedData.join(','),
@@ -27,25 +27,24 @@ async function getCatalogItem(asin, marketplaceId, createLog = false) {
 
   try {
     const response = await spApiInstance.sendRequest(
-      'GET',
+      method,
       endpoint,
       queryParams,
       {},
+      logContext,
       createLog,
       apiOperation,
-      false,
+      (isGrantless = false),
       (rateLimitConfig = { rate: 2, burst: 2 }),
     );
-    logMessage += `Catalog item fetched successfully \n`;
+
     return response.data;
   } catch (error) {
-    console.error(`Error in getCatalogItem: ${error}`);
-    logMessage += `Error in getCatalogItem: ${error}\n`;
-    throw new Error(`Error in getCatalogItem: ${error}`);
-  } finally {
     if (createLog) {
-      logger(logMessage, apiOperation);
+      logger(`Error in getCatalogItem: ${error}\n`, logContext);
     }
+    console.error(`Error in getCatalogItem`);
+    throw new Error(`Error in getCatalogItem: ${error}`);
   }
 }
 

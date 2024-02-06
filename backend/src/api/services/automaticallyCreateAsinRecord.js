@@ -32,7 +32,7 @@ async function automaticallyCreateAsinRecord(
   marketplaceId = null,
   countryCode = null,
   createLog = false,
-  logContext,
+  logContext = 'automaticallyCreateAsinRecord',
 ) {
   // If neither marketplaceId nor countryCode is provided, quit the function and log an error.
   if (!marketplaceId && !countryCode) {
@@ -41,7 +41,7 @@ async function automaticallyCreateAsinRecord(
     logMessage += errorMessage + '\n';
     console.error(errorMessage);
     if (createLog) {
-      logger(logMessage, 'automaticallyCreateAsinRecord');
+      logger(logMessage, logContext);
     }
     return;
   }
@@ -51,13 +51,15 @@ async function automaticallyCreateAsinRecord(
     countryCode = convertMarketplaceIdentifier(
       marketplaceId,
       'marketplaceIdToCountryCode',
+      true,
+      logContext,
     );
     if (!countryCode) {
       const errorMessage = `Could not find country code for marketplaceId: ${marketplaceId}`;
       logMessage += errorMessage + '\n';
       console.error(errorMessage);
       if (createLog) {
-        logger(logMessage, 'automaticallyCreateAsinRecord');
+        logger(logMessage, logContext);
       }
       throw new Error(errorMessage);
     }
@@ -67,13 +69,15 @@ async function automaticallyCreateAsinRecord(
     marketplaceId = convertMarketplaceIdentifier(
       countryCode,
       'countryCodeToMarketplaceId',
+      true,
+      logContext,
     );
     if (!marketplaceId) {
       const errorMessage = `Could not find marketplaceId for country code: ${countryCode}`;
       logMessage += errorMessage + '\n';
       console.error(errorMessage);
       if (createLog) {
-        logger(logMessage, 'automaticallyCreateAsinRecord');
+        logger(logMessage, logContext);
       }
       throw new Error(errorMessage);
     }
@@ -98,7 +102,12 @@ async function automaticallyCreateAsinRecord(
 
     let catalogItem;
     try {
-      catalogItem = await getCatalogItem(asin, marketplaceId, createLog);
+      catalogItem = await getCatalogItem(
+        asin,
+        marketplaceId,
+        createLog,
+        logContext,
+      );
     } catch (error) {
       logMessage += `Error fetching catalog item: ${error}\n`;
       throw new Error(`Error fetching catalog item: ${error}`);
@@ -206,7 +215,7 @@ async function automaticallyCreateAsinRecord(
     console.error('Error automaticallyCreateAsinRecord:', error);
   } finally {
     if (createLog) {
-      logger(logMessage, 'automaticallyCreateAsinRecord');
+      logger(logMessage, logContext);
     }
   }
 }

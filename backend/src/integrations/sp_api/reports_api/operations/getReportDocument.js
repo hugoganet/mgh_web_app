@@ -36,11 +36,10 @@ async function getReportDocument(reportDocumentId, createLog, logContext) {
 
     return { documentUrl, compressionAlgorithm, reportDocumentId };
   } catch (error) {
-    logMessage = `Error fetching document URL: ${error}\n`;
     if (createLog) {
-      logger(logMessage, logContext);
+      logger(`Error in getReportDocument: ${error}\n`, logContext);
     }
-    console.error(`Error fetching document URL: ${error}`);
+    console.error(`Error in getReportDocument`);
     throw error;
   }
 }
