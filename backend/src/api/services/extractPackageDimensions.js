@@ -5,11 +5,14 @@ const { logger } = require('../../utils/logger');
  * @function extractPackageDimensions
  * @param {Object} catalogItem - The catalog item to extract package dimensions from.
  * @param {boolean} createLog - Whether to create a log for this operation.
+ * @param {string} logContext - The context for the log message.
  * @return {Object} - An object containing the package dimensions and weight.
  */
-function extractPackageDimensions(catalogItem, createLog = false) {
-  let logMessage = `Starting extractPackageDimensions for ASIN: ${catalogItem.asin}\n`;
-
+function extractPackageDimensions(
+  catalogItem,
+  createLog = false,
+  logContext = 'extractPackageDimensions',
+) {
   const dimensions = catalogItem.attributes.item_package_dimensions?.[0];
   const weightData = catalogItem.attributes.item_package_weight?.[0];
   let packageLength;
@@ -48,24 +51,12 @@ function extractPackageDimensions(catalogItem, createLog = false) {
     } else {
       packageWeight = weightData?.value;
     }
-
-    logMessage += `Package dimensions and weight resolved: ${JSON.stringify(
-      {
-        packageLength,
-        packageWidth,
-        packageHeight,
-        packageWeight,
-      },
-      '',
-      2,
-    )}.\n`;
   } catch (error) {
-    logMessage += `Error extracting package dimensions: ${error}\n`;
-    throw new Error(`Error extracting package dimensions: ${error}`);
-  } finally {
     if (createLog) {
-      logger(logMessage, 'extractPackageDimensions');
+      logger(`Error extracting package dimensions: ${error}\n`, logContext);
     }
+    console.error(`Error in extractPackageDimensions`);
+    throw new Error(`Error extracting package dimensions: ${error.message}`);
   }
   return {
     packageLength,
