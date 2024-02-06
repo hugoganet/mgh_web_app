@@ -1,4 +1,5 @@
 const db = require('../../src/api/models/index');
+const { logger } = require('../utils/logger');
 
 /**
  * Converts an amount in a given currency to EUR.
@@ -6,11 +7,12 @@ const db = require('../../src/api/models/index');
  * @param {number} amount - The amount to convert.
  * @param {string} currency - The currency of the amount.
  * @param {Date} date - The date of the amount.
+ * @param {boolean} createLog - Whether to create a log of the process.
+ * @param {string} logContext - The context for the log message.
  * @return {Promise<number>} - A promise that resolves to the converted amount.
  */
-async function convertToEur(amount, currency, date) {
+async function convertToEur(amount, currency, date, createLog, logContext) {
   try {
-    // Check in db.DailyAverageExchangeRate if there is a record for the given date and currency
     let exchangeRateRecord = await db.DailyAverageExchangeRate.findOne({
       where: {
         currencyCode: currency,
@@ -31,13 +33,26 @@ async function convertToEur(amount, currency, date) {
       });
     }
 
-    // If an exchange rate is found, return the amount * exchangeRate
     if (exchangeRateRecord) {
+      if (createLog) {
+        logger(
+          `Converted ${currency} ${amount} to EUR: ${
+            amount * exchangeRateRecord.rateToEur
+          }\n`,
+          logContext,
+        );
+      }
       return amount * exchangeRateRecord.rateToEur;
     } else {
-      throw new Error(`Exchange rate not found for ${currency} on ${date}`);
+      if (createLog) {
+        logger(`Exchange rate not found for ${currency}\n`, logContext);
+      }
+      throw new Error(`Exchange rate not found for ${currency}`);
     }
   } catch (error) {
+    if (createLog) {
+      logger(`Error in convertToEur: ${error.message}\n`, logContext);
+    }
     console.error(`Error in convertToEur: ${error.message}`);
     throw error;
   }

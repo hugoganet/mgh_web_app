@@ -20,6 +20,7 @@ const {
  * @param {string} countryCode - The country code associated with the inventory data.
  * @param {string} currencyCode - The currency code associated with the inventory data.
  * @param {boolean} createLog - Whether to create a log of the process.
+ * @param {string} logContext - The context for the log message.
  * @return {Promise<Object>} - A promise that resolves to the updated or created AfnInventoryDailyUpdate record.
  * @description This function takes a chunk of data from an inventory report CSV, processes it to extract
  *              necessary information, and performs various asynchronous database operations including
@@ -32,6 +33,7 @@ async function processInventoryChunk(
   countryCode,
   currencyCode,
   createLog,
+  logContext,
 ) {
   let logMessage = `Processing inventory chunk for SKU: ${chunk['sku']} on ${countryCode}\n`;
   try {
