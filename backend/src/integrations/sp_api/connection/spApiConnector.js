@@ -436,6 +436,7 @@ class SpApiConnector {
           endpoint,
           queryParams,
           body,
+          logContext,
           createLog,
           apiOperation,
           isGrantless,

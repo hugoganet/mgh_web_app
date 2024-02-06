@@ -93,8 +93,8 @@ async function requestFbaInventoryReport(
       compressionAlgorithm,
       reportDocumentId,
       country,
-      logContext,
       createLog,
+      logContext,
     );
     logMessage += `Finished fetching and processing inventory report for ${country} in index.js\n`;
   } catch (error) {

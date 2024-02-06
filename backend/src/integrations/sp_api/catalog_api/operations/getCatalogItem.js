@@ -7,9 +7,15 @@ const { logger } = require('../../../../utils/logger');
  * @param {string} asin - The ASIN of the catalog item.
  * @param {string} marketplaceId - The marketplace identifier.
  * @param {boolean} createLog - Whether to create a log of the process.
+ * @param {string} logContext - The context for the log message.
  * @return {Promise<Object>} - The catalog item details.
  */
-async function getCatalogItem(asin, marketplaceId, createLog = false) {
+async function getCatalogItem(
+  asin,
+  marketplaceId,
+  createLog = false,
+  logContext = 'getCatalogItem',
+) {
   const includedData = [
     'attributes',
     'productTypes',
@@ -24,7 +30,6 @@ async function getCatalogItem(asin, marketplaceId, createLog = false) {
     marketplaceIds: marketplaceId,
     includedData: includedData.join(','),
   };
-
   try {
     const response = await spApiInstance.sendRequest(
       method,
@@ -44,7 +49,7 @@ async function getCatalogItem(asin, marketplaceId, createLog = false) {
       logger(`Error in getCatalogItem: ${error}\n`, logContext);
     }
     console.error(`Error in getCatalogItem`);
-    throw new Error(`Error in getCatalogItem: ${error}`);
+    throw error;
   }
 }
 

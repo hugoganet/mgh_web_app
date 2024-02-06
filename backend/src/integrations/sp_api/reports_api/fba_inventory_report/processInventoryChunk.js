@@ -116,7 +116,7 @@ async function processInventoryChunk(
           createLog,
           logContext,
         );
-        logMessage += `No associated ASIN found for ASIN: ${asin} in ${countryCode}, created one with id: ${associatedAsin.asinId} \n`;
+        logMessage += `No associated ASIN found for ASIN: ${asin} in ${countryCode}, created one with id: ${associatedAsin} \n`;
       }
       // Create AsinSku record
       try {
@@ -192,7 +192,7 @@ async function processInventoryChunk(
     logMessage += `Error processing inventory chunk: ${error}\n`;
   } finally {
     if (createLog) {
-      logger(logMessage, 'processInventoryChunk');
+      logger(logMessage, logContext);
     }
   }
 }

@@ -38,7 +38,6 @@ function convertMarketplaceIdentifier(
       domain: marketplace.domain,
     };
 
-    console.log(`Result: `, result);
     return result;
   } catch (error) {
     console.error(`Error in convertMarketplaceIdentifier`);

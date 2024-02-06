@@ -15,6 +15,7 @@ async function updateAfnQuantity(
   createLog = false,
   logContext = 'updateAfnQuantity',
 ) {
+  let logMessage = '';
   try {
     const latestUpdate = await db.AfnInventoryDailyUpdate.findOne({
       where: { skuId },

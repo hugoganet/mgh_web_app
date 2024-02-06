@@ -11,7 +11,13 @@ const { logger } = require('../utils/logger');
  * @param {string} logContext - The context for the log message.
  * @return {Promise<number>} - A promise that resolves to the converted amount.
  */
-async function convertToEur(amount, currency, date, createLog, logContext) {
+async function convertToEur(
+  amount,
+  currency,
+  date,
+  createLog = false,
+  logContext = 'convertToEur',
+) {
   try {
     let exchangeRateRecord = await db.DailyAverageExchangeRate.findOne({
       where: {

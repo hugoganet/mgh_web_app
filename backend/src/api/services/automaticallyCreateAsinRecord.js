@@ -34,6 +34,7 @@ async function automaticallyCreateAsinRecord(
   createLog = false,
   logContext = 'automaticallyCreateAsinRecord',
 ) {
+  let logMessage = '';
   try {
     if (!marketplaceId && !countryCode) {
       logMessage = +'Error: Both marketplaceId and countryCode cannot be null.';
@@ -158,6 +159,7 @@ async function automaticallyCreateAsinRecord(
             similarAsin.asinId,
             newAsin.asinId,
             createLog,
+            logContext,
           );
         }
         logMessage += `EAN in ASIN record created successfully.\n`;

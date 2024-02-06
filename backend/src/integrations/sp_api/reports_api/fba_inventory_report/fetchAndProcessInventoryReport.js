@@ -17,8 +17,8 @@ const { logger } = require('../../../../utils/logger');
  * @param {string|null} compressionAlgorithm - The compression algorithm used (e.g., 'GZIP'), or null if uncompressed.
  * @param {string} reportDocumentId - The document ID associated with the report.
  * @param {string[]} country - The country keys to associate with the report.
- * @param {string} logContext - The context for the log message.
  * @param {boolean} createLog - Whether to create a log of the process.
+ * @param {string} logContext - The context for the log message.
  * @return {Promise<void>} - A promise that resolves when the CSV file has been fetched and processed.
  */
 async function fetchAndProcessInventoryReport(
@@ -26,8 +26,8 @@ async function fetchAndProcessInventoryReport(
   compressionAlgorithm,
   reportDocumentId,
   country,
-  logContext,
   createLog,
+  logContext,
 ) {
   const countryCode = marketplaces[country[0]].countryCode;
   const currencyCode = marketplaces[country[0]].currencyCode;
@@ -73,6 +73,7 @@ async function fetchAndProcessInventoryReport(
             countryCode,
             currencyCode,
             createLog,
+            logContext,
           ),
         );
       })

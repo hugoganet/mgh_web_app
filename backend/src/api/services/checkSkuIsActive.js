@@ -15,6 +15,7 @@ async function checkSkuIsActive(
   createLog = false,
   logContext = 'checkSkuIsActive',
 ) {
+  let logMessage = '';
   try {
     const latestUpdate = await db.AfnInventoryDailyUpdate.findOne({
       where: { skuId },
