@@ -1,6 +1,6 @@
 const {
-  mapSalesChannelOrCountryCode,
-} = require('../../utils/mapSalesChannelOrCountryCode');
+  convertMarketplaceIdentifier,
+} = require('../../utils/convertMarketplaceIdentifier');
 const { logger } = require('../../utils/logger');
 
 /**
@@ -9,6 +9,7 @@ const { logger } = require('../../utils/logger');
  * @param {string} asin - Amazon Standard Identification Number
  * @param {string} countryCode - Country code associated with the ASIN
  * @param {boolean} createLog - Whether to create a log for this operation
+ * @param {string} logContext - The context for the log message
  * @return {string} - Amazon URL
  */
 async function createUrlAmazon(
@@ -21,27 +22,28 @@ async function createUrlAmazon(
   let urlAmazon;
 
   try {
-    marketplaceDomain = await mapSalesChannelOrCountryCode(
-      countryCode,
-      'countryCodeToMarketplaceDomain',
-      (createLog = false),
-      logContext,
-    );
+    result = convertMarketplaceIdentifier(countryCode, true, logContext);
+    marketplaceDomain = result.domain;
+
     if (marketplaceDomain) {
       marketplaceDomain = marketplaceDomain.toLowerCase();
       urlAmazon = `https://${marketplaceDomain}/dp/${asin}`;
+      return urlAmazon;
     } else {
-      logMessage += `Marketplace domain not found for country code ${countryCode}\n`;
+      throw new Error(
+        `Marketplace domain not found for country code ${countryCode}\n`,
+      );
     }
   } catch (error) {
-    logMessage += `Error in createUrlAmazon. Url not created ${error}\n`;
-    throw new Error(`Error in createUrlAmazon. Url not created ${error}`);
-  } finally {
+    console.log(`Error in createUrlAmazon.`);
     if (createLog) {
-      logger(logMessage, 'createUrlAmazon');
+      logger(
+        `Error in createUrlAmazon for asin: ${asin}. Url not created ${error}\n`,
+        logContext,
+      );
     }
+    throw new Error(`Error in createUrlAmazon. Url not created ${error}`);
   }
-  return urlAmazon;
 }
 
 module.exports = { createUrlAmazon };

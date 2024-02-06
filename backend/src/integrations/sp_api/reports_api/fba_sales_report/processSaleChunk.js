@@ -15,8 +15,8 @@ const {
 } = require('../../../../utils/calculateNetMargin.js');
 const { calculateRoi } = require('../../../../utils/calculateRoi.js');
 const {
-  mapSalesChannelOrCountryCode,
-} = require('../../../../utils/mapSalesChannelOrCountryCode.js');
+  convertMarketplaceIdentifier,
+} = require('../../../../utils/convertMarketplaceIdentifier.js');
 const { convertToEur } = require('../../../../utils/convertToEur');
 
 /**
@@ -34,11 +34,11 @@ async function processSalesChunk(chunk, reportDocumentId, createLog = false) {
     let asinId;
     let salesFbaFeeType;
     let salesFbaFees;
-
     try {
-      countryCode = await mapSalesChannelOrCountryCode(
+      {countryCode} = convertMarketplaceIdentifier(
         chunk['sales-channel'],
-        'salesChannelToCountryCode',
+        true,
+        logContext,
       );
     } catch (err) {
       logMessage += `Error mapping sales channel (${chunk['sales-channel']}) to country code: ${err.message}\n`;

@@ -4,14 +4,12 @@ const { logger } = require('./logger');
 /**
  * Converts between marketplace identifiers, country codes, and sales channels.
  * @param {string} identifier - The identifier to be converted (marketplaceId, countryCode, or domain).
- * @param {'marketplaceIdToCountryCode' | 'marketplaceIdToCurrencyCode' | 'marketplaceIdToDomain' | 'countryCodeToMarketplaceId' | 'countryCodeToDomain' | } type - The type of conversion to perform. Can be 'marketplaceIdToCountryCode', 'countryCodeToMarketplaceId', 'salesChannelToCountryCode', or 'countryCodeToSalesChannel'.
  * @param {boolean} createLog - Whether to create a log of the process.
  * @param {string} logContext - The context for the log message.
  * @return {string|null} - The converted value or null if not found.
  */
 function convertMarketplaceIdentifier(
   identifier,
-  type,
   createLog = false,
   logContext = 'convertMarketplaceIdentifier',
 ) {
@@ -55,5 +53,3 @@ function convertMarketplaceIdentifier(
 module.exports = {
   convertMarketplaceIdentifier,
 };
-
-convertMarketplaceIdentifier('FR', 'domainToMarketplaceId', true);

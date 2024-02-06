@@ -34,55 +34,35 @@ async function automaticallyCreateAsinRecord(
   createLog = false,
   logContext = 'automaticallyCreateAsinRecord',
 ) {
-  // If neither marketplaceId nor countryCode is provided, quit the function and log an error.
+  // Early validation if both marketplaceId and countryCode are missing
   if (!marketplaceId && !countryCode) {
     const errorMessage =
       'Error: Both marketplaceId and countryCode cannot be null.';
-    logMessage += errorMessage + '\n';
     console.error(errorMessage);
     if (createLog) {
-      logger(logMessage, logContext);
+      logger(errorMessage, logContext);
     }
     return;
   }
 
-  // If marketplaceId is provided, get the countryCode.
-  if (!countryCode && marketplaceId) {
-    {countryCode} = convertMarketplaceIdentifier(
-      marketplaceId,
-      true,
-      logContext,
-    );
-    if (!countryCode) {
-      const errorMessage = `Could not find country code for marketplaceId: ${marketplaceId}`;
-      logMessage += errorMessage + '\n';
-      console.error(errorMessage);
-      if (createLog) {
-        logger(logMessage, logContext);
-      }
-      throw new Error(errorMessage);
-    }
-    logMessage += `Resolved country code from marketplaceId ${marketplaceId}: ${countryCode}\n`;
-  } // If countryCode is provided, get the marketplaceId.
-  else if (!marketplaceId && countryCode) {
-    {marketplaceId} = convertMarketplaceIdentifier(
-      countryCode,
-      true,
-      logContext,
-    );
-    if (!marketplaceId) {
-      const errorMessage = `Could not find marketplaceId for country code: ${countryCode}`;
-      logMessage += errorMessage + '\n';
-      console.error(errorMessage);
-      if (createLog) {
-        logger(logMessage, logContext);
-      }
-      throw new Error(errorMessage);
-    }
-    logMessage += `Resolved marketplaceId from country code ${countryCode}: ${marketplaceId}\n`;
-  }
-
   try {
+    let conversionResult;
+    if (marketplaceId) {
+      conversionResult = convertMarketplaceIdentifier(
+        marketplaceId,
+        createLog,
+        logContext,
+      );
+    } else if (countryCode) {
+      conversionResult = convertMarketplaceIdentifier(
+        countryCode,
+        createLog,
+        logContext,
+      );
+    }
+    countryCode = conversionResult.countryCode;
+    marketplaceId = conversionResult.marketplaceId;
+
     const similarAsin = await db.Asin.findOne({
       where: {
         asin,
