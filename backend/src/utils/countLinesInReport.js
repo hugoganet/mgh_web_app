@@ -21,7 +21,7 @@ async function countLinesInReport(
   logContext = 'countLinesInReport',
 ) {
   let logMessage = `Starting countLinesInReport for ${documentUrl}.\n`;
-  let lineCount = 0;
+  let lineCount = -1; // Start at -1 to account for the header line
 
   try {
     const response = await axios({
@@ -74,9 +74,3 @@ async function countLinesInReport(
 }
 
 module.exports = { countLinesInReport };
-
-// countLinesInReport(
-//   'https://tortuga-prod-eu.s3-eu-west-1.amazonaws.com/6ca6d8f3-8f36-4079-9b1b-0e60d114aec4.amzn1.tortuga.4.eu.T2FE9GSBFIFIHT?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240207T140905Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=AKIAX2ZVOZFBLRVE6O7G%2F20240207%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Signature=2fdab927b804f3718f719333daac90e227730485ad1a230991cf8a7d849b1125',
-//   undefined,
-//   true,
-// );
