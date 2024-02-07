@@ -35,13 +35,15 @@ async function fetchAndProcessInventoryReport(
   const countryCode = marketplaces[country[0]].countryCode;
   const currencyCode = marketplaces[country[0]].currencyCode;
   const processingPromises = [];
+
+  // console.log(documentUrl, compressionAlgorithm);
   // const totalLines = await countLinesInReport(
   //   documentUrl,
   //   compressionAlgorithm,
   //   createLog,
   //   logContext,
   // );
-  // console.log(createLog, logContext, totalLines);
+
   // let logMessage = `Starting fetchAndProcessInventoryReport. ${totalLines} SKUs to process.\n`;
   // if (createLog) {
   //   logger(logMessage, logContext);

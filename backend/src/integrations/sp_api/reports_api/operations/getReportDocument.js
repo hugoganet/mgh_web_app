@@ -11,7 +11,11 @@ const { logger } = require('../../../../utils/logger');
  * @param {string} logContext - The context for the log file.
  * @return {Promise<string>} - A promise that resolves to the URL of the report document.
  */
-async function getReportDocument(reportDocumentId, createLog, logContext) {
+async function getReportDocument(
+  reportDocumentId,
+  createLog = false,
+  logContext = 'getReportDocument',
+) {
   const apiOperation = 'getReportDocument';
   const endpoint = `/reports/2021-06-30/documents/${reportDocumentId}`;
   const method = 'GET';

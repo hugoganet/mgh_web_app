@@ -27,6 +27,7 @@ async function countLinesInReport(
       url: documentUrl,
       responseType: 'stream',
     });
+
     const decompressionStream = chooseDecompressionStream(compressionAlgorithm);
     let lineCount = 0;
 
@@ -40,7 +41,6 @@ async function countLinesInReport(
               const lines = chunk.toString().split('\n');
               lines.forEach(line => {
                 if (!line.startsWith('#') && line.trim() !== '') {
-                  // Skip comment lines and empty lines
                   lineCount++;
                 }
               });
@@ -48,22 +48,30 @@ async function countLinesInReport(
             },
           }),
         )
-        .on(
-          'end',
-          () => resolve(lineCount),
-          (logMessage += `Processed ${lineCount} lines.\n`),
-        )
-        .on('error', reject);
+        .on('end', () => {
+          logMessage += `Processed ${lineCount} lines.\n`;
+          if (createLog) {
+            logger(logMessage, logContext);
+          }
+          resolve(lineCount);
+        })
+        .on('error', error => {
+          reject(error);
+        });
     });
   } catch (error) {
-    console.log('Error in countLinesInReport:');
     logMessage += `Error in countLinesInReport: ${error}\n`;
-    throw error;
-  } finally {
     if (createLog) {
       logger(logMessage, logContext);
     }
+    throw error;
   }
 }
 
 module.exports = { countLinesInReport };
+
+// countLinesInReport(
+//   'https://tortuga-prod-eu.s3-eu-west-1.amazonaws.com/98cc842b-90af-49fa-86c3-5fc514b0504e.amzn1.tortuga.4.eu.TJ2SWZX5RLJ6C?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240207T112854Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=AKIAX2ZVOZFBLRVE6O7G%2F20240207%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Signature=f9de506085206c69f2a388e9c313c4c3468d1a4651d14300d6184969e79b8305',
+//   undefined,
+//   true,
+// );
