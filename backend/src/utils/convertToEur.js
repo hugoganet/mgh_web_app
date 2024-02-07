@@ -44,16 +44,16 @@ async function convertToEur(
         logger(
           `Converted ${currency} ${amount} to EUR: ${
             amount * exchangeRateRecord.rateToEur
-          }\n`,
+          }. Rate: ${exchangeRateRecord.rateToEur}\n`,
           logContext,
         );
       }
       return amount * exchangeRateRecord.rateToEur;
     } else {
       if (createLog) {
-        logger(`Exchange rate not found for ${currency}\n`, logContext);
+        logger(`Error: Exchange rate not found for ${currency}\n`, logContext);
       }
-      throw new Error(`Exchange rate not found for ${currency}`);
+      throw new Error(`Error: Exchange rate not found for ${currency}`);
     }
   } catch (error) {
     if (createLog) {

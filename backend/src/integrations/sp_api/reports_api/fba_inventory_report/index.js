@@ -38,34 +38,34 @@ async function requestFbaInventoryReport(
 
   let logMessage = '';
   try {
-    // // Step 1: Create Report to get ReportId
-    // const reportIdResponse = await createReport(
-    //   marketplaceIds,
-    //   reportType,
-    //   logContext,
-    //   createLog,
-    //   dataStartTime,
-    //   dataEndTime,
-    // );
+    // Step 1: Create Report to get ReportId
+    const reportIdResponse = await createReport(
+      marketplaceIds,
+      reportType,
+      logContext,
+      createLog,
+      dataStartTime,
+      dataEndTime,
+    );
 
-    // // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
-    // await new Promise(resolve => setTimeout(resolve, 60000 * 2));
+    // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
+    await new Promise(resolve => setTimeout(resolve, 60000 * 2));
 
-    // // Step 2 : Request report document ID
-    // const reportDocumentId = await getReport(
-    //   reportIdResponse.reportId,
-    //   createLog,
-    //   logContext,
-    // );
+    // Step 2 : Request report document ID
+    const reportDocumentId = await getReport(
+      reportIdResponse.reportId,
+      createLog,
+      logContext,
+    );
 
-    const reportDocumentId =
-      //   // 'amzn1.spdoc.1.4.eu.f7b75d40-725b-48c2-bdf1-25c1d170fe1a.T1TJXQMEOP6F78.2651'; // PL
-      //   // 'amzn1.spdoc.1.4.eu.fe1e84d2-982c-489a-800f-32f400dae70e.TE9Q2KN2IWU7W.2651'; // UK
-      //   // 'amzn1.spdoc.1.4.eu.b2a04f6a-4f6b-4e5e-aeee-4358f249e382.TMJISGFM4QT0U.2651'; // FR
-      //   //  'amzn1.spdoc.1.4.eu.2b27c303-d7c0-41c9-abf9-6e62b656e19f.TY1M93LGOOVTG.2651'; // FR
-      'amzn1.spdoc.1.4.eu.747fbeda-09b4-46f2-9461-a247fefedfe7.T3S2NUER3WI3DN.2651'; // SE
-    // // 'amzn1.spdoc.1.4.eu.676049ac-e8f9-482a-844b-cbbe8e669026.T23JVIUV5OOZBA.2651'; // BE
-    // // 'amzn1.spdoc.1.4.eu.9cb48e16-ccb9-404f-8b8f-7eee1fdb49a0.T3297N0K75JAE1.2651'; // NL
+    // const reportDocumentId =
+    //   //   // 'amzn1.spdoc.1.4.eu.f7b75d40-725b-48c2-bdf1-25c1d170fe1a.T1TJXQMEOP6F78.2651'; // PL
+    //   //   // 'amzn1.spdoc.1.4.eu.fe1e84d2-982c-489a-800f-32f400dae70e.TE9Q2KN2IWU7W.2651'; // UK
+    //   //   // 'amzn1.spdoc.1.4.eu.b2a04f6a-4f6b-4e5e-aeee-4358f249e382.TMJISGFM4QT0U.2651'; // FR
+    //   //   //  'amzn1.spdoc.1.4.eu.2b27c303-d7c0-41c9-abf9-6e62b656e19f.TY1M93LGOOVTG.2651'; // FR
+    //   'amzn1.spdoc.1.4.eu.747fbeda-09b4-46f2-9461-a247fefedfe7.T3S2NUER3WI3DN.2651'; // SE
+    // // // 'amzn1.spdoc.1.4.eu.676049ac-e8f9-482a-844b-cbbe8e669026.T23JVIUV5OOZBA.2651'; // BE
+    // // // 'amzn1.spdoc.1.4.eu.9cb48e16-ccb9-404f-8b8f-7eee1fdb49a0.T3297N0K75JAE1.2651'; // NL
     // // 'amzn1.spdoc.1.4.eu.b3576b9a-3942-4672-8516-f94fb3a3c426.T2M2KT4WLMZ2CG.2651'; // ES
     // // 'amzn1.spdoc.1.4.eu.8da8812e-4d6d-4c31-8582-9ebbef234d33.T3SOIONY47K9JT.2651'; // IT
     // // 'amzn1.spdoc.1.4.eu.baf3f61b-1f3a-44d3-9304-85fea6bd0a89.T1SOV0NF16MRRD.2651'; // DE
