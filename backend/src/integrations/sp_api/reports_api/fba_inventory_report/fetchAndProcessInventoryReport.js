@@ -35,8 +35,8 @@ async function fetchAndProcessInventoryReport(
   const countryCode = marketplaces[country[0]].countryCode;
   const currencyCode = marketplaces[country[0]].currencyCode;
   const processingPromises = [];
+  let logMessage = '';
 
-  let logMessage = `Starting fetchAndProcessInventoryReport.\n`;
   try {
     const totalLines = await countLinesInReport(
       documentUrl,
@@ -44,11 +44,6 @@ async function fetchAndProcessInventoryReport(
       createLog,
       logContext,
     );
-
-    let logMessage = `Starting fetchAndProcessInventoryReport. ${totalLines} SKUs to process.\n`;
-    if (createLog) {
-      logger(logMessage, logContext);
-    }
 
     const response = await axios({
       method: 'get',
@@ -95,8 +90,7 @@ async function fetchAndProcessInventoryReport(
           console.log(
             'Inventory data processing completed in fetchAndProcessInventoryReport.',
           );
-          logMessage +=
-            'Inventory data processing completed successfully in fetchAndProcessInventoryReport.\n';
+          logMessage += `Inventory data processing completed successfully in fetchAndProcessInventoryReport for ${totalLines} SKUs.\n`;
           await seedSellingPriceHistory(createLog, logContext);
         } catch (error) {
           logMessage += `Error processing inventory data stream in fetchAndProcessInventoryReport: ${error}\n`;
