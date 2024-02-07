@@ -36,21 +36,20 @@ async function fetchAndProcessInventoryReport(
   const currencyCode = marketplaces[country[0]].currencyCode;
   const processingPromises = [];
 
-  // console.log(documentUrl, compressionAlgorithm);
-  // const totalLines = await countLinesInReport(
-  //   documentUrl,
-  //   compressionAlgorithm,
-  //   createLog,
-  //   logContext,
-  // );
-
-  // let logMessage = `Starting fetchAndProcessInventoryReport. ${totalLines} SKUs to process.\n`;
-  // if (createLog) {
-  //   logger(logMessage, logContext);
-  // }
-
   let logMessage = `Starting fetchAndProcessInventoryReport.\n`;
   try {
+    const totalLines = await countLinesInReport(
+      documentUrl,
+      compressionAlgorithm,
+      createLog,
+      logContext,
+    );
+
+    let logMessage = `Starting fetchAndProcessInventoryReport. ${totalLines} SKUs to process.\n`;
+    if (createLog) {
+      logger(logMessage, logContext);
+    }
+
     const response = await axios({
       method: 'get',
       url: documentUrl,
