@@ -1,6 +1,6 @@
 const { PassThrough } = require('stream');
 const zlib = require('zlib');
-const { logger } = require('../../utils/logger');
+const { logger } = require('./logger');
 
 /**
  * Chooses the appropriate decompression stream based on the compression algorithm.

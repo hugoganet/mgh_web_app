@@ -38,38 +38,42 @@ async function requestFbaInventoryReport(
 
   let logMessage = '';
   try {
-    // Step 1: Create Report to get ReportId
-    const reportIdResponse = await createReport(
-      marketplaceIds,
-      reportType,
-      logContext,
-      createLog,
-      dataStartTime,
-      dataEndTime,
-    );
+    // // Step 1: Create Report to get ReportId
+    // const reportIdResponse = await createReport(
+    //   marketplaceIds,
+    //   reportType,
+    //   logContext,
+    //   createLog,
+    //   dataStartTime,
+    //   dataEndTime,
+    // );
 
-    // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
-    await new Promise(resolve => setTimeout(resolve, 60000 * 2));
+    // // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
+    // await new Promise(resolve => setTimeout(resolve, 60000 * 2));
 
-    // Step 2 : Request report document ID
-    const reportDocumentId = await getReport(
-      reportIdResponse.reportId,
-      createLog,
-      logContext,
-    );
+    // // Step 2 : Request report document ID
+    // const reportDocumentId = await getReport(
+    //   reportIdResponse.reportId,
+    //   createLog,
+    //   logContext,
+    // );
 
-    // const reportDocumentId =
-    //   //   // 'amzn1.spdoc.1.4.eu.f7b75d40-725b-48c2-bdf1-25c1d170fe1a.T1TJXQMEOP6F78.2651'; // PL
-    //   //   // 'amzn1.spdoc.1.4.eu.fe1e84d2-982c-489a-800f-32f400dae70e.TE9Q2KN2IWU7W.2651'; // UK
-    //   //   // 'amzn1.spdoc.1.4.eu.b2a04f6a-4f6b-4e5e-aeee-4358f249e382.TMJISGFM4QT0U.2651'; // FR
-    //   //   //  'amzn1.spdoc.1.4.eu.2b27c303-d7c0-41c9-abf9-6e62b656e19f.TY1M93LGOOVTG.2651'; // FR
-    //   'amzn1.spdoc.1.4.eu.747fbeda-09b4-46f2-9461-a247fefedfe7.T3S2NUER3WI3DN.2651'; // SE
+    const reportDocumentId =
+      //   // 'amzn1.spdoc.1.4.eu.f7b75d40-725b-48c2-bdf1-25c1d170fe1a.T1TJXQMEOP6F78.2651'; // PL
+      //   // 'amzn1.spdoc.1.4.eu.fe1e84d2-982c-489a-800f-32f400dae70e.TE9Q2KN2IWU7W.2651'; // UK
+      //   // 'amzn1.spdoc.1.4.eu.b2a04f6a-4f6b-4e5e-aeee-4358f249e382.TMJISGFM4QT0U.2651'; // FR
+      //   //  'amzn1.spdoc.1.4.eu.2b27c303-d7c0-41c9-abf9-6e62b656e19f.TY1M93LGOOVTG.2651'; // FR
+      'amzn1.spdoc.1.4.eu.747fbeda-09b4-46f2-9461-a247fefedfe7.T3S2NUER3WI3DN.2651'; // SE
     // // // 'amzn1.spdoc.1.4.eu.676049ac-e8f9-482a-844b-cbbe8e669026.T23JVIUV5OOZBA.2651'; // BE
     // // // 'amzn1.spdoc.1.4.eu.9cb48e16-ccb9-404f-8b8f-7eee1fdb49a0.T3297N0K75JAE1.2651'; // NL
     // // 'amzn1.spdoc.1.4.eu.b3576b9a-3942-4672-8516-f94fb3a3c426.T2M2KT4WLMZ2CG.2651'; // ES
     // // 'amzn1.spdoc.1.4.eu.8da8812e-4d6d-4c31-8582-9ebbef234d33.T3SOIONY47K9JT.2651'; // IT
     // // 'amzn1.spdoc.1.4.eu.baf3f61b-1f3a-44d3-9304-85fea6bd0a89.T1SOV0NF16MRRD.2651'; // DE
     // // 'amzn1.spdoc.1.4.eu.8363b830-ce6b-4f0e-81e7-5f28dbcfd5e1.T2LBHOKZ77F7Y6.2651'; // TR
+
+    // const documentUrl =
+    //   'https://tortuga-prod-eu.s3-eu-west-1.amazonaws.com/04ec3a67-8ff3-4c22-b4dc-3646ad7d9983.amzn1.tortuga.4.eu.T18UEQAQ2L2BV5?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240207T094553Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=AKIAX2ZVOZFBLRVE6O7G%2F20240207%2Feu-west-1%2Fs3%2Faws4_request&X-Amz-Signature=fbdf9c9721e0de5916b13f399e6a7f9fab68fb341f5c4586eec33914ae9deda3';
+    // const compressionAlgorithm = null;
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getReportDocument(
@@ -96,6 +100,7 @@ async function requestFbaInventoryReport(
       createLog,
       logContext,
     );
+
     logMessage += `Finished fetching and processing inventory report for ${country} in index.js\n`;
   } catch (error) {
     console.error('Overall error in requesting FBA Inventory report:', error);

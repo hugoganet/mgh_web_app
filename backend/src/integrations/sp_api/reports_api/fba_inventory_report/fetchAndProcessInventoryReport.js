@@ -4,11 +4,14 @@ const { Transform } = require('stream'); // To work with streams
 const marketplaces = require('../../../../config/marketplaces.js');
 const {
   chooseDecompressionStream,
-} = require('../../chooseDecompressionStream.js');
+} = require('../../../../utils/chooseDecompressionStream.js');
 const { preProcessCsvRow } = require('../../preProcessCsvRow.js');
 const { processInventoryChunk } = require('./processInventoryChunk.js');
 const { seedSellingPriceHistory } = require('./seedSellingPricesHistory.js');
 const { logger } = require('../../../../utils/logger');
+const {
+  countLinesInReport,
+} = require('../../../../utils/countLinesInReport.js');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -32,11 +35,19 @@ async function fetchAndProcessInventoryReport(
   const countryCode = marketplaces[country[0]].countryCode;
   const currencyCode = marketplaces[country[0]].currencyCode;
   const processingPromises = [];
-  let logMessage = `Starting fetchAndProcessInventoryReport for ReportDocumentId: ${reportDocumentId}\n`;
-  if (createLog) {
-    logger(logMessage, logContext);
-  }
+  // const totalLines = await countLinesInReport(
+  //   documentUrl,
+  //   compressionAlgorithm,
+  //   createLog,
+  //   logContext,
+  // );
+  // console.log(createLog, logContext, totalLines);
+  // let logMessage = `Starting fetchAndProcessInventoryReport. ${totalLines} SKUs to process.\n`;
+  // if (createLog) {
+  //   logger(logMessage, logContext);
+  // }
 
+  let logMessage = `Starting fetchAndProcessInventoryReport.\n`;
   try {
     const response = await axios({
       method: 'get',

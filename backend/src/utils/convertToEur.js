@@ -38,17 +38,16 @@ async function convertToEur(
         order: [['date', 'DESC']],
       });
     }
-
+    const convertedAmount = (amount * exchangeRateRecord.rateToEur).toFixed(2);
     if (exchangeRateRecord) {
       if (createLog) {
         logger(
-          `Converted ${currency} ${amount} to EUR: ${
-            amount * exchangeRateRecord.rateToEur
-          }. Rate: ${exchangeRateRecord.rateToEur}\n`,
+          `Converted ${currency} ${amount} to EUR: ${convertedAmount}. Rate: ${exchangeRateRecord.rateToEur}\n`,
           logContext,
         );
       }
-      return amount * exchangeRateRecord.rateToEur;
+
+      return convertedAmount;
     } else {
       if (createLog) {
         logger(`Error: Exchange rate not found for ${currency}\n`, logContext);
