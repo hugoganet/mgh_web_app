@@ -16,6 +16,7 @@ const {
 } = require('./automaticallyCreateFbaFeesRecord');
 const { extractPackageDimensions } = require('./extractPackageDimensions');
 const { createUrlAmazon } = require('./createUrlAmazon');
+const eventBus = require('../../../src/utils/eventBus');
 
 /**
  * Creates an ASIN record in the database if it does not exist.
@@ -152,6 +153,11 @@ async function automaticallyCreateAsinRecord(
 
     try {
       const newAsin = await db.Asin.create(asinRecord);
+      eventBus.emit('recordCreated', {
+        type: 'asin',
+        action: 'asin_created',
+        id: newAsin.asinId,
+      });
       logMessage += `ASIN record created successfully with id : ${newAsin.asinId}.\n`;
       try {
         if (similarAsin) {

@@ -37,8 +37,6 @@ async function processInventoryChunk(
   logContext,
 ) {
   let logMessage = ``;
-  const skuCreationCounter = 0;
-  let asinCreationCounter = 0;
 
   try {
     const sku = chunk['sku'];
@@ -123,6 +121,11 @@ async function processInventoryChunk(
       });
       // TODO : Find out why the associatedAsin is not found
       if (associatedAsin) {
+        eventBus.emit('recordCreated', {
+          type: 'asin',
+          action: 'asin_found',
+          id: associatedAsin.asinId,
+        });
         logMessage += `Associated ASIN found for ${asin} in ${countryCode}, creating AsinSku record\n`;
       } else if (!associatedAsin) {
         associatedAsin = await automaticallyCreateAsinRecord(
@@ -132,8 +135,7 @@ async function processInventoryChunk(
           createLog,
           logContext,
         );
-        asinCreationCounter++;
-        logMessage += `No associated ASIN found for ASIN: ${asin} in ${countryCode}, created one with id: ${associatedAsin.asinId} \n`;
+        // logMessage += `No associated ASIN found for ASIN: ${asin} in ${countryCode}, created one with id: ${associatedAsin.asinId} \n`;
       }
       // Create AsinSku record
       try {
@@ -208,8 +210,6 @@ async function processInventoryChunk(
     console.error('Error processing inventory chunk:', error);
     logMessage += `Error processing inventory chunk: ${error}\n`;
   } finally {
-    logMessage += `Created ${skuCreationCounter} new SKU records.
-    Created ${asinCreationCounter} new ASIN records\n`;
     if (createLog) {
       logger(logMessage, logContext);
     }

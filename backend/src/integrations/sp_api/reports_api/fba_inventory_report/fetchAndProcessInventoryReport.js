@@ -101,11 +101,13 @@ async function fetchAndProcessInventoryReport(
 
           console.log(
             `PROCESSED ${totalLines} in fetchAndProcessInventoryReport : 
-          Created ${counts.sku.sku_created} new SKU records and found ${counts.sku.sku_found} SKU.`,
+          Created ${counts.sku.sku_created} new SKU records and found ${counts.sku.sku_found} SKU.
+          Created ${counts.asin.asin_created} new ASIN records and found ${counts.asin.asin_found} ASIN.`,
           );
 
-          logMessage += `PROCESSED ${totalLines} report lines in fetchAndProcessInventoryReport : 
-          Created ${counts.sku.sku_created} new SKU records.\n`;
+          logMessage += `PROCESSED ${totalLines} in fetchAndProcessInventoryReport : 
+          Created ${counts.sku.sku_created} new SKU records and found ${counts.sku.sku_found} SKU.
+          Created ${counts.asin.asin_created} new ASIN records and found ${counts.asin.asin_found} ASIN.`;
 
           if (createLog) {
             logger(logMessage, logContext);
