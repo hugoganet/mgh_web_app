@@ -1,5 +1,6 @@
 const db = require('../models/index');
 const { logger } = require('../../utils/logger');
+const eventBus = require('../../../src/utils/eventBus');
 
 /**
  * @description This function creates an EAN in ASIN record in the database if it does not exist.
@@ -31,6 +32,13 @@ async function automaticallyCreateEanInAsinRecord(
           asinId: newlyCreatedAsinId,
           eanInAsinQuantity: record.eanInAsinQuantity,
         });
+        if (newlyCreatedEanInAsinRecord.eanInAsinId) {
+          eventBus.emit('recordCreated', {
+            type: 'eanInAsin',
+            action: 'eanInAsin_created',
+            id: newlyCreatedEanInAsinRecord.eanInAsinId,
+          });
+        }
         logMessage += `Created new eanInAsinRecord with id : ${newlyCreatedEanInAsinRecord.eanInAsinId} for asinId:${newlyCreatedAsinId}\n`;
       }
     } else {

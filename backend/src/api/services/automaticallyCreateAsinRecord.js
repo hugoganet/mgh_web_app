@@ -153,11 +153,13 @@ async function automaticallyCreateAsinRecord(
 
     try {
       const newAsin = await db.Asin.create(asinRecord);
-      eventBus.emit('recordCreated', {
-        type: 'asin',
-        action: 'asin_created',
-        id: newAsin.asinId,
-      });
+      if (newAsin.asinId) {
+        eventBus.emit('recordCreated', {
+          type: 'asin',
+          action: 'asin_created',
+          id: newAsin.asinId,
+        });
+      }
       logMessage += `ASIN record created successfully with id : ${newAsin.asinId}.\n`;
       try {
         if (similarAsin) {

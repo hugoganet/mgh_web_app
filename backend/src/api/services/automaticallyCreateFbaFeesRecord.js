@@ -1,6 +1,7 @@
 const db = require('../models/index');
 const { logger } = require('../../utils/logger');
 const { getPriceGridFbaFeeId } = require('./getPriceGridFbaFeeId');
+const eventBus = require('../../../src/utils/eventBus');
 
 /**
  * @description This function creates an EAN in ASIN record in the database if it does not exist.

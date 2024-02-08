@@ -102,12 +102,14 @@ async function fetchAndProcessInventoryReport(
           console.log(
             `PROCESSED ${totalLines} in fetchAndProcessInventoryReport : 
           Created ${counts.sku.sku_created} new SKU records and found ${counts.sku.sku_found} SKU.
-          Created ${counts.asin.asin_created} new ASIN records and found ${counts.asin.asin_found} ASIN.`,
+          Created ${counts.asin.asin_created} new ASIN records and found ${counts.asin.asin_found} ASIN.
+          Created ${counts.eanInAsin.eanInAsin_created} new eanInAsin records and found ${counts.eanInAsin.eanInAsin_found} eanInAsin.`,
           );
 
           logMessage += `PROCESSED ${totalLines} in fetchAndProcessInventoryReport : 
           Created ${counts.sku.sku_created} new SKU records and found ${counts.sku.sku_found} SKU.
-          Created ${counts.asin.asin_created} new ASIN records and found ${counts.asin.asin_found} ASIN.`;
+          Created ${counts.asin.asin_created} new ASIN records and found ${counts.asin.asin_found} ASIN.
+          Created ${counts.eanInAsin.eanInAsin_created} new eanInAsin records and found ${counts.eanInAsin.eanInAsin_found} eanInAsin.\n`;
 
           if (createLog) {
             logger(logMessage, logContext);

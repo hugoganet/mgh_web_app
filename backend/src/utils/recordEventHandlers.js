@@ -10,6 +10,10 @@ let counters = {
     asin_created: 0,
     asin_found: 0,
   },
+  eanInAsin: {
+    eanInAsin_created: 0,
+    eanInAsin_found: 0,
+  },
 };
 
 /**
