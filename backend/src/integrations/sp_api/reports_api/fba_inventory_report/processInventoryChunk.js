@@ -36,6 +36,8 @@ async function processInventoryChunk(
   logContext,
 ) {
   let logMessage = ``;
+  let skuCreationCounter = 0;
+  let asinCreationCounter = 0;
   try {
     const sku = chunk['sku'];
     const fnsku = chunk['fnsku'];
@@ -94,6 +96,7 @@ async function processInventoryChunk(
           skuRestockAlertQuantity: 1,
           skuIsTest: false,
         });
+        skuCreationCounter++;
         logMessage += `Created new SKU record with id: ${skuRecord.skuId} for SKU: ${sku} on ${countryCode}\n`;
       } catch (err) {
         logMessage += `Error finding similar SKU or copying acquisition costs: ${err}\n`;
@@ -116,7 +119,8 @@ async function processInventoryChunk(
           createLog,
           logContext,
         );
-        logMessage += `No associated ASIN found for ASIN: ${asin} in ${countryCode}, created one with id: ${associatedAsin} \n`;
+        asinCreationCounter++;
+        logMessage += `No associated ASIN found for ASIN: ${asin} in ${countryCode}, created one with id: ${associatedAsin.asinId} \n`;
       }
       // Create AsinSku record
       try {
@@ -191,6 +195,8 @@ async function processInventoryChunk(
     console.error('Error processing inventory chunk:', error);
     logMessage += `Error processing inventory chunk: ${error}\n`;
   } finally {
+    logMessage += `Created ${skuCreationCounter} new SKU records.
+    Created ${asinCreationCounter} new ASIN records\n`;
     if (createLog) {
       logger(logMessage, logContext);
     }
