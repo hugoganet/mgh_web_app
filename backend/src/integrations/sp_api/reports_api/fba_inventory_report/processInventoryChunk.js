@@ -122,7 +122,7 @@ async function processInventoryChunk(
         },
       });
       // TODO : Find out why the associatedAsin is not found
-      if (associatedAsin) {
+      if (associatedAsin.asinId) {
         eventBus.emit('recordCreated', {
           type: 'asin',
           action: 'asin_found',
@@ -142,10 +142,17 @@ async function processInventoryChunk(
       // Create AsinSku record
       try {
         logMessage += `Creating AsinSku record for asin: ${asin} and sku: ${sku} in ${countryCode}\n`;
-        await db.AsinSku.create({
+        const newAsinSku = await db.AsinSku.create({
           asinId: associatedAsin.asinId,
           skuId: skuRecord.skuId,
         });
+        if (newAsinSku.asinSkuId) {
+          eventBus.emit('recordCreated', {
+            type: 'asinSku',
+            action: 'asinSku_created',
+            id: newAsinSku.asinSkuId,
+          });
+        }
       } catch (err) {
         console.log('Error creating AsinSku record in processInventoryChunk :');
         logMessage += `Error creating AsinSku record in processInventoryChunk : ${err}\n`;

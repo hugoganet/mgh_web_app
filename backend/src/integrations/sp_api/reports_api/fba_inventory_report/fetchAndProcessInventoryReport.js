@@ -104,13 +104,16 @@ async function fetchAndProcessInventoryReport(
           Created ${counts.sku.sku_created} new SKU records and found ${counts.sku.sku_found} SKU.
           Created ${counts.asin.asin_created} new ASIN records and found ${counts.asin.asin_found} ASIN.
           Created ${counts.eanInAsin.eanInAsin_created} new eanInAsin records and found ${counts.eanInAsin.eanInAsin_found} eanInAsin.
-          Created ${counts.fbaFee.fbaFee_created} new fbaFee records and found ${counts.fbaFee.fbaFee_found} fbaFee.`,
+          Created ${counts.fbaFee.fbaFee_created} new fbaFee records and found ${counts.fbaFee.fbaFee_found} fbaFee.
+          Created ${counts.asinSku.asinSku_created} new asinSku records and found ${counts.asinSku.asinSku_found} asinSku.`,
           );
 
           logMessage += `PROCESSED ${totalLines} in fetchAndProcessInventoryReport : 
           Created ${counts.sku.sku_created} new SKU records and found ${counts.sku.sku_found} SKU.
           Created ${counts.asin.asin_created} new ASIN records and found ${counts.asin.asin_found} ASIN.
-          Created ${counts.eanInAsin.eanInAsin_created} new eanInAsin records and found ${counts.eanInAsin.eanInAsin_found} eanInAsin.\n`;
+          Created ${counts.eanInAsin.eanInAsin_created} new eanInAsin records and found ${counts.eanInAsin.eanInAsin_found} eanInAsin.
+          Created ${counts.fbaFee.fbaFee_created} new fbaFee records and found ${counts.fbaFee.fbaFee_found} fbaFee.
+          Created ${counts.asinSku.asinSku_created} new asinSku records and found ${counts.asinSku.asinSku_found} asinSku.\n`;
 
           if (createLog) {
             logger(logMessage, logContext);

@@ -18,6 +18,10 @@ let counters = {
     fbaFee_created: 0,
     fbaFee_found: 0,
   },
+  asinSku: {
+    asinSku_created: 0,
+    asinSku_found: 0,
+  },
 };
 
 /**
