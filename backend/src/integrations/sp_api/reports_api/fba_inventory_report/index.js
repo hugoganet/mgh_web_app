@@ -62,7 +62,7 @@ async function requestFbaInventoryReport(
       //   //   // 'amzn1.spdoc.1.4.eu.fe1e84d2-982c-489a-800f-32f400dae70e.TE9Q2KN2IWU7W.2651'; // UK
       //   //   // 'amzn1.spdoc.1.4.eu.b2a04f6a-4f6b-4e5e-aeee-4358f249e382.TMJISGFM4QT0U.2651'; // FR
       //   //   //  'amzn1.spdoc.1.4.eu.2b27c303-d7c0-41c9-abf9-6e62b656e19f.TY1M93LGOOVTG.2651'; // FR
-      'amzn1.spdoc.1.4.eu.d2fa9518-d694-492e-9035-d43e0776304d.T1Y5C8D31ZSFET.2651'; // SE
+      'amzn1.spdoc.1.4.eu.fdec64a7-9aca-47e6-ba71-e2a332486488.T2TGT18L2RTN5.2651'; // SE
     // // // // 'amzn1.spdoc.1.4.eu.676049ac-e8f9-482a-844b-cbbe8e669026.T23JVIUV5OOZBA.2651'; // BE
     // // // 'amzn1.spdoc.1.4.eu.9cb48e16-ccb9-404f-8b8f-7eee1fdb49a0.T3297N0K75JAE1.2651'; // NL
     // // 'amzn1.spdoc.1.4.eu.b3576b9a-3942-4672-8516-f94fb3a3c426.T2M2KT4WLMZ2CG.2651'; // ES

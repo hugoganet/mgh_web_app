@@ -12,7 +12,11 @@ const { logger } = require('../../../../utils/logger');
 const {
   countLinesInReport,
 } = require('../../../../utils/countLinesInReport.js');
-const eventBus = require('../../../../utils/eventBus');
+const {
+  startListening,
+  stopListeningAndReset,
+  getCounts,
+} = require('../../../../utils/recordEventHandlers');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -38,29 +42,8 @@ async function fetchAndProcessInventoryReport(
   const processingPromises = [];
   let totalLines = 0;
   let logMessage = '';
-  let skuCreationCount = 0;
 
-  // // Register the event listener to count the number of SKUs created
-  // eventBus.on('recordCreated', data => {
-  //   if (data.type === 'Sku') {
-  //     skuCreationCount++;
-  //     console.log('SKU created:', skuCreationCount);
-  //   }
-  // });
-
-  /**
-   * @description - The event listener to count the number of SKUs created.
-   * @function onSkuCreated
-   * @param {Object} data - The data associated with the event.
-   */
-  function onSkuCreated(data) {
-    if (data.type === 'Sku') {
-      skuCreationCount++;
-    }
-  }
-
-  // Add the listener
-  eventBus.on('recordCreated', onSkuCreated);
+  startListening(); // Start listening for recordCreated events
 
   try {
     totalLines = await countLinesInReport(
@@ -112,16 +95,24 @@ async function fetchAndProcessInventoryReport(
       .on('end', async () => {
         try {
           await Promise.all(processingPromises);
+
+          const counts = getCounts(); // Get the counts of created records
+          console.log(counts.sku);
+
           console.log(
-            'Inventory data processing completed in fetchAndProcessInventoryReport.',
+            `PROCESSED ${totalLines} in fetchAndProcessInventoryReport : 
+          Created ${counts.sku.sku_created} new SKU records and found ${counts.sku.sku_found} SKU.`,
           );
 
-          logMessage += `PROCESSED ${totalLines} in fetchAndProcessInventoryReport : 
-          Created ${skuCreationCount} new SKU records.\n`;
+          logMessage += `PROCESSED ${totalLines} report lines in fetchAndProcessInventoryReport : 
+          Created ${counts.sku.sku_created} new SKU records.\n`;
+
           if (createLog) {
             logger(logMessage, logContext);
           }
-          eventBus.removeListener('recordCreated'); // Unregister the event listener to prevent memory leaks
+
+          stopListeningAndReset(); // Stop listening and reset counters
+
           await seedSellingPriceHistory(createLog, logContext);
         } catch (error) {
           logMessage += `Error processing inventory data stream in fetchAndProcessInventoryReport: ${error}\n`;

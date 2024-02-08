@@ -60,8 +60,14 @@ async function processInventoryChunk(
     }
 
     let skuRecord = await db.Sku.findOne({ where: { sku, countryCode } });
-
-    if (!skuRecord) {
+    if (skuRecord) {
+      eventBus.emit('recordCreated', {
+        type: 'sku',
+        action: 'sku_found',
+        id: skuRecord.skuId,
+      });
+      logMessage += `SKU record found for SKU: ${sku} on ${countryCode}, updating acquisition costs\n`;
+    } else {
       logMessage += `SKU record not found for SKU: ${sku} on ${countryCode}, looking for similar SKU with another countryCode\n`;
       try {
         const similarSku = await db.Sku.findOne({
@@ -99,7 +105,11 @@ async function processInventoryChunk(
           skuIsTest: false,
         });
         // Emit an event after successful creation
-        eventBus.emit('recordCreated', { type: 'Sku', id: skuRecord.skuId });
+        eventBus.emit('recordCreated', {
+          type: 'sku',
+          action: 'sku_created',
+          id: skuRecord.skuId,
+        });
         logMessage += `Created new SKU record with id: ${skuRecord.skuId} for SKU: ${sku} on ${countryCode}\n`;
       } catch (err) {
         logMessage += `Error finding similar SKU or copying acquisition costs: ${err}\n`;
