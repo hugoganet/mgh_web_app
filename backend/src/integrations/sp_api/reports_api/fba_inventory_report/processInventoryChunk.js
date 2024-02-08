@@ -11,6 +11,7 @@ const { convertToEur } = require('../../../../utils/convertToEur.js');
 const {
   automaticallyCreateAsinRecord,
 } = require('../../../../api/services/automaticallyCreateAsinRecord.js');
+const eventBus = require('../../../../utils/eventBus');
 
 /**
  * @async
@@ -36,8 +37,9 @@ async function processInventoryChunk(
   logContext,
 ) {
   let logMessage = ``;
-  let skuCreationCounter = 0;
+  const skuCreationCounter = 0;
   let asinCreationCounter = 0;
+
   try {
     const sku = chunk['sku'];
     const fnsku = chunk['fnsku'];
@@ -96,7 +98,8 @@ async function processInventoryChunk(
           skuRestockAlertQuantity: 1,
           skuIsTest: false,
         });
-        skuCreationCounter++;
+        // Emit an event after successful creation
+        eventBus.emit('recordCreated', { type: 'Sku', id: skuRecord.skuId });
         logMessage += `Created new SKU record with id: ${skuRecord.skuId} for SKU: ${sku} on ${countryCode}\n`;
       } catch (err) {
         logMessage += `Error finding similar SKU or copying acquisition costs: ${err}\n`;

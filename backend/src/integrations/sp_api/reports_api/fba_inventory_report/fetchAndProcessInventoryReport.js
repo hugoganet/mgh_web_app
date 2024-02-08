@@ -12,6 +12,7 @@ const { logger } = require('../../../../utils/logger');
 const {
   countLinesInReport,
 } = require('../../../../utils/countLinesInReport.js');
+const eventBus = require('../../../../utils/eventBus');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -35,10 +36,34 @@ async function fetchAndProcessInventoryReport(
   const countryCode = marketplaces[country[0]].countryCode;
   const currencyCode = marketplaces[country[0]].currencyCode;
   const processingPromises = [];
+  let totalLines = 0;
   let logMessage = '';
+  let skuCreationCount = 0;
+
+  // // Register the event listener to count the number of SKUs created
+  // eventBus.on('recordCreated', data => {
+  //   if (data.type === 'Sku') {
+  //     skuCreationCount++;
+  //     console.log('SKU created:', skuCreationCount);
+  //   }
+  // });
+
+  /**
+   * @description - The event listener to count the number of SKUs created.
+   * @function onSkuCreated
+   * @param {Object} data - The data associated with the event.
+   */
+  function onSkuCreated(data) {
+    if (data.type === 'Sku') {
+      skuCreationCount++;
+    }
+  }
+
+  // Add the listener
+  eventBus.on('recordCreated', onSkuCreated);
 
   try {
-    const totalLines = await countLinesInReport(
+    totalLines = await countLinesInReport(
       documentUrl,
       compressionAlgorithm,
       createLog,
@@ -90,7 +115,13 @@ async function fetchAndProcessInventoryReport(
           console.log(
             'Inventory data processing completed in fetchAndProcessInventoryReport.',
           );
-          logMessage += `Inventory data processing completed successfully in fetchAndProcessInventoryReport for ${totalLines} SKUs.\n`;
+
+          logMessage += `PROCESSED ${totalLines} in fetchAndProcessInventoryReport : 
+          Created ${skuCreationCount} new SKU records.\n`;
+          if (createLog) {
+            logger(logMessage, logContext);
+          }
+          eventBus.removeListener('recordCreated'); // Unregister the event listener to prevent memory leaks
           await seedSellingPriceHistory(createLog, logContext);
         } catch (error) {
           logMessage += `Error processing inventory data stream in fetchAndProcessInventoryReport: ${error}\n`;
@@ -113,10 +144,6 @@ async function fetchAndProcessInventoryReport(
       'Error fetching inventory data in fetchAndProcessInventoryReport:',
       error,
     );
-  } finally {
-    if (createLog) {
-      logger(logMessage, logContext);
-    }
   }
 }
 
