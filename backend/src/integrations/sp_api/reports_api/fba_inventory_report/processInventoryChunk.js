@@ -102,12 +102,14 @@ async function processInventoryChunk(
           skuRestockAlertQuantity: 1,
           skuIsTest: false,
         });
-        // Emit an event after successful creation
-        eventBus.emit('recordCreated', {
-          type: 'sku',
-          action: 'sku_created',
-          id: skuRecord.skuId,
-        });
+
+        if (skuRecord.skuId) {
+          eventBus.emit('recordCreated', {
+            type: 'sku',
+            action: 'sku_created',
+            id: skuRecord.skuId,
+          });
+        }
         logMessage += `Created new SKU record with id: ${skuRecord.skuId} for SKU: ${sku} on ${countryCode}\n`;
       } catch (err) {
         logMessage += `Error finding similar SKU or copying acquisition costs: ${err}\n`;

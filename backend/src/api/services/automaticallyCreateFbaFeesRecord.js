@@ -46,6 +46,13 @@ async function automaticallyCreateFbaFeesRecord(
         packageWeight,
         priceGridFbaFeeId,
       });
+      if (fbaFeesRecord.fbaFeeId) {
+        eventBus.emit('recordCreated', {
+          type: 'fbaFee',
+          action: 'fbaFee_created',
+          id: fbaFeesRecord.fbaFeeId,
+        });
+      }
       logMessage += `Successfully created fbaFeesRecord for asinId: ${newlyCreatedAsinId} with id: ${fbaFeesRecord.fbaFeeId}\n`;
     } else {
       logMessage += `Could not get priceGridFbaFeeId for asinId: ${newlyCreatedAsinId}\n`;

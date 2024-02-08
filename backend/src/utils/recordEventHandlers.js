@@ -14,6 +14,10 @@ let counters = {
     eanInAsin_created: 0,
     eanInAsin_found: 0,
   },
+  fbaFee: {
+    fbaFee_created: 0,
+    fbaFee_found: 0,
+  },
 };
 
 /**
