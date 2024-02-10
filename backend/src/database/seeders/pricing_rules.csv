@@ -1,4 +1,4 @@
-pricingRuleIUd,pricingRuleName,pricingRuleDescription,pricingRuleMinimumRoi,pricingRuleMinimumMargin
+pricingRuleIUd,pricingRuleName,pricingRuleDescription,pricingRuleMinimumRoiPercentage,pricingRuleMinimumMarginAmount
 ,Buy Box compétitive,"Match the Featured Offer price, when offers are in the same fulfilment channel. Continue automated pricing after updating prices elsewhere.
 Minimum ROI = 20% 
 Minimum margin = 1€",0.2,1.00

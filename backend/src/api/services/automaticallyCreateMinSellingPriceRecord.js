@@ -63,21 +63,38 @@ async function automaticallyCreateMinSellingPriceRecord(
   }
 
   const referralFeeCategoryId = amazonReferralFeeRecord.referralFeeCategoryId;
-
   console.log('referralFeeCategoryId: ', referralFeeCategoryId);
 
-  // const minimumSellingPriceRecord = await db.MinimumSellingPrice.create({
-  //   skuId,
-  //   pricingRuleId: 1,
-  //   enrolledInPanEu: false,
-  //   eligibleForPanEu: false,
-  //   referralFeeCategoryId,
-  //   minimumMarginWanted: 0.1,
-  //   minimumSellingPriceLocalAndPanEu: 0,
-  //   minimumSellingPriceEfn: 0,
-  //   maximumSellingPriceLocalAndPanEu: 0,
-  //   maximumSellingPriceEfn: 0,
-  // });
+  const pricingRuleRecord = await db.PricingRule.findOne({
+    where: { pricingRuleId: 1 },
+  });
+  if (!pricingRuleRecord) {
+    logMessage += `No pricing rule record found for pricing rule ID 1, cannot create minimum selling price record.`;
+    return;
+  }
+  const pricingRuleMinimumMarginAmount =
+    pricingRuleRecord.pricingRuleMinimumMargin;
+  const pricingRuleMinimumRoiPercentage =
+    pricingRuleRecord.pricingRuleMinimumRoiPercentage;
+
+  // if ( sku(aquisition_cost_exc) x pricing_rule(pricing_rule_minimum_roi) < pricing_rule(pricing_rule_minimum_margin) ) { pricing_rule(pricing_rule_minimum_margin) } else {  sku(aquisition_cost_exc) x pricing_rule(pricing_rule_minimum_roi) < pricing_rule(pricing_rule_minimum_margin) }
+  const minimumMarginAmount = Math.max(
+    skuAcquisitionCostExc * pricingRuleMinimumRoiPercentage,
+    pricingRuleMinimumMarginAmount,
+  );
+
+  const minimumSellingPriceRecord = await db.MinimumSellingPrice.create({
+    skuId,
+    pricingRuleId: 1,
+    enrolledInPanEu: false,
+    eligibleForPanEu: false,
+    referralFeeCategoryId,
+    minimumMarginAmount,
+    minimumSellingPriceLocalAndPanEu,
+    minimumSellingPriceEfn,
+    maximumSellingPriceLocalAndPanEu,
+    maximumSellingPriceEfn,
+  });
 }
 
 module.exports = { automaticallyCreateMinSellingPriceRecord };

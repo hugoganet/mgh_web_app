@@ -49,7 +49,7 @@ module.exports = sequelize => {
           key: 'referral_fee_category_id',
         },
       },
-      minimumMarginWanted: {
+      minimumMarginAmount: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
@@ -67,6 +67,10 @@ module.exports = sequelize => {
       },
       maximumSellingPriceEfn: {
         type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+      },
+      currencyCode: {
+        type: DataTypes.STRING(3),
         allowNull: false,
       },
     },
