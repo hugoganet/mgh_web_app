@@ -29,11 +29,11 @@ module.exports = sequelize => {
         allowNull: false,
       },
       referralFeePercentage: {
-        type: DataTypes.DECIMAL(6, 5),
+        type: DataTypes.DECIMAL(7, 5),
         allowNull: false,
       },
       reducedReferralFeePercentage: {
-        type: DataTypes.DECIMAL(6, 5),
+        type: DataTypes.DECIMAL(7, 5),
       },
       reducedReferralFeeLimit: {
         type: DataTypes.DECIMAL(10, 2),

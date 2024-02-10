@@ -1,7 +1,10 @@
 const db = require('../models/index');
 const { logger } = require('../../utils/logger');
 const { getPriceGridFbaFeeId } = require('./getPriceGridFbaFeeId');
-const eventBus = require('../../../src/utils/eventBus');
+const eventBus = require('../../utils/eventBus');
+const {
+  convertMarketplaceIdentifier,
+} = require('../../utils/convertMarketplaceIdentifier');
 
 /**
  * @description This function creates a minimum selling price record in the database if it does not exist.
@@ -24,8 +27,9 @@ async function automaticallyCreateMinSellingPriceRecord(
     logMessage += `No SKU record found for SKU ID ${skuId}.`;
     return;
   }
-  const skuAcquisitionCostExc = skuRecord.skuAcquisitionCostExc;
   const countryCode = skuRecord.countryCode;
+
+  const { currencyCode } = convertMarketplaceIdentifier(countryCode);
 
   const asinRecord = await db.Asin.findOne({
     include: [
@@ -56,14 +60,29 @@ async function automaticallyCreateMinSellingPriceRecord(
     ],
     where: { countryCode: countryCode },
   });
-
   if (!amazonReferralFeeRecord) {
     logMessage += `No referral fee record found for product category ID ${productCategoryId} and country code ${countryCode}.`;
     return;
   }
-
   const referralFeeCategoryId = amazonReferralFeeRecord.referralFeeCategoryId;
-  console.log('referralFeeCategoryId: ', referralFeeCategoryId);
+  const closingFee = amazonReferralFeeRecord.closingFee;
+  const reducedReferralFeePercentage =
+    amazonReferralFeeRecord.reducedReferralFeePercentage;
+
+  const fbaFeeRecord = await db.fbaFee.findOne({
+    where: { asinId: asinRecord.asinId },
+  });
+  if (!fbaFeeRecord) {
+    logMessage += `No FBA fee record found for ASIN ID ${asinRecord.asinId}.`;
+    return;
+  }
+  priceGridFbaFeeRecord = await db.PriceGridFbaFee.findOne({
+    where: { priceGridFbaFeeId: fbaFeeRecord.priceGridFbaFeeId },
+  });
+  if (!priceGridFbaFeeRecord) {
+    logMessage += `No price grid FBA fee record found for price grid FBA fee ID ${fbaFeeRecord.priceGridFbaFeeId}.`;
+    return;
+  }
 
   const pricingRuleRecord = await db.PricingRule.findOne({
     where: { pricingRuleId: 1 },
@@ -72,16 +91,45 @@ async function automaticallyCreateMinSellingPriceRecord(
     logMessage += `No pricing rule record found for pricing rule ID 1, cannot create minimum selling price record.`;
     return;
   }
-  const pricingRuleMinimumMarginAmount =
-    pricingRuleRecord.pricingRuleMinimumMargin;
-  const pricingRuleMinimumRoiPercentage =
-    pricingRuleRecord.pricingRuleMinimumRoiPercentage;
 
-  // if ( sku(aquisition_cost_exc) x pricing_rule(pricing_rule_minimum_roi) < pricing_rule(pricing_rule_minimum_margin) ) { pricing_rule(pricing_rule_minimum_margin) } else {  sku(aquisition_cost_exc) x pricing_rule(pricing_rule_minimum_roi) < pricing_rule(pricing_rule_minimum_margin) }
+  const productTaxCategoryId = asinRecord.productTaxCategoryId;
+  const vatCategoryId =
+    await db.ProductTaxCategory.findByPk(productTaxCategoryId).vatCategoryId;
+  const { vatRate } = await db.VatRatePerCountry.findOne({
+    where: {
+      countryCode,
+      vatCategoryId,
+    },
+  });
+
+  const referralFeePercentage = amazonReferralFeeRecord.referralFeePercentage;
+
+  // ! From here on, I'll have to add the converting logic for currencyCode !== 'EUR
+  let skuAcquisitionCostExc;
+  if (currencyCode === 'EUR') {
+    skuAcquisitionCostExc = skuRecord.skuAcquisitionCostExc;
+  } else {
+    logMessage += `Cannot create minimum selling price record for SKU ID ${skuId} because the currency code ${currencyCode} is not supported.`;
+    return;
+  }
+  const fbaFeeLocalAndPanEu = priceGridFbaFeeRecord.fbaFeeLocalAndPanEu;
+  const fbaFeeEfn = priceGridFbaFeeRecord.fbaFeeEfn;
+
   const minimumMarginAmount = Math.max(
-    skuAcquisitionCostExc * pricingRuleMinimumRoiPercentage,
-    pricingRuleMinimumMarginAmount,
+    skuAcquisitionCostExc * pricingRuleRecord.pricingRuleMinimumRoiPercentage,
+    pricingRuleRecord.pricingRuleMinimumMarginAmount,
   );
+
+  const minimumSellingPriceLocalAndPanEu =
+    (skuAcquisitionCostExc +
+      minimumMarginAmount +
+      closingFee +
+      fbaFeeLocalAndPanEu) /
+    (1 / (1 + vatRate) - referralFeePercentage);
+
+  const minimumSellingPriceEfn =
+    (skuAcquisitionCostExc + minimumMarginAmount + closingFee + fbaFeeEfn) /
+    (1 / (1 + vatRate) - referralFeePercentage);
 
   const minimumSellingPriceRecord = await db.MinimumSellingPrice.create({
     skuId,
@@ -94,7 +142,12 @@ async function automaticallyCreateMinSellingPriceRecord(
     minimumSellingPriceEfn,
     maximumSellingPriceLocalAndPanEu,
     maximumSellingPriceEfn,
+    currencyCode,
   });
+
+  console.log('referralFeeCategoryId: ', referralFeeCategoryId);
+  console.log('minimumMarginAmount: ', minimumMarginAmount);
+  console.log('currencyCode: ', currencyCode);
 }
 
 module.exports = { automaticallyCreateMinSellingPriceRecord };
