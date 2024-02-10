@@ -36,10 +36,10 @@ module.exports = sequelize => {
         type: DataTypes.DECIMAL(6, 5),
       },
       reducedReferralFeeLimit: {
-        type: DataTypes.DECIMAL(5, 2),
+        type: DataTypes.DECIMAL(10, 2),
       },
       reducedReferralFeeThreshold: {
-        type: DataTypes.DECIMAL(5, 2),
+        type: DataTypes.DECIMAL(10, 2),
       },
       perItemMinimumReferralFee: {
         type: DataTypes.DECIMAL(5, 2),
@@ -47,6 +47,10 @@ module.exports = sequelize => {
       },
       closingFee: {
         type: DataTypes.DECIMAL(5, 2),
+        allowNull: false,
+      },
+      currencyCode: {
+        type: DataTypes.CHAR(3),
         allowNull: false,
       },
     },

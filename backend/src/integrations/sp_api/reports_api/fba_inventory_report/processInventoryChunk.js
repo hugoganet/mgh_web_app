@@ -109,6 +109,21 @@ async function processInventoryChunk(
             action: 'sku_created',
             id: skuRecord.skuId,
           });
+          // TODO : Create MinimumSellingPrice record
+          const minimumSellingPriceRecord = await db.MinimumSellingPrice.create(
+            {
+              skuId: skuRecord.skuId,
+              pricingRuleId: 1,
+              enrolledInPanEu: false,
+              eligibleForPanEu: false,
+              referralFeeCategoryId: 1,
+              minimumMarginWanted: 0.1,
+              minimumSellingPriceLocalAndPanEu: 0,
+              minimumSellingPriceEfn: 0,
+              maximumSellingPriceLocalAndPanEu: 0,
+              maximumSellingPriceEfn: 0,
+            },
+          );
         }
         logMessage += `Created new SKU record with id: ${skuRecord.skuId} for SKU: ${sku} on ${countryCode}\n`;
       } catch (err) {

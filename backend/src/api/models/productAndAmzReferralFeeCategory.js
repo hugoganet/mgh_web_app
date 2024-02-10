@@ -36,7 +36,7 @@ module.exports = sequelize => {
     {
       sequelize,
       modelName: 'ProductAndAmzReferralFeeCategory',
-      tableName: 'product_and_amz_referral_fee_categories',
+      tableName: 'product_and_amz_referral_fees_categories',
       timestamps: false,
     },
   );

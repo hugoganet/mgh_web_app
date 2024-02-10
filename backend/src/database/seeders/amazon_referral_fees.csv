@@ -1,319 +1,531 @@
-referralFeeCategoryId,countryCode,referralFeeCategoryNameEn,referralFeePercentage,reducedReferralFeePercentage,reducedReferralFeeLimit,reducedReferralFeeThreshold,perItemMinimumReferralFee,closingFee
-,FR,Additive Manufacturing,0.123600,,,,0.30,0.00
-,FR,Amazon Device Accessories,0.463500,,,,0.30,0.00
-,FR,Automotive and Powersports,0.154500,0.092700,50.00,,0.30,0.00
-,FR,Baby Products,0.154500,0.082400,10.00,,0.30,0.00
-,FR,Backpacks and Handbags,0.154500,,,,0.30,0.00
-,FR,"Beauty, Health, and Personal Care*",0.154500,0.082400,10.00,,0.30,0.00
-,FR,"Beer, Wine, and Spirits",0.103000,,,,0.30,0.00
-,FR,Books,0.154500,,,,0.00,0.61
-,FR,"Media – Books, DVD, Music, Software, Video",0.154500,,,,0.00,0.61
-,FR,"Business, Industrial, and Scientific Supplies",0.154500,,,,0.30,0.00
-,FR,Car and Motorbike Electronic Accessories,0.154500,0.082400,,100.00,0.30,0.00
-,FR,Clothing and Accessories,0.154500,0.072100,,45.00,0.30,0.00
-,FR,Compact Appliances,0.154500,,,,0.30,0.00
-,FR,Computers,0.072100,,,,0.30,0.00
-,FR,Computer Accessories,0.154500,0.082400,,100.00,0.30,0.00
-,FR,Consumer Electronics,0.072100,,,,0.30,0.00
-,FR,Cycling,0.154500,,,,0.00,0.00
-,FR,Cycling Accessories,0.082400,,,,0.30,0.00
-,FR,DIY & Tools,0.133900,,,,0.30,0.00
-,FR,Education Supplies,0.154500,,,,0.30,0.00
-,FR,Electronic Accessories,0.154500,0.082400,,100.00,0.30,0.00
-,FR,Eyewear,0.154500,,,,0.30,0.00
-,FR,Flow Control and Filtration,0.123600,,,,0.30,0.00
-,FR,Fluid Transfer,0.123600,,,,0.30,0.00
-,FR,Food Service,0.154500,,,,0.30,0.00
-,FR,Footwear,0.154500,,,,0.30,0.00
-,FR,Full-Size Appliances,0.072100,,,,0.30,0.00
-,FR,Furniture,0.154500,0.103000,,200.00,0.30,0.00
-,FR,Grocery and Gourmet,0.154500,0.082400,10.00,,0.00,0.00
-,FR,Handmade,0.123600,,,,0.30,0.00
-,FR,Home and Kitchen,0.154500,,,,0.30,0.00
-,FR,Industrial Electrical Supplies,0.123600,,,,0.30,0.00
-,FR,Industrial Tools and Instruments,0.123600,,,,0.30,0.00
-,FR,Jewelry,0.206000,0.051500,,250.00,0.30,0.00
-,FR,Lawn and Garden,0.154500,,,,0.30,0.00
-,FR,Material Handling,0.123600,,,,0.30,0.00
-,FR,Mattresses,0.154500,,,,0.30,0.00
-,FR,Metalworking,0.123600,,,,0.30,0.00
-,FR,Musical Instruments and AV Production,0.123600,,,,0.30,0.00
-,FR,Office Products,0.154500,,,,0.30,0.00
-,FR,Pet Products,0.154500,,,,0.30,0.00
-,FR,Renewable Energy Supplies,0.123600,,,,0.30,0.00
-,FR,Personal Care Appliances,0.154500,,,,0.00,0.00
-,FR,Shoes and Handbags,0.154500,,,,0.00,0.00
-,FR,Software,0.154500,,,,0.00,0.00
-,FR,Sports and Outdoors,0.154500,,,,0.30,0.00
-,FR,Tires,0.072100,,,,0.30,0.00
-,FR,Tools and Home Improvement,0.133900,,,,0.30,0.00
-,FR,Toys and Games,0.154500,,,,0.30,0.00
-,FR,Video Games and Gaming Accessories,0.154500,,,,0.00,0.61
-,FR,Video Games Consoles,0.082400,,,,0.00,0.61
-,FR,Watches,0.154500,0.051500,,250.00,0.30,0.00
-,FR,Everything else,0.154500,,,,0.30,0.00
-,NL,Additive Manufacturing,0.120000,,,,0.30,0.00
-,NL,Amazon Device Accessories,0.450000,,,,0.30,0.00
-,NL,Automotive and Powersports,0.150000,,,,0.00,0.00
-,NL,Baby Products,0.150000,0.080000,10.00,,0.30,0.00
-,NL,Backpacks and Handbags,0.150000,,,,0.00,0.00
-,NL,"Beauty, Health, and Personal Care*",0.150000,0.080000,10.00,,0.30,0.00
-,NL,"Beer, Wine, and Spirits",0.100000,,,,0.30,0.00
-,NL,Books,0.150000,,,,0.00,1.01
-,NL,"Media – Books, DVD, Music, Software, Video",0.150000,,,,0.00,0.81
-,NL,"Business, Industrial, and Scientific Supplies",0.150000,,,,0.30,0.00
-,NL,Car and Motorbike Electronic Accessories,0.120000,,,,0.30,0.00
-,NL,Clothing and Accessories,0.150000,0.070000,,45.00,0.30,0.00
-,NL,Compact Appliances,0.150000,,,,0.00,0.00
-,NL,Computers,0.070000,,,,0.30,0.00
-,NL,Computer Accessories,0.150000,0.080000,,100.00,0.30,0.00
-,NL,Consumer Electronics,0.070000,,,,0.30,0.00
-,NL,Cycling,0.100000,,,,0.30,0.00
-,NL,Cycling Accessories,0.080000,,,,0.30,0.00
-,NL,DIY & Tools,0.130000,,,,0.30,0.00
-,NL,Education Supplies,0.150000,,,,0.30,0.00
-,NL,Electronic Accessories,0.150000,0.080000,,100.00,0.30,0.00
-,NL,Eyewear,0.150000,,,,0.00,0.00
-,NL,Flow Control and Filtration,0.120000,,,,0.30,0.00
-,NL,Fluid Transfer,0.120000,,,,0.30,0.00
-,NL,Food Service,0.150000,,,,0.00,0.00
-,NL,Footwear,0.150000,,,,0.00,0.00
-,NL,Full-Size Appliances,0.150000,,,,0.00,0.00
-,NL,Furniture,0.150000,0.100000,,200.00,0.30,0.00
-,NL,Grocery and Gourmet,0.150000,0.080000,10.00,,0.00,0.00
-,NL,Handmade,0.150000,,,,0.00,0.00
-,NL,Home and Kitchen,0.150000,,,,0.00,0.00
-,NL,Industrial Electrical Supplies,0.150000,,,,0.00,0.00
-,NL,Industrial Tools and Instruments,0.150000,,,,0.00,0.00
-,NL,Jewelry,0.200000,0.050000,,250.00,0.30,0.00
-,NL,Lawn and Garden,0.150000,,,,0.00,0.00
-,NL,Material Handling,0.150000,,,,0.00,0.00
-,NL,Mattresses,0.150000,,,,0.00,0.00
-,NL,Metalworking,0.150000,,,,0.00,0.00
-,NL,Musical Instruments and AV Production,0.120000,,,,0.30,0.00
-,NL,Office Products,0.150000,,,,0.00,0.00
-,NL,Pet Products,0.150000,,,,0.00,0.00
-,NL,Renewable Energy Supplies,0.150000,,,,0.00,0.00
-,NL,Personal Care Appliances,0.150000,0.080000,10.00,,0.30,0.00
-,NL,Shoes and Handbags,0.150000,,,,0.30,0.00
-,NL,Software,0.150000,,,,0.00,0.00
-,NL,Sports and Outdoors,0.150000,,,,0.30,0.00
-,NL,Tires,0.070000,,,,0.30,0.00
-,NL,Tools and Home Improvement,0.150000,,,,0.00,0.00
-,NL,Toys and Games,0.150000,,,,0.00,0.00
-,NL,Video Games and Gaming Accessories,0.150000,,,,0.00,0.81
-,NL,Video Games Consoles,0.080000,,,,0.00,0.81
-,NL,Watches,0.150000,0.050000,,250.00,0.30,0.00
-,NL,Everything else,0.150000,,,,0.30,0.00
-,DE,Additive Manufacturing,0.120000,,,,0.30,0.00
-,DE,Amazon Device Accessories,0.450000,,,,0.30,0.00
-,DE,Automotive and Powersports,0.150000,0.090000,,50.00,0.30,0.00
-,DE,Baby Products,0.150000,0.080000,10.00,,0.30,0.00
-,DE,Backpacks and Handbags,0.150000,,,,0.30,0.00
-,DE,"Beauty, Health, and Personal Care*",0.150000,0.080000,10.00,,0.30,0.00
-,DE,"Beer, Wine, and Spirits",0.100000,,,,0.30,0.00
-,DE,Books,0.150000,,,,0.00,1.01
-,DE,"Media – Books, DVD, Music, Software, Video",0.150000,,,,0.00,0.81
-,DE,"Business, Industrial, and Scientific Supplies",0.150000,,,,0.30,0.00
-,DE,Car and Motorbike Electronic Accessories,0.150000,0.080000,,100.00,0.30,0.00
-,DE,Clothing and Accessories,0.150000,0.070000,,45.00,0.30,0.00
-,DE,Compact Appliances,0.150000,,,,0.30,0.00
-,DE,Computers,0.070000,,,,0.30,0.00
-,DE,Computer Accessories,0.150000,0.080000,,100.00,0.30,0.00
-,DE,Consumer Electronics,0.070000,,,,0.30,0.00
-,DE,Cycling,0.150000,,,,0.30,0.00
-,DE,Cycling Accessories,0.080000,,,,0.30,0.00
-,DE,DIY & Tools,0.150000,,,,0.00,0.00
-,DE,Education Supplies,0.150000,,,,0.30,0.00
-,DE,Electronic Accessories,0.150000,0.080000,,100.00,0.30,0.00
-,DE,Eyewear,0.150000,,,,0.30,0.00
-,DE,Flow Control and Filtration,0.120000,,,,0.30,0.00
-,DE,Fluid Transfer,0.120000,,,,0.30,0.00
-,DE,Food Service,0.150000,,,,0.30,0.00
-,DE,Footwear,0.150000,,,,0.30,0.00
-,DE,Full-Size Appliances,0.070000,,,,0.30,0.00
-,DE,Furniture,0.150000,0.100000,,200.00,0.30,0.00
-,DE,Grocery and Gourmet,0.150000,0.150000,10.00,,0.00,0.00
-,DE,Handmade,0.120000,,,,0.30,0.00
-,DE,Home and Kitchen,0.150000,,,,0.30,0.00
-,DE,Industrial Electrical Supplies,0.120000,,,,0.30,0.00
-,DE,Industrial Tools and Instruments,0.120000,,,,0.30,0.00
-,DE,Jewelry,0.200000,0.050000,,250.00,0.30,0.00
-,DE,Lawn and Garden,0.150000,,,,0.30,0.00
-,DE,Material Handling,0.120000,,,,0.30,0.00
-,DE,Mattresses,0.150000,,,,0.30,0.00
-,DE,Metalworking,0.120000,,,,0.30,0.00
-,DE,Musical Instruments and AV Production,0.120000,,,,0.30,0.00
-,DE,Office Products,0.150000,,,,0.30,0.00
-,DE,Pet Products,0.150000,,,,0.30,0.00
-,DE,Renewable Energy Supplies,0.150000,,,,0.00,0.00
-,DE,Personal Care Appliances,0.150000,,,,0.00,0.00
-,DE,Shoes and Handbags,0.150000,,,,0.00,0.00
-,DE,Software,0.150000,,,,0.00,0.00
-,DE,Sports and Outdoors,0.150000,,,,0.30,0.00
-,DE,Tires,0.070000,,,,0.30,0.00
-,DE,Tools and Home Improvement,0.130000,,,,0.30,0.00
-,DE,Toys and Games,0.150000,,,,0.30,0.00
-,DE,Video Games and Gaming Accessories,0.150000,,,,0.00,0.81
-,DE,Video Games Consoles,0.080000,,,,0.00,0.81
-,DE,Watches,0.150000,0.050000,,250.00,0.30,0.00
-,DE,Everything else,0.150000,,,,0.30,0.00
-,ES,Additive Manufacturing,0.123600,,,,0.30,0.00
-,ES,Amazon Device Accessories,0.463500,,,,0.30,0.00
-,ES,Automotive and Powersports,0.154500,0.092700,,50.00,0.30,0.00
-,ES,Baby Products,0.154500,0.082400,10.00,,0.30,0.00
-,ES,Backpacks and Handbags,0.154500,,,,0.30,0.00
-,ES,"Beauty, Health, and Personal Care*",0.154500,0.082400,10.00,,0.30,0.00
-,ES,"Beer, Wine, and Spirits",0.103000,,,,0.30,0.00
-,ES,Books,0.154500,,,,0.00,1.01
-,ES,"Media – Books, DVD, Music, Software, Video",0.154500,,,,0.00,0.81
-,ES,"Business, Industrial, and Scientific Supplies",0.154500,,,,0.30,0.00
-,ES,Car and Motorbike Electronic Accessories,0.154500,0.082400,,100.00,0.30,0.00
-,ES,Clothing and Accessories,0.154500,0.072100,,45.00,0.30,0.00
-,ES,Compact Appliances,0.154500,,,,0.30,0.00
-,ES,Computers,0.072100,,,,0.30,0.00
-,ES,Computer Accessories,0.154500,0.082400,,100.00,0.30,0.00
-,ES,Consumer Electronics,0.072100,,,,0.30,0.00
-,ES,Cycling,0.154500,,,,0.00,0.00
-,ES,Cycling Accessories,0.082400,,,,0.30,0.00
-,ES,DIY & Tools,0.154500,,,,0.00,0.00
-,ES,Education Supplies,0.154500,,,,0.30,0.00
-,ES,Electronic Accessories,0.154500,0.082400,,100.00,0.30,0.00
-,ES,Eyewear,0.154500,,,,0.30,0.00
-,ES,Flow Control and Filtration,0.123600,,,,0.30,0.00
-,ES,Fluid Transfer,0.123600,,,,0.30,0.00
-,ES,Food Service,0.154500,,,,0.30,0.00
-,ES,Footwear,0.154500,,,,0.30,0.00
-,ES,Full-Size Appliances,0.072100,,,,0.30,0.00
-,ES,Furniture,0.154500,0.103000,,200.00,0.30,0.00
-,ES,Grocery and Gourmet,0.154500,0.082400,10.00,,0.00,0.00
-,ES,Handmade,0.123600,,,,0.30,0.00
-,ES,Home and Kitchen,0.154500,,,,0.30,0.00
-,ES,Industrial Electrical Supplies,0.123600,,,,0.30,0.00
-,ES,Industrial Tools and Instruments,0.123600,,,,0.30,0.00
-,ES,Jewelry,0.206000,0.051500,,250.00,0.30,0.00
-,ES,Lawn and Garden,0.154500,,,,0.30,0.00
-,ES,Material Handling,0.123600,,,,0.30,0.00
-,ES,Mattresses,0.154500,,,,0.30,0.00
-,ES,Metalworking,0.123600,,,,0.30,0.00
-,ES,Musical Instruments and AV Production,0.123600,,,,0.30,0.00
-,ES,Office Products,0.154500,,,,0.30,0.00
-,ES,Pet Products,0.154500,,,,0.30,0.00
-,ES,Renewable Energy Supplies,0.123600,,,,0.30,0.00
-,ES,Personal Care Appliances,0.154500,,,,0.00,0.00
-,ES,Shoes and Handbags,0.154500,,,,0.00,0.00
-,ES,Software,0.154500,,,,0.00,0.00
-,ES,Sports and Outdoors,0.154500,,,,0.30,0.00
-,ES,Tires,0.072100,,,,0.30,0.00
-,ES,Tools and Home Improvement,0.133900,,,,0.30,0.00
-,ES,Toys and Games,0.154500,,,,0.30,0.00
-,ES,Video Games and Gaming Accessories,0.154500,,,,0.00,0.81
-,ES,Video Games Consoles,0.082400,,,,0.00,0.81
-,ES,Watches,0.154500,0.051500,,250.00,0.30,0.00
-,ES,Everything else,0.154500,,,,0.30,0.00
-,IT,Additive Manufacturing,0.123600,,,,0.30,0.00
-,IT,Amazon Device Accessories,0.463500,,,,0.30,0.00
-,IT,Automotive and Powersports,0.154500,0.092700,,50.00,0.30,0.00
-,IT,Baby Products,0.154500,0.082400,10.00,,0.30,0.00
-,IT,Backpacks and Handbags,0.154500,,,,0.30,0.00
-,IT,"Beauty, Health, and Personal Care*",0.154500,0.082400,10.00,,0.30,0.00
-,IT,"Beer, Wine, and Spirits",0.103000,,,,0.30,0.00
-,IT,Books,0.154500,,,,0.00,1.01
-,IT,"Media – Books, DVD, Music, Software, Video",0.154500,,,,0.00,0.81
-,IT,"Business, Industrial, and Scientific Supplies",0.154500,,,,0.30,0.00
-,IT,Car and Motorbike Electronic Accessories,0.154500,0.082400,,100.00,0.30,0.00
-,IT,Clothing and Accessories,0.154500,0.072100,,45.00,0.30,0.00
-,IT,Compact Appliances,0.154500,,,,0.30,0.00
-,IT,Computers,0.072100,,,,0.30,0.00
-,IT,Computer Accessories,0.154500,0.082400,,100.00,0.30,0.00
-,IT,Consumer Electronics,0.072100,,,,0.30,0.00
-,IT,Cycling,0.154500,,,,0.00,0.00
-,IT,Cycling Accessories,0.082400,,,,0.30,0.00
-,IT,DIY & Tools,0.154500,,,,0.00,0.00
-,IT,Education Supplies,0.154500,,,,0.30,0.00
-,IT,Electronic Accessories,0.154500,0.082400,,100.00,0.30,0.00
-,IT,Eyewear,0.154500,,,,0.30,0.00
-,IT,Flow Control and Filtration,0.123600,,,,0.30,0.00
-,IT,Fluid Transfer,0.123600,,,,0.30,0.00
-,IT,Food Service,0.154500,,,,0.30,0.00
-,IT,Footwear,0.154500,,,,0.30,0.00
-,IT,Full-Size Appliances,0.072100,,,,0.30,0.00
-,IT,Furniture,0.154500,0.103000,,200.00,0.30,0.00
-,IT,Grocery and Gourmet,0.154500,0.082400,10.00,,0.00,0.00
-,IT,Handmade,0.123600,,,,0.30,0.00
-,IT,Home and Kitchen,0.154500,,,,0.30,0.00
-,IT,Industrial Electrical Supplies,0.123600,,,,0.30,0.00
-,IT,Industrial Tools and Instruments,0.123600,,,,0.30,0.00
-,IT,Jewelry,0.206000,0.051500,,250.00,0.30,0.00
-,IT,Lawn and Garden,0.154500,,,,0.30,0.00
-,IT,Material Handling,0.123600,,,,0.30,0.00
-,IT,Mattresses,0.154500,,,,0.30,0.00
-,IT,Metalworking,0.123600,,,,0.30,0.00
-,IT,Musical Instruments and AV Production,0.123600,,,,0.30,0.00
-,IT,Office Products,0.154500,,,,0.30,0.00
-,IT,Pet Products,0.154500,,,,0.30,0.00
-,IT,Renewable Energy Supplies,0.123600,,,,0.30,0.00
-,IT,Personal Care Appliances,0.154500,,,,0.00,0.00
-,IT,Shoes and Handbags,0.154500,,,,0.00,0.00
-,IT,Software,0.154500,,,,0.00,0.00
-,IT,Sports and Outdoors,0.154500,,,,0.30,0.00
-,IT,Tires,0.072100,,,,0.30,0.00
-,IT,Tools and Home Improvement,0.133900,,,,0.30,0.00
-,IT,Toys and Games,0.154500,,,,0.30,0.00
-,IT,Video Games and Gaming Accessories,0.154500,,,,0.00,0.81
-,IT,Video Games Consoles,0.082400,,,,0.00,0.81
-,IT,Watches,0.154500,0.051500,,250.00,0.30,0.00
-,IT,Everything else,0.154500,,,,0.30,0.00
-,BE,Additive Manufacturing,0.120000,,,,0.30,0.00
-,BE,Amazon Device Accessories,0.450000,,,,0.30,0.00
-,BE,Automotive and Powersports,0.150000,0.090000,,50.00,0.30,0.00
-,BE,Baby Products,0.150000,0.080000,10.00,,0.30,0.00
-,BE,Backpacks and Handbags,0.150000,,,,0.30,0.00
-,BE,"Beauty, Health, and Personal Care*",0.150000,0.080000,10.00,,0.30,0.00
-,BE,"Beer, Wine, and Spirits",0.100000,,,,0.30,0.00
-,BE,Books,0.150000,,,,0.00,1.01
-,BE,"Media – Books, DVD, Music, Software, Video",0.150000,,,,0.00,0.81
-,BE,"Business, Industrial, and Scientific Supplies",0.150000,,,,0.30,0.00
-,BE,Car and Motorbike Electronic Accessories,0.150000,0.080000,,100.00,0.30,0.00
-,BE,Clothing and Accessories,0.150000,0.070000,,45.00,0.30,0.00
-,BE,Compact Appliances,0.150000,,,,0.30,0.00
-,BE,Computers,0.070000,,,,0.30,0.00
-,BE,Computer Accessories,0.150000,0.080000,,100.00,0.30,0.00
-,BE,Consumer Electronics,0.070000,,,,0.30,0.00
-,BE,Cycling,0.150000,,,,0.30,0.00
-,BE,Cycling Accessories,0.080000,,,,0.30,0.00
-,BE,DIY & Tools,0.150000,,,,0.00,0.00
-,BE,Education Supplies,0.150000,,,,0.30,0.00
-,BE,Electronic Accessories,0.150000,0.080000,,100.00,0.30,0.00
-,BE,Eyewear,0.150000,,,,0.30,0.00
-,BE,Flow Control and Filtration,0.120000,,,,0.30,0.00
-,BE,Fluid Transfer,0.120000,,,,0.30,0.00
-,BE,Food Service,0.150000,,,,0.30,0.00
-,BE,Footwear,0.150000,,,,0.30,0.00
-,BE,Full-Size Appliances,0.070000,,,,0.30,0.00
-,BE,Furniture,0.150000,0.100000,,200.00,0.30,0.00
-,BE,Grocery and Gourmet,0.150000,0.150000,10.00,,0.00,0.00
-,BE,Handmade,0.120000,,,,0.30,0.00
-,BE,Home and Kitchen,0.150000,,,,0.30,0.00
-,BE,Industrial Electrical Supplies,0.120000,,,,0.30,0.00
-,BE,Industrial Tools and Instruments,0.120000,,,,0.30,0.00
-,BE,Jewelry,0.200000,0.050000,,250.00,0.30,0.00
-,BE,Lawn and Garden,0.150000,,,,0.30,0.00
-,BE,Material Handling,0.120000,,,,0.30,0.00
-,BE,Mattresses,0.150000,,,,0.30,0.00
-,BE,Metalworking,0.120000,,,,0.30,0.00
-,BE,Musical Instruments and AV Production,0.120000,,,,0.30,0.00
-,BE,Office Products,0.150000,,,,0.30,0.00
-,BE,Pet Products,0.150000,,,,0.30,0.00
-,BE,Renewable Energy Supplies,0.150000,,,,0.00,0.00
-,BE,Personal Care Appliances,0.150000,,,,0.00,0.00
-,BE,Shoes and Handbags,0.150000,,,,0.00,0.00
-,BE,Software,0.150000,,,,0.00,0.00
-,BE,Sports and Outdoors,0.150000,,,,0.30,0.00
-,BE,Tires,0.070000,,,,0.30,0.00
-,BE,Tools and Home Improvement,0.130000,,,,0.30,0.00
-,BE,Toys and Games,0.150000,,,,0.30,0.00
-,BE,Video Games and Gaming Accessories,0.150000,,,,0.00,0.81
-,BE,Video Games Consoles,0.080000,,,,0.00,0.81
-,BE,Watches,0.150000,0.050000,,250.00,0.30,0.00
-,BE,Everything else,0.150000,,,,0.30,0.00
+referralFeeCategoryId,countryCode,referralFeeCategoryNameEn,referralFeePercentage,reducedReferralFeePercentage,reducedReferralFeeLimit,reducedReferralFeeThreshold,perItemMinimumReferralFee,closingFee,currencyCode
+,FR,Additive Manufacturing,0.123600,,,,0.30,0.00,EUR
+,FR,Amazon Device Accessories,0.463500,,,,0.30,0.00,EUR
+,FR,Automotive and Powersports,0.154500,0.092700,50.00,,0.30,0.00,EUR
+,FR,Baby Products,0.154500,0.082400,10.00,,0.30,0.00,EUR
+,FR,Backpacks and Handbags,0.154500,,,,0.30,0.00,EUR
+,FR,"Beauty, Health, and Personal Care*",0.154500,0.082400,10.00,,0.30,0.00,EUR
+,FR,"Beer, Wine, and Spirits",0.103000,,,,0.30,0.00,EUR
+,FR,Books,0.154500,,,,0.00,0.61,EUR
+,FR,"Media – Books, DVD, Music, Software, Video",0.154500,,,,0.00,0.61,EUR
+,FR,"Business, Industrial, and Scientific Supplies",0.154500,,,,0.30,0.00,EUR
+,FR,Car and Motorbike Electronic Accessories,0.154500,0.082400,,100.00,0.30,0.00,EUR
+,FR,Clothing and Accessories,0.154500,0.072100,,45.00,0.30,0.00,EUR
+,FR,Compact Appliances,0.154500,,,,0.30,0.00,EUR
+,FR,Computers,0.072100,,,,0.30,0.00,EUR
+,FR,Computer Accessories,0.154500,0.082400,,100.00,0.30,0.00,EUR
+,FR,Consumer Electronics,0.072100,,,,0.30,0.00,EUR
+,FR,Cycling,0.154500,,,,0.00,0.00,EUR
+,FR,Cycling Accessories,0.082400,,,,0.30,0.00,EUR
+,FR,DIY & Tools,0.133900,,,,0.30,0.00,EUR
+,FR,Education Supplies,0.154500,,,,0.30,0.00,EUR
+,FR,Electronic Accessories,0.154500,0.082400,,100.00,0.30,0.00,EUR
+,FR,Eyewear,0.154500,,,,0.30,0.00,EUR
+,FR,Flow Control and Filtration,0.123600,,,,0.30,0.00,EUR
+,FR,Fluid Transfer,0.123600,,,,0.30,0.00,EUR
+,FR,Food Service,0.154500,,,,0.30,0.00,EUR
+,FR,Footwear,0.154500,,,,0.30,0.00,EUR
+,FR,Full-Size Appliances,0.072100,,,,0.30,0.00,EUR
+,FR,Furniture,0.154500,0.103000,,200.00,0.30,0.00,EUR
+,FR,Grocery and Gourmet,0.154500,0.082400,10.00,,0.00,0.00,EUR
+,FR,Handmade,0.123600,,,,0.30,0.00,EUR
+,FR,Home and Kitchen,0.154500,,,,0.30,0.00,EUR
+,FR,Industrial Electrical Supplies,0.123600,,,,0.30,0.00,EUR
+,FR,Industrial Tools and Instruments,0.123600,,,,0.30,0.00,EUR
+,FR,Jewelry,0.206000,0.051500,,250.00,0.30,0.00,EUR
+,FR,Lawn and Garden,0.154500,,,,0.30,0.00,EUR
+,FR,Material Handling,0.123600,,,,0.30,0.00,EUR
+,FR,Mattresses,0.154500,,,,0.30,0.00,EUR
+,FR,Metalworking,0.123600,,,,0.30,0.00,EUR
+,FR,Musical Instruments and AV Production,0.123600,,,,0.30,0.00,EUR
+,FR,Office Products,0.154500,,,,0.30,0.00,EUR
+,FR,Pet Products,0.154500,,,,0.30,0.00,EUR
+,FR,Renewable Energy Supplies,0.123600,,,,0.30,0.00,EUR
+,FR,Personal Care Appliances,0.154500,,,,0.00,0.00,EUR
+,FR,Shoes and Handbags,0.154500,,,,0.00,0.00,EUR
+,FR,Software,0.154500,,,,0.00,0.00,EUR
+,FR,Sports and Outdoors,0.154500,,,,0.30,0.00,EUR
+,FR,Tires,0.072100,,,,0.30,0.00,EUR
+,FR,Tools and Home Improvement,0.133900,,,,0.30,0.00,EUR
+,FR,Toys and Games,0.154500,,,,0.30,0.00,EUR
+,FR,Video Games and Gaming Accessories,0.154500,,,,0.00,0.61,EUR
+,FR,Video Games Consoles,0.082400,,,,0.00,0.61,EUR
+,FR,Watches,0.154500,0.051500,,250.00,0.30,0.00,EUR
+,FR,Everything else,0.154500,,,,0.30,0.00,EUR
+,NL,Additive Manufacturing,0.120000,,,,0.30,0.00,EUR
+,NL,Amazon Device Accessories,0.450000,,,,0.30,0.00,EUR
+,NL,Automotive and Powersports,0.150000,,,,0.00,0.00,EUR
+,NL,Baby Products,0.150000,0.080000,10.00,,0.30,0.00,EUR
+,NL,Backpacks and Handbags,0.150000,,,,0.00,0.00,EUR
+,NL,"Beauty, Health, and Personal Care*",0.150000,0.080000,10.00,,0.30,0.00,EUR
+,NL,"Beer, Wine, and Spirits",0.100000,,,,0.30,0.00,EUR
+,NL,Books,0.150000,,,,0.00,1.01,EUR
+,NL,"Media – Books, DVD, Music, Software, Video",0.150000,,,,0.00,0.81,EUR
+,NL,"Business, Industrial, and Scientific Supplies",0.150000,,,,0.30,0.00,EUR
+,NL,Car and Motorbike Electronic Accessories,0.120000,,,,0.30,0.00,EUR
+,NL,Clothing and Accessories,0.150000,0.070000,,45.00,0.30,0.00,EUR
+,NL,Compact Appliances,0.150000,,,,0.00,0.00,EUR
+,NL,Computers,0.070000,,,,0.30,0.00,EUR
+,NL,Computer Accessories,0.150000,0.080000,,100.00,0.30,0.00,EUR
+,NL,Consumer Electronics,0.070000,,,,0.30,0.00,EUR
+,NL,Cycling,0.100000,,,,0.30,0.00,EUR
+,NL,Cycling Accessories,0.080000,,,,0.30,0.00,EUR
+,NL,DIY & Tools,0.130000,,,,0.30,0.00,EUR
+,NL,Education Supplies,0.150000,,,,0.30,0.00,EUR
+,NL,Electronic Accessories,0.150000,0.080000,,100.00,0.30,0.00,EUR
+,NL,Eyewear,0.150000,,,,0.00,0.00,EUR
+,NL,Flow Control and Filtration,0.120000,,,,0.30,0.00,EUR
+,NL,Fluid Transfer,0.120000,,,,0.30,0.00,EUR
+,NL,Food Service,0.150000,,,,0.00,0.00,EUR
+,NL,Footwear,0.150000,,,,0.00,0.00,EUR
+,NL,Full-Size Appliances,0.150000,,,,0.00,0.00,EUR
+,NL,Furniture,0.150000,0.100000,,200.00,0.30,0.00,EUR
+,NL,Grocery and Gourmet,0.150000,0.080000,10.00,,0.00,0.00,EUR
+,NL,Handmade,0.150000,,,,0.00,0.00,EUR
+,NL,Home and Kitchen,0.150000,,,,0.00,0.00,EUR
+,NL,Industrial Electrical Supplies,0.150000,,,,0.00,0.00,EUR
+,NL,Industrial Tools and Instruments,0.150000,,,,0.00,0.00,EUR
+,NL,Jewelry,0.200000,0.050000,,250.00,0.30,0.00,EUR
+,NL,Lawn and Garden,0.150000,,,,0.00,0.00,EUR
+,NL,Material Handling,0.150000,,,,0.00,0.00,EUR
+,NL,Mattresses,0.150000,,,,0.00,0.00,EUR
+,NL,Metalworking,0.150000,,,,0.00,0.00,EUR
+,NL,Musical Instruments and AV Production,0.120000,,,,0.30,0.00,EUR
+,NL,Office Products,0.150000,,,,0.00,0.00,EUR
+,NL,Pet Products,0.150000,,,,0.00,0.00,EUR
+,NL,Renewable Energy Supplies,0.150000,,,,0.00,0.00,EUR
+,NL,Personal Care Appliances,0.150000,0.080000,10.00,,0.30,0.00,EUR
+,NL,Shoes and Handbags,0.150000,,,,0.30,0.00,EUR
+,NL,Software,0.150000,,,,0.00,0.00,EUR
+,NL,Sports and Outdoors,0.150000,,,,0.30,0.00,EUR
+,NL,Tires,0.070000,,,,0.30,0.00,EUR
+,NL,Tools and Home Improvement,0.150000,,,,0.00,0.00,EUR
+,NL,Toys and Games,0.150000,,,,0.00,0.00,EUR
+,NL,Video Games and Gaming Accessories,0.150000,,,,0.00,0.81,EUR
+,NL,Video Games Consoles,0.080000,,,,0.00,0.81,EUR
+,NL,Watches,0.150000,0.050000,,250.00,0.30,0.00,EUR
+,NL,Everything else,0.150000,,,,0.30,0.00,EUR
+,DE,Additive Manufacturing,0.120000,,,,0.30,0.00,EUR
+,DE,Amazon Device Accessories,0.450000,,,,0.30,0.00,EUR
+,DE,Automotive and Powersports,0.150000,0.090000,,50.00,0.30,0.00,EUR
+,DE,Baby Products,0.150000,0.080000,10.00,,0.30,0.00,EUR
+,DE,Backpacks and Handbags,0.150000,,,,0.30,0.00,EUR
+,DE,"Beauty, Health, and Personal Care*",0.150000,0.080000,10.00,,0.30,0.00,EUR
+,DE,"Beer, Wine, and Spirits",0.100000,,,,0.30,0.00,EUR
+,DE,Books,0.150000,,,,0.00,1.01,EUR
+,DE,"Media – Books, DVD, Music, Software, Video",0.150000,,,,0.00,0.81,EUR
+,DE,"Business, Industrial, and Scientific Supplies",0.150000,,,,0.30,0.00,EUR
+,DE,Car and Motorbike Electronic Accessories,0.150000,0.080000,,100.00,0.30,0.00,EUR
+,DE,Clothing and Accessories,0.150000,0.070000,,45.00,0.30,0.00,EUR
+,DE,Compact Appliances,0.150000,,,,0.30,0.00,EUR
+,DE,Computers,0.070000,,,,0.30,0.00,EUR
+,DE,Computer Accessories,0.150000,0.080000,,100.00,0.30,0.00,EUR
+,DE,Consumer Electronics,0.070000,,,,0.30,0.00,EUR
+,DE,Cycling,0.150000,,,,0.30,0.00,EUR
+,DE,Cycling Accessories,0.080000,,,,0.30,0.00,EUR
+,DE,DIY & Tools,0.150000,,,,0.00,0.00,EUR
+,DE,Education Supplies,0.150000,,,,0.30,0.00,EUR
+,DE,Electronic Accessories,0.150000,0.080000,,100.00,0.30,0.00,EUR
+,DE,Eyewear,0.150000,,,,0.30,0.00,EUR
+,DE,Flow Control and Filtration,0.120000,,,,0.30,0.00,EUR
+,DE,Fluid Transfer,0.120000,,,,0.30,0.00,EUR
+,DE,Food Service,0.150000,,,,0.30,0.00,EUR
+,DE,Footwear,0.150000,,,,0.30,0.00,EUR
+,DE,Full-Size Appliances,0.070000,,,,0.30,0.00,EUR
+,DE,Furniture,0.150000,0.100000,,200.00,0.30,0.00,EUR
+,DE,Grocery and Gourmet,0.150000,0.150000,10.00,,0.00,0.00,EUR
+,DE,Handmade,0.120000,,,,0.30,0.00,EUR
+,DE,Home and Kitchen,0.150000,,,,0.30,0.00,EUR
+,DE,Industrial Electrical Supplies,0.120000,,,,0.30,0.00,EUR
+,DE,Industrial Tools and Instruments,0.120000,,,,0.30,0.00,EUR
+,DE,Jewelry,0.200000,0.050000,,250.00,0.30,0.00,EUR
+,DE,Lawn and Garden,0.150000,,,,0.30,0.00,EUR
+,DE,Material Handling,0.120000,,,,0.30,0.00,EUR
+,DE,Mattresses,0.150000,,,,0.30,0.00,EUR
+,DE,Metalworking,0.120000,,,,0.30,0.00,EUR
+,DE,Musical Instruments and AV Production,0.120000,,,,0.30,0.00,EUR
+,DE,Office Products,0.150000,,,,0.30,0.00,EUR
+,DE,Pet Products,0.150000,,,,0.30,0.00,EUR
+,DE,Renewable Energy Supplies,0.150000,,,,0.00,0.00,EUR
+,DE,Personal Care Appliances,0.150000,,,,0.00,0.00,EUR
+,DE,Shoes and Handbags,0.150000,,,,0.00,0.00,EUR
+,DE,Software,0.150000,,,,0.00,0.00,EUR
+,DE,Sports and Outdoors,0.150000,,,,0.30,0.00,EUR
+,DE,Tires,0.070000,,,,0.30,0.00,EUR
+,DE,Tools and Home Improvement,0.130000,,,,0.30,0.00,EUR
+,DE,Toys and Games,0.150000,,,,0.30,0.00,EUR
+,DE,Video Games and Gaming Accessories,0.150000,,,,0.00,0.81,EUR
+,DE,Video Games Consoles,0.080000,,,,0.00,0.81,EUR
+,DE,Watches,0.150000,0.050000,,250.00,0.30,0.00,EUR
+,DE,Everything else,0.150000,,,,0.30,0.00,EUR
+,ES,Additive Manufacturing,0.123600,,,,0.30,0.00,EUR
+,ES,Amazon Device Accessories,0.463500,,,,0.30,0.00,EUR
+,ES,Automotive and Powersports,0.154500,0.092700,,50.00,0.30,0.00,EUR
+,ES,Baby Products,0.154500,0.082400,10.00,,0.30,0.00,EUR
+,ES,Backpacks and Handbags,0.154500,,,,0.30,0.00,EUR
+,ES,"Beauty, Health, and Personal Care*",0.154500,0.082400,10.00,,0.30,0.00,EUR
+,ES,"Beer, Wine, and Spirits",0.103000,,,,0.30,0.00,EUR
+,ES,Books,0.154500,,,,0.00,1.01,EUR
+,ES,"Media – Books, DVD, Music, Software, Video",0.154500,,,,0.00,0.81,EUR
+,ES,"Business, Industrial, and Scientific Supplies",0.154500,,,,0.30,0.00,EUR
+,ES,Car and Motorbike Electronic Accessories,0.154500,0.082400,,100.00,0.30,0.00,EUR
+,ES,Clothing and Accessories,0.154500,0.072100,,45.00,0.30,0.00,EUR
+,ES,Compact Appliances,0.154500,,,,0.30,0.00,EUR
+,ES,Computers,0.072100,,,,0.30,0.00,EUR
+,ES,Computer Accessories,0.154500,0.082400,,100.00,0.30,0.00,EUR
+,ES,Consumer Electronics,0.072100,,,,0.30,0.00,EUR
+,ES,Cycling,0.154500,,,,0.00,0.00,EUR
+,ES,Cycling Accessories,0.082400,,,,0.30,0.00,EUR
+,ES,DIY & Tools,0.154500,,,,0.00,0.00,EUR
+,ES,Education Supplies,0.154500,,,,0.30,0.00,EUR
+,ES,Electronic Accessories,0.154500,0.082400,,100.00,0.30,0.00,EUR
+,ES,Eyewear,0.154500,,,,0.30,0.00,EUR
+,ES,Flow Control and Filtration,0.123600,,,,0.30,0.00,EUR
+,ES,Fluid Transfer,0.123600,,,,0.30,0.00,EUR
+,ES,Food Service,0.154500,,,,0.30,0.00,EUR
+,ES,Footwear,0.154500,,,,0.30,0.00,EUR
+,ES,Full-Size Appliances,0.072100,,,,0.30,0.00,EUR
+,ES,Furniture,0.154500,0.103000,,200.00,0.30,0.00,EUR
+,ES,Grocery and Gourmet,0.154500,0.082400,10.00,,0.00,0.00,EUR
+,ES,Handmade,0.123600,,,,0.30,0.00,EUR
+,ES,Home and Kitchen,0.154500,,,,0.30,0.00,EUR
+,ES,Industrial Electrical Supplies,0.123600,,,,0.30,0.00,EUR
+,ES,Industrial Tools and Instruments,0.123600,,,,0.30,0.00,EUR
+,ES,Jewelry,0.206000,0.051500,,250.00,0.30,0.00,EUR
+,ES,Lawn and Garden,0.154500,,,,0.30,0.00,EUR
+,ES,Material Handling,0.123600,,,,0.30,0.00,EUR
+,ES,Mattresses,0.154500,,,,0.30,0.00,EUR
+,ES,Metalworking,0.123600,,,,0.30,0.00,EUR
+,ES,Musical Instruments and AV Production,0.123600,,,,0.30,0.00,EUR
+,ES,Office Products,0.154500,,,,0.30,0.00,EUR
+,ES,Pet Products,0.154500,,,,0.30,0.00,EUR
+,ES,Renewable Energy Supplies,0.123600,,,,0.30,0.00,EUR
+,ES,Personal Care Appliances,0.154500,,,,0.00,0.00,EUR
+,ES,Shoes and Handbags,0.154500,,,,0.00,0.00,EUR
+,ES,Software,0.154500,,,,0.00,0.00,EUR
+,ES,Sports and Outdoors,0.154500,,,,0.30,0.00,EUR
+,ES,Tires,0.072100,,,,0.30,0.00,EUR
+,ES,Tools and Home Improvement,0.133900,,,,0.30,0.00,EUR
+,ES,Toys and Games,0.154500,,,,0.30,0.00,EUR
+,ES,Video Games and Gaming Accessories,0.154500,,,,0.00,0.81,EUR
+,ES,Video Games Consoles,0.082400,,,,0.00,0.81,EUR
+,ES,Watches,0.154500,0.051500,,250.00,0.30,0.00,EUR
+,ES,Everything else,0.154500,,,,0.30,0.00,EUR
+,IT,Additive Manufacturing,0.123600,,,,0.30,0.00,EUR
+,IT,Amazon Device Accessories,0.463500,,,,0.30,0.00,EUR
+,IT,Automotive and Powersports,0.154500,0.092700,,50.00,0.30,0.00,EUR
+,IT,Baby Products,0.154500,0.082400,10.00,,0.30,0.00,EUR
+,IT,Backpacks and Handbags,0.154500,,,,0.30,0.00,EUR
+,IT,"Beauty, Health, and Personal Care*",0.154500,0.082400,10.00,,0.30,0.00,EUR
+,IT,"Beer, Wine, and Spirits",0.103000,,,,0.30,0.00,EUR
+,IT,Books,0.154500,,,,0.00,1.01,EUR
+,IT,"Media – Books, DVD, Music, Software, Video",0.154500,,,,0.00,0.81,EUR
+,IT,"Business, Industrial, and Scientific Supplies",0.154500,,,,0.30,0.00,EUR
+,IT,Car and Motorbike Electronic Accessories,0.154500,0.082400,,100.00,0.30,0.00,EUR
+,IT,Clothing and Accessories,0.154500,0.072100,,45.00,0.30,0.00,EUR
+,IT,Compact Appliances,0.154500,,,,0.30,0.00,EUR
+,IT,Computers,0.072100,,,,0.30,0.00,EUR
+,IT,Computer Accessories,0.154500,0.082400,,100.00,0.30,0.00,EUR
+,IT,Consumer Electronics,0.072100,,,,0.30,0.00,EUR
+,IT,Cycling,0.154500,,,,0.00,0.00,EUR
+,IT,Cycling Accessories,0.082400,,,,0.30,0.00,EUR
+,IT,DIY & Tools,0.154500,,,,0.00,0.00,EUR
+,IT,Education Supplies,0.154500,,,,0.30,0.00,EUR
+,IT,Electronic Accessories,0.154500,0.082400,,100.00,0.30,0.00,EUR
+,IT,Eyewear,0.154500,,,,0.30,0.00,EUR
+,IT,Flow Control and Filtration,0.123600,,,,0.30,0.00,EUR
+,IT,Fluid Transfer,0.123600,,,,0.30,0.00,EUR
+,IT,Food Service,0.154500,,,,0.30,0.00,EUR
+,IT,Footwear,0.154500,,,,0.30,0.00,EUR
+,IT,Full-Size Appliances,0.072100,,,,0.30,0.00,EUR
+,IT,Furniture,0.154500,0.103000,,200.00,0.30,0.00,EUR
+,IT,Grocery and Gourmet,0.154500,0.082400,10.00,,0.00,0.00,EUR
+,IT,Handmade,0.123600,,,,0.30,0.00,EUR
+,IT,Home and Kitchen,0.154500,,,,0.30,0.00,EUR
+,IT,Industrial Electrical Supplies,0.123600,,,,0.30,0.00,EUR
+,IT,Industrial Tools and Instruments,0.123600,,,,0.30,0.00,EUR
+,IT,Jewelry,0.206000,0.051500,,250.00,0.30,0.00,EUR
+,IT,Lawn and Garden,0.154500,,,,0.30,0.00,EUR
+,IT,Material Handling,0.123600,,,,0.30,0.00,EUR
+,IT,Mattresses,0.154500,,,,0.30,0.00,EUR
+,IT,Metalworking,0.123600,,,,0.30,0.00,EUR
+,IT,Musical Instruments and AV Production,0.123600,,,,0.30,0.00,EUR
+,IT,Office Products,0.154500,,,,0.30,0.00,EUR
+,IT,Pet Products,0.154500,,,,0.30,0.00,EUR
+,IT,Renewable Energy Supplies,0.123600,,,,0.30,0.00,EUR
+,IT,Personal Care Appliances,0.154500,,,,0.00,0.00,EUR
+,IT,Shoes and Handbags,0.154500,,,,0.00,0.00,EUR
+,IT,Software,0.154500,,,,0.00,0.00,EUR
+,IT,Sports and Outdoors,0.154500,,,,0.30,0.00,EUR
+,IT,Tires,0.072100,,,,0.30,0.00,EUR
+,IT,Tools and Home Improvement,0.133900,,,,0.30,0.00,EUR
+,IT,Toys and Games,0.154500,,,,0.30,0.00,EUR
+,IT,Video Games and Gaming Accessories,0.154500,,,,0.00,0.81,EUR
+,IT,Video Games Consoles,0.082400,,,,0.00,0.81,EUR
+,IT,Watches,0.154500,0.051500,,250.00,0.30,0.00,EUR
+,IT,Everything else,0.154500,,,,0.30,0.00,EUR
+,BE,Additive Manufacturing,0.120000,,,,0.30,0.00,EUR
+,BE,Amazon Device Accessories,0.450000,,,,0.30,0.00,EUR
+,BE,Automotive and Powersports,0.150000,0.090000,,50.00,0.30,0.00,EUR
+,BE,Baby Products,0.150000,0.080000,10.00,,0.30,0.00,EUR
+,BE,Backpacks and Handbags,0.150000,,,,0.30,0.00,EUR
+,BE,"Beauty, Health, and Personal Care*",0.150000,0.080000,10.00,,0.30,0.00,EUR
+,BE,"Beer, Wine, and Spirits",0.100000,,,,0.30,0.00,EUR
+,BE,Books,0.150000,,,,0.00,1.01,EUR
+,BE,"Media – Books, DVD, Music, Software, Video",0.150000,,,,0.00,0.81,EUR
+,BE,"Business, Industrial, and Scientific Supplies",0.150000,,,,0.30,0.00,EUR
+,BE,Car and Motorbike Electronic Accessories,0.150000,0.080000,,100.00,0.30,0.00,EUR
+,BE,Clothing and Accessories,0.150000,0.070000,,45.00,0.30,0.00,EUR
+,BE,Compact Appliances,0.150000,,,,0.30,0.00,EUR
+,BE,Computers,0.070000,,,,0.30,0.00,EUR
+,BE,Computer Accessories,0.150000,0.080000,,100.00,0.30,0.00,EUR
+,BE,Consumer Electronics,0.070000,,,,0.30,0.00,EUR
+,BE,Cycling,0.150000,,,,0.30,0.00,EUR
+,BE,Cycling Accessories,0.080000,,,,0.30,0.00,EUR
+,BE,DIY & Tools,0.150000,,,,0.00,0.00,EUR
+,BE,Education Supplies,0.150000,,,,0.30,0.00,EUR
+,BE,Electronic Accessories,0.150000,0.080000,,100.00,0.30,0.00,EUR
+,BE,Eyewear,0.150000,,,,0.30,0.00,EUR
+,BE,Flow Control and Filtration,0.120000,,,,0.30,0.00,EUR
+,BE,Fluid Transfer,0.120000,,,,0.30,0.00,EUR
+,BE,Food Service,0.150000,,,,0.30,0.00,EUR
+,BE,Footwear,0.150000,,,,0.30,0.00,EUR
+,BE,Full-Size Appliances,0.070000,,,,0.30,0.00,EUR
+,BE,Furniture,0.150000,0.100000,,200.00,0.30,0.00,EUR
+,BE,Grocery and Gourmet,0.150000,0.150000,10.00,,0.00,0.00,EUR
+,BE,Handmade,0.120000,,,,0.30,0.00,EUR
+,BE,Home and Kitchen,0.150000,,,,0.30,0.00,EUR
+,BE,Industrial Electrical Supplies,0.120000,,,,0.30,0.00,EUR
+,BE,Industrial Tools and Instruments,0.120000,,,,0.30,0.00,EUR
+,BE,Jewelry,0.200000,0.050000,,250.00,0.30,0.00,EUR
+,BE,Lawn and Garden,0.150000,,,,0.30,0.00,EUR
+,BE,Material Handling,0.120000,,,,0.30,0.00,EUR
+,BE,Mattresses,0.150000,,,,0.30,0.00,EUR
+,BE,Metalworking,0.120000,,,,0.30,0.00,EUR
+,BE,Musical Instruments and AV Production,0.120000,,,,0.30,0.00,EUR
+,BE,Office Products,0.150000,,,,0.30,0.00,EUR
+,BE,Pet Products,0.150000,,,,0.30,0.00,EUR
+,BE,Renewable Energy Supplies,0.150000,,,,0.00,0.00,EUR
+,BE,Personal Care Appliances,0.150000,,,,0.00,0.00,EUR
+,BE,Shoes and Handbags,0.150000,,,,0.00,0.00,EUR
+,BE,Software,0.150000,,,,0.00,0.00,EUR
+,BE,Sports and Outdoors,0.150000,,,,0.30,0.00,EUR
+,BE,Tires,0.070000,,,,0.30,0.00,EUR
+,BE,Tools and Home Improvement,0.130000,,,,0.30,0.00,EUR
+,BE,Toys and Games,0.150000,,,,0.30,0.00,EUR
+,BE,Video Games and Gaming Accessories,0.150000,,,,0.00,0.81,EUR
+,BE,Video Games Consoles,0.080000,,,,0.00,0.81,EUR
+,BE,Watches,0.150000,0.050000,,250.00,0.30,0.00,EUR
+,BE,Everything else,0.150000,,,,0.30,0.00,EUR
+,SE,Additive Manufacturing,0.120000,,,,3.00,0.00,SEK
+,SE,Amazon Device Accessories,0.450000,,,,3.00,0.00,SEK
+,SE,Automotive and Powersports,0.150000,,,,0.00,0.00,SEK
+,SE,Baby Products,0.150000,0.080000,105.00,,3.00,0.00,SEK
+,SE,Backpacks and Handbags,0.150000,,,,0.00,0.00,SEK
+,SE,"Beauty, Health, and Personal Care*",0.150000,0.080000,105.00,,3.00,0.00,SEK
+,SE,"Beer, Wine, and Spirits",0.100000,,,,3.00,0.00,SEK
+,SE,Books,0.150000,,,,0.00,0.00,SEK
+,SE,"Media – Books, DVD, Music, Software, Video",0.150000,,,,0.00,0.00,SEK
+,SE,"Business, Industrial, and Scientific Supplies",0.150000,,,,3.00,0.00,SEK
+,SE,Car and Motorbike Electronic Accessories,0.120000,,,,3.00,0.00,SEK
+,SE,Clothing and Accessories,0.150000,0.070000,,470.00,3.00,0.00,SEK
+,SE,Compact Appliances,0.150000,,,,0.00,0.00,SEK
+,SE,Computers,0.070000,,,,3.00,0.00,SEK
+,SE,Computer Accessories,0.150000,0.080000,,1050.00,3.00,0.00,SEK
+,SE,Consumer Electronics,0.070000,,,,3.00,0.00,SEK
+,SE,Cycling,0.100000,,,,3.00,0.00,SEK
+,SE,Cycling Accessories,0.080000,,,,3.00,0.00,SEK
+,SE,DIY & Tools,0.130000,,,,3.00,0.00,SEK
+,SE,Education Supplies,0.150000,,,,3.00,0.00,SEK
+,SE,Electronic Accessories,0.150000,0.080000,,1050.00,3.00,0.00,SEK
+,SE,Eyewear,0.150000,,,,0.00,0.00,SEK
+,SE,Flow Control and Filtration,0.120000,,,,3.00,0.00,SEK
+,SE,Fluid Transfer,0.120000,,,,3.00,0.00,SEK
+,SE,Food Service,0.150000,,,,0.00,0.00,SEK
+,SE,Footwear,0.150000,,,,0.00,0.00,SEK
+,SE,Full-Size Appliances,0.150000,,,,0.00,0.00,SEK
+,SE,Furniture,0.150000,0.100000,,2100.00,3.00,0.00,SEK
+,SE,Grocery and Gourmet,0.150000,0.080000,105.00,,0.00,0.00,SEK
+,SE,Handmade,0.150000,,,,0.00,0.00,SEK
+,SE,Home and Kitchen,0.150000,,,,0.00,0.00,SEK
+,SE,Industrial Electrical Supplies,0.150000,,,,0.00,0.00,SEK
+,SE,Industrial Tools and Instruments,0.150000,,,,0.00,0.00,SEK
+,SE,Jewelry,0.200000,0.050000,,2600.00,3.00,0.00,SEK
+,SE,Lawn and Garden,0.150000,,,,0.00,0.00,SEK
+,SE,Material Handling,0.150000,,,,0.00,0.00,SEK
+,SE,Mattresses,0.150000,,,,0.00,0.00,SEK
+,SE,Metalworking,0.150000,,,,0.00,0.00,SEK
+,SE,Musical Instruments and AV Production,0.120000,,,,3.00,0.00,SEK
+,SE,Office Products,0.150000,,,,0.00,0.00,SEK
+,SE,Pet Products,0.150000,,,,0.00,0.00,SEK
+,SE,Renewable Energy Supplies,0.150000,,,,0.00,0.00,SEK
+,SE,Personal Care Appliances,0.150000,0.080000,105.00,,3.00,0.00,SEK
+,SE,Shoes and Handbags,0.150000,,,,3.00,0.00,SEK
+,SE,Software,0.150000,,,,0.00,0.00,SEK
+,SE,Sports and Outdoors,0.150000,,,,3.00,0.00,SEK
+,SE,Tires,0.070000,,,,3.00,0.00,SEK
+,SE,Tools and Home Improvement,0.150000,,,,0.00,0.00,SEK
+,SE,Toys and Games,0.150000,,,,0.00,0.00,SEK
+,SE,Video Games and Gaming Accessories,0.150000,,,,0.00,0.00,SEK
+,SE,Video Games Consoles,0.080000,,,,0.00,0.00,SEK
+,SE,Watches,0.150000,0.050000,,2600,3.00,0.00,SEK
+,SE,Everything else,0.150000,,,,3.00,0.00,SEK
+,UK,Additive Manufacturing,0.122400,,,,0.25,0.00,GBP
+,UK,Amazon Device Accessories,0.459000,,,,0.250000,0.00,GBP
+,UK,Automotive and Powersports,0.153000,0.091800,,,0.00,0.00,GBP
+,UK,Baby Products,0.153000,0.081600,10.00,,0.25,0.00,GBP
+,UK,Backpacks and Handbags,0.153000,,,,0.250000,0.00,GBP
+,UK,"Beauty, Health, and Personal Care*",0.153000,0.081600,10.00,,0.25,0.00,GBP
+,UK,"Beer, Wine, and Spirits",0.102000,,,,0.250000,0.00,GBP
+,UK,Books,0.153000,,,,0.00,0.50,GBP
+,UK,"Media – Books, DVD, Music, Software, Video",0.153000,,,,0.00,0.50,GBP
+,UK,"Business, Industrial, and Scientific Supplies",0.153000,,,,0.250000,0.00,GBP
+,UK,Car and Motorbike Electronic Accessories,0.122400,,,,0.25,0.00,GBP
+,UK,Clothing and Accessories,0.153000,0.071400,,40.00,0.25,0.00,GBP
+,UK,Compact Appliances,0.153000,,,,0.250000,0.00,GBP
+,UK,Computers,0.071400,,,,0.250000,0.00,GBP
+,UK,Computer Accessories,0.153000,0.081600,,100.00,0.25,0.00,GBP
+,UK,Consumer Electronics,0.071400,,,,0.250000,0.00,GBP
+,UK,Cycling,0.102000,,,,0.25,0.00,GBP
+,UK,Cycling Accessories,0.081600,,,,0.250000,0.00,GBP
+,UK,DIY & Tools,0.132600,,,,0.25,0.00,GBP
+,UK,Education Supplies,0.153000,,,,0.25,0.00,GBP
+,UK,Electronic Accessories,0.153000,0.081600,100.00,,0.25,0.00,GBP
+,UK,Eyewear,0.153000,,,,0.250000,0.00,GBP
+,UK,Flow Control and Filtration,0.122400,,,,0.25,0.00,GBP
+,UK,Fluid Transfer,0.122400,,,,0.25,0.00,GBP
+,UK,Food Service,0.153000,,,,0.00,0.00,GBP
+,UK,Footwear,0.153000,,,,0.250000,0.00,GBP
+,UK,Full-Size Appliances,0.071400,,,,0.250000,0.00,GBP
+,UK,Furniture,0.153000,0.102000,,175.00,0.25,0.00,GBP
+,UK,Grocery and Gourmet,0.153000,0.081600,10.00,,0.00,0.00,GBP
+,UK,Handmade,0.122400,,,,0.250000,0.00,GBP
+,UK,Home and Kitchen,0.153000,,,,0.250000,0.00,GBP
+,UK,Industrial Electrical Supplies,0.153000,,,,0.00,0.00,GBP
+,UK,Industrial Tools and Instruments,0.153000,,,,0.00,0.00,GBP
+,UK,Jewelry,0.204000,0.051000,,225.00,0.25,0.00,GBP
+,UK,Lawn and Garden,0.153000,,,,0.250000,0.00,GBP
+,UK,Material Handling,0.153000,,,,0.00,0.00,GBP
+,UK,Mattresses,0.153000,,,,0.250000,0.00,GBP
+,UK,Metalworking,0.153000,,,,0.00,0.00,GBP
+,UK,Musical Instruments and AV Production,0.122400,,,,0.250000,0.00,GBP
+,UK,Office Products,0.153000,,,,0.250000,0.00,GBP
+,UK,Pet Products,0.153000,,,,0.250000,0.00,GBP
+,UK,Renewable Energy Supplies,0.153000,,,,0.00,0.00,GBP
+,UK,Personal Care Appliances,0.153000,0.081600,10.00,,0.25,0.00,GBP
+,UK,Shoes and Handbags,0.153000,,,,0.25,0.00,GBP
+,UK,Software,0.153000,,,,0.00,0.50,GBP
+,UK,Sports and Outdoors,0.153000,,,,0.250000,0.00,GBP
+,UK,Tires,0.071400,,,,0.25,0.00,GBP
+,UK,Tools and Home Improvement,0.132600,,,,0.250000,0.00,GBP
+,UK,Toys and Games,0.153000,,,,0.250000,0.00,GBP
+,UK,Video Games and Gaming Accessories,0.153000,,,,0.00,0.50,GBP
+,UK,Video Games Consoles,0.081600,,,,0.00,0.50,GBP
+,UK,Watches,0.153000,0.051000,,225.00,0.25,0.00,GBP
+,UK,Everything else,0.153000,,,,0.250000,0.00,GBP
+,PL,Additive Manufacturing,0.100000,,,,1.00,0.00,PLN
+,PL,Amazon Device Accessories,0.450000,,,,1.00,0.00,PLN
+,PL,Automotive and Powersports,0.150000,,,,0.00,0.00,PLN
+,PL,Baby Products,0.100000,0.080000,40.00,,1.00,0.00,PLN
+,PL,Backpacks and Handbags,0.150000,,,,0.00,0.00,PLN
+,PL,"Beauty, Health, and Personal Care*",0.060000,0.040000,40.00,,1.00,0.00,PLN
+,PL,"Beer, Wine, and Spirits",0.110000,0.080000,,,1.00,0.00,PLN
+,PL,Books,0.090000,,,,0.00,0.00,PLN
+,PL,"Media – Books, DVD, Music, Software, Video",0.100000,,,,0.00,0.00,PLN
+,PL,"Business, Industrial, and Scientific Supplies",0.100000,,,,1.00,0.00,PLN
+,PL,Car and Motorbike Electronic Accessories,0.080000,0.070000,120.00,,1.00,0.00,PLN
+,PL,Clothing and Accessories,0.100000,0.070000,,180.00,1.00,0.00,PLN
+,PL,Compact Appliances,0.150000,,,,0.00,0.00,PLN
+,PL,Computers,0.030000,0.015000,,20000,1.00,0.00,PLN
+,PL,Computer Accessories,0.080000,0.040000,,50.00,1.00,0.00,PLN
+,PL,Consumer Electronics,0.050000,,,,1.00,0.00,PLN
+,PL,Cycling,0.080000,,,,1.00,0.00,PLN
+,PL,Cycling Accessories,0.080000,,,,1.00,0.00,PLN
+,PL,DIY & Tools,0.060000,,,,1.00,0.00,PLN
+,PL,Education Supplies,0.100000,,,,1.00,0.00,PLN
+,PL,Electronic Accessories,0.120000,0.060000,,50.00,1.00,0.00,PLN
+,PL,Eyewear,0.150000,,,,0.00,0.00,PLN
+,PL,Flow Control and Filtration,0.100000,,,,1.00,0.00,PLN
+,PL,Fluid Transfer,0.100000,,,,1.00,0.00,PLN
+,PL,Food Service,0.150000,,,,0.00,0.00,PLN
+,PL,Footwear,0.150000,,,,0.00,0.00,PLN
+,PL,Full-Size Appliances,0.150000,,,,0.00,0.00,PLN
+,PL,Furniture,0.150000,,,,1.00,0.00,PLN
+,PL,Grocery and Gourmet,0.110000,0.080000,40.00,,0.00,0.00,PLN
+,PL,Handmade,0.150000,,,,0.00,0.00,PLN
+,PL,Home and Kitchen,0.100000,,,,0.00,0.00,PLN
+,PL,Industrial Electrical Supplies,0.100000,,,,0.00,0.00,PLN
+,PL,Industrial Tools and Instruments,0.100000,,,,0.00,0.00,PLN
+,PL,Jewelry,0.120000,0.050000,,200.00,1.00,0.00,PLN
+,PL,Lawn and Garden,0.900000,,,,0.00,0.00,PLN
+,PL,Material Handling,0.100000,,,,0.00,0.00,PLN
+,PL,Mattresses,0.150000,,,,0.00,0.00,PLN
+,PL,Metalworking,0.100000,,,,0.00,0.00,PLN
+,PL,Musical Instruments and AV Production,0.090000,,,,1.00,0.00,PLN
+,PL,Office Products,0.100000,,,,0.00,0.00,PLN
+,PL,Pet Products,0.055000,,,,0.00,0.00,PLN
+,PL,Renewable Energy Supplies,0.150000,,,,0.00,0.00,PLN
+,PL,Personal Care Appliances,0.080000,0.075000,40.00,,1.00,0.00,PLN
+,PL,Shoes and Handbags,0.150000,,,,1.00,0.00,PLN
+,PL,Software,0.090000,,,,0.00,0.00,PLN
+,PL,Sports and Outdoors,0.100000,,,,1.00,0.00,PLN
+,PL,Tires,0.055000,,,,1.00,0.00,PLN
+,PL,Tools and Home Improvement,0.150000,,,,0.00,0.00,PLN
+,PL,Toys and Games,0.100000,,,,0.00,0.00,PLN
+,PL,Video Games and Gaming Accessories,0.080000,,,,0.00,0.00,PLN
+,PL,Video Games Consoles,0.040000,,,,0.00,0.00,PLN
+,PL,Watches,0.120000,0.050000,,200.00,1.00,0.00,PLN
+,PL,Everything else,0.150000,,,,1.00,0.00,PLN
+,TR,Additive Manufacturing,0.150000,,,,0.00,0.00,TRY
+,TR,Amazon Device Accessories,0.150000,,,,0.00,0.00,TRY
+,TR,Automotive and Powersports,0.070000,,,,0.00,0.00,TRY
+,TR,Baby Products,0.115000,,,,0.00,0.00,TRY
+,TR,Backpacks and Handbags,0.150000,,,,0.00,0.00,TRY
+,TR,"Beauty, Health, and Personal Care*",0.110000,,,,0.00,0.00,TRY
+,TR,"Beer, Wine, and Spirits",0.150000,,,,0.00,0.00,TRY
+,TR,Books,0.102000,,,,0.00,0.00,TRY
+,TR,"Media – Books, DVD, Music, Software, Video",0.100000,,,,0.00,0.00,TRY
+,TR,"Business, Industrial, and Scientific Supplies",0.150000,,,,0.00,0.00,TRY
+,TR,Car and Motorbike Electronic Accessories,0.070000,,,,0.00,0.00,TRY
+,TR,Clothing and Accessories,0.150000,,,,0.00,0.00,TRY
+,TR,Compact Appliances,0.150000,,,,0.00,0.00,TRY
+,TR,Computers,0.060000,,,,0.00,0.00,TRY
+,TR,Computer Accessories,0.060000,,,,0.00,0.00,TRY
+,TR,Consumer Electronics,0.060000,,,,0.00,0.00,TRY
+,TR,Cycling,0.150000,,,,0.00,0.00,TRY
+,TR,Cycling Accessories,0.150000,,,,0.00,0.00,TRY
+,TR,DIY & Tools,0.150000,,,,0.00,0.00,TRY
+,TR,Education Supplies,0.150000,,,,0.00,0.00,TRY
+,TR,Electronic Accessories,0.110000,,,,0.00,0.00,TRY
+,TR,Eyewear,0.150000,,,,0.00,0.00,TRY
+,TR,Flow Control and Filtration,0.150000,,,,0.00,0.00,TRY
+,TR,Fluid Transfer,0.150000,,,,0.00,0.00,TRY
+,TR,Food Service,0.150000,,,,0.00,0.00,TRY
+,TR,Footwear,0.150000,,,,0.00,0.00,TRY
+,TR,Full-Size Appliances,0.150000,,,,0.00,0.00,TRY
+,TR,Furniture,0.150000,,,,0.00,0.00,TRY
+,TR,Grocery and Gourmet,0.127000,,,,0.00,0.00,TRY
+,TR,Handmade,0.150000,,,,0.00,0.00,TRY
+,TR,Home and Kitchen,0.150000,,,,0.00,0.00,TRY
+,TR,Industrial Electrical Supplies,0.150000,,,,0.00,0.00,TRY
+,TR,Industrial Tools and Instruments,0.150000,,,,0.00,0.00,TRY
+,TR,Jewelry,0.200000,,,,0.00,0.00,TRY
+,TR,Lawn and Garden,0.140000,,,,0.00,0.00,TRY
+,TR,Material Handling,0.150000,,,,0.00,0.00,TRY
+,TR,Mattresses,0.150000,,,,0.00,0.00,TRY
+,TR,Metalworking,0.150000,,,,0.00,0.00,TRY
+,TR,Musical Instruments and AV Production,0.150000,,,,0.00,0.00,TRY
+,TR,Office Products,0.120000,,,,0.00,0.00,TRY
+,TR,Pet Products,0.127000,,,,0.00,0.00,TRY
+,TR,Renewable Energy Supplies,0.150000,,,,0.00,0.00,TRY
+,TR,Personal Care Appliances,0.136000,,,,0.00,0.00,TRY
+,TR,Shoes and Handbags,0.150000,,,,0.00,0.00,TRY
+,TR,Software,0.150000,,,,0.00,0.00,TRY
+,TR,Sports and Outdoors,0.100000,,,,0.00,0.00,TRY
+,TR,Tires,0.150000,,,,0.00,0.00,TRY
+,TR,Tools and Home Improvement,0.150000,,,,0.00,0.00,TRY
+,TR,Toys and Games,0.130000,,,,0.00,0.00,TRY
+,TR,Video Games and Gaming Accessories,0.100000,,,,0.00,0.00,TRY
+,TR,Video Games Consoles,0.085000,,,,0.00,0.00,TRY
+,TR,Watches,0.150000,,,,0.00,0.00,TRY
+,TR,Everything else,0.100000,,,,0.00,0.00,TRY
