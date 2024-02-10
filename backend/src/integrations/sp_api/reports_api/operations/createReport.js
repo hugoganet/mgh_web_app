@@ -32,7 +32,7 @@ async function createReport(
       {},
       {
         reportType,
-        marketplaceIds: marketplaceIds,
+        marketplaceIds,
         dataStartTime,
         dataEndTime,
       },

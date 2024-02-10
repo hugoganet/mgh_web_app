@@ -8,7 +8,6 @@ const marketplaces = require('../../../../config/marketplaces');
 const {
   downloadAndDecompressDocument,
 } = require('../downloadAndDecompressDocument');
-const { seedSellingPriceHistory } = require('./seedSellingPricesHistory');
 const { createReport } = require('../operations/createReport.js');
 const { logger } = require('../../../../utils/logger');
 
