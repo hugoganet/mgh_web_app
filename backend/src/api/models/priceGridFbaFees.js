@@ -46,6 +46,15 @@ module.exports = sequelize => {
       fbaFeeEfn: {
         type: DataTypes.DECIMAL(10, 2),
       },
+      fbaFeeLowPriceLocalAndPanEu: {
+        type: DataTypes.DECIMAL(10, 2),
+      },
+      fbaFeeLowPriceEfn: {
+        type: DataTypes.DECIMAL(10, 2),
+      },
+      lowPriceSellingPriceThresholdInc: {
+        type: DataTypes.DECIMAL(10, 2),
+      },
       currencyCode: {
         type: DataTypes.CHAR(3),
         allowNull: false,
