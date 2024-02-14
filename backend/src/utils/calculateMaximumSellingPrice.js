@@ -1,7 +1,3 @@
-// To calculate the maximumSellingPrice, I need to know if we are using a reducedReferralFee, and what is the threshold.
-// I also need to know if we are using lowPriceFbaFee, and what is the threshold.
-// I should transform calculateMinimumSellingPrice into calculateSellingPrice
-
 /**
  * @description Calculate the maximum selling price
  * @function calculateMaximumSellingPrice
@@ -17,18 +13,7 @@ function calculateMaximumSellingPrice(
   minimumSellingPrice,
   markupMultiplier = 1.5,
 ) {
-  // Basic error handling for input validation
-  if (typeof minimumSellingPrice !== 'number' || minimumSellingPrice <= 0) {
-    throw new Error('Invalid minimumSellingPrice: must be a positive number.');
-  }
-  if (markupMultiplier < 0) {
-    throw new Error(
-      'Invalid markupMultiplier: must be greater than or = to 0.',
-    );
-  }
-
   let maximumSellingPrice;
-
   if (!reducedReferralFeeLimit && !lowPriceSellingPriceThresholdIncludingVAT) {
     maximumSellingPrice = minimumSellingPrice * markupMultiplier;
   } else if (!reducedReferralFeeLimit) {
@@ -41,8 +26,6 @@ function calculateMaximumSellingPrice(
       lowPriceSellingPriceThresholdIncludingVAT,
     );
   }
-
-  console.log('Calculated maximumSellingPrice:', maximumSellingPrice);
   return maximumSellingPrice;
 }
 

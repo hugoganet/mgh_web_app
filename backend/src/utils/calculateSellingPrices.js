@@ -8,6 +8,7 @@ const {
 const {
   calculateMaximumSellingPrice,
 } = require('./calculateMaximumSellingPrice');
+const { parseAndValidateNumber } = require('./parseAndValidateNumber');
 
 /**
  * @description Calculate the minimum and maximum selling prices
@@ -58,34 +59,42 @@ function calculateSellingPrices(
       reducedReferralFeeLimit,
       vatRate,
       reducedReferralFeePercentage,
+      referralFeePercentage,
     );
 
-    minimumSellingPrice = parseFloat(
+    minimumSellingPrice = parseAndValidateNumber(
       calculateMinimumSellingPrice(
         costBeforeReferralFees,
         applicableReferralFeePercentage,
         vatRate,
       ),
-    ).toFixed(2);
+      {
+        paramName: 'minimumSellingPrice',
+      },
+    );
 
-    console.log(`minimumSellingPrice => ${minimumSellingPrice} : ${typeof minimumSellingPrice}`);
     // Return if within threshold, else proceed to calculate with standard FBA fee
     if (minimumSellingPrice <= lowPriceSellingPriceThresholdIncludingVAT) {
-      maximumSellingPrice = parseFloat(
+      maximumSellingPrice = parseAndValidateNumber(
         calculateMaximumSellingPrice(
           reducedReferralFeeThresholdSellingPriceInc,
           lowPriceSellingPriceThresholdIncludingVAT,
           minimumSellingPrice,
         ),
-      ).toFixed(2);
+        {
+          paramName: 'maximumSellingPrice',
+          min: minimumSellingPrice,
+        },
+      );
       return (sellingPrices = {
         minimumSellingPrice,
         maximumSellingPrice,
       });
     }
   }
-
   // Calculate with Standard FBA Fee
+  lowPriceSellingPriceThresholdIncludingVAT = null; // set this to null for calculateMaximumSellingPrice
+
   const {
     costBeforeReferralFees,
     applicableReferralFeePercentage,
@@ -98,24 +107,32 @@ function calculateSellingPrices(
     reducedReferralFeeLimit,
     vatRate,
     reducedReferralFeePercentage,
+    referralFeePercentage,
   );
 
-  minimumSellingPrice = parseFloat(
+  minimumSellingPrice = parseAndValidateNumber(
     calculateMinimumSellingPrice(
       costBeforeReferralFees,
       applicableReferralFeePercentage,
       vatRate,
     ),
-  ).toFixed(2);
-
+    {
+      paramName: 'minimumSellingPrice',
+      min: 0,
+    },
+  );
   // calculate maximumSellingPrice
-  maximumSellingPrice = parseFloat(
+  maximumSellingPrice = parseAndValidateNumber(
     calculateMaximumSellingPrice(
       reducedReferralFeeThresholdSellingPriceInc,
       lowPriceSellingPriceThresholdIncludingVAT,
       minimumSellingPrice,
     ),
-  ).toFixed(2);
+    {
+      paramName: 'maximumSellingPrice',
+      min: minimumSellingPrice,
+    },
+  );
 
   return (sellingPrices = {
     minimumSellingPrice,

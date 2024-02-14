@@ -10,7 +10,7 @@
  */
 function parseAndValidateNumber(
   value,
-  { min = -Infinity, max = Infinity, paramName = '' } = {},
+  { min = -Infinity, max = Infinity, paramName = '', decimal = 0 } = {},
 ) {
   const number = parseFloat(value);
   if (isNaN(number) || number < min || number > max) {

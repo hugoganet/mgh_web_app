@@ -259,6 +259,7 @@ async function automaticallyCreateMinSellingPriceRecord(
       reducedReferralFeeLimit,
     );
 
+    // TODO : Just before inserting into database, I have to change the sellingPrices for 2 decimal points
     // const minimumSellingPriceRecord = await db.MinimumSellingPrice.create({
     //   skuId,
     //   pricingRuleId: 1,

@@ -1,3 +1,5 @@
+const { parseAndValidateNumber } = require('./parseAndValidateNumber');
+
 /**
  * @description Check if reduced referral fee is applicable and return the applicable percentage
  * @function calculateCostBeforeReferralFeeAndCheckReducedFee
@@ -23,23 +25,38 @@ function calculateCostBeforeReferralFeeAndCheckReducedFee(
   reducedReferralFeePercentage,
   referralFeePercentage,
 ) {
-  const costBeforeReferralFees =
-    skuAcquisitionCostExcludingVAT + minimumMarginAmount + closingFee + fbaFee;
-
+  const costBeforeReferralFees = parseAndValidateNumber(
+    skuAcquisitionCostExcludingVAT + minimumMarginAmount + closingFee + fbaFee,
+    {
+      paramName: 'costBeforeReferralFees',
+      min: 0,
+    },
+  );
   const threshold =
     reducedReferralFeeLimit *
     (1 / (1 + vatRate) - reducedReferralFeePercentage);
   const useReducedFee = costBeforeReferralFees <= threshold;
   const applicablePercentage = useReducedFee
-    ? reducedReferralFeePercentage
-    : referralFeePercentage;
+    ? parseAndValidateNumber(reducedReferralFeePercentage, {
+        paramName: 'reducedReferralFeePercentage',
+        min: 0,
+        max: 1,
+      })
+    : parseAndValidateNumber(referralFeePercentage, {
+        paramName: 'referralFeePercentage',
+        min: 0,
+        max: 1,
+      });
 
   return {
     costBeforeReferralFees,
-    applicableReferralFeePercentage: useReducedFee
-      ? applicablePercentage
+    applicableReferralFeePercentage: applicablePercentage,
+    reducedReferralFeeThresholdSellingPriceInc: useReducedFee
+      ? parseAndValidateNumber(reducedReferralFeeLimit, {
+          paramName: 'reducedReferralFeeThresholdSellingPriceInc',
+          min: 0,
+        })
       : null,
-    reducedReferralFeeLimit: useReducedFee ? reducedReferralFeeLimit : null,
   };
 }
 

@@ -1,3 +1,5 @@
+const { parseAndValidateNumber } = require('./parseAndValidateNumber');
+
 /**
  * @description Calculates the minimum selling price for a product considering cost before referral fees, applicable referral fee percentage, and VAT rate.
  * @function calculateMinimumSellingPrice
@@ -35,11 +37,13 @@ function calculateMinimumSellingPrice(
   }
 
   // Calculate minimum selling price
-  const minimumSellingPrice = (
-    costBeforeReferralFees /
-    (1 - applicableReferralFeePercentage - vatRate)
-  ).toFixed(2);
-
+  const minimumSellingPrice = parseAndValidateNumber(
+    costBeforeReferralFees / (1 - applicableReferralFeePercentage - vatRate),
+    {
+      paramName: 'minimumSellingPrice',
+      min: 0,
+    },
+  );
   return minimumSellingPrice;
 }
 
