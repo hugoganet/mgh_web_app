@@ -68,6 +68,7 @@ function calculateSellingPrices(
       ),
     ).toFixed(2);
 
+    console.log(`minimumSellingPrice => ${minimumSellingPrice} : ${typeof minimumSellingPrice}`);
     // Return if within threshold, else proceed to calculate with standard FBA fee
     if (minimumSellingPrice <= lowPriceSellingPriceThresholdIncludingVAT) {
       maximumSellingPrice = parseFloat(

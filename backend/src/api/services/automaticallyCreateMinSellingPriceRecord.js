@@ -7,6 +7,9 @@ const {
 const {
   calculateSellingPrices,
 } = require('../../utils/calculateSellingPrices');
+const {
+  parseAndValidateNumber,
+} = require('../../utils/parseAndValidateNumber');
 
 /**
  * @description This function creates a minimum selling price record in the database if it does not exist.
@@ -71,12 +74,27 @@ async function automaticallyCreateMinSellingPriceRecord(
     }
     // Extract and convert the referral fee record fields
     const referralFeeCategoryId = amazonReferralFeeRecord.referralFeeCategoryId;
-    const closingFee = parseFloat(amazonReferralFeeRecord.closingFee);
-    const referralFeePercentage = parseFloat(
-      amazonReferralFeeRecord.referralFeePercentage,
+    const closingFee = parseAndValidateNumber(
+      amazonReferralFeeRecord.closingFee,
+      {
+        paramName: 'closingFee',
+        min: 0,
+      },
     );
-    const perItemMinimumReferralFee = parseFloat(
+    const referralFeePercentage = parseAndValidateNumber(
+      amazonReferralFeeRecord.referralFeePercentage,
+      {
+        paramName: 'referralFeePercentage',
+        min: 0,
+        max: 1,
+      },
+    );
+    const perItemMinimumReferralFee = parseAndValidateNumber(
       amazonReferralFeeRecord.perItemMinimumReferralFee,
+      {
+        paramName: 'perItemMinimumReferralFee',
+        min: 0,
+      },
     );
 
     // Handle potential nulls for optional/nullable fields
@@ -134,37 +152,79 @@ async function automaticallyCreateMinSellingPriceRecord(
       logMessage += `No VAT rate record found for country code ${countryCode} and VAT category ID ${vatCategoryId}.`;
       return;
     }
-    const vatRate = parseFloat(vatRateRecord.vatRate);
+    const vatRate = parseAndValidateNumber(vatRateRecord.vatRate, {
+      paramName: 'vatRate',
+      min: 0,
+      max: 1,
+    });
 
     // ! From here on, I'll have to add the converting logic for currencyCode !== 'EUR
     let skuAcquisitionCostExc = 0;
     if (currencyCode === 'EUR') {
-      skuAcquisitionCostExc = parseFloat(skuRecord.skuAcquisitionCostExc);
+      skuAcquisitionCostExc = parseAndValidateNumber(
+        skuRecord.skuAcquisitionCostExc,
+        {
+          paramName: 'skuAcquisitionCostExc',
+          min: 0,
+        },
+      );
     } else {
       logMessage += `Cannot create minimum selling price record for SKU ID ${skuId} because the currency code ${currencyCode} is not supported.`;
       return;
     }
 
-    const fbaFeeLocalAndPanEu = parseFloat(
+    const fbaFeeLocalAndPanEu = parseAndValidateNumber(
       priceGridFbaFeeRecord.fbaFeeLocalAndPanEu,
+      {
+        paramName: 'fbaFeeLocalAndPanEu',
+        min: 0,
+      },
     );
     const fbaFeeLowPriceLocalAndPanEu =
       priceGridFbaFeeRecord.fbaFeeLowPriceLocalAndPanEu
-        ? parseFloat(priceGridFbaFeeRecord.fbaFeeLowPriceLocalAndPanEu)
+        ? parseAndValidateNumber(
+            priceGridFbaFeeRecord.fbaFeeLowPriceLocalAndPanEu,
+            {
+              paramName: 'fbaFeeLowPriceLocalAndPanEu',
+              min: 0,
+            },
+          )
         : null;
-    const fbaFeeEfn = parseFloat(priceGridFbaFeeRecord.fbaFeeEfn);
+    const fbaFeeEfn = parseAndValidateNumber(priceGridFbaFeeRecord.fbaFeeEfn, {
+      paramName: 'fbaFeeEfn',
+      min: 0,
+    });
     const fbaFeeLowPriceEfn = priceGridFbaFeeRecord.fbaFeeLowPriceEfn
-      ? parseFloat(priceGridFbaFeeRecord.fbaFeeLowPriceEfn)
+      ? parseAndValidateNumber(priceGridFbaFeeRecord.fbaFeeLowPriceEfn, {
+          paramName: 'fbaFeeLowPriceEfn',
+          min: 0,
+        })
       : null;
     const lowPriceSellingPriceThresholdInc =
       priceGridFbaFeeRecord.lowPriceSellingPriceThresholdInc
-        ? parseFloat(priceGridFbaFeeRecord.lowPriceSellingPriceThresholdInc)
+        ? parseAndValidateNumber(
+            priceGridFbaFeeRecord.lowPriceSellingPriceThresholdInc,
+            {
+              paramName: 'lowPriceSellingPriceThresholdInc',
+              min: 0,
+            },
+          )
         : null;
 
     const minimumMarginAmount = Math.max(
       skuAcquisitionCostExc *
-        parseFloat(pricingRuleRecord.pricingRuleMinimumRoiPercentage),
-      parseFloat(pricingRuleRecord.pricingRuleMinimumMarginAmount),
+        parseAndValidateNumber(
+          pricingRuleRecord.pricingRuleMinimumRoiPercentage,
+          {
+            paramName: 'pricingRuleMinimumRoiPercentage',
+            min: 0,
+            max: 1,
+          },
+        ),
+      parseAndValidateNumber(pricingRuleRecord.pricingRuleMinimumMarginAmount, {
+        parseAndValidateNumber: 'pricingRuleMinimumMarginAmount',
+        min: 0,
+      }),
     );
 
     const {
@@ -199,25 +259,31 @@ async function automaticallyCreateMinSellingPriceRecord(
       reducedReferralFeeLimit,
     );
 
-    const minimumSellingPriceRecord = await db.MinimumSellingPrice.create({
-      skuId,
-      pricingRuleId: 1,
-      enrolledInPanEu: false,
-      eligibleForPanEu: false,
-      referralFeeCategoryId,
-      minimumMarginAmount,
-      minimumSellingPriceLocalAndPanEu,
-      minimumSellingPriceEfn,
-      maximumSellingPriceLocalAndPanEu,
-      maximumSellingPriceEfn,
-      currencyCode,
-    });
+    // const minimumSellingPriceRecord = await db.MinimumSellingPrice.create({
+    //   skuId,
+    //   pricingRuleId: 1,
+    //   enrolledInPanEu: false,
+    //   eligibleForPanEu: false,
+    //   referralFeeCategoryId,
+    //   minimumMarginAmount,
+    //   minimumSellingPriceLocalAndPanEu,
+    //   minimumSellingPriceEfn,
+    //   maximumSellingPriceLocalAndPanEu,
+    //   maximumSellingPriceEfn,
+    //   currencyCode,
+    // });
 
     console.log(
       `minimumSellingPriceLocalAndPanEu => ${minimumSellingPriceLocalAndPanEu} : ${typeof minimumSellingPriceLocalAndPanEu}`,
     );
     console.log(
+      `maximumSellingPriceLocalAndPanEu => ${maximumSellingPriceLocalAndPanEu} : ${typeof maximumSellingPriceLocalAndPanEu}`,
+    );
+    console.log(
       `minimumSellingPriceEfn => ${minimumSellingPriceEfn} : ${typeof minimumSellingPriceEfn}`,
+    );
+    console.log(
+      `maximumSellingPriceEfn => ${maximumSellingPriceEfn} : ${typeof maximumSellingPriceEfn}`,
     );
   } catch (error) {
     console.log(
