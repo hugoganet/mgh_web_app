@@ -5,7 +5,7 @@ const {
   convertMarketplaceIdentifier,
 } = require('../../utils/convertMarketplaceIdentifier');
 const {
-  calculateMinimumSellingPrice,
+  calculateSellingPrices,
 } = require('../../utils/calculateSellingPrices');
 
 /**
@@ -167,49 +167,51 @@ async function automaticallyCreateMinSellingPriceRecord(
       parseFloat(pricingRuleRecord.pricingRuleMinimumMarginAmount),
     );
 
-    const minimumSellingPriceLocalAndPanEu = parseFloat(
-      calculateMinimumSellingPrice(
-        skuAcquisitionCostExc,
-        minimumMarginAmount,
-        closingFee,
-        fbaFeeLocalAndPanEu,
-        fbaFeeLowPriceLocalAndPanEu,
-        lowPriceSellingPriceThresholdInc,
-        vatRate,
-        referralFeePercentage,
-        reducedReferralFeePercentage,
-        reducedReferralFeeLimit,
-      ),
-    ).toFixed(2);
+    const {
+      minimumSellingPrice: minimumSellingPriceLocalAndPanEu,
+      maximumSellingPrice: maximumSellingPriceLocalAndPanEu,
+    } = calculateSellingPrices(
+      skuAcquisitionCostExc,
+      minimumMarginAmount,
+      closingFee,
+      fbaFeeLocalAndPanEu,
+      fbaFeeLowPriceLocalAndPanEu,
+      lowPriceSellingPriceThresholdInc,
+      vatRate,
+      referralFeePercentage,
+      reducedReferralFeePercentage,
+      reducedReferralFeeLimit,
+    );
 
-    const minimumSellingPriceEfn = parseFloat(
-      calculateMinimumSellingPrice(
-        skuAcquisitionCostExc,
-        minimumMarginAmount,
-        closingFee,
-        fbaFeeEfn,
-        fbaFeeLowPriceEfn,
-        lowPriceSellingPriceThresholdInc,
-        vatRate,
-        referralFeePercentage,
-        reducedReferralFeePercentage,
-        reducedReferralFeeLimit,
-      ),
-    ).toFixed(2);
+    const {
+      minimumSellingPrice: minimumSellingPriceEfn,
+      maximumSellingPrice: maximumSellingPriceEfn,
+    } = calculateSellingPrices(
+      skuAcquisitionCostExc,
+      minimumMarginAmount,
+      closingFee,
+      fbaFeeEfn,
+      fbaFeeLowPriceEfn,
+      lowPriceSellingPriceThresholdInc,
+      vatRate,
+      referralFeePercentage,
+      reducedReferralFeePercentage,
+      reducedReferralFeeLimit,
+    );
 
-    // const minimumSellingPriceRecord = await db.MinimumSellingPrice.create({
-    //   skuId,
-    //   pricingRuleId: 1,
-    //   enrolledInPanEu: false,
-    //   eligibleForPanEu: false,
-    //   referralFeeCategoryId,
-    //   minimumMarginAmount,
-    //   minimumSellingPriceLocalAndPanEu,
-    //   minimumSellingPriceEfn,
-    // maximumSellingPriceLocalAndPanEu,
-    // maximumSellingPriceEfn,
-    //   currencyCode,
-    // });
+    const minimumSellingPriceRecord = await db.MinimumSellingPrice.create({
+      skuId,
+      pricingRuleId: 1,
+      enrolledInPanEu: false,
+      eligibleForPanEu: false,
+      referralFeeCategoryId,
+      minimumMarginAmount,
+      minimumSellingPriceLocalAndPanEu,
+      minimumSellingPriceEfn,
+      maximumSellingPriceLocalAndPanEu,
+      maximumSellingPriceEfn,
+      currencyCode,
+    });
 
     console.log(
       `minimumSellingPriceLocalAndPanEu => ${minimumSellingPriceLocalAndPanEu} : ${typeof minimumSellingPriceLocalAndPanEu}`,

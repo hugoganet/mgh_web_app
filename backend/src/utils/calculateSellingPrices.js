@@ -3,6 +3,9 @@ const {
   calculateCostBeforeReferralFeeAndCheckReducedFee,
 } = require('./calculateCostBeforeReferralFeeAndCheckReducedFee');
 const {
+  calculateMinimumSellingPrice,
+} = require('./calculateMinimumSellingPrice');
+const {
   calculateMaximumSellingPrice,
 } = require('./calculateMaximumSellingPrice');
 
@@ -37,7 +40,6 @@ function calculateSellingPrices(
 ) {
   let minimumSellingPrice;
   let maximumSellingPrice;
-  let sellingPrices = {};
 
   // First, attempt calculation with LowPrice FBA Fee if conditions allow
   if (
@@ -58,14 +60,16 @@ function calculateSellingPrices(
       reducedReferralFeePercentage,
     );
 
-    minimumSellingPrice = (
-      costBeforeReferralFees /
-      (1 - (applicableReferralFeePercentage || referralFeePercentage) - vatRate)
+    minimumSellingPrice = parseFloat(
+      calculateMinimumSellingPrice(
+        costBeforeReferralFees,
+        applicableReferralFeePercentage,
+        vatRate,
+      ),
     ).toFixed(2);
 
     // Return if within threshold, else proceed to calculate with standard FBA fee
     if (minimumSellingPrice <= lowPriceSellingPriceThresholdIncludingVAT) {
-      // calculate maximumSellingPrice
       maximumSellingPrice = parseFloat(
         calculateMaximumSellingPrice(
           reducedReferralFeeThresholdSellingPriceInc,
@@ -95,9 +99,12 @@ function calculateSellingPrices(
     reducedReferralFeePercentage,
   );
 
-  minimumSellingPrice = (
-    costBeforeReferralFees /
-    (1 - (applicableReferralFeePercentage || referralFeePercentage) - vatRate)
+  minimumSellingPrice = parseFloat(
+    calculateMinimumSellingPrice(
+      costBeforeReferralFees,
+      applicableReferralFeePercentage,
+      vatRate,
+    ),
   ).toFixed(2);
 
   // calculate maximumSellingPrice

@@ -8,6 +8,7 @@
  * @param {number} reducedReferralFeeLimit - The reduced referral fee limit
  * @param {number} vatRate - The VAT rate
  * @param {number} reducedReferralFeePercentage - The reduced referral fee percentage
+ * @param {number} referralFeePercentage - The referral fee percentage
  * @return {Object} An object with the following properties:
  * @return {number} costBeforeReferralFees - The cost before referral fees
  * @return {number} applicableReferralFeePercentage - The applicable referral fee percentage
@@ -20,6 +21,7 @@ function calculateCostBeforeReferralFeeAndCheckReducedFee(
   reducedReferralFeeLimit,
   vatRate,
   reducedReferralFeePercentage,
+  referralFeePercentage,
 ) {
   const costBeforeReferralFees =
     skuAcquisitionCostExcludingVAT + minimumMarginAmount + closingFee + fbaFee;
@@ -30,7 +32,7 @@ function calculateCostBeforeReferralFeeAndCheckReducedFee(
   const useReducedFee = costBeforeReferralFees <= threshold;
   const applicablePercentage = useReducedFee
     ? reducedReferralFeePercentage
-    : null; // Assume null means standard fee applies
+    : referralFeePercentage;
 
   return {
     costBeforeReferralFees,
