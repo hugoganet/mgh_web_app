@@ -23,13 +23,14 @@ function calculateCostBeforeReferralFeeAndCheckReducedFee(
 ) {
   const costBeforeReferralFees =
     skuAcquisitionCostExcludingVAT + minimumMarginAmount + closingFee + fbaFee;
-  const { useReducedFee, applicablePercentage } =
-    checkReducedReferralFeeApplicability(
-      costBeforeReferralFees,
-      reducedReferralFeeLimit,
-      vatRate,
-      reducedReferralFeePercentage,
-    );
+
+  const threshold =
+    reducedReferralFeeLimit *
+    (1 / (1 + vatRate) - reducedReferralFeePercentage);
+  const useReducedFee = cost <= threshold;
+  const applicablePercentage = useReducedFee
+    ? reducedReferralFeePercentage
+    : null; // Assume null means standard fee applies
 
   return {
     costBeforeReferralFees,

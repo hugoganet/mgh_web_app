@@ -1,12 +1,24 @@
 /* eslint-disable require-jsdoc */
 const {
-  checkReducedReferralFeeApplicability,
-} = require('./checkReducedReferralFeeApplicability');
-const {
-  calculateMinimumSellingPrice,
-} = require('./calculateMinimumSellingPrice');
+  calculateCostBeforeReferralFeeAndCheckReducedFee,
+} = require('./calculateCostBeforeReferralFeeAndCheckReducedFee');
 
-function calculateMinimumSellingPrices(
+/**
+ * @description Calculate the minimum selling price for a SKU
+ * @function calculateMinimumSellingPrice
+ * @param {number} skuAcquisitionCostExcludingVAT - The SKU acquisition cost excluding VAT
+ * @param {number} minimumMarginAmount - The minimum margin amount
+ * @param {number} closingFee - The closing fee
+ * @param {number} fbaFee - The FBA fee
+ * @param {number} fbaFeeLowPrice - The low price FBA fee
+ * @param {number} lowPriceSellingPriceThresholdIncludingVAT - The low price selling price threshold including VAT
+ * @param {number} vatRate - The VAT rate
+ * @param {number} referralFeePercentage - The referral fee percentage
+ * @param {number} reducedReferralFeePercentage - The reduced referral fee percentage
+ * @param {number} reducedReferralFeeLimit - The reduced referral fee limit
+ * @return {number} minimumSellingPrice - The minimum selling price
+ */
+function calculateMinimumSellingPrice(
   skuAcquisitionCostExcludingVAT,
   minimumMarginAmount,
   closingFee,
@@ -18,100 +30,54 @@ function calculateMinimumSellingPrices(
   reducedReferralFeePercentage = null,
   reducedReferralFeeLimit = null,
 ) {
-  // Initialize variables
-  let costBeforeReferralFees;
-  let minimumSellingPrice;
-
-  // 1- IF (lowPriceSellingPriceThresholdIncludingVAT !== null) Calculate Cost Before Referral Fees with LowPrice FBA Fee:
+  // First, attempt calculation with LowPrice FBA Fee if conditions allow
   if (
     lowPriceSellingPriceThresholdIncludingVAT !== null &&
     fbaFeeLowPrice !== null
   ) {
-    costBeforeReferralFees =
-      skuAcquisitionCostExcludingVAT +
-      minimumMarginAmount +
-      closingFee +
-      fbaFeeLowPrice;
-    // 2- Check for reduced referral fee applicability
-    const {
-      useReducedFee: useReducedReferralFeeLocalAndPanEu,
-      applicablePercentage: applicableReferralFeePercentageLocalAndPanEu,
-    } = checkReducedReferralFeeApplicability(
-      costBeforeReferralFees,
-      reducedReferralFeeLimit,
-      vatRate,
-      reducedReferralFeePercentage,
-    );
-    // 3- Calculate minimumSellingPrice
-    minimumSellingPrice = calculateMinimumSellingPrice(
-      costBeforeReferralFees,
-      vatRate,
-      referralFeePercentage,
-      useReducedReferralFeeLocalAndPanEu
-        ? applicableReferralFeePercentageLocalAndPanEu
-        : null,
-      lowPriceSellingPriceThresholdIncludingVAT,
-    );
-    if (minimumSellingPrice <= lowPriceSellingPriceThresholdIncludingVAT) {
-      return minimumSellingPrice;
-    } else {
-      // Recalculate with Standard FBA Fee
-      costBeforeReferralFees =
-        skuAcquisitionCostExcludingVAT +
-        minimumMarginAmount +
-        closingFee +
-        fbaFee;
-      const {
-        useReducedFee: useReducedReferralFeeLocalAndPanEu,
-        applicablePercentage: applicableReferralFeePercentageLocalAndPanEu,
-      } = checkReducedReferralFeeApplicability(
-        costBeforeReferralFees,
+    const { costBeforeReferralFees, applicableReferralFeePercentage } =
+      calculateCostBeforeReferralFeeAndCheckReducedFee(
+        skuAcquisitionCostExcludingVAT,
+        minimumMarginAmount,
+        closingFee,
+        fbaFeeLowPrice,
         reducedReferralFeeLimit,
         vatRate,
         reducedReferralFeePercentage,
       );
-      minimumSellingPrice = calculateMinimumSellingPrice(
-        costBeforeReferralFees,
-        vatRate,
-        referralFeePercentage,
-        useReducedReferralFeeLocalAndPanEu
-          ? applicableReferralFeePercentageLocalAndPanEu
-          : null,
-        lowPriceSellingPriceThresholdIncludingVAT,
-      );
-      return minimumSellingPrice;
+
+    const minimumSellingPrice =
+      costBeforeReferralFees /
+      (1 -
+        (applicableReferralFeePercentage || referralFeePercentage) -
+        vatRate);
+
+    // Return if within threshold, else proceed to calculate with standard FBA fee
+    if (minimumSellingPrice <= lowPriceSellingPriceThresholdIncludingVAT) {
+      return minimumSellingPrice.toFixed(2);
     }
-  } else {
-    // 1- Calculate Cost Before Referral Fees with Standard FBA Fee
-    costBeforeReferralFees =
-      skuAcquisitionCostExcludingVAT +
-      minimumMarginAmount +
-      closingFee +
-      fbaFee;
-    // 2- Check for reduced referral fee applicability
-    const {
-      useReducedFee: useReducedReferralFeeLocalAndPanEu,
-      applicablePercentage: applicableReferralFeePercentageLocalAndPanEu,
-    } = checkReducedReferralFeeApplicability(
-      costBeforeReferralFees,
+  }
+
+  // Calculate with Standard FBA Fee
+  const { costBeforeReferralFees, applicableReferralFeePercentage } =
+    calculateCostBeforeReferralFeeAndCheckReducedFee(
+      skuAcquisitionCostExcludingVAT,
+      minimumMarginAmount,
+      closingFee,
+      fbaFee,
       reducedReferralFeeLimit,
       vatRate,
       reducedReferralFeePercentage,
     );
-    // 3- Calculate minimumSellingPrice
-    minimumSellingPrice = calculateMinimumSellingPrice(
-      costBeforeReferralFees,
-      vatRate,
-      referralFeePercentage,
-      useReducedReferralFeeLocalAndPanEu
-        ? applicableReferralFeePercentageLocalAndPanEu
-        : null,
-      lowPriceSellingPriceThresholdIncludingVAT,
-    );
-    return minimumSellingPrice;
-  }
 
-  console.log(`Minimum Selling Price: ${minimumSellingPrice}`);
+  return (
+    costBeforeReferralFees /
+    (
+      1 -
+      (applicableReferralFeePercentage || referralFeePercentage) -
+      vatRate
+    ).toFixed(2)
+  );
 }
 
-module.exports = { calculateMinimumSellingPrices };
+module.exports = { calculateMinimumSellingPrice };
