@@ -1,164 +1,112 @@
+const {
+  checkReducedReferralFeeApplicability,
+} = require('./checkReducedReferralFeeApplicability');
+const {
+  calculateMinimumSellingPrice,
+} = require('./calculateMinimumSellingPrice');
+
 /* eslint-disable require-jsdoc */
 function calculateMinimumSellingPrices(
-  skuAcquisitionCostExc,
+  skuAcquisitionCostExcludingVAT,
   minimumMarginAmount,
   closingFee,
-  fbaFeeLocalAndPanEu,
-  fbaFeeLowPriceLocalAndPanEu,
-  fbaFeeEfn,
-  fbaFeeLowPriceEfn,
-  lowPriceSellingPriceThresholdInc,
+  fbaFeeLocalAndPanEuropean,
+  fbaFeeLowPriceLocalAndPanEuropean,
+  fbaFeeEuropeanFulfillmentNetwork,
+  fbaFeeLowPriceEuropeanFulfillmentNetwork,
+  lowPriceSellingPriceThresholdIncludingVAT,
   vatRate,
   referralFeePercentage,
-  reducedReferralFeePercentage = null, // Assuming this can be null if not applicable
-  reducedReferralFeeLimit = null, // Assuming this can be null if not applicable
+  reducedReferralFeePercentage = null,
+  reducedReferralFeeLimit = null,
 ) {
-  // Initialize variables
-  let costBeforeReferralFeesLowPriceLocalAndPanEu = null;
-  let costBeforeReferralFeesLowPriceEfn = null;
-  let thresholdAmountForReducedFeeApplicabilityLocalAndPanEu = null;
-  let thresholdAmountForReducedFeeApplicabilityEfn = null;
-  let applicableReferralFeePercentageLocalAndPanEu = referralFeePercentage;
-  let applicableReferralFeePercentageEfn = referralFeePercentage;
-  let useReducedReferralFeePercentageLocalAndPanEu = false;
-  let useReducedReferralFeePercentageEfn = false;
-
-  // Calculate cost before VAT and referral fees for Standard and Low-Price parcels
-  // Standard Local/Pan-EU
-  const costBeforeReferralFeesLocalAndPanEu =
-    skuAcquisitionCostExc +
+  // Calculate cost before VAT and referral fees for Standard and Low-Price parcels for Local/Pan-EU
+  const costBeforeReferralFeesLocalAndPanEuropean =
+    skuAcquisitionCostExcludingVAT +
     minimumMarginAmount +
     closingFee +
-    fbaFeeLocalAndPanEu;
-  // Low-Price Local/Pan-EU
-  if (
-    lowPriceSellingPriceThresholdInc !== null &&
-    fbaFeeLowPriceLocalAndPanEu !== null
-  ) {
-    costBeforeReferralFeesLowPriceLocalAndPanEu =
-      skuAcquisitionCostExc +
-      minimumMarginAmount +
-      closingFee +
-      fbaFeeLowPriceLocalAndPanEu;
-  }
+    fbaFeeLocalAndPanEuropean;
 
-  // Standard EFN
-  const costBeforeReferralFeesEfn =
-    skuAcquisitionCostExc + minimumMarginAmount + closingFee + fbaFeeEfn;
-  // Low-Price EFN
-  if (lowPriceSellingPriceThresholdInc !== null && fbaFeeLowPriceEfn !== null) {
-    costBeforeReferralFeesLowPriceEfn =
-      skuAcquisitionCostExc +
-      minimumMarginAmount +
-      closingFee +
-      fbaFeeLowPriceEfn;
-  }
+  const costBeforeReferralFeesLowPriceLocalAndPanEuropean =
+    lowPriceSellingPriceThresholdIncludingVAT !== null &&
+    fbaFeeLowPriceLocalAndPanEuropean !== null
+      ? skuAcquisitionCostExcludingVAT +
+        minimumMarginAmount +
+        closingFee +
+        fbaFeeLowPriceLocalAndPanEuropean
+      : null;
 
-  // Check for reduced referral fee applicability for Local and Pan-EU
-  if (reducedReferralFeeLimit) {
-    // if the referralFeeCategory has reduced referral fee percentage calculate the threshold amount of costA to use the reduced referral fee percentage
-    thresholdAmountForReducedFeeApplicabilityLocalAndPanEu =
-      reducedReferralFeeLimit *
-      (1 / (1 + vatRate) - reducedReferralFeePercentage);
-    // if the costALowPrice is less than the threshold amount, use the reduced referral fee percentage
-    if (
-      costBeforeReferralFeesLowPriceLocalAndPanEu <=
-      thresholdAmountForReducedFeeApplicabilityLocalAndPanEu
-    ) {
-      applicableReferralFeePercentageLocalAndPanEu =
-        reducedReferralFeePercentage;
-      useReducedReferralFeePercentageLocalAndPanEu = true;
-    }
-    // else if the costA is less than the threshold amount, use the reduced referral fee percentage
-    else if (
-      costBeforeReferralFeesLocalAndPanEu <=
-      thresholdAmountForReducedFeeApplicabilityLocalAndPanEu
-    ) {
-      applicableReferralFeePercentageLocalAndPanEu =
-        reducedReferralFeePercentage;
-      useReducedReferralFeePercentageLocalAndPanEu = true;
-    }
-  }
+  // Calculate cost before VAT and referral fees for Standard and Low-Price parcels for EFN
+  const costBeforeReferralFeesEFN =
+    skuAcquisitionCostExcludingVAT +
+    minimumMarginAmount +
+    closingFee +
+    fbaFeeEuropeanFulfillmentNetwork;
 
-  // Check for reduced referral fee applicability for EFN
-  if (reducedReferralFeeLimit) {
-    // if the referralFeeCategory has reduced referral fee percentage calculate the threshold amount of costA to use the reduced referral fee percentage
-    thresholdAmountForReducedFeeApplicabilityEfn =
-      reducedReferralFeeLimit *
-      (1 / (1 + vatRate) - reducedReferralFeePercentage);
-    // if the costALowPrice is less than the threshold amount, use the reduced referral fee percentage
-    if (
-      costBeforeReferralFeesLowPriceEfn <=
-      thresholdAmountForReducedFeeApplicabilityEfn
-    ) {
-      applicableReferralFeePercentageEfn = reducedReferralFeePercentage;
-      useReducedReferralFeePercentageEfn = true;
-    }
-    // else if the costA is less than the threshold amount, use the reduced referral fee percentage
-    else if (
-      costBeforeReferralFeesEfn <= thresholdAmountForReducedFeeApplicabilityEfn
-    ) {
-      applicableReferralFeePercentageEfn = reducedReferralFeePercentage;
-      useReducedReferralFeePercentageEfn = true;
-    }
-  }
+  const costBeforeReferralFeesLowPriceEuropeanFulfillmentNetwork =
+    lowPriceSellingPriceThresholdIncludingVAT !== null &&
+    fbaFeeLowPriceEuropeanFulfillmentNetwork !== null
+      ? skuAcquisitionCostExcludingVAT +
+        minimumMarginAmount +
+        closingFee +
+        fbaFeeLowPriceEuropeanFulfillmentNetwork
+      : null;
 
-  // TODO : if the minimumSellingPrice is less than lowPriceSellingPriceThresholdInc, use costBeforeReferralFeesLowPriceLocalAndPanEu otherwise use costBeforeReferralFeesLocalAndPanEu
-  // calculate minimum selling price for local and pan-eu standard parcels
-  const minimumSellingPriceLocalAndPanEu = parseFloat(
-    costBeforeReferralFeesLocalAndPanEu /
-      (1 / (1 + vatRate) - applicableReferralFeePercentageLocalAndPanEu),
-  ).toFixed(2);
-
-  // calculate minimum selling price for local and pan-eu low-price parcels
-  const minimumSellingPriceLocalAndPanEuLowPrice = parseFloat(
-    costBeforeReferralFeesLowPriceLocalAndPanEu /
-      (1 / (1 + vatRate) - applicableReferralFeePercentageLocalAndPanEu),
-  ).toFixed(2);
-
-  const minimumSellingPriceEfn = parseFloat(
-    (
-      (skuAcquisitionCostExc + minimumMarginAmount + closingFee + fbaFeeEfn) /
-      (1 / (1 + vatRate) - applicableReferralFeePercentageEfn)
-    ).toFixed(2),
+  // Check for reduced referral fee applicability
+  const {
+    useReducedFee: useReducedReferralFeeLocalAndPanEu,
+    applicablePercentage: applicableReferralFeePercentageLocalAndPanEu,
+  } = checkReducedReferralFeeApplicability(
+    costBeforeReferralFeesLocalAndPanEuropean,
+    reducedReferralFeeLimit,
+    vatRate,
+    reducedReferralFeePercentage,
   );
 
+  const {
+    useReducedFee: useReducedReferralFeeEfn,
+    applicablePercentage: applicableReferralFeePercentageEfn,
+  } = checkReducedReferralFeeApplicability(
+    costBeforeReferralFeesEFN,
+    reducedReferralFeeLimit,
+    vatRate,
+    reducedReferralFeePercentage,
+  );
+
+  // Calculate minimum selling price for Local and Pan-EU
+  const minimumSellingPriceLocalAndPanEuropean = calculateMinimumSellingPrice(
+    costBeforeReferralFeesLocalAndPanEuropean,
+    vatRate,
+    referralFeePercentage,
+    useReducedReferralFeeLocalAndPanEu
+      ? applicableReferralFeePercentageLocalAndPanEu
+      : null,
+    lowPriceSellingPriceThresholdIncludingVAT,
+  );
+
+  // Calculate minimum selling price for EFN
+  const minimumSellingPriceEuropeanFulfillmentNetwork =
+    calculateMinimumSellingPrice(
+      costBeforeReferralFeesEFN,
+      vatRate,
+      referralFeePercentage,
+      useReducedReferralFeeEfn ? applicableReferralFeePercentageEfn : null,
+      lowPriceSellingPriceThresholdIncludingVAT,
+    );
+
+  // Log for verification, remove in production
   console.log(
-    `costBeforeReferralFeesLocalAndPanEu => ${costBeforeReferralFeesLocalAndPanEu} : ${typeof costBeforeReferralFeesLocalAndPanEu}`,
+    `Minimum Selling Price Local/Pan-EU: ${minimumSellingPriceLocalAndPanEuropean}`,
   );
   console.log(
-    `costBeforeReferralFeesLowPriceLocalAndPanEu => ${costBeforeReferralFeesLowPriceLocalAndPanEu} : ${typeof costBeforeReferralFeesLowPriceLocalAndPanEu}`,
+    `Minimum Selling Price EFN: ${minimumSellingPriceEuropeanFulfillmentNetwork}`,
   );
-  console.log(
-    `costBeforeReferralFeesEfn => ${costBeforeReferralFeesEfn} : ${typeof costBeforeReferralFeesEfn}`,
-  );
-  console.log(
-    `costBeforeReferralFeesLowPriceEfn => ${costBeforeReferralFeesLowPriceEfn} : ${typeof costBeforeReferralFeesLowPriceEfn}`,
-  );
-  console.log(
-    `thresholdAmountForReducedFeeApplicabilityLocalAndPanEu => ${thresholdAmountForReducedFeeApplicabilityLocalAndPanEu} : ${typeof thresholdAmountForReducedFeeApplicabilityLocalAndPanEu}`,
-  );
-  console.log(
-    `thresholdAmountForReducedFeeApplicabilityEfn => ${thresholdAmountForReducedFeeApplicabilityEfn} : ${typeof thresholdAmountForReducedFeeApplicabilityEfn}`,
-  );
-  console.log(
-    `applicableReferralFeePercentageLocalAndPanEu => ${applicableReferralFeePercentageLocalAndPanEu} : ${typeof applicableReferralFeePercentageLocalAndPanEu}`,
-  );
-  console.log(
-    `applicableReferralFeePercentageEfn => ${applicableReferralFeePercentageEfn} : ${typeof applicableReferralFeePercentageEfn}`,
-  );
-  console.log(
-    `useReducedReferralFeePercentageLocalAndPanEu => ${useReducedReferralFeePercentageLocalAndPanEu} : ${typeof useReducedReferralFeePercentageLocalAndPanEu}`,
-  );
-  console.log(
-    `useReducedReferralFeePercentageEfn => ${useReducedReferralFeePercentageEfn} : ${typeof useReducedReferralFeePercentageEfn}`,
-  );
-  console.log(
-    `minimumSellingPriceLocalAndPanEu => ${minimumSellingPriceLocalAndPanEu} : ${typeof minimumSellingPriceLocalAndPanEu}`,
-  );
-  console.log(
-    `minimumSellingPriceLocalAndPanEuLowPrice => ${minimumSellingPriceLocalAndPanEuLowPrice} : ${typeof minimumSellingPriceLocalAndPanEuLowPrice}`,
-  );
+
+  // Return calculated prices
+  return {
+    minimumSellingPriceLocalAndPanEuropean,
+    minimumSellingPriceEuropeanFulfillmentNetwork,
+  };
 }
 
 module.exports = { calculateMinimumSellingPrices };

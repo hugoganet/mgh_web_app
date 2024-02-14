@@ -180,36 +180,37 @@ async function automaticallyCreateMinSellingPriceRecord(
     //   currencyCode,
     // });
 
+    console.log(`${JSON.stringify({ amazonReferralFeeRecord }, null, 2)}`);
     console.log(`${JSON.stringify({ priceGridFbaFeeRecord }, null, 2)}`);
-    console.log(`countryCode => ${countryCode} ${typeof countryCode}`);
-    console.log(`currencyCode => ${currencyCode} ${typeof currencyCode}`);
+    console.log(`countryCode => ${countryCode} : ${typeof countryCode}`);
+    console.log(`currencyCode => ${currencyCode} : ${typeof currencyCode}`);
     console.log(
-      `productCategoryId => ${productCategoryId} ${typeof productCategoryId}`,
+      `productCategoryId => ${productCategoryId} : ${typeof productCategoryId}`,
     );
     console.log(
-      `referralFeeCategoryId => ${referralFeeCategoryId} ${typeof referralFeeCategoryId}`,
+      `referralFeeCategoryId => ${referralFeeCategoryId} : ${typeof referralFeeCategoryId}`,
     );
-    console.log(`closingFee => ${closingFee} ${typeof closingFee}`);
+    console.log(`closingFee => ${closingFee} : ${typeof closingFee}`);
     console.log(
-      `reducedReferralFeePercentage => ${reducedReferralFeePercentage} ${typeof reducedReferralFeePercentage}`,
-    );
-    console.log(
-      `referralFeePercentage => ${referralFeePercentage} ${typeof referralFeePercentage}`,
+      `reducedReferralFeePercentage => ${reducedReferralFeePercentage} : ${typeof reducedReferralFeePercentage}`,
     );
     console.log(
-      `reducedReferralFeeLimit => ${reducedReferralFeeLimit} ${typeof reducedReferralFeeLimit}`,
+      `referralFeePercentage => ${referralFeePercentage} : ${typeof referralFeePercentage}`,
     );
     console.log(
-      `reducedReferralFeeThreshold => ${reducedReferralFeeThreshold} ${typeof reducedReferralFeeThreshold}`,
+      `reducedReferralFeeLimit => ${reducedReferralFeeLimit} : ${typeof reducedReferralFeeLimit}`,
     );
     console.log(
-      `perItemMinimumReferralFee => ${perItemMinimumReferralFee} ${typeof perItemMinimumReferralFee}`,
+      `reducedReferralFeeThreshold => ${reducedReferralFeeThreshold} : ${typeof reducedReferralFeeThreshold}`,
     );
     console.log(
-      `productTaxCategoryId => ${productTaxCategoryId} ${typeof productTaxCategoryId}`,
+      `perItemMinimumReferralFee => ${perItemMinimumReferralFee} : ${typeof perItemMinimumReferralFee}`,
     );
-    console.log(`vatCategoryId => ${vatCategoryId} ${typeof vatCategoryId}`);
-    console.log(`vatRate => ${vatRate} ${typeof vatRate}`);
+    console.log(
+      `productTaxCategoryId => ${productTaxCategoryId} : ${typeof productTaxCategoryId}`,
+    );
+    console.log(`vatCategoryId => ${vatCategoryId} : ${typeof vatCategoryId}`);
+    console.log(`vatRate => ${vatRate} : ${typeof vatRate}`);
     console.log(
       `skuAcquisitionCostExc => ${skuAcquisitionCostExc} : ${typeof skuAcquisitionCostExc}`,
     );
@@ -258,4 +259,4 @@ async function automaticallyCreateMinSellingPriceRecord(
 module.exports = { automaticallyCreateMinSellingPriceRecord };
 
 // automaticallyCreateMinSellingPriceRecord(2, true); // Book Low-price
-automaticallyCreateMinSellingPriceRecord(2766, true); // Low-price, reduced referral fee
+automaticallyCreateMinSellingPriceRecord(3635, true); // Low-price, reduced referral fee
