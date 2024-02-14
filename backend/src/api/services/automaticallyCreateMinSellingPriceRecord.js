@@ -5,8 +5,8 @@ const {
   convertMarketplaceIdentifier,
 } = require('../../utils/convertMarketplaceIdentifier');
 const {
-  calculateMinimumSellingPrices,
-} = require('../../utils/calculateMinimumSellingPrices');
+  calculateMinimumSellingPrice,
+} = require('../../utils/calculateSellingPrices');
 
 /**
  * @description This function creates a minimum selling price record in the database if it does not exist.
@@ -22,18 +22,20 @@ async function automaticallyCreateMinSellingPriceRecord(
 ) {
   let logMessage = '';
   try {
+    // Get the SKU record
     const skuRecord = await db.Sku.findOne({
       where: { skuId },
     });
-
     if (!skuRecord) {
       logMessage += `No SKU record found for SKU ID ${skuId}.`;
       return;
     }
     const countryCode = skuRecord.countryCode;
 
+    // Get the currency code for the country code
     const { currencyCode } = convertMarketplaceIdentifier(countryCode);
 
+    // Get the ASIN record
     const asinRecord = await db.Asin.findOne({
       include: [
         {
@@ -43,13 +45,13 @@ async function automaticallyCreateMinSellingPriceRecord(
         },
       ],
     });
-
     if (!asinRecord) {
       logMessage = `No ASIN record found for SKU ID ${skuId}. productCategoryId needed to create minimum selling price record.`;
       return;
     }
     const productCategoryId = asinRecord.productCategoryId;
 
+    // Get the Amazon referral fee record
     const amazonReferralFeeRecord = await db.AmazonReferralFee.findOne({
       include: [
         {
@@ -67,8 +69,7 @@ async function automaticallyCreateMinSellingPriceRecord(
       logMessage += `No referral fee record found for product category ID ${productCategoryId} and country code ${countryCode}.`;
       return;
     }
-
-    // Extract and convert numeric values from strings
+    // Extract and convert the referral fee record fields
     const referralFeeCategoryId = amazonReferralFeeRecord.referralFeeCategoryId;
     const closingFee = parseFloat(amazonReferralFeeRecord.closingFee);
     const referralFeePercentage = parseFloat(
@@ -87,15 +88,15 @@ async function automaticallyCreateMinSellingPriceRecord(
       amazonReferralFeeRecord.reducedReferralFeeLimit
         ? parseFloat(amazonReferralFeeRecord.reducedReferralFeeLimit)
         : null;
-    const reducedReferralFeeThreshold =
-      amazonReferralFeeRecord.reducedReferralFeeThreshold
-        ? parseFloat(amazonReferralFeeRecord.reducedReferralFeeThreshold)
-        : null;
+    // const reducedReferralFeeThreshold =
+    //   amazonReferralFeeRecord.reducedReferralFeeThreshold
+    //     ? parseFloat(amazonReferralFeeRecord.reducedReferralFeeThreshold)
+    //     : null;
 
-    const applicableReferralFeePercentageLocalAndPanEu = referralFeePercentage;
-    const applicableReferralFeePercentageEfn = referralFeePercentage;
-    const usedReducedReferralFeePercentageLocalAndPanEu = false;
-    const usedReducedReferralFeePercentageEfn = false;
+    // const applicableReferralFeePercentageLocalAndPanEu = referralFeePercentage;
+    // const applicableReferralFeePercentageEfn = referralFeePercentage;
+    // const usedReducedReferralFeePercentageLocalAndPanEu = false;
+    // const usedReducedReferralFeePercentageEfn = false;
 
     const fbaFeeRecord = await db.FbaFee.findOne({
       where: { asinId: asinRecord.asinId },
@@ -147,11 +148,11 @@ async function automaticallyCreateMinSellingPriceRecord(
     const fbaFeeLocalAndPanEu = parseFloat(
       priceGridFbaFeeRecord.fbaFeeLocalAndPanEu,
     );
-    const fbaFeeEfn = parseFloat(priceGridFbaFeeRecord.fbaFeeEfn);
     const fbaFeeLowPriceLocalAndPanEu =
       priceGridFbaFeeRecord.fbaFeeLowPriceLocalAndPanEu
         ? parseFloat(priceGridFbaFeeRecord.fbaFeeLowPriceLocalAndPanEu)
         : null;
+    const fbaFeeEfn = parseFloat(priceGridFbaFeeRecord.fbaFeeEfn);
     const fbaFeeLowPriceEfn = priceGridFbaFeeRecord.fbaFeeLowPriceEfn
       ? parseFloat(priceGridFbaFeeRecord.fbaFeeLowPriceEfn)
       : null;
@@ -166,6 +167,36 @@ async function automaticallyCreateMinSellingPriceRecord(
       parseFloat(pricingRuleRecord.pricingRuleMinimumMarginAmount),
     );
 
+    const minimumSellingPriceLocalAndPanEu = parseFloat(
+      calculateMinimumSellingPrice(
+        skuAcquisitionCostExc,
+        minimumMarginAmount,
+        closingFee,
+        fbaFeeLocalAndPanEu,
+        fbaFeeLowPriceLocalAndPanEu,
+        lowPriceSellingPriceThresholdInc,
+        vatRate,
+        referralFeePercentage,
+        reducedReferralFeePercentage,
+        reducedReferralFeeLimit,
+      ),
+    ).toFixed(2);
+
+    const minimumSellingPriceEfn = parseFloat(
+      calculateMinimumSellingPrice(
+        skuAcquisitionCostExc,
+        minimumMarginAmount,
+        closingFee,
+        fbaFeeEfn,
+        fbaFeeLowPriceEfn,
+        lowPriceSellingPriceThresholdInc,
+        vatRate,
+        referralFeePercentage,
+        reducedReferralFeePercentage,
+        reducedReferralFeeLimit,
+      ),
+    ).toFixed(2);
+
     // const minimumSellingPriceRecord = await db.MinimumSellingPrice.create({
     //   skuId,
     //   pricingRuleId: 1,
@@ -175,74 +206,16 @@ async function automaticallyCreateMinSellingPriceRecord(
     //   minimumMarginAmount,
     //   minimumSellingPriceLocalAndPanEu,
     //   minimumSellingPriceEfn,
-    //   maximumSellingPriceLocalAndPanEu,
-    //   maximumSellingPriceEfn,
+    // maximumSellingPriceLocalAndPanEu,
+    // maximumSellingPriceEfn,
     //   currencyCode,
     // });
 
-    console.log(`${JSON.stringify({ amazonReferralFeeRecord }, null, 2)}`);
-    console.log(`${JSON.stringify({ priceGridFbaFeeRecord }, null, 2)}`);
-    console.log(`countryCode => ${countryCode} : ${typeof countryCode}`);
-    console.log(`currencyCode => ${currencyCode} : ${typeof currencyCode}`);
     console.log(
-      `productCategoryId => ${productCategoryId} : ${typeof productCategoryId}`,
+      `minimumSellingPriceLocalAndPanEu => ${minimumSellingPriceLocalAndPanEu} : ${typeof minimumSellingPriceLocalAndPanEu}`,
     );
     console.log(
-      `referralFeeCategoryId => ${referralFeeCategoryId} : ${typeof referralFeeCategoryId}`,
-    );
-    console.log(`closingFee => ${closingFee} : ${typeof closingFee}`);
-    console.log(
-      `reducedReferralFeePercentage => ${reducedReferralFeePercentage} : ${typeof reducedReferralFeePercentage}`,
-    );
-    console.log(
-      `referralFeePercentage => ${referralFeePercentage} : ${typeof referralFeePercentage}`,
-    );
-    console.log(
-      `reducedReferralFeeLimit => ${reducedReferralFeeLimit} : ${typeof reducedReferralFeeLimit}`,
-    );
-    console.log(
-      `reducedReferralFeeThreshold => ${reducedReferralFeeThreshold} : ${typeof reducedReferralFeeThreshold}`,
-    );
-    console.log(
-      `perItemMinimumReferralFee => ${perItemMinimumReferralFee} : ${typeof perItemMinimumReferralFee}`,
-    );
-    console.log(
-      `productTaxCategoryId => ${productTaxCategoryId} : ${typeof productTaxCategoryId}`,
-    );
-    console.log(`vatCategoryId => ${vatCategoryId} : ${typeof vatCategoryId}`);
-    console.log(`vatRate => ${vatRate} : ${typeof vatRate}`);
-    console.log(
-      `skuAcquisitionCostExc => ${skuAcquisitionCostExc} : ${typeof skuAcquisitionCostExc}`,
-    );
-    console.log(
-      `fbaFeeLocalAndPanEu => ${fbaFeeLocalAndPanEu} : ${typeof fbaFeeLocalAndPanEu}`,
-    );
-    console.log(`fbaFeeEfn => ${fbaFeeEfn} : ${typeof fbaFeeEfn}`);
-    console.log(
-      `fbaFeeLowPriceLocalAndPanEu => ${fbaFeeLowPriceLocalAndPanEu} : ${typeof fbaFeeLowPriceLocalAndPanEu}`,
-    );
-    console.log(
-      `fbaFeeLowPriceEfn => ${fbaFeeLowPriceEfn} : ${typeof fbaFeeLowPriceEfn}`,
-    );
-    console.log(
-      `lowPriceSellingPriceThresholdInc => ${lowPriceSellingPriceThresholdInc} : ${typeof lowPriceSellingPriceThresholdInc}`,
-    );
-    console.log(
-      `minimumMarginAmount => ${minimumMarginAmount} : ${typeof minimumMarginAmount}`,
-    );
-    calculateMinimumSellingPrices(
-      skuAcquisitionCostExc,
-      minimumMarginAmount,
-      closingFee,
-      fbaFeeLocalAndPanEu,
-      fbaFeeLowPriceLocalAndPanEu,
-      fbaFeeEfn,
-      fbaFeeLowPriceEfn,
-      lowPriceSellingPriceThresholdInc,
-      vatRate,
-      referralFeePercentage,
-      reducedReferralFeePercentage,
-      reducedReferralFeeLimit,
+      `minimumSellingPriceEfn => ${minimumSellingPriceEfn} : ${typeof minimumSellingPriceEfn}`,
     );
   } catch (error) {
     console.log(

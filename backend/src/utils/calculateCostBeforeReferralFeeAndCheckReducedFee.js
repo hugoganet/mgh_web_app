@@ -27,7 +27,7 @@ function calculateCostBeforeReferralFeeAndCheckReducedFee(
   const threshold =
     reducedReferralFeeLimit *
     (1 / (1 + vatRate) - reducedReferralFeePercentage);
-  const useReducedFee = cost <= threshold;
+  const useReducedFee = costBeforeReferralFees <= threshold;
   const applicablePercentage = useReducedFee
     ? reducedReferralFeePercentage
     : null; // Assume null means standard fee applies
@@ -37,6 +37,7 @@ function calculateCostBeforeReferralFeeAndCheckReducedFee(
     applicableReferralFeePercentage: useReducedFee
       ? applicablePercentage
       : null,
+    reducedReferralFeeLimit: useReducedFee ? reducedReferralFeeLimit : null,
   };
 }
 
