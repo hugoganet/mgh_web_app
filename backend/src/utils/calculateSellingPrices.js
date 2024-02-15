@@ -70,6 +70,8 @@ function calculateSellingPrices(
       ),
       {
         paramName: 'minimumSellingPrice',
+        min: 0,
+        decimals: 2,
       },
     );
 
@@ -84,6 +86,7 @@ function calculateSellingPrices(
         {
           paramName: 'maximumSellingPrice',
           min: minimumSellingPrice,
+          decimals: 2,
         },
       );
       return (sellingPrices = {
@@ -119,6 +122,7 @@ function calculateSellingPrices(
     {
       paramName: 'minimumSellingPrice',
       min: 0,
+      decimals: 2,
     },
   );
   // calculate maximumSellingPrice
@@ -131,6 +135,7 @@ function calculateSellingPrices(
     {
       paramName: 'maximumSellingPrice',
       min: minimumSellingPrice,
+      decimals: 2,
     },
   );
 
