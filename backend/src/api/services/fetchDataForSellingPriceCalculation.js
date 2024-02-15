@@ -17,7 +17,6 @@ async function fetchDataForSellingPriceCalculation(
   logContext = 'fetchDataForSellingPriceCalculation',
 ) {
   try {
-    const logMessage = '';
     const skuRecord = await db.Sku.findOne({ where: { skuId } });
     if (!skuRecord) throw new Error(`No SKU record found for SKU ID ${skuId}.`);
 
@@ -124,7 +123,7 @@ async function fetchDataForSellingPriceCalculation(
         { paramName: 'fbaFeeLowPriceEfn', min: 0, decimals: 2 },
       ),
       lowPriceThresholdInc: parseAndValidateNumber(
-        priceGridFbaFeeRecord.lowPriceSellingPriceThresholdInc || 0,
+        priceGridFbaFeeRecord.lowPriceThresholdInc || 0,
         { paramName: 'lowPriceThresholdInc', min: 0, decimals: 2 },
       ),
       vatRate: parseAndValidateNumber(vatRateRecord.vatRate, {
@@ -149,6 +148,11 @@ async function fetchDataForSellingPriceCalculation(
       countryCode: skuRecord.countryCode,
     };
 
+    const logMessage = `Fetched data for SKU ID ${skuId}. DATA: ${JSON.stringify(
+      parsedData,
+      '',
+      2,
+    )}`;
     if (createLog) logger(logMessage, logContext);
     return parsedData;
   } catch (error) {

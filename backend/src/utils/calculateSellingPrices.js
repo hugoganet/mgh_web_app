@@ -1,4 +1,7 @@
-/* eslint-disable require-jsdoc */
+const { logger } = require('../utils/logger');
+const {
+  fetchDataForSellingPriceCalculation,
+} = require('../api/services/fetchDataForSellingPriceCalculation');
 const {
   calculateCostBeforeReferralFeeAndCheckReducedFee,
 } = require('./calculateCostBeforeReferralFeeAndCheckReducedFee');
@@ -11,135 +14,133 @@ const {
 const { parseAndValidateNumber } = require('./parseAndValidateNumber');
 
 /**
- * @description Calculate the minimum and maximum selling prices
+ * @description Calculate the minimum and maximum selling prices for both EFN and Local/PanEU
  * @function calculateSellingPrices
- * @param {number} skuAcquisitionCostExc - The SKU acquisition cost excluding VAT
- * @param {number} minimumMarginAmount - The minimum margin amount
- * @param {number} closingFee - The closing fee
- * @param {number} fbaFee - The FBA fee
- * @param {number} fbaFeeLowPrice - The low price FBA fee
- * @param {number} lowPriceThresholdInc - The low price selling price threshold including VAT
- * @param {number} vatRate - The VAT rate
- * @param {number} referralFeePercentage - The referral fee percentage
- * @param {number} reducedReferralFeePercentage - The reduced referral fee percentage
- * @param {number} reducedReferralFeeLimit - The reduced referral fee limit
- * @return {Object} An object with the following properties:
- * @return {number} minimumSellingPrice - The minimum selling price
- * @return {number} maximumSellingPrice - The maximum selling price
+ * @param {number} skuId - The ID of the SKU for which to calculate selling prices
+ * @param {boolean} createLog - Whether to create a log for this operation
+ * @param {string} logContext - The context for the log message
+ * @return {Object} An object containing selling prices for EFN and Local/PanEU
  */
-function calculateSellingPrices(
-  skuAcquisitionCostExc,
-  minimumMarginAmount,
-  closingFee,
-  fbaFee,
-  fbaFeeLowPrice,
-  lowPriceThresholdInc,
-  vatRate,
-  referralFeePercentage,
-  reducedReferralFeePercentage = null,
-  reducedReferralFeeLimit = null,
+async function calculateSellingPrices(
+  skuId,
+  createLog = false,
+  logContext = 'calculateSellingPrices',
 ) {
-  let minimumSellingPrice;
-  let maximumSellingPrice;
-
-  // First, attempt calculation with LowPrice FBA Fee if conditions allow
-  if (lowPriceThresholdInc !== null && fbaFeeLowPrice !== null) {
-    const {
-      costBeforeReferralFees,
-      applicableReferralFeePercentage,
-      reducedReferralFeeThresholdSellingPriceInc,
-    } = calculateCostBeforeReferralFeeAndCheckReducedFee(
-      skuAcquisitionCostExc,
-      minimumMarginAmount,
-      closingFee,
-      fbaFeeLowPrice,
-      reducedReferralFeeLimit,
-      vatRate,
-      reducedReferralFeePercentage,
-      referralFeePercentage,
+  try {
+    const data = await fetchDataForSellingPriceCalculation(
+      skuId,
+      createLog,
+      logContext,
     );
-
-    minimumSellingPrice = parseAndValidateNumber(
-      calculateMinimumSellingPrice(
-        costBeforeReferralFees,
-        applicableReferralFeePercentage,
-        vatRate,
-      ),
+    console.log(JSON.stringify(data, '', 2));
+    const feeTypes = [
       {
-        paramName: 'minimumSellingPrice',
-        min: 0,
-        decimals: 2,
+        type: 'LocalAndPanEU',
+        fbaFee: data.fbaFeeLocalAndPanEu,
+        fbaFeeLowPrice: data.fbaFeeLowPriceLocalAndPanEu,
       },
-    );
+      {
+        type: 'EFN',
+        fbaFee: data.fbaFeeEfn,
+        fbaFeeLowPrice: data.fbaFeeLowPriceEfn,
+      },
+    ];
+    const sellingPrices = {};
 
-    // Return if within threshold, else proceed to calculate with standard FBA fee
-    if (minimumSellingPrice <= lowPriceThresholdInc) {
-      maximumSellingPrice = parseAndValidateNumber(
-        calculateMaximumSellingPrice(
-          reducedReferralFeeThresholdSellingPriceInc,
-          lowPriceThresholdInc,
-          minimumSellingPrice,
-        ),
-        {
+    feeTypes.forEach(({ type, fbaFee, fbaFeeLowPrice }) => {
+      let calculationResults;
+      let minimumSellingPrice;
+      let maximumSellingPrice;
+
+      // Attempt calculation with LowPrice FBA Fee if conditions allow
+      if (data.lowPriceThresholdInc !== null && fbaFeeLowPrice !== null) {
+        console.log('lowPriceThresholdInc:', data.lowPriceThresholdInc);
+        calculationResults = calculateCostBeforeReferralFeeAndCheckReducedFee(
+          data.skuAcquisitionCostExc,
+          data.minimumMarginAmount,
+          data.closingFee,
+          fbaFeeLowPrice,
+          data.reducedReferralFeeLimit,
+          data.vatRate,
+          data.reducedReferralFeePercentage,
+          data.referralFeePercentage,
+        );
+
+        minimumSellingPrice = calculateMinimumSellingPrice(
+          calculationResults.costBeforeReferralFees,
+          calculationResults.applicableReferralFeePercentage,
+          data.vatRate,
+        );
+
+        if (minimumSellingPrice <= data.lowPriceThresholdInc) {
+          maximumSellingPrice = calculateMaximumSellingPrice(
+            calculationResults.reducedReferralFeeThresholdSellingPriceInc,
+            data.lowPriceThresholdInc,
+            minimumSellingPrice,
+          );
+          // If within the low price threshold, assign the calculated prices
+          sellingPrices[type] = {
+            minimumSellingPrice: parseAndValidateNumber(minimumSellingPrice, {
+              paramName: 'minimumSellingPrice',
+              min: 0,
+              decimals: 2,
+            }),
+            maximumSellingPrice: parseAndValidateNumber(maximumSellingPrice, {
+              paramName: 'maximumSellingPrice',
+              min: minimumSellingPrice,
+              decimals: 2,
+            }),
+          };
+          return;
+        }
+      }
+      // Proceed to calculate with standard FBA fee if low price conditions not met or not applicable
+      calculationResults = calculateCostBeforeReferralFeeAndCheckReducedFee(
+        data.skuAcquisitionCostExc,
+        data.minimumMarginAmount,
+        data.closingFee,
+        fbaFee,
+        data.reducedReferralFeeLimit,
+        data.vatRate,
+        data.reducedReferralFeePercentage,
+        data.referralFeePercentage,
+      );
+
+      minimumSellingPrice = calculateMinimumSellingPrice(
+        calculationResults.costBeforeReferralFees,
+        calculationResults.applicableReferralFeePercentage,
+        data.vatRate,
+      );
+
+      maximumSellingPrice = calculateMaximumSellingPrice(
+        calculationResults.reducedReferralFeeThresholdSellingPriceInc,
+        (lowPriceThresholdInc = null), // If low price threshold not met, or low price conditions not applicable, set lowPriceThresholdInc to null
+        minimumSellingPrice,
+      );
+
+      // Assign the calculated prices
+      sellingPrices[type] = {
+        minimumSellingPrice: parseAndValidateNumber(minimumSellingPrice, {
+          paramName: 'minimumSellingPrice',
+          min: 0,
+          decimals: 2,
+        }),
+        maximumSellingPrice: parseAndValidateNumber(maximumSellingPrice, {
           paramName: 'maximumSellingPrice',
           min: minimumSellingPrice,
           decimals: 2,
-        },
-      );
-      return (sellingPrices = {
-        minimumSellingPrice,
-        maximumSellingPrice,
-      });
-    }
+        }),
+      };
+    });
+
+    return sellingPrices;
+  } catch (error) {
+    logger(
+      `Error in calculateSellingPrices for SKU ID ${skuId}: ${error}`,
+      logContext,
+    );
+    throw error;
   }
-  // Calculate with Standard FBA Fee
-  lowPriceThresholdInc = null; // set this to null for calculateMaximumSellingPrice
-
-  const {
-    costBeforeReferralFees,
-    applicableReferralFeePercentage,
-    reducedReferralFeeThresholdSellingPriceInc,
-  } = calculateCostBeforeReferralFeeAndCheckReducedFee(
-    skuAcquisitionCostExc,
-    minimumMarginAmount,
-    closingFee,
-    fbaFee,
-    reducedReferralFeeLimit,
-    vatRate,
-    reducedReferralFeePercentage,
-    referralFeePercentage,
-  );
-
-  minimumSellingPrice = parseAndValidateNumber(
-    calculateMinimumSellingPrice(
-      costBeforeReferralFees,
-      applicableReferralFeePercentage,
-      vatRate,
-    ),
-    {
-      paramName: 'minimumSellingPrice',
-      min: 0,
-      decimals: 2,
-    },
-  );
-  // calculate maximumSellingPrice
-  maximumSellingPrice = parseAndValidateNumber(
-    calculateMaximumSellingPrice(
-      reducedReferralFeeThresholdSellingPriceInc,
-      lowPriceThresholdInc,
-      minimumSellingPrice,
-    ),
-    {
-      paramName: 'maximumSellingPrice',
-      min: minimumSellingPrice,
-      decimals: 2,
-    },
-  );
-
-  return (sellingPrices = {
-    minimumSellingPrice,
-    maximumSellingPrice,
-  });
 }
 
 module.exports = { calculateSellingPrices };

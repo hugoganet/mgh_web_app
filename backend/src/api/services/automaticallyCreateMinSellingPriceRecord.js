@@ -1,15 +1,8 @@
-const db = require('../../api/models');
 const { logger } = require('../../utils/logger');
 const eventBus = require('../../utils/eventBus');
 const {
-  convertMarketplaceIdentifier,
-} = require('../../utils/convertMarketplaceIdentifier');
-const {
   calculateSellingPrices,
 } = require('../../utils/calculateSellingPrices');
-const {
-  fetchDataForSellingPriceCalculation,
-} = require('./fetchDataForSellingPriceCalculation');
 
 /**
  * @description This function creates a minimum selling price record in the database if it does not exist.
@@ -26,76 +19,38 @@ async function automaticallyCreateMinSellingPriceRecord(
   let logMessage = '';
 
   try {
-    // Fetch all necessary data
-    const data = await fetchDataForSellingPriceCalculation(
-      skuId,
-      false,
-      logContext,
-    );
-
-    // Convert currency if necessary
-    const currencyCode = convertMarketplaceIdentifier(
-      data.countryCode,
-    ).currencyCode;
-    if (currencyCode !== 'EUR') {
-      logMessage += `Currency conversion needed for currency code ${currencyCode}.`;
-      // Implement currency conversion logic here if required
-    }
-
-    // Process fetched data for selling price calculation
     const {
-      minimumSellingPrice: minimumSellingPriceLocalAndPanEu,
-      maximumSellingPrice: maximumSellingPriceLocalAndPanEu,
-    } = calculateSellingPrices(
-      data.skuAcquisitionCostExc,
-      data.minimumMarginAmount,
-      data.closingFee,
-      data.fbaFeeLocalAndPanEu,
-      data.fbaFeeLowPriceLocalAndPanEu,
-      data.lowPriceThresholdInc,
-      data.vatRate,
-      data.referralFeePercentage,
-      data.reducedReferralFeePercentage,
-      data.reducedReferralFeeLimit,
-    );
-
-    const {
-      minimumSellingPrice: minimumSellingPriceEfn,
-      maximumSellingPrice: maximumSellingPriceEfn,
-    } = calculateSellingPrices(
-      data.skuAcquisitionCostExc,
-      data.minimumMarginAmount,
-      data.closingFee,
-      data.fbaFeeEfn,
-      data.fbaFeeLowPriceEfn,
-      data.lowPriceThresholdInc,
-      data.vatRate,
-      data.referralFeePercentage,
-      data.reducedReferralFeePercentage,
-      data.reducedReferralFeeLimit,
-    );
+      LocalAndPanEU: {
+        minimumSellingPrice: minimumSellingPriceLocalAndPanEu,
+        maximumSellingPrice: maximumSellingPriceLocalAndPanEu,
+      },
+      EFN: {
+        minimumSellingPrice: minimumSellingPriceEfn,
+        maximumSellingPrice: maximumSellingPriceEfn,
+      },
+    } = await calculateSellingPrices(skuId);
 
     // Create minimum selling price record
-    const newMinimumSellingPriceRecord = await db.MinimumSellingPrice.create({
-      skuId,
-      pricingRuleId: 1,
-      enrolledInPanEu: false,
-      eligibleForPanEu: false,
-      referralFeeCategoryId: data.referralFeeCategoryId,
-      minimumMarginAmount: data.minimumMarginAmount,
-      minimumSellingPriceLocalAndPanEu,
-      minimumSellingPriceEfn,
-      maximumSellingPriceLocalAndPanEu,
-      maximumSellingPriceEfn,
-      currencyCode,
-    });
-    if (newMinimumSellingPriceRecord.minimumSellingPriceId) {
-      eventBus.emit('recordCreated', {
-        type: 'minimumSellingPrice',
-        action: 'minimumSellingPrice_created',
-        id: newMinimumSellingPriceRecord.minimumSellingPriceId,
-      });
-    }
+    // const newMinimumSellingPriceRecord = await db.MinimumSellingPrice.create({
+    //   skuId,
+    //   pricingRuleId: 1,
+    //   enrolledInPanEu: false,
+    //   eligibleForPanEu: false,
+    //   referralFeeCategoryId: data.referralFeeCategoryId,
+    //   minimumMarginAmount: data.minimumMarginAmount,
+    //   minimumSellingPriceLocalAndPanEu,
+    //   minimumSellingPriceEfn,
+    //   maximumSellingPriceLocalAndPanEu,
+    //   maximumSellingPriceEfn,
+    //   currencyCode,
+    // });
+    // if (newMinimumSellingPriceRecord.minimumSellingPriceId) {
+    //   eventBus.emit('recordCreated', {
+    //     type: 'minimumSellingPrice',
+    //     action: 'minimumSellingPrice_created',
+    //     id: newMinimumSellingPriceRecord.minimumSellingPriceId,
+    //   });
+    // }
 
     console.log(
       `Minimum Selling Price Local/Pan-EU: ${minimumSellingPriceLocalAndPanEu}`,

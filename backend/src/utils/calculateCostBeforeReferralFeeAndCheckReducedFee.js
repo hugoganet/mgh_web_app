@@ -3,7 +3,7 @@ const { parseAndValidateNumber } = require('./parseAndValidateNumber');
 /**
  * @description Check if reduced referral fee is applicable and return the applicable percentage
  * @function calculateCostBeforeReferralFeeAndCheckReducedFee
- * @param {number} skuAcquisitionCostExcludingVAT - The SKU acquisition cost excluding VAT
+ * @param {number} skuAcquisitionCostExc - The SKU acquisition cost excluding VAT
  * @param {number} minimumMarginAmount - The minimum margin amount
  * @param {number} closingFee - The closing fee
  * @param {number} fbaFee - The FBA fee
@@ -16,7 +16,7 @@ const { parseAndValidateNumber } = require('./parseAndValidateNumber');
  * @return {number} applicableReferralFeePercentage - The applicable referral fee percentage
  */
 function calculateCostBeforeReferralFeeAndCheckReducedFee(
-  skuAcquisitionCostExcludingVAT,
+  skuAcquisitionCostExc,
   minimumMarginAmount,
   closingFee,
   fbaFee,
@@ -26,7 +26,7 @@ function calculateCostBeforeReferralFeeAndCheckReducedFee(
   referralFeePercentage,
 ) {
   const costBeforeReferralFees = parseAndValidateNumber(
-    skuAcquisitionCostExcludingVAT + minimumMarginAmount + closingFee + fbaFee,
+    skuAcquisitionCostExc + minimumMarginAmount + closingFee + fbaFee,
     {
       paramName: 'costBeforeReferralFees',
       min: 0,
