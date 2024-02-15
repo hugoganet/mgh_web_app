@@ -22,6 +22,10 @@ let counters = {
     asinSku_created: 0,
     asinSku_found: 0,
   },
+  minimumSellingPrice: {
+    minimumSellingPrice_created: 0,
+    minimumSellingPrice_found: 0,
+  },
 };
 
 /**

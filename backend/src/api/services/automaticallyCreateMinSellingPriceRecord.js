@@ -1,3 +1,4 @@
+const db = require('../../api/models');
 const { logger } = require('../../utils/logger');
 const eventBus = require('../../utils/eventBus');
 const {
@@ -74,20 +75,27 @@ async function automaticallyCreateMinSellingPriceRecord(
       data.reducedReferralFeeLimit,
     );
 
-    // TODO : Just before inserting into database, I have to change the sellingPrices for 2 decimal points
-    // const minimumSellingPriceRecord = await db.MinimumSellingPrice.create({
-    //   skuId,
-    //   pricingRuleId: 1,
-    //   enrolledInPanEu: false,
-    //   eligibleForPanEu: false,
-    //   referralFeeCategoryId,
-    //   minimumMarginAmount,
-    //   minimumSellingPriceLocalAndPanEu,
-    //   minimumSellingPriceEfn,
-    //   maximumSellingPriceLocalAndPanEu,
-    //   maximumSellingPriceEfn,
-    //   currencyCode,
-    // });
+    // Create minimum selling price record
+    const newMinimumSellingPriceRecord = await db.MinimumSellingPrice.create({
+      skuId,
+      pricingRuleId: 1,
+      enrolledInPanEu: false,
+      eligibleForPanEu: false,
+      referralFeeCategoryId: data.referralFeeCategoryId,
+      minimumMarginAmount: data.minimumMarginAmount,
+      minimumSellingPriceLocalAndPanEu,
+      minimumSellingPriceEfn,
+      maximumSellingPriceLocalAndPanEu,
+      maximumSellingPriceEfn,
+      currencyCode,
+    });
+    if (newMinimumSellingPriceRecord.minimumSellingPriceId) {
+      eventBus.emit('recordCreated', {
+        type: 'minimumSellingPrice',
+        action: 'minimumSellingPrice_created',
+        id: newMinimumSellingPriceRecord.minimumSellingPriceId,
+      });
+    }
 
     console.log(
       `Minimum Selling Price Local/Pan-EU: ${minimumSellingPriceLocalAndPanEu}`,
@@ -101,7 +109,7 @@ async function automaticallyCreateMinSellingPriceRecord(
     console.error(
       `Error in automaticallyCreateMinSellingPriceRecord: ${error}`,
     );
-    logMessage += ` Error: ${error.message}`;
+    logMessage += ` Error encountered in automaticallyCreateMinSellingPriceRecord for SKU ID ${skuId}. ERROR: ${error}.`;
   } finally {
     if (createLog) {
       logger(logMessage, logContext);

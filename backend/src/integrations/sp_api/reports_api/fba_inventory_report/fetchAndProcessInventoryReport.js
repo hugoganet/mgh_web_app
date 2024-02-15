@@ -97,7 +97,6 @@ async function fetchAndProcessInventoryReport(
           await Promise.all(processingPromises);
 
           const counts = getCounts(); // Get the counts of created records
-          console.log(counts.sku);
 
           console.log(
             `PROCESSED ${totalLines} in fetchAndProcessInventoryReport : 
@@ -105,7 +104,8 @@ async function fetchAndProcessInventoryReport(
           Created ${counts.asin.asin_created} new ASIN records and found ${counts.asin.asin_found} ASIN.
           Created ${counts.eanInAsin.eanInAsin_created} new eanInAsin records and found ${counts.eanInAsin.eanInAsin_found} eanInAsin.
           Created ${counts.fbaFee.fbaFee_created} new fbaFee records and found ${counts.fbaFee.fbaFee_found} fbaFee.
-          Created ${counts.asinSku.asinSku_created} new asinSku records and found ${counts.asinSku.asinSku_found} asinSku.`,
+          Created ${counts.asinSku.asinSku_created} new asinSku records and found ${counts.asinSku.asinSku_found} asinSku.
+          Created ${counts.minimumSellingPrice.minimumSellingPrice_created} new minimumSellingPrice records and found ${counts.minimumSellingPrice.minimumSellingPrice_found} asinSku.`,
           );
 
           logMessage += `PROCESSED ${totalLines} in fetchAndProcessInventoryReport : 
@@ -113,7 +113,8 @@ async function fetchAndProcessInventoryReport(
           Created ${counts.asin.asin_created} new ASIN records and found ${counts.asin.asin_found} ASIN.
           Created ${counts.eanInAsin.eanInAsin_created} new eanInAsin records and found ${counts.eanInAsin.eanInAsin_found} eanInAsin.
           Created ${counts.fbaFee.fbaFee_created} new fbaFee records and found ${counts.fbaFee.fbaFee_found} fbaFee.
-          Created ${counts.asinSku.asinSku_created} new asinSku records and found ${counts.asinSku.asinSku_found} asinSku.\n`;
+          Created ${counts.asinSku.asinSku_created} new asinSku records and found ${counts.asinSku.asinSku_found} asinSku.
+          Created ${counts.minimumSellingPrice.minimumSellingPrice_created} new minimumSellingPrice records and found ${counts.minimumSellingPrice.minimumSellingPrice_found} asinSku.\n`;
 
           if (createLog) {
             logger(logMessage, logContext);
