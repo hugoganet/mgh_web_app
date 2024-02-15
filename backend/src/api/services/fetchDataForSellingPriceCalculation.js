@@ -80,6 +80,11 @@ async function fetchDataForSellingPriceCalculation(
         `No VAT rate record found for country code ${skuRecord.countryCode}.`,
       );
 
+    // Convert currency if necessary
+    const currencyCode = convertMarketplaceIdentifier(
+      skuRecord.countryCode,
+    ).currencyCode;
+
     // Parse and validate numerical fields
     const parsedData = {
       skuAcquisitionCostExc: parseAndValidateNumber(
@@ -146,6 +151,7 @@ async function fetchDataForSellingPriceCalculation(
       referralFeeCategoryId: amazonReferralFeeRecord.referralFeeCategoryId,
       isHazmat: asinRecord.isHazmat,
       countryCode: skuRecord.countryCode,
+      currencyCode,
     };
 
     const logMessage = `Fetched data for SKU ID ${skuId}. DATA: ${JSON.stringify(

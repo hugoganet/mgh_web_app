@@ -32,7 +32,7 @@ async function calculateSellingPrices(
       createLog,
       logContext,
     );
-    console.log(JSON.stringify(data, '', 2));
+
     const feeTypes = [
       {
         type: 'LocalAndPanEU',
@@ -64,6 +64,7 @@ async function calculateSellingPrices(
           data.vatRate,
           data.reducedReferralFeePercentage,
           data.referralFeePercentage,
+          data.currencyCode,
         );
 
         minimumSellingPrice = calculateMinimumSellingPrice(
@@ -104,6 +105,7 @@ async function calculateSellingPrices(
         data.vatRate,
         data.reducedReferralFeePercentage,
         data.referralFeePercentage,
+        data.currencyCode,
       );
 
       minimumSellingPrice = calculateMinimumSellingPrice(

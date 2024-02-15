@@ -31,26 +31,26 @@ async function automaticallyCreateMinSellingPriceRecord(
     } = await calculateSellingPrices(skuId);
 
     // Create minimum selling price record
-    // const newMinimumSellingPriceRecord = await db.MinimumSellingPrice.create({
-    //   skuId,
-    //   pricingRuleId: 1,
-    //   enrolledInPanEu: false,
-    //   eligibleForPanEu: false,
-    //   referralFeeCategoryId: data.referralFeeCategoryId,
-    //   minimumMarginAmount: data.minimumMarginAmount,
-    //   minimumSellingPriceLocalAndPanEu,
-    //   minimumSellingPriceEfn,
-    //   maximumSellingPriceLocalAndPanEu,
-    //   maximumSellingPriceEfn,
-    //   currencyCode,
-    // });
-    // if (newMinimumSellingPriceRecord.minimumSellingPriceId) {
-    //   eventBus.emit('recordCreated', {
-    //     type: 'minimumSellingPrice',
-    //     action: 'minimumSellingPrice_created',
-    //     id: newMinimumSellingPriceRecord.minimumSellingPriceId,
-    //   });
-    // }
+    const newMinimumSellingPriceRecord = await db.MinimumSellingPrice.create({
+      skuId,
+      pricingRuleId: 1,
+      enrolledInPanEu: false,
+      eligibleForPanEu: false,
+      referralFeeCategoryId: data.referralFeeCategoryId,
+      minimumMarginAmount: data.minimumMarginAmount,
+      minimumSellingPriceLocalAndPanEu,
+      minimumSellingPriceEfn,
+      maximumSellingPriceLocalAndPanEu,
+      maximumSellingPriceEfn,
+      currencyCode,
+    });
+    if (newMinimumSellingPriceRecord.minimumSellingPriceId) {
+      eventBus.emit('recordCreated', {
+        type: 'minimumSellingPrice',
+        action: 'minimumSellingPrice_created',
+        id: newMinimumSellingPriceRecord.minimumSellingPriceId,
+      });
+    }
 
     console.log(
       `Minimum Selling Price Local/Pan-EU: ${minimumSellingPriceLocalAndPanEu}`,
