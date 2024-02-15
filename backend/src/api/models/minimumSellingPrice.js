@@ -41,18 +41,6 @@ module.exports = sequelize => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
-      referralFeeCategoryId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'amazon_referral_fees',
-          key: 'referral_fee_category_id',
-        },
-      },
-      minimumMarginAmount: {
-        type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
-      },
       minimumSellingPriceLocalAndPanEu: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
