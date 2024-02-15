@@ -13,12 +13,12 @@ const { parseAndValidateNumber } = require('./parseAndValidateNumber');
 /**
  * @description Calculate the minimum and maximum selling prices
  * @function calculateSellingPrices
- * @param {number} skuAcquisitionCostExcludingVAT - The SKU acquisition cost excluding VAT
+ * @param {number} skuAcquisitionCostExc - The SKU acquisition cost excluding VAT
  * @param {number} minimumMarginAmount - The minimum margin amount
  * @param {number} closingFee - The closing fee
  * @param {number} fbaFee - The FBA fee
  * @param {number} fbaFeeLowPrice - The low price FBA fee
- * @param {number} lowPriceThresholdIncludingVAT - The low price selling price threshold including VAT
+ * @param {number} lowPriceThresholdInc - The low price selling price threshold including VAT
  * @param {number} vatRate - The VAT rate
  * @param {number} referralFeePercentage - The referral fee percentage
  * @param {number} reducedReferralFeePercentage - The reduced referral fee percentage
@@ -28,12 +28,12 @@ const { parseAndValidateNumber } = require('./parseAndValidateNumber');
  * @return {number} maximumSellingPrice - The maximum selling price
  */
 function calculateSellingPrices(
-  skuAcquisitionCostExcludingVAT,
+  skuAcquisitionCostExc,
   minimumMarginAmount,
   closingFee,
   fbaFee,
   fbaFeeLowPrice,
-  lowPriceThresholdIncludingVAT,
+  lowPriceThresholdInc,
   vatRate,
   referralFeePercentage,
   reducedReferralFeePercentage = null,
@@ -43,16 +43,13 @@ function calculateSellingPrices(
   let maximumSellingPrice;
 
   // First, attempt calculation with LowPrice FBA Fee if conditions allow
-  if (
-    lowPriceThresholdIncludingVAT !== null &&
-    fbaFeeLowPrice !== null
-  ) {
+  if (lowPriceThresholdInc !== null && fbaFeeLowPrice !== null) {
     const {
       costBeforeReferralFees,
       applicableReferralFeePercentage,
       reducedReferralFeeThresholdSellingPriceInc,
     } = calculateCostBeforeReferralFeeAndCheckReducedFee(
-      skuAcquisitionCostExcludingVAT,
+      skuAcquisitionCostExc,
       minimumMarginAmount,
       closingFee,
       fbaFeeLowPrice,
@@ -76,11 +73,11 @@ function calculateSellingPrices(
     );
 
     // Return if within threshold, else proceed to calculate with standard FBA fee
-    if (minimumSellingPrice <= lowPriceThresholdIncludingVAT) {
+    if (minimumSellingPrice <= lowPriceThresholdInc) {
       maximumSellingPrice = parseAndValidateNumber(
         calculateMaximumSellingPrice(
           reducedReferralFeeThresholdSellingPriceInc,
-          lowPriceThresholdIncludingVAT,
+          lowPriceThresholdInc,
           minimumSellingPrice,
         ),
         {
@@ -96,14 +93,14 @@ function calculateSellingPrices(
     }
   }
   // Calculate with Standard FBA Fee
-  lowPriceThresholdIncludingVAT = null; // set this to null for calculateMaximumSellingPrice
+  lowPriceThresholdInc = null; // set this to null for calculateMaximumSellingPrice
 
   const {
     costBeforeReferralFees,
     applicableReferralFeePercentage,
     reducedReferralFeeThresholdSellingPriceInc,
   } = calculateCostBeforeReferralFeeAndCheckReducedFee(
-    skuAcquisitionCostExcludingVAT,
+    skuAcquisitionCostExc,
     minimumMarginAmount,
     closingFee,
     fbaFee,
@@ -129,7 +126,7 @@ function calculateSellingPrices(
   maximumSellingPrice = parseAndValidateNumber(
     calculateMaximumSellingPrice(
       reducedReferralFeeThresholdSellingPriceInc,
-      lowPriceThresholdIncludingVAT,
+      lowPriceThresholdInc,
       minimumSellingPrice,
     ),
     {

@@ -7,9 +7,6 @@ const {
   calculateSellingPrices,
 } = require('../../utils/calculateSellingPrices');
 const {
-  parseAndValidateNumber,
-} = require('../../utils/parseAndValidateNumber');
-const {
   fetchDataForSellingPriceCalculation,
 } = require('./fetchDataForSellingPriceCalculation');
 
@@ -37,7 +34,7 @@ async function automaticallyCreateMinSellingPriceRecord(
 
     // Convert currency if necessary
     const currencyCode = convertMarketplaceIdentifier(
-      data.skuRecord.countryCode,
+      data.countryCode,
     ).currencyCode;
     if (currencyCode !== 'EUR') {
       logMessage += `Currency conversion needed for currency code ${currencyCode}.`;
@@ -46,66 +43,51 @@ async function automaticallyCreateMinSellingPriceRecord(
 
     // Process fetched data for selling price calculation
     const {
-      minimumSellingPriceLocalAndPanEu,
-      maximumSellingPriceLocalAndPanEu,
-      minimumSellingPriceEfn,
-      maximumSellingPriceEfn,
+      minimumSellingPrice: minimumSellingPriceLocalAndPanEu,
+      maximumSellingPrice: maximumSellingPriceLocalAndPanEu,
     } = calculateSellingPrices(
-      parseAndValidateNumber(data.skuRecord.skuAcquisitionCostExc, {
-        paramName: 'skuAcquisitionCostExc',
-        min: 0,
-      }),
-      parseAndValidateNumber(
-        data.pricingRuleRecord.pricingRuleMinimumMarginAmount,
-        {
-          paramName: 'minimumMarginAmount',
-          min: 0,
-        },
-      ),
-      parseAndValidateNumber(data.amazonReferralFeeRecord.closingFee, {
-        paramName: 'closingFee',
-        min: 0,
-      }),
-      parseAndValidateNumber(data.priceGridFbaFeeRecord.fbaFeeLocalAndPanEu, {
-        paramName: 'fbaFeeLocalAndPanEu',
-        min: 0,
-      }),
-      data.priceGridFbaFeeRecord.fbaFeeLowPriceLocalAndPanEu
-        ? parseAndValidateNumber(
-            data.priceGridFbaFeeRecord.fbaFeeLowPriceLocalAndPanEu,
-            { paramName: 'fbaFeeLowPriceLocalAndPanEu', min: 0 },
-          )
-        : null,
-      data.priceGridFbaFeeRecord.lowPriceThresholdInc
-        ? parseAndValidateNumber(
-            data.priceGridFbaFeeRecord.lowPriceThresholdInc,
-            { paramName: 'lowPriceThresholdInc', min: 0 },
-          )
-        : null,
-      parseAndValidateNumber(data.vatRateRecord.vatRate, {
-        paramName: 'vatRate',
-        min: 0,
-        max: 1,
-      }),
-      parseAndValidateNumber(
-        data.amazonReferralFeeRecord.referralFeePercentage,
-        { paramName: 'referralFeePercentage', min: 0, max: 1 },
-      ),
-      data.amazonReferralFeeRecord.reducedReferralFeePercentage
-        ? parseAndValidateNumber(
-            data.amazonReferralFeeRecord.reducedReferralFeePercentage,
-            { paramName: 'reducedReferralFeePercentage', min: 0, max: 1 },
-          )
-        : null,
-      data.amazonReferralFeeRecord.reducedReferralFeeLimit
-        ? parseAndValidateNumber(
-            data.amazonReferralFeeRecord.reducedReferralFeeLimit,
-            { paramName: 'reducedReferralFeeLimit', min: 0 },
-          )
-        : null,
+      data.skuAcquisitionCostExc,
+      data.minimumMarginAmount,
+      data.closingFee,
+      data.fbaFeeLocalAndPanEu,
+      data.fbaFeeLowPriceLocalAndPanEu,
+      data.lowPriceThresholdInc,
+      data.vatRate,
+      data.referralFeePercentage,
+      data.reducedReferralFeePercentage,
+      data.reducedReferralFeeLimit,
     );
 
-    // Here you would continue with creating the minimum selling price record in the database
+    const {
+      minimumSellingPrice: minimumSellingPriceEfn,
+      maximumSellingPrice: maximumSellingPriceEfn,
+    } = calculateSellingPrices(
+      data.skuAcquisitionCostExc,
+      data.minimumMarginAmount,
+      data.closingFee,
+      data.fbaFeeEfn,
+      data.fbaFeeLowPriceEfn,
+      data.lowPriceThresholdInc,
+      data.vatRate,
+      data.referralFeePercentage,
+      data.reducedReferralFeePercentage,
+      data.reducedReferralFeeLimit,
+    );
+
+    // TODO : Just before inserting into database, I have to change the sellingPrices for 2 decimal points
+    // const minimumSellingPriceRecord = await db.MinimumSellingPrice.create({
+    //   skuId,
+    //   pricingRuleId: 1,
+    //   enrolledInPanEu: false,
+    //   eligibleForPanEu: false,
+    //   referralFeeCategoryId,
+    //   minimumMarginAmount,
+    //   minimumSellingPriceLocalAndPanEu,
+    //   minimumSellingPriceEfn,
+    //   maximumSellingPriceLocalAndPanEu,
+    //   maximumSellingPriceEfn,
+    //   currencyCode,
+    // });
 
     console.log(
       `Minimum Selling Price Local/Pan-EU: ${minimumSellingPriceLocalAndPanEu}`,
