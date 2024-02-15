@@ -52,7 +52,10 @@ module.exports = sequelize => {
       fbaFeeLowPriceEfn: {
         type: DataTypes.DECIMAL(10, 2),
       },
-      lowPriceSellingPriceThresholdInc: {
+      lowPriceThresholdInc: {
+        type: DataTypes.DECIMAL(10, 2),
+      },
+      hazmatFee: {
         type: DataTypes.DECIMAL(10, 2),
       },
       currencyCode: {

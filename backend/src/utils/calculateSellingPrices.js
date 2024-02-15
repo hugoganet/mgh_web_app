@@ -18,7 +18,7 @@ const { parseAndValidateNumber } = require('./parseAndValidateNumber');
  * @param {number} closingFee - The closing fee
  * @param {number} fbaFee - The FBA fee
  * @param {number} fbaFeeLowPrice - The low price FBA fee
- * @param {number} lowPriceSellingPriceThresholdIncludingVAT - The low price selling price threshold including VAT
+ * @param {number} lowPriceThresholdIncludingVAT - The low price selling price threshold including VAT
  * @param {number} vatRate - The VAT rate
  * @param {number} referralFeePercentage - The referral fee percentage
  * @param {number} reducedReferralFeePercentage - The reduced referral fee percentage
@@ -33,7 +33,7 @@ function calculateSellingPrices(
   closingFee,
   fbaFee,
   fbaFeeLowPrice,
-  lowPriceSellingPriceThresholdIncludingVAT,
+  lowPriceThresholdIncludingVAT,
   vatRate,
   referralFeePercentage,
   reducedReferralFeePercentage = null,
@@ -44,7 +44,7 @@ function calculateSellingPrices(
 
   // First, attempt calculation with LowPrice FBA Fee if conditions allow
   if (
-    lowPriceSellingPriceThresholdIncludingVAT !== null &&
+    lowPriceThresholdIncludingVAT !== null &&
     fbaFeeLowPrice !== null
   ) {
     const {
@@ -76,11 +76,11 @@ function calculateSellingPrices(
     );
 
     // Return if within threshold, else proceed to calculate with standard FBA fee
-    if (minimumSellingPrice <= lowPriceSellingPriceThresholdIncludingVAT) {
+    if (minimumSellingPrice <= lowPriceThresholdIncludingVAT) {
       maximumSellingPrice = parseAndValidateNumber(
         calculateMaximumSellingPrice(
           reducedReferralFeeThresholdSellingPriceInc,
-          lowPriceSellingPriceThresholdIncludingVAT,
+          lowPriceThresholdIncludingVAT,
           minimumSellingPrice,
         ),
         {
@@ -96,7 +96,7 @@ function calculateSellingPrices(
     }
   }
   // Calculate with Standard FBA Fee
-  lowPriceSellingPriceThresholdIncludingVAT = null; // set this to null for calculateMaximumSellingPrice
+  lowPriceThresholdIncludingVAT = null; // set this to null for calculateMaximumSellingPrice
 
   const {
     costBeforeReferralFees,
@@ -129,7 +129,7 @@ function calculateSellingPrices(
   maximumSellingPrice = parseAndValidateNumber(
     calculateMaximumSellingPrice(
       reducedReferralFeeThresholdSellingPriceInc,
-      lowPriceSellingPriceThresholdIncludingVAT,
+      lowPriceThresholdIncludingVAT,
       minimumSellingPrice,
     ),
     {

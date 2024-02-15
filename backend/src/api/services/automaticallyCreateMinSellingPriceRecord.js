@@ -53,6 +53,7 @@ async function automaticallyCreateMinSellingPriceRecord(
       return;
     }
     const productCategoryId = asinRecord.productCategoryId;
+    const isHazmat = asinRecord.isHazmat;
 
     // Get the Amazon referral fee record
     const amazonReferralFeeRecord = await db.AmazonReferralFee.findOne({
@@ -66,7 +67,7 @@ async function automaticallyCreateMinSellingPriceRecord(
           required: true,
         },
       ],
-      where: { countryCode: countryCode },
+      where: { countryCode },
     });
     if (!amazonReferralFeeRecord) {
       logMessage += `No referral fee record found for product category ID ${productCategoryId} and country code ${countryCode}.`;
@@ -200,16 +201,29 @@ async function automaticallyCreateMinSellingPriceRecord(
           min: 0,
         })
       : null;
-    const lowPriceSellingPriceThresholdInc =
-      priceGridFbaFeeRecord.lowPriceSellingPriceThresholdInc
-        ? parseAndValidateNumber(
-            priceGridFbaFeeRecord.lowPriceSellingPriceThresholdInc,
-            {
-              paramName: 'lowPriceSellingPriceThresholdInc',
-              min: 0,
-            },
-          )
+
+    if (isHazmat) {
+      const hazmatFee = priceGridFbaFeeRecord.hazmatFee
+        ? parseAndValidateNumber(priceGridFbaFeeRecord.hazmatFee, {
+            paramName: 'hazmatFee',
+            min: 0,
+          })
         : null;
+      fbaFeeLocalAndPanEu += hazmatFee;
+      fbaFeeEfn += hazmatFee;
+      if (fbaFeeLowPriceLocalAndPanEu) {
+        fbaFeeLowPriceLocalAndPanEu += hazmatFee;
+      }
+      if (fbaFeeLowPriceEfn) {
+        fbaFeeLowPriceEfn += hazmatFee;
+      }
+    }
+    const lowPriceThresholdInc = priceGridFbaFeeRecord.lowPriceThresholdInc
+      ? parseAndValidateNumber(priceGridFbaFeeRecord.lowPriceThresholdInc, {
+          paramName: 'lowPriceThresholdInc',
+          min: 0,
+        })
+      : null;
 
     const minimumMarginAmount = Math.max(
       skuAcquisitionCostExc *
@@ -236,7 +250,7 @@ async function automaticallyCreateMinSellingPriceRecord(
       closingFee,
       fbaFeeLocalAndPanEu,
       fbaFeeLowPriceLocalAndPanEu,
-      lowPriceSellingPriceThresholdInc,
+      lowPriceThresholdInc,
       vatRate,
       referralFeePercentage,
       reducedReferralFeePercentage,
@@ -252,7 +266,7 @@ async function automaticallyCreateMinSellingPriceRecord(
       closingFee,
       fbaFeeEfn,
       fbaFeeLowPriceEfn,
-      lowPriceSellingPriceThresholdInc,
+      lowPriceThresholdInc,
       vatRate,
       referralFeePercentage,
       reducedReferralFeePercentage,
