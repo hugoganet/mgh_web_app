@@ -29,7 +29,7 @@ async function calculateSellingPrices(
   try {
     const data = await fetchDataForSellingPriceCalculation(
       skuId,
-      createLog,
+      true,
       logContext,
     );
 
@@ -47,25 +47,25 @@ async function calculateSellingPrices(
     ];
     const sellingPrices = {};
 
-    feeTypes.forEach(({ type, fbaFee, fbaFeeLowPrice }) => {
+    for (const { type, fbaFee, fbaFeeLowPrice } of feeTypes) {
       let calculationResults;
       let minimumSellingPrice;
       let maximumSellingPrice;
 
       // Attempt calculation with LowPrice FBA Fee if conditions allow
       if (data.lowPriceThresholdInc !== null && fbaFeeLowPrice !== null) {
-        console.log('lowPriceThresholdInc:', data.lowPriceThresholdInc);
-        calculationResults = calculateCostBeforeReferralFeeAndCheckReducedFee(
-          data.skuAcquisitionCostExc,
-          data.minimumMarginAmount,
-          data.closingFee,
-          fbaFeeLowPrice,
-          data.reducedReferralFeeLimit,
-          data.vatRate,
-          data.reducedReferralFeePercentage,
-          data.referralFeePercentage,
-          data.currencyCode,
-        );
+        calculationResults =
+          await calculateCostBeforeReferralFeeAndCheckReducedFee(
+            data.skuAcquisitionCostExc,
+            data.minimumMarginAmount,
+            data.closingFee,
+            fbaFeeLowPrice,
+            data.reducedReferralFeeLimit,
+            data.vatRate,
+            data.reducedReferralFeePercentage,
+            data.referralFeePercentage,
+            data.currencyCode,
+          );
 
         minimumSellingPrice = calculateMinimumSellingPrice(
           calculationResults.costBeforeReferralFees,
@@ -79,34 +79,33 @@ async function calculateSellingPrices(
             data.lowPriceThresholdInc,
             minimumSellingPrice,
           );
-          // If within the low price threshold, assign the calculated prices
+
           sellingPrices[type] = {
             minimumSellingPrice: parseAndValidateNumber(minimumSellingPrice, {
-              paramName: 'minimumSellingPrice',
-              min: 0,
               decimals: 2,
             }),
             maximumSellingPrice: parseAndValidateNumber(maximumSellingPrice, {
-              paramName: 'maximumSellingPrice',
-              min: minimumSellingPrice,
               decimals: 2,
             }),
+            currencyCode: data.currencyCode,
           };
-          return;
+          continue;
         }
       }
-      // Proceed to calculate with standard FBA fee if low price conditions not met or not applicable
-      calculationResults = calculateCostBeforeReferralFeeAndCheckReducedFee(
-        data.skuAcquisitionCostExc,
-        data.minimumMarginAmount,
-        data.closingFee,
-        fbaFee,
-        data.reducedReferralFeeLimit,
-        data.vatRate,
-        data.reducedReferralFeePercentage,
-        data.referralFeePercentage,
-        data.currencyCode,
-      );
+
+      // Proceed with standard FBA fee calculation
+      calculationResults =
+        await calculateCostBeforeReferralFeeAndCheckReducedFee(
+          data.skuAcquisitionCostExc,
+          data.minimumMarginAmount,
+          data.closingFee,
+          fbaFee,
+          data.reducedReferralFeeLimit,
+          data.vatRate,
+          data.reducedReferralFeePercentage,
+          data.referralFeePercentage,
+          data.currencyCode,
+        );
 
       minimumSellingPrice = calculateMinimumSellingPrice(
         calculationResults.costBeforeReferralFees,
@@ -116,24 +115,20 @@ async function calculateSellingPrices(
 
       maximumSellingPrice = calculateMaximumSellingPrice(
         calculationResults.reducedReferralFeeThresholdSellingPriceInc,
-        (lowPriceThresholdInc = null), // If low price threshold not met, or low price conditions not applicable, set lowPriceThresholdInc to null
+        null, // Ignored for standard fee calculation
         minimumSellingPrice,
       );
 
-      // Assign the calculated prices
       sellingPrices[type] = {
         minimumSellingPrice: parseAndValidateNumber(minimumSellingPrice, {
-          paramName: 'minimumSellingPrice',
-          min: 0,
           decimals: 2,
         }),
         maximumSellingPrice: parseAndValidateNumber(maximumSellingPrice, {
-          paramName: 'maximumSellingPrice',
-          min: minimumSellingPrice,
           decimals: 2,
         }),
+        currencyCode: data.currencyCode,
       };
-    });
+    }
 
     return sellingPrices;
   } catch (error) {
@@ -141,7 +136,7 @@ async function calculateSellingPrices(
       `Error in calculateSellingPrices for SKU ID ${skuId}: ${error}`,
       logContext,
     );
-    throw error;
+    console.log(error);
   }
 }
 

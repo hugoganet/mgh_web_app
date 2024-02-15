@@ -3,6 +3,9 @@ const { logger } = require('../../utils/logger');
 const {
   parseAndValidateNumber,
 } = require('../../utils/parseAndValidateNumber');
+const {
+  convertMarketplaceIdentifier,
+} = require('../../utils/convertMarketplaceIdentifier');
 
 /**
  * Fetches necessary data for calculating selling prices.
@@ -16,15 +19,17 @@ async function fetchDataForSellingPriceCalculation(
   createLog = false,
   logContext = 'fetchDataForSellingPriceCalculation',
 ) {
+  let logMessage = '';
   try {
     const skuRecord = await db.Sku.findOne({ where: { skuId } });
-    if (!skuRecord) throw new Error(`No SKU record found for SKU ID ${skuId}.`);
+    if (!skuRecord) {
+      logMessage += `No SKU record found for SKU ID ${skuId}.`;
+    }
 
     const asinRecord = await db.Asin.findOne({
       include: [{ model: db.Sku, where: { skuId }, required: true }],
     });
-    if (!asinRecord)
-      throw new Error(`No ASIN record found for SKU ID ${skuId}.`);
+    if (!asinRecord) logMessage += `No ASIN record found for SKU ID ${skuId}.`;
 
     const amazonReferralFeeRecord = await db.AmazonReferralFee.findOne({
       include: [
@@ -40,31 +45,25 @@ async function fetchDataForSellingPriceCalculation(
       where: { countryCode: skuRecord.countryCode },
     });
     if (!amazonReferralFeeRecord)
-      throw new Error(
-        `No referral fee record found for product category ID ${asinRecord.productCategoryId} and country code ${skuRecord.countryCode}.`,
-      );
+      logMessage += `No referral fee record found for product category ID ${asinRecord.productCategoryId} and country code ${skuRecord.countryCode}.`;
 
     const fbaFeeRecord = await db.FbaFee.findOne({
       where: { asinId: asinRecord.asinId },
     });
     if (!fbaFeeRecord)
-      throw new Error(
-        `No FBA fee record found for ASIN ID ${asinRecord.asinId}.`,
-      );
+      logMessage += `No FBA fee record found for ASIN ID ${asinRecord.asinId}.`;
 
     const priceGridFbaFeeRecord = await db.PriceGridFbaFee.findOne({
       where: { priceGridFbaFeeId: fbaFeeRecord.priceGridFbaFeeId },
     });
     if (!priceGridFbaFeeRecord)
-      throw new Error(
-        `No PriceGridFbaFee record found for priceGridFbaFeeId ${fbaFeeRecord.priceGridFbaFeeId}.`,
-      );
+      logMessage += `No PriceGridFbaFee record found for priceGridFbaFeeId ${fbaFeeRecord.priceGridFbaFeeId}.`;
 
     const pricingRuleRecord = await db.PricingRule.findOne({
       where: { pricingRuleId: 1 },
-    }); // Assuming a default or specific pricing rule is being used
+    });
     if (!pricingRuleRecord)
-      throw new Error('No pricing rule record found for pricing rule ID 1.');
+      logMessage += 'No pricing rule record found for pricing rule ID 1.';
 
     const productTaxCategory = await db.ProductTaxCategory.findByPk(
       asinRecord.productTaxCategoryId,
@@ -76,9 +75,7 @@ async function fetchDataForSellingPriceCalculation(
       },
     });
     if (!vatRateRecord)
-      throw new Error(
-        `No VAT rate record found for country code ${skuRecord.countryCode}.`,
-      );
+      logMessage += `No VAT rate record found for country code ${skuRecord.countryCode}.`;
 
     // Convert currency if necessary
     const currencyCode = convertMarketplaceIdentifier(
@@ -154,7 +151,7 @@ async function fetchDataForSellingPriceCalculation(
       currencyCode,
     };
 
-    const logMessage = `Fetched data for SKU ID ${skuId}. DATA: ${JSON.stringify(
+    logMessage = `Fetched data for SKU ID ${skuId}. DATA: ${JSON.stringify(
       parsedData,
       '',
       2,

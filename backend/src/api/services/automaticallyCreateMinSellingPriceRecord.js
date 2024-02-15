@@ -1,3 +1,4 @@
+const db = require('../../api/models/index');
 const { logger } = require('../../utils/logger');
 const eventBus = require('../../utils/eventBus');
 const {
@@ -28,7 +29,8 @@ async function automaticallyCreateMinSellingPriceRecord(
         minimumSellingPrice: minimumSellingPriceEfn,
         maximumSellingPrice: maximumSellingPriceEfn,
       },
-    } = await calculateSellingPrices(skuId);
+      currencyCode,
+    } = await calculateSellingPrices(skuId, true, logContext);
 
     // Create minimum selling price record
     const newMinimumSellingPriceRecord = await db.MinimumSellingPrice.create({
@@ -53,13 +55,15 @@ async function automaticallyCreateMinSellingPriceRecord(
     }
 
     console.log(
-      `Minimum Selling Price Local/Pan-EU: ${minimumSellingPriceLocalAndPanEu}`,
+      `Local/Pan-EU: 
+      minimumSellingPrice: ${minimumSellingPriceLocalAndPanEu} ${currencyCode},
+      maximumSellingPrice: ${maximumSellingPriceLocalAndPanEu} ${currencyCode}`,
     );
     console.log(
-      `Maximum Selling Price Local/Pan-EU: ${maximumSellingPriceLocalAndPanEu}`,
+      `EFN: 
+      minimumSellingPrice: ${minimumSellingPriceEfn} ${currencyCode},
+      maximumSellingPrice: ${maximumSellingPriceEfn} ${currencyCode}`,
     );
-    console.log(`Minimum Selling Price EFN: ${minimumSellingPriceEfn}`);
-    console.log(`Maximum Selling Price EFN: ${maximumSellingPriceEfn}`);
   } catch (error) {
     console.error(
       `Error in automaticallyCreateMinSellingPriceRecord: ${error}`,

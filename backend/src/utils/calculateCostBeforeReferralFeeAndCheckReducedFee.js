@@ -59,7 +59,7 @@ async function calculateCostBeforeReferralFeeAndCheckReducedFee(
           closingFee +
           (await convertToEur(fbaFee, currencyCode, today, true, logContext));
       } catch (error) {
-        throw new Error(`Currency conversion failed: ${error.message}`);
+        logMessage += `Currency conversion failed: ${error}`;
       }
     }
 
@@ -90,8 +90,7 @@ async function calculateCostBeforeReferralFeeAndCheckReducedFee(
     console.error(
       `Error in calculateCostBeforeReferralFeeAndCheckReducedFee: ${error.message}`,
     );
-    logMessage += ` Error encountered in calculateCostBeforeReferralFeeAndCheckReducedFee. ERROR: ${error.message}.`;
-    throw error;
+    logMessage += ` Error encountered in calculateCostBeforeReferralFeeAndCheckReducedFee. ERROR: ${error}.`;
   } finally {
     if (createLog) {
       logger(logMessage, logContext);
