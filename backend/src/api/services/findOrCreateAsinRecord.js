@@ -1,4 +1,3 @@
-/* eslint-disable require-jsdoc */
 const db = require('../models/index');
 const { logger } = require('../../utils/logger');
 const eventBus = require('../../utils/eventBus');

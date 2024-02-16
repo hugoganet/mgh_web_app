@@ -21,6 +21,9 @@ const {
 const {
   findOrCreateAsinRecord,
 } = require('../../../../api/services/findOrCreateAsinRecord.js');
+const {
+  findOrCreateAsinSkuRecord,
+} = require('../../../../api/services/findOrCreateAsinSkuRecord.js');
 
 /**
  * @async
@@ -74,31 +77,16 @@ async function processInventoryChunk(
     );
 
     // Handle AsinSku record
-    logMessage += `Creating AsinSku record for asin: ${asin} and sku: ${sku} in ${countryCode}\n`;
-    const [asinSkuRecord, createdAsinSkuRecord] = await db.AsinSku.findOrcreate(
-      {
-        asinId: associatedAsinRecord.asinId,
-        skuId: skuRecord.skuId,
-      },
+    const asinSkuRecord = await findOrCreateAsinSkuRecord(
+      associatedAsinRecord.asinId,
+      skuRecord.skuId,
+      countryCode,
+      (createLog = true),
+      logContext,
     );
-    if (createdAsinSkuRecord) {
-      eventBus.emit('recordCreated', {
-        type: 'asinSku',
-        action: 'asinSku_created',
-        id: asinSkuRecord.asinSkuId,
-      });
-      logMessage += `Created new AsinSku record for ASIN: ${asin} and SKU: ${sku} in ${countryCode}\n`;
-    } else {
-      eventBus.emit('recordCreated', {
-        type: 'asinSku',
-        action: 'asinSku_found',
-        id: asinSkuRecord.asinSkuId,
-      });
-      logMessage += `Error creating AsinSku record in processInventoryChunk : ${err}\n`;
-    }
 
-    // Create MinimumSellingPrice record
-    const newMinSellingPriceRecord =
+    // Handle MinimumSellingPrice record
+    const newMinSellingPriceRecord = 
       await automaticallyCreateMinSellingPriceRecord(
         skuRecord.skuId,
         true,
@@ -113,7 +101,6 @@ async function processInventoryChunk(
     const skuId = skuRecord.skuId;
 
     // Attempt to find or create a corresponding AfnInventoryDailyUpdate record in the database
-
     const [afnInventoryRecord, createdAfnInventoryRecord] =
       await db.AfnInventoryDailyUpdate.findOrCreate({
         where: { skuId: skuId },
