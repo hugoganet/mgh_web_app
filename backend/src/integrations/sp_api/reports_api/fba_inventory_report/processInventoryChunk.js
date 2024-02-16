@@ -24,6 +24,9 @@ const {
 const {
   findOrCreateAsinSkuRecord,
 } = require('../../../../api/services/findOrCreateAsinSkuRecord.js');
+const {
+  findOrCreateMinSellingPriceRecord,
+} = require('../../../../api/services/findOrCreateMinSellingPriceRecord.js');
 
 /**
  * @async
@@ -86,19 +89,11 @@ async function processInventoryChunk(
     );
 
     // Handle MinimumSellingPrice record
-    const newMinSellingPriceRecord = 
-      await automaticallyCreateMinSellingPriceRecord(
-        skuRecord.skuId,
-        true,
-        logContext,
-      );
-    if (newMinSellingPriceRecord) {
-      logMessage += `Created new MinimumSellingPrice record for SKU ID: ${skuRecord.skuId}.\n`;
-    } else {
-      logMessage += `Error creating MinimumSellingPrice record for SKU ID: ${skuRecord.skuId}.\n`;
-    }
-
-    const skuId = skuRecord.skuId;
+    const minimumSellingPriceRecord = await findOrCreateMinSellingPriceRecord(
+      skuRecord.skuId,
+      (createLog = true),
+      logContext,
+    );
 
     // Attempt to find or create a corresponding AfnInventoryDailyUpdate record in the database
     const [afnInventoryRecord, createdAfnInventoryRecord] =
