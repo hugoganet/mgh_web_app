@@ -1,4 +1,7 @@
 const db = require('../../../../api/models/index');
+const { logger } = require('../../../../utils/logger');
+const eventBus = require('../../../../utils/eventBus');
+const { convertToEur } = require('../../../../utils/convertToEur.js');
 const {
   checkSkuIsActive,
 } = require('../../../../api/services/checkSkuIsActive.js');
@@ -6,15 +9,18 @@ const {
   updateAfnQuantity,
 } = require('../../../../api/services/updateAfnQuantity.js');
 const { addFnskuToSku } = require('../../../../api/services/addFnskuToSku.js');
-const { logger } = require('../../../../utils/logger');
-const { convertToEur } = require('../../../../utils/convertToEur.js');
 const {
   automaticallyCreateAsinRecord,
 } = require('../../../../api/services/automaticallyCreateAsinRecord.js');
-const eventBus = require('../../../../utils/eventBus');
 const {
   automaticallyCreateMinSellingPriceRecord,
 } = require('../../../../api/services/automaticallyCreateMinSellingPriceRecord.js');
+const {
+  findOrCreateSkuRecord,
+} = require('../../../../api/services/findOrCreateSkuRecord.js');
+const {
+  findOrCreateAsinRecord,
+} = require('../../../../api/services/findOrCreateAsinRecord.js');
 
 /**
  * @async
@@ -47,194 +53,101 @@ async function processInventoryChunk(
     const asin = chunk['asin'];
     const skuAfnTotalQuantity = parseInt(chunk['afn-fulfillable-quantity'], 10);
     const skuAverageSellingPrice = parseFloat(chunk['your-price']);
-    const today = new Date().toISOString().split('T')[0]; // Results in "YYYY-MM-DD"
 
-    let convertedSellingPrice = skuAverageSellingPrice;
-    if (currencyCode !== 'EUR') {
-      convertedSellingPrice = await convertToEur(
-        skuAverageSellingPrice,
-        currencyCode,
-        today,
-        createLog,
-        logContext,
-      );
+    // Handle SKU record
+    const skuRecord = await findOrCreateSkuRecord(
+      sku,
+      countryCode,
+      currencyCode,
+      skuAfnTotalQuantity,
+      skuAverageSellingPrice,
+      (createLog = true),
+      logContext,
+    );
+
+    // Handle ASIN record
+    const associatedAsinRecord = await findOrCreateAsinRecord(
+      asin,
+      countryCode,
+      (createLog = true),
+      logContext,
+    );
+
+    // Handle AsinSku record
+    logMessage += `Creating AsinSku record for asin: ${asin} and sku: ${sku} in ${countryCode}\n`;
+    const [asinSkuRecord, createdAsinSkuRecord] = await db.AsinSku.findOrcreate(
+      {
+        asinId: associatedAsinRecord.asinId,
+        skuId: skuRecord.skuId,
+      },
+    );
+    if (createdAsinSkuRecord) {
+      eventBus.emit('recordCreated', {
+        type: 'asinSku',
+        action: 'asinSku_created',
+        id: asinSkuRecord.asinSkuId,
+      });
+      logMessage += `Created new AsinSku record for ASIN: ${asin} and SKU: ${sku} in ${countryCode}\n`;
+    } else {
+      eventBus.emit('recordCreated', {
+        type: 'asinSku',
+        action: 'asinSku_found',
+        id: asinSkuRecord.asinSkuId,
+      });
+      logMessage += `Error creating AsinSku record in processInventoryChunk : ${err}\n`;
     }
 
-    let skuRecord = await db.Sku.findOne({ where: { sku, countryCode } });
-    if (skuRecord) {
-      eventBus.emit('recordCreated', {
-        type: 'sku',
-        action: 'sku_found',
-        id: skuRecord.skuId,
-      });
-      logMessage += `SKU record found for SKU: ${sku} on ${countryCode}, updating acquisition costs\n`;
+    // Create MinimumSellingPrice record
+    const newMinSellingPriceRecord =
+      await automaticallyCreateMinSellingPriceRecord(
+        skuRecord.skuId,
+        true,
+        logContext,
+      );
+    if (newMinSellingPriceRecord) {
+      logMessage += `Created new MinimumSellingPrice record for SKU ID: ${skuRecord.skuId}.\n`;
     } else {
-      logMessage += `SKU record not found for SKU: ${sku} on ${countryCode}, looking for similar SKU with another countryCode\n`;
-      try {
-        const similarSku = await db.Sku.findOne({
-          where: {
-            sku,
-            countryCode: { [db.Sequelize.Op.ne]: countryCode },
-          },
-        });
-        if (similarSku) {
-          skuAcquisitionCostExc = similarSku.skuAcquisitionCostExc;
-          skuAcquisitionCostInc = similarSku.skuAcquisitionCostInc;
-          logMessage += `Found similar SKU: ${similarSku.sku} on ${similarSku.countryCode}, copying acquisition costs\n`;
-        } else {
-          logMessage += `No similar SKU found, exiting the script\n`;
-          return;
-        }
-        // create new SKU record
-        skuRecord = await db.Sku.create({
-          sku,
-          countryCode,
-          fnsku: null,
-          skuAcquisitionCostExc,
-          skuAcquisitionCostInc,
-          skuAfnTotalQuantity,
-          skuAverageSellingPrice: convertedSellingPrice,
-          skuAverageNetMargin: null,
-          skuAverageNetMarginPercentage: null,
-          skuAverageReturnOnInvestmentRate: null,
-          skuAverageDailyReturnOnInvestmentRate: null,
-          isActive: true,
-          numberOfActiveDays: 1,
-          numberOfUnitSold: 0,
-          skuAverageUnitSoldPerDay: 0,
-          skuRestockAlertQuantity: 1,
-          skuIsTest: false,
-        });
-        if (skuRecord.skuId) {
-          eventBus.emit('recordCreated', {
-            type: 'sku',
-            action: 'sku_created',
-            id: skuRecord.skuId,
-          });
-        }
-        logMessage += `Created new SKU record with id: ${skuRecord.skuId} for SKU: ${sku} on ${countryCode}\n`;
-      } catch (err) {
-        logMessage += `Error finding similar SKU or copying acquisition costs: ${err}\n`;
-        throw err;
-      }
-      let associatedAsin = await db.Asin.findOne({
-        where: {
-          asin,
-          countryCode,
-        },
-      });
-
-      // TODO : Find out why the associatedAsin is not found
-      if (associatedAsin) {
-        eventBus.emit('recordCreated', {
-          type: 'asin',
-          action: 'asin_found',
-          id: associatedAsin.asinId,
-        });
-        logMessage += `Associated ASIN found in processInventoryChunk for ${asin} in ${countryCode}, creating AsinSku record\n`;
-      } else if (!associatedAsin) {
-        logMessage += `No associated ASIN found in processInventoryChunk for ASIN: ${asin} in ${countryCode}\n`;
-        associatedAsin = await automaticallyCreateAsinRecord(
-          asin,
-          (marketplaceId = null),
-          countryCode,
-          createLog,
-          logContext,
-        );
-        if (associatedAsin) {
-          logMessage += `Created new ASIN record for ASIN: ${asin} in ${countryCode}\n`;
-        } else {
-          logMessage += `Error creating ASIN record for ASIN: ${asin} in ${countryCode}\n`;
-        }
-      }
-      // Create MinimumSellingPrice record
-      const newMinSellingPriceRecord =
-        await automaticallyCreateMinSellingPriceRecord(
-          skuRecord.skuId,
-          true,
-          logContext,
-        );
-      if (newMinSellingPriceRecord) {
-        logMessage += `Created new MinimumSellingPrice record for SKU ID: ${skuRecord.skuId}.\n`;
-      } else {
-        logMessage += `Error creating MinimumSellingPrice record for SKU ID: ${skuRecord.skuId}.\n`;
-      }
-      // Create AsinSku record
-      try {
-        logMessage += `Creating AsinSku record for asin: ${asin} and sku: ${sku} in ${countryCode}\n`;
-        const newAsinSku = await db.AsinSku.create({
-          asinId: associatedAsin.asinId,
-          skuId: skuRecord.skuId,
-        });
-        if (newAsinSku.asinSkuId) {
-          eventBus.emit('recordCreated', {
-            type: 'asinSku',
-            action: 'asinSku_created',
-            id: newAsinSku.asinSkuId,
-          });
-        }
-      } catch (err) {
-        console.log('Error creating AsinSku record in processInventoryChunk :');
-        logMessage += `Error creating AsinSku record in processInventoryChunk : ${err}\n`;
-        throw new Error(err);
-      }
+      logMessage += `Error creating MinimumSellingPrice record for SKU ID: ${skuRecord.skuId}.\n`;
     }
 
     const skuId = skuRecord.skuId;
 
     // Attempt to find or create a corresponding AfnInventoryDailyUpdate record in the database
-    try {
-      const [inventoryRecord, createdAfnInventoryRecord] =
-        await db.AfnInventoryDailyUpdate.findOrCreate({
-          where: { skuId: skuId },
-          defaults: {
-            skuId,
-            sku,
-            countryCode,
-            currencyCode,
-            actualPrice: skuAverageSellingPrice,
-            afnFulfillableQuantity: skuAfnTotalQuantity,
-            reportDocumentId,
-          },
-        });
 
-      // If the record already existed, update the actualPrice and afnFulfillableQuantity fields
-      if (!createdAfnInventoryRecord) {
-        inventoryRecord.actualPrice = skuAverageSellingPrice;
-        inventoryRecord.afnFulfillableQuantity = skuAfnTotalQuantity;
-        inventoryRecord.reportDocumentId = reportDocumentId;
-        await inventoryRecord.save();
-        logMessage += `Updated existing AfnInventoryDailyUpdate record for skuId: ${skuId}.\n`;
-      } else {
-        logMessage += `Created new AfnInventoryDailyUpdate record for skuId: ${skuId}.\n`;
-      }
-    } catch (err) {
-      logMessage += `Error finding or creating AfnInventoryDailyUpdate record: ${err}\n`;
+    const [afnInventoryRecord, createdAfnInventoryRecord] =
+      await db.AfnInventoryDailyUpdate.findOrCreate({
+        where: { skuId: skuId },
+        defaults: {
+          skuId,
+          sku,
+          countryCode,
+          currencyCode,
+          actualPrice: skuAverageSellingPrice,
+          afnFulfillableQuantity: skuAfnTotalQuantity,
+          reportDocumentId,
+        },
+      });
+
+    // If the record already existed, update the actualPrice and afnFulfillableQuantity fields
+    if (!createdAfnInventoryRecord) {
+      afnInventoryRecord.actualPrice = skuAverageSellingPrice;
+      afnInventoryRecord.afnFulfillableQuantity = skuAfnTotalQuantity;
+      afnInventoryRecord.reportDocumentId = reportDocumentId;
+      await afnInventoryRecord.save();
+      logMessage += `Updated existing AfnInventoryDailyUpdate record for skuId: ${skuId}.\n`;
+    } else {
+      logMessage += `Created new AfnInventoryDailyUpdate record for skuId: ${skuId}.\n`;
     }
 
     // Perform various database operations on the SKU record
-    try {
-      await checkSkuIsActive(skuId, createLog, logContext);
-      logMessage += `Checked SKU activity for SKU ID: ${skuRecord.skuId}.\n`;
-    } catch (err) {
-      logMessage += `Error checking SKU activity: ${err}\n`;
-    }
+    await checkSkuIsActive(skuId, createLog, logContext);
+    logMessage += `Checked SKU activity for SKU ID: ${skuRecord.skuId}.\n`;
 
-    try {
-      await updateAfnQuantity(skuId, createLog, logContext);
-      logMessage += `Updated AFN quantity for SKU ID: ${skuRecord.skuId}.\n`;
-    } catch (err) {
-      logMessage += `Error updating AFN quantity: ${err}\n`;
-    }
+    await updateAfnQuantity(skuId, createLog, logContext);
+    logMessage += `Updated AFN quantity for SKU ID: ${skuRecord.skuId}.\n`;
 
-    try {
-      if (skuRecord.fnsku == null) {
-        await addFnskuToSku(skuId, fnsku, createLog, logContext);
-        logMessage += `Added fnsku to SKU ID: ${skuRecord.skuId}.\n`;
-      }
-    } catch (err) {
-      logMessage += `Error adding fnsku to sku: ${err}\n`;
-    }
+    await addFnskuToSku(skuId, fnsku, createLog, logContext);
+    logMessage += `Added fnsku to SKU ID: ${skuRecord.skuId}.\n`;
   } catch (error) {
     console.error('Error processing inventory chunk:', error);
     logMessage += `Error processing inventory chunk: ${error}\n`;
