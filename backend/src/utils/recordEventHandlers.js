@@ -26,6 +26,10 @@ let counters = {
     minimumSellingPrice_created: 0,
     minimumSellingPrice_found: 0,
   },
+  afnInventoryDailyUpdate: {
+    afnInventoryDailyUpdate_created: 0,
+    afnInventoryDailyUpdate_found: 0,
+  },
 };
 
 /**

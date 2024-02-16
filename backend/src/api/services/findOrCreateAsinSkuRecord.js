@@ -19,11 +19,12 @@ async function findOrCreateAsinSkuRecord(
   createLog = false,
   logContext,
 ) {
+  let logMessage = '';
   try {
     const [asinSkuRecord, createdAsinSkuRecord] = await db.AsinSku.findOrcreate(
       {
-        asinId: associatedAsinRecord.asinId,
-        skuId: skuRecord.skuId,
+        asinId: asinId,
+        skuId: skuId,
       },
     );
     if (createdAsinSkuRecord) {
