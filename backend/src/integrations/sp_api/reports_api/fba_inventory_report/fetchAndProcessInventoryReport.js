@@ -105,7 +105,9 @@ async function fetchAndProcessInventoryReport(
           Created ${counts.eanInAsin.eanInAsin_created} new eanInAsin records and found ${counts.eanInAsin.eanInAsin_found} eanInAsin.
           Created ${counts.fbaFee.fbaFee_created} new fbaFee records and found ${counts.fbaFee.fbaFee_found} fbaFee.
           Created ${counts.asinSku.asinSku_created} new asinSku records and found ${counts.asinSku.asinSku_found} asinSku.
-          Created ${counts.minimumSellingPrice.minimumSellingPrice_created} new minimumSellingPrice records and found ${counts.minimumSellingPrice.minimumSellingPrice_found} asinSku.`,
+          Created ${counts.minimumSellingPrice.minimumSellingPrice_created} new minimumSellingPrice records and found ${counts.minimumSellingPrice.minimumSellingPrice_found} asinSku.
+          Created ${counts.afnInventoryDailyUpdate.afnInventoryDailyUpdate_created} new afnInventoryDailyUpdate records and update ${counts.afnInventoryDailyUpdate.afnInventoryDailyUpdate_updated}.
+          Created ${counts.sellingPriceHistory.sellingPriceHistory_created} new sellingPriceHistory records and found ${counts.sellingPriceHistory.sellingPriceHistory_found}.`,
           );
 
           logMessage += `PROCESSED ${totalLines} in fetchAndProcessInventoryReport : 
@@ -114,15 +116,16 @@ async function fetchAndProcessInventoryReport(
           Created ${counts.eanInAsin.eanInAsin_created} new eanInAsin records and found ${counts.eanInAsin.eanInAsin_found} eanInAsin.
           Created ${counts.fbaFee.fbaFee_created} new fbaFee records and found ${counts.fbaFee.fbaFee_found} fbaFee.
           Created ${counts.asinSku.asinSku_created} new asinSku records and found ${counts.asinSku.asinSku_found} asinSku.
-          Created ${counts.minimumSellingPrice.minimumSellingPrice_created} new minimumSellingPrice records and found ${counts.minimumSellingPrice.minimumSellingPrice_found} asinSku.\n`;
+          Created ${counts.minimumSellingPrice.minimumSellingPrice_created} new minimumSellingPrice records and found ${counts.minimumSellingPrice.minimumSellingPrice_found} asinSku.
+          Created ${counts.afnInventoryDailyUpdate.afnInventoryDailyUpdate_created} new afnInventoryDailyUpdate records and update ${counts.afnInventoryDailyUpdate.afnInventoryDailyUpdate_updated}.
+          Created ${counts.sellingPriceHistory.sellingPriceHistory_created} new sellingPriceHistory records and found ${counts.sellingPriceHistory.sellingPriceHistory_found}.\n`;
 
           if (createLog) {
             logger(logMessage, logContext);
           }
-
-          stopListeningAndReset(); // Stop listening and reset counters
-
+          // Seed SellingPriceHistory table with recent data
           await seedSellingPriceHistory(createLog, logContext);
+          stopListeningAndReset(); // Stop listening and reset counters
         } catch (error) {
           logMessage += `Error processing inventory data stream in fetchAndProcessInventoryReport: ${error}\n`;
           console.error(

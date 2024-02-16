@@ -27,6 +27,7 @@ async function findOrCreateAfnInventoryDailyUpdateRecord(
   createLog = false,
   logContext,
 ) {
+  let logMessage = '';
   try {
     const [afnInventoryRecord, createdAfnInventoryRecord] =
       await db.AfnInventoryDailyUpdate.findOrCreate({
@@ -45,7 +46,7 @@ async function findOrCreateAfnInventoryDailyUpdateRecord(
     if (!createdAfnInventoryRecord) {
       eventBus.emit('recordCreated', {
         type: 'afnInventoryDailyUpdate',
-        action: 'afnInventoryDailyUpdate_found',
+        action: 'afnInventoryDailyUpdate_updated',
         id: afnInventoryDailyUpdate.afnInventoryDailyUpdateId,
       });
       afnInventoryRecord.actualPrice = skuAverageSellingPrice;

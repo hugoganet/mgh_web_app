@@ -1,7 +1,4 @@
-const db = require('../../../../api/models/index');
 const { logger } = require('../../../../utils/logger');
-const eventBus = require('../../../../utils/eventBus');
-const { convertToEur } = require('../../../../utils/convertToEur.js');
 const {
   checkSkuIsActive,
 } = require('../../../../api/services/checkSkuIsActive.js');
@@ -9,12 +6,6 @@ const {
   updateAfnQuantity,
 } = require('../../../../api/services/updateAfnQuantity.js');
 const { addFnskuToSku } = require('../../../../api/services/addFnskuToSku.js');
-const {
-  automaticallyCreateAsinRecord,
-} = require('../../../../api/services/automaticallyCreateAsinRecord.js');
-const {
-  automaticallyCreateMinSellingPriceRecord,
-} = require('../../../../api/services/automaticallyCreateMinSellingPriceRecord.js');
 const {
   findOrCreateSkuRecord,
 } = require('../../../../api/services/findOrCreateSkuRecord.js');
@@ -122,7 +113,7 @@ async function processInventoryChunk(
     await addFnskuToSku(skuId, fnsku, createLog, logContext);
     logMessage += `Added fnsku to SKU ID: ${skuId}.\n`;
   } catch (error) {
-    console.error('Error processing inventory chunk:', error);
+    console.error('Error processInventoryChunk:', error);
     logMessage += `Error in processInventoryChunk: ${error}\n`;
   } finally {
     if (createLog) {

@@ -1,12 +1,13 @@
 const db = require('../../../../api/models/index');
 const { logger } = require('../../../../utils/logger');
+const eventBus = require('../../../../utils/eventBus');
 
 /**
- * @function seedSellingPriceHistory
  * @description Populates the SellingPriceHistory table with recent data.
+ * @function seedSellingPriceHistory
+ * @async
  * @param {boolean} createLog - Whether to create a log of the process.
  * @param {string} logContext - The context for the log message.
- * @async
  * @return {Promise<void>} - A promise that resolves when the SellingPriceHistory table has been populated with recent data.
  */
 async function seedSellingPriceHistory(
@@ -16,25 +17,45 @@ async function seedSellingPriceHistory(
   let logMessage = '';
 
   try {
-    const inventoryUpdates = await db.AfnInventoryDailyUpdate.findAll();
+    // Fetch all afnInventoryDailyUpdate records
+    const afnInventoryDailyUpdateRecords =
+      await db.AfnInventoryDailyUpdate.findAll();
 
-    for (const update of inventoryUpdates) {
+    for (const record of afnInventoryDailyUpdateRecords) {
       try {
-        const dateString = update.updatedAt.toISOString().split('T')[0];
+        const dateString = record.updatedAt.toISOString().split('T')[0];
 
-        if (update.afnFulfillableQuantity > 0) {
-          const record = {
-            skuId: update.skuId,
-            dailyPrice: update.actualPrice,
-            currencyCode: update.currencyCode,
-            date: dateString,
-          };
+        // If the afnInventoryDailyUpdate record has no fulfillable quantity, skip it (no need to update nor createsellingPriceHistory record)
+        if (record.afnFulfillableQuantity <= 0) {
+          continue;
+        } else {
+          // If none sellingPriceHistory record was found for the skuId and date, create one.
+          const [sellingPriceHistoryRecord, createdsellingPriceHistoryRecord] =
+            await db.SellingPriceHistory.findOrCreate({
+              where: { skuId: record.skuId, date: dateString },
+              defaults: {
+                skuId: record.skuId,
+                dailyPrice: record.actualPrice,
+                currencyCode: record.currencyCode,
+                date: dateString,
+              },
+            });
 
-          await db.SellingPriceHistory.upsert(record, {
-            where: { skuId: update.skuId, date: dateString },
-          });
-
-          logMessage += `Record for SKU ID: ${update.skuId} on ${dateString} inserted/updated in SellingPriceHistory.\n`;
+          if (createdsellingPriceHistoryRecord) {
+            eventBus.emit('recordCreated', {
+              type: 'sellingPriceHistory',
+              action: 'sellingPriceHistory_created',
+              id: sellingPriceHistoryRecord.skuId,
+            });
+            logMessage += `Record for SKU ID: ${sellingPriceHistoryRecord.skuId} on ${dateString} created in SellingPriceHistory.\n`;
+          } else {
+            eventBus.emit('recordCreated', {
+              type: 'sellingPriceHistory',
+              action: 'sellingPriceHistory_found',
+              id: sellingPriceHistoryRecord.skuId,
+            });
+            logMessage += `Record for SKU ID: ${sellingPriceHistoryRecord.skuId} on ${dateString} found in SellingPriceHistory.\n`;
+          }
         }
       } catch (innerError) {
         logMessage += `Error processing record for SKU ID: ${update.skuId}: ${innerError}\n`;

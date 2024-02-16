@@ -28,7 +28,11 @@ let counters = {
   },
   afnInventoryDailyUpdate: {
     afnInventoryDailyUpdate_created: 0,
-    afnInventoryDailyUpdate_found: 0,
+    afnInventoryDailyUpdate_updated: 0,
+  },
+  sellingPriceHistory: {
+    sellingPriceHistory_created: 0,
+    sellingPriceHistory_found: 0,
   },
 };
 
