@@ -23,13 +23,19 @@ async function fetchDataForSellingPriceCalculation(
   try {
     const skuRecord = await db.Sku.findOne({ where: { skuId } });
     if (!skuRecord) {
-      logMessage += `No SKU record found for SKU ID ${skuId}.`;
+      logMessage += `No SKU record found in fetchDataForSellingPriceCalculation for SKU ID ${skuId}.`;
+    } else {
+      logMessage += `Fetched SKU in fetchDataForSellingPriceCalculation record for SKU ID ${skuId}.`;
     }
 
     const asinRecord = await db.Asin.findOne({
       include: [{ model: db.Sku, where: { skuId }, required: true }],
     });
-    if (!asinRecord) logMessage += `No ASIN record found for SKU ID ${skuId}.`;
+    if (!asinRecord) {
+      logMessage += `No ASIN record in fetchDataForSellingPriceCalculation found for SKU ID ${skuId}.`;
+    } else {
+      logMessage += `Fetched ASIN record in fetchDataForSellingPriceCalculation for SKU ID ${skuId}.`;
+    }
 
     const amazonReferralFeeRecord = await db.AmazonReferralFee.findOne({
       include: [
@@ -44,38 +50,60 @@ async function fetchDataForSellingPriceCalculation(
       ],
       where: { countryCode: skuRecord.countryCode },
     });
-    if (!amazonReferralFeeRecord)
+    if (!amazonReferralFeeRecord) {
       logMessage += `No referral fee record found for product category ID ${asinRecord.productCategoryId} and country code ${skuRecord.countryCode}.`;
+    } else {
+      logMessage += `Fetched referral fee record in fetchDataForSellingPriceCalculation for product category ID ${asinRecord.productCategoryId} and country code ${skuRecord.countryCode}.`;
+    }
 
     const fbaFeeRecord = await db.FbaFee.findOne({
       where: { asinId: asinRecord.asinId },
     });
-    if (!fbaFeeRecord)
+    if (!fbaFeeRecord) {
       logMessage += `No FBA fee record found for ASIN ID ${asinRecord.asinId}.`;
+    } else {
+      logMessage += `Fetched FBA fee record in fetchDataForSellingPriceCalculation for ASIN ID ${asinRecord.asinId}.`;
+    }
 
     const priceGridFbaFeeRecord = await db.PriceGridFbaFee.findOne({
       where: { priceGridFbaFeeId: fbaFeeRecord.priceGridFbaFeeId },
     });
-    if (!priceGridFbaFeeRecord)
+    if (!priceGridFbaFeeRecord) {
       logMessage += `No PriceGridFbaFee record found for priceGridFbaFeeId ${fbaFeeRecord.priceGridFbaFeeId}.`;
+    } else {
+      logMessage += `Fetched PriceGridFbaFee record in fetchDataForSellingPriceCalculation for priceGridFbaFeeId ${fbaFeeRecord.priceGridFbaFeeId}.`;
+    }
 
     const pricingRuleRecord = await db.PricingRule.findOne({
       where: { pricingRuleId: 1 },
     });
-    if (!pricingRuleRecord)
+    if (!pricingRuleRecord) {
       logMessage += 'No pricing rule record found for pricing rule ID 1.';
+    } else {
+      logMessage +=
+        'Fetched pricing rule record in fetchDataForSellingPriceCalculation for pricing rule ID 1.';
+    }
 
     const productTaxCategory = await db.ProductTaxCategory.findByPk(
       asinRecord.productTaxCategoryId,
     );
+    if (!productTaxCategory) {
+      logMessage += `No productTaxCategory record found in fetchDataForSellingPriceCalculation for productTaxCategoryId: ${asinRecord.productTaxCategoryId}.`;
+    } else {
+      logMessage += `Fetched productTaxCategory record in fetchDataForSellingPriceCalculation for productTaxCategoryId: ${asinRecord.productTaxCategoryId}.`;
+    }
+
     const vatRateRecord = await db.VatRatePerCountry.findOne({
       where: {
         countryCode: skuRecord.countryCode,
         vatCategoryId: productTaxCategory.vatCategoryId,
       },
     });
-    if (!vatRateRecord)
+    if (!vatRateRecord) {
       logMessage += `No VAT rate record found for country code ${skuRecord.countryCode}.`;
+    } else {
+      logMessage += `Fetched VAT rate record in fetchDataForSellingPriceCalculation for country code ${skuRecord.countryCode}.`;
+    }
 
     // Convert currency if necessary
     const currencyCode = convertMarketplaceIdentifier(
@@ -156,11 +184,14 @@ async function fetchDataForSellingPriceCalculation(
       '',
       2,
     )}`;
-    if (createLog) logger(logMessage, logContext);
     return parsedData;
   } catch (error) {
     console.error(`Error in fetchDataForSellingPriceCalculation: ${error}`);
     throw error; // Rethrow to handle it in the caller or log it
+  } finally {
+    if (createLog) {
+      logger(logMessage, logContext);
+    }
   }
 }
 

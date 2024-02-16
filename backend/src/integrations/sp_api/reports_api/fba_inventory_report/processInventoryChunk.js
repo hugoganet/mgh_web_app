@@ -12,6 +12,9 @@ const {
   automaticallyCreateAsinRecord,
 } = require('../../../../api/services/automaticallyCreateAsinRecord.js');
 const eventBus = require('../../../../utils/eventBus');
+const {
+  automaticallyCreateMinSellingPriceRecord,
+} = require('../../../../api/services/automaticallyCreateMinSellingPriceRecord.js');
 
 /**
  * @async
@@ -102,28 +105,12 @@ async function processInventoryChunk(
           skuRestockAlertQuantity: 1,
           skuIsTest: false,
         });
-
         if (skuRecord.skuId) {
           eventBus.emit('recordCreated', {
             type: 'sku',
             action: 'sku_created',
             id: skuRecord.skuId,
           });
-          // TODO : Create MinimumSellingPrice record
-          const minimumSellingPriceRecord = await db.MinimumSellingPrice.create(
-            {
-              skuId: skuRecord.skuId,
-              pricingRuleId: 1,
-              enrolledInPanEu: false,
-              eligibleForPanEu: false,
-              referralFeeCategoryId: 1,
-              minimumMarginWanted: 0.1,
-              minimumSellingPriceLocalAndPanEu: 0,
-              minimumSellingPriceEfn: 0,
-              maximumSellingPriceLocalAndPanEu: 0,
-              maximumSellingPriceEfn: 0,
-            },
-          );
         }
         logMessage += `Created new SKU record with id: ${skuRecord.skuId} for SKU: ${sku} on ${countryCode}\n`;
       } catch (err) {
@@ -136,15 +123,17 @@ async function processInventoryChunk(
           countryCode,
         },
       });
+
       // TODO : Find out why the associatedAsin is not found
-      if (associatedAsin.asinId) {
+      if (associatedAsin) {
         eventBus.emit('recordCreated', {
           type: 'asin',
           action: 'asin_found',
           id: associatedAsin.asinId,
         });
-        logMessage += `Associated ASIN found for ${asin} in ${countryCode}, creating AsinSku record\n`;
+        logMessage += `Associated ASIN found in processInventoryChunk for ${asin} in ${countryCode}, creating AsinSku record\n`;
       } else if (!associatedAsin) {
+        logMessage += `No associated ASIN found in processInventoryChunk for ASIN: ${asin} in ${countryCode}\n`;
         associatedAsin = await automaticallyCreateAsinRecord(
           asin,
           (marketplaceId = null),
@@ -152,7 +141,23 @@ async function processInventoryChunk(
           createLog,
           logContext,
         );
-        // logMessage += `No associated ASIN found for ASIN: ${asin} in ${countryCode}, created one with id: ${associatedAsin.asinId} \n`;
+        if (associatedAsin) {
+          logMessage += `Created new ASIN record for ASIN: ${asin} in ${countryCode}\n`;
+        } else {
+          logMessage += `Error creating ASIN record for ASIN: ${asin} in ${countryCode}\n`;
+        }
+      }
+      // Create MinimumSellingPrice record
+      const newMinSellingPriceRecord =
+        await automaticallyCreateMinSellingPriceRecord(
+          skuRecord.skuId,
+          true,
+          logContext,
+        );
+      if (newMinSellingPriceRecord) {
+        logMessage += `Created new MinimumSellingPrice record for SKU ID: ${skuRecord.skuId}.\n`;
+      } else {
+        logMessage += `Error creating MinimumSellingPrice record for SKU ID: ${skuRecord.skuId}.\n`;
       }
       // Create AsinSku record
       try {

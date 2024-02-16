@@ -38,8 +38,8 @@ async function automaticallyCreateMinSellingPriceRecord(
       pricingRuleId: 1,
       enrolledInPanEu: false,
       eligibleForPanEu: false,
-      referralFeeCategoryId: data.referralFeeCategoryId,
-      minimumMarginAmount: data.minimumMarginAmount,
+      // referralFeeCategoryId: data.referralFeeCategoryId, // I got rid of those 2 fields beause I don't need to store them.
+      // minimumMarginAmount: data.minimumMarginAmount,
       minimumSellingPriceLocalAndPanEu,
       minimumSellingPriceEfn,
       maximumSellingPriceLocalAndPanEu,
@@ -79,4 +79,4 @@ async function automaticallyCreateMinSellingPriceRecord(
 module.exports = { automaticallyCreateMinSellingPriceRecord };
 
 // automaticallyCreateMinSellingPriceRecord(2, true); // Book Low-price
-automaticallyCreateMinSellingPriceRecord(3635, true); // Low-price, reduced referral fee
+// automaticallyCreateMinSellingPriceRecord(3635, true); // Low-price, reduced referral fee
