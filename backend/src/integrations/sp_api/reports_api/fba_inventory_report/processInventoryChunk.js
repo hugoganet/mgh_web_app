@@ -27,6 +27,9 @@ const {
 const {
   findOrCreateMinSellingPriceRecord,
 } = require('../../../../api/services/findOrCreateMinSellingPriceRecord.js');
+const {
+  findOrCreateAfnInventoryDailyUpdateRecord,
+} = require('../../../../api/services/findOrCreateAfnInventoryDailyUpdateRecord.js');
 
 /**
  * @async
@@ -70,6 +73,7 @@ async function processInventoryChunk(
       (createLog = true),
       logContext,
     );
+    const skuId = skuRecord.skuId;
 
     // Handle ASIN record
     const associatedAsinRecord = await findOrCreateAsinRecord(
@@ -80,59 +84,46 @@ async function processInventoryChunk(
     );
 
     // Handle AsinSku record
-    const asinSkuRecord = await findOrCreateAsinSkuRecord(
+    await findOrCreateAsinSkuRecord(
       associatedAsinRecord.asinId,
-      skuRecord.skuId,
+      skuId,
       countryCode,
       (createLog = true),
       logContext,
     );
 
     // Handle MinimumSellingPrice record
-    const minimumSellingPriceRecord = await findOrCreateMinSellingPriceRecord(
-      skuRecord.skuId,
+    await findOrCreateMinSellingPriceRecord(
+      skuId,
       (createLog = true),
       logContext,
     );
 
-    // Attempt to find or create a corresponding AfnInventoryDailyUpdate record in the database
-    const [afnInventoryRecord, createdAfnInventoryRecord] =
-      await db.AfnInventoryDailyUpdate.findOrCreate({
-        where: { skuId: skuId },
-        defaults: {
-          skuId,
-          sku,
-          countryCode,
-          currencyCode,
-          actualPrice: skuAverageSellingPrice,
-          afnFulfillableQuantity: skuAfnTotalQuantity,
-          reportDocumentId,
-        },
-      });
-
-    // If the record already existed, update the actualPrice and afnFulfillableQuantity fields
-    if (!createdAfnInventoryRecord) {
-      afnInventoryRecord.actualPrice = skuAverageSellingPrice;
-      afnInventoryRecord.afnFulfillableQuantity = skuAfnTotalQuantity;
-      afnInventoryRecord.reportDocumentId = reportDocumentId;
-      await afnInventoryRecord.save();
-      logMessage += `Updated existing AfnInventoryDailyUpdate record for skuId: ${skuId}.\n`;
-    } else {
-      logMessage += `Created new AfnInventoryDailyUpdate record for skuId: ${skuId}.\n`;
-    }
+    // Handle AfnInventoryDailyUpdate record
+    await findOrCreateAfnInventoryDailyUpdateRecord(
+      skuId,
+      sku,
+      countryCode,
+      currencyCode,
+      skuAverageSellingPrice,
+      skuAfnTotalQuantity,
+      reportDocumentId,
+      (createLog = true),
+      logContext,
+    );
 
     // Perform various database operations on the SKU record
     await checkSkuIsActive(skuId, createLog, logContext);
-    logMessage += `Checked SKU activity for SKU ID: ${skuRecord.skuId}.\n`;
+    logMessage += `Checked SKU activity for SKU ID: ${skuId}.\n`;
 
     await updateAfnQuantity(skuId, createLog, logContext);
-    logMessage += `Updated AFN quantity for SKU ID: ${skuRecord.skuId}.\n`;
+    logMessage += `Updated AFN quantity for SKU ID: ${skuId}.\n`;
 
     await addFnskuToSku(skuId, fnsku, createLog, logContext);
-    logMessage += `Added fnsku to SKU ID: ${skuRecord.skuId}.\n`;
+    logMessage += `Added fnsku to SKU ID: ${skuId}.\n`;
   } catch (error) {
     console.error('Error processing inventory chunk:', error);
-    logMessage += `Error processing inventory chunk: ${error}\n`;
+    logMessage += `Error in processInventoryChunk: ${error}\n`;
   } finally {
     if (createLog) {
       logger(logMessage, logContext);
