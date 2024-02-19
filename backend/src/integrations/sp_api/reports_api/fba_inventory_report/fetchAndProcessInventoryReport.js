@@ -121,7 +121,7 @@ async function fetchAndProcessInventoryReport(
           Created ${counts.sellingPriceHistory.sellingPriceHistory_created} new sellingPriceHistory records and found ${counts.sellingPriceHistory.sellingPriceHistory_found}.\n`;
 
           if (createLog) {
-            logger(logMessage, logContext);
+            logger(logMessage, logContext, 1.2);
           }
           // Seed SellingPriceHistory table with recent data
           await seedSellingPriceHistory(createLog, logContext);

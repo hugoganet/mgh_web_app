@@ -9,7 +9,7 @@ const {
   downloadAndDecompressDocument,
 } = require('../downloadAndDecompressDocument');
 const { createReport } = require('../operations/createReport.js');
-const { logger } = require('../../../../utils/logger');
+const { logger, flushLogBuffer } = require('../../../../utils/logger');
 
 /**
  * Requests an FBA Inventory report from the Amazon Selling Partner API.
@@ -92,8 +92,9 @@ async function requestFbaInventoryReport(
     logMessage += `Overral error in requesting FBA Inventory report: ${error}\n`;
   } finally {
     if (createLog) {
-      logger(logMessage, logContext);
+      logger(logMessage, logContext, 100);
     }
+    flushLogBuffer();
   }
 }
 

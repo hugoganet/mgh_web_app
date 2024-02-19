@@ -113,8 +113,8 @@ async function processInventoryChunk(
     await addFnskuToSku(skuId, fnsku, createLog, logContext);
     logMessage += `Added fnsku to SKU ID: ${skuId}.\n`;
   } catch (error) {
-    console.error('Error processInventoryChunk:', error);
     logMessage += `Error in processInventoryChunk: ${error}\n`;
+    throw new Error(`Error in processInventoryChunk: ${error}\n`);
   } finally {
     if (createLog) {
       logger(logMessage, logContext);

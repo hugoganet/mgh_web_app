@@ -45,6 +45,10 @@ async function getReportDocument(
     }
     console.error(`Error in getReportDocument`);
     throw error;
+  } finally {
+    if (createLog) {
+      logger(`documentUrl fectched !\n`, logContext, 1.1);
+    }
   }
 }
 
