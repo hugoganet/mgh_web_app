@@ -45,12 +45,9 @@ async function getSubscription(
 
 module.exports = { getSubscription };
 
-// Example usage
-const notificationType = 'ANY_OFFER_CHANGED';
-const payloadVersion = null;
 getSubscription(
-  notificationType,
-  payloadVersion,
+  'REPORT_PROCESSING_FINISHED',
+  null,
   true,
   'getSubscription',
   true,

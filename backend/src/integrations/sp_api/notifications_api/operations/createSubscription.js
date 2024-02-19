@@ -59,10 +59,9 @@ async function createSubscription(
 
 module.exports = { createSubscription };
 
-// Example usage
 const config = {
   notificationType: 'REPORT_PROCESSING_FINISHED',
-  payloadVersion: '1.0',
-  destinationId: 'f7b4283f-ec83-462a-a999-925dbe6d32c3',
+  payloadVersion: null,
+  destinationId: '490f7538-13f7-4958-9b53-1ee89f0fc0cf',
 };
 createSubscription(config, true, 'createSubscription', true);
