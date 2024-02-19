@@ -2,9 +2,9 @@ const { spApiInstance } = require('../../connection/spApiConnector');
 
 /**
  * @function getReportSchedules
- * @description Create reports based on the specified config.
+ * @description This function gets the scheduled reports for the seller.
  * @async
- * @param {string} reportType - The type of report being scheduled.
+ * @param {string} reportType - The type of report to get schedules for.
  * @param {boolean} createLog - Indicates if the operation should be logged.
  * @param {string} logContext - The context for the log.
  * @param {boolean} flushBuffer - Whether to flush the log buffer.
@@ -17,7 +17,7 @@ async function getReportSchedules(
   flushBuffer = false,
 ) {
   const queryParams = {
-    reportTypes: [reportType], // Ensure this is an array of string(s)
+    reportTypes: [reportType],
   };
   const apiOperation = 'getReportSchedules';
   const endpoint = '/reports/2021-06-30/schedules';
@@ -50,8 +50,9 @@ async function getReportSchedules(
 
 module.exports = { getReportSchedules };
 
-// config = {
-//   reportType: ['GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA'],
-//   createLog: true,
-// };
-// getReportSchedules(config);
+getReportSchedules(
+  ['GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA'],
+  true,
+  'getReportSchedules',
+  true,
+);
