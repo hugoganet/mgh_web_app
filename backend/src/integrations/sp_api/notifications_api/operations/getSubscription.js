@@ -6,6 +6,7 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @param {string} [payloadVersion] - The version of the payload for the notification (optional).
  * @param {boolean} createLog - Indicates if the operation should be logged.
  * @param {string} logContext - The context for the log.
+ * @param {boolean} flushBuffer - Whether to flush the log buffer.
  * @return {Promise<Object>} - Response from the API call.
  */
 async function getSubscription(
@@ -13,6 +14,7 @@ async function getSubscription(
   payloadVersion = null,
   createLog = false,
   logContext = 'getSubscription',
+  flushBuffer = false,
 ) {
   const apiOperation = 'getSubscription';
   const endpoint = `/notifications/v1/subscriptions/${notificationType}`;
@@ -27,6 +29,7 @@ async function getSubscription(
       (body = {}),
       logContext,
       createLog,
+      flushBuffer,
       apiOperation,
       (isGrantless = false),
       (rateLimitConfig = { rate: 1, burst: 5 }),
@@ -45,4 +48,10 @@ module.exports = { getSubscription };
 // Example usage
 const notificationType = 'REPORT_PROCESSING_FINISHED';
 const payloadVersion = null;
-getSubscription(notificationType, payloadVersion, true);
+getSubscription(
+  notificationType,
+  payloadVersion,
+  true,
+  'getSubscription',
+  true,
+);

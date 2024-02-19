@@ -6,6 +6,7 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @param {string} subscriptionId - The identifier for the subscription to delete.
  * @param {boolean} createLog - Indicates if the operation should be logged.
  * @param {string} logContext - The context for the log.
+ * @param {boolean} flushBuffer - Whether to flush the log buffer.
  * @return {Promise<Object>} - Response from the API call.
  */
 async function deleteSubscriptionById(
@@ -13,6 +14,7 @@ async function deleteSubscriptionById(
   subscriptionId,
   createLog = false,
   logContext = 'deleteSubscriptionById',
+  flushBuffer = false,
 ) {
   const apiOperation = 'deleteSubscriptionById';
   const endpoint = `/notifications/v1/subscriptions/${notificationType}/${subscriptionId}`;
@@ -26,6 +28,7 @@ async function deleteSubscriptionById(
       (body = {}),
       logContext,
       createLog,
+      flushBuffer,
       apiOperation,
       (isGrantless = true),
       (rateLimitConfig = { rate: 1, burst: 5 }),
@@ -43,5 +46,11 @@ module.exports = { deleteSubscriptionById };
 
 // Example usage
 const notificationType = 'REPORT_PROCESSING_FINISHED';
-const subscriptionId = '7fb53ffd-6d7c-40bb-87bb-82d32f4c714a';
-deleteSubscriptionById(notificationType, subscriptionId, true);
+const subscriptionId = '633f70aa-495c-463a-b21b-60d85a676719';
+deleteSubscriptionById(
+  notificationType,
+  subscriptionId,
+  true,
+  'deleteSubscriptionById',
+  true,
+);

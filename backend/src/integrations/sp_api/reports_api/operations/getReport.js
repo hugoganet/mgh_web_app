@@ -7,6 +7,7 @@ const { logger } = require('../../../../utils/logger');
  * @param {string} reportId - The unique identifier of the report for which the document ID is being fetched.
  * @param {boolean} createLog - Whether to create a log file for the request.
  * @param {string} logContext - The context for the log file.
+ * @param {boolean} flushBuffer - Whether to flush the log buffer.
  * @return {Promise<void>} A promise that resolves when the report document ID is successfully retrieved.
  * @throws {Error} Throws an error if there is an issue fetching the report document ID.
  * @description This function continuously polls the Amazon SP API at 60-second intervals to check if the report
@@ -14,7 +15,12 @@ const { logger } = require('../../../../utils/logger');
  *              is available, the function breaks out of the loop and logs the report document ID. This function
  *              should be used in sequence after requesting a report and obtaining a report ID.
  */
-async function getReport(reportId, createLog, logContext) {
+async function getReport(
+  reportId,
+  createLog = false,
+  logContext = 'getReport',
+  flushBuffer = false,
+) {
   const apiOperation = 'getReport';
   const endpoint = `/reports/2021-06-30/reports/${reportId}`;
   const method = 'GET';
@@ -29,6 +35,7 @@ async function getReport(reportId, createLog, logContext) {
         (body = {}),
         logContext,
         createLog,
+        flushBuffer,
         apiOperation,
         (isGrantless = false),
         (rateLimitConfig = { rate: 2, burst: 15 }),
@@ -44,7 +51,7 @@ async function getReport(reportId, createLog, logContext) {
       }
     } catch (error) {
       if (createLog) {
-        logger(`Error in getReport: ${error}\n`, logContext);
+        logger(`Error in getReport: ${error}\n`, logContext, '', flushBuffer);
       }
       console.error(`Error in getReport`);
       throw error;

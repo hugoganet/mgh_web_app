@@ -14,12 +14,14 @@ const calculateNextReportCreationTime = require('../../schedule_reports/calculat
  * @param {string} config.nextReportCreationTime - (Optional) The date and time for the next report creation.
  * @param {boolean} createLog - Indicates if the operation should be logged.
  * @param {string} logContext - The context for the log.
+ * @param {boolean} flushBuffer - Whether to flush the log buffer.
  * @return {Promise<string>} - A promise that resolves to the report schedule ID.
  */
 async function createReportSchedule(
   config,
   createLog = false,
   logContext = 'createReportSchedule',
+  flushBuffer = false,
 ) {
   const { marketplaceIds, reportType, period, nextReportCreationTime } = config;
 
@@ -40,6 +42,7 @@ async function createReportSchedule(
       },
       logContext,
       createLog,
+      flushBuffer,
       apiOperation,
       (isGrantless = false),
       (rateLimitConfig = { rate: 0.0222, burst: 10 }),

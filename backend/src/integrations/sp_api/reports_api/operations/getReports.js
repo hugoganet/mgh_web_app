@@ -7,6 +7,7 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @param {Array} accumulatedReports - Accumulator for reports across multiple pages.
  * @param {boolean} createLog - Indicates if the operation should be logged.
  * @param {string} logContext - The context for the log.
+ * @param {boolean} flushBuffer - Whether to flush the log buffer.
  * @return {Promise<Object>} - Response containing all report details across pages.
  */
 async function getReports(
@@ -14,6 +15,7 @@ async function getReports(
   accumulatedReports = [],
   createLog = false,
   logContext = 'getReports',
+  flushBuffer = false,
 ) {
   const {
     reportTypes,
@@ -47,6 +49,7 @@ async function getReports(
       (body = {}),
       logContext,
       createLog,
+      flushBuffer,
       apiOperation,
       (isGrantless = false),
       (rateLimitConfig = { rate: 0.0222, burst: 10 }),
@@ -68,7 +71,7 @@ async function getReports(
   } catch (error) {
     console.error(`Error in getReports: ${error}`);
     if (createLog) {
-      logger(`Error in getReports: ${error}`, apiOperation);
+      logger(`Error in getReports: ${error}`, apiOperation, '', flushBuffer);
     }
     throw error;
   }

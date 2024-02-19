@@ -8,6 +8,7 @@ const { logger } = require('../../../../utils/logger');
  * @param {string} marketplaceId - The marketplace identifier.
  * @param {boolean} createLog - Whether to create a log of the process.
  * @param {string} logContext - The context for the log message.
+ * @param {boolean} flushBuffer - Whether to flush the log buffer.
  * @return {Promise<Object>} - The catalog item details.
  */
 async function getCatalogItem(
@@ -15,6 +16,7 @@ async function getCatalogItem(
   marketplaceId,
   createLog = false,
   logContext = 'getCatalogItem',
+  flushBuffer = false,
 ) {
   const includedData = [
     'attributes',
@@ -38,6 +40,7 @@ async function getCatalogItem(
       (body = {}),
       logContext,
       createLog,
+      flushBuffer,
       apiOperation,
       (isGrantless = false),
       (rateLimitConfig = { rate: 2, burst: 2 }),

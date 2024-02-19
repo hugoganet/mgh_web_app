@@ -4,7 +4,7 @@ const { getReportDocument } = require('../operations/getReportDocument.js');
 const marketplaces = require('../../../../config/marketplaces');
 const {
   downloadAndDecompressDocument,
-} = require('../downloadAndDecompressDocument');
+} = require('../../../../utils/downloadAndDecompressDocument.js');
 const { createReport } = require('../operations/createReport.js');
 const { logger } = require('../../../../utils/logger');
 

@@ -285,6 +285,7 @@ class SpApiConnector {
    * @param {Object} body - The request body.
    * @param {string} logContext - The context for logging.
    * @param {boolean} createLog - Whether to log the request and response.
+   * @param {boolean} flushBuffer - Whether to flush the log buffer.
    * @param {string} apiOperation - The API operation being performed.
    * @param {boolean} isGrantless - Indicates grantless operation.
    * @param {Object} rateLimitConfig - Configuration for rate limiting { rate: Number, burst: Number }.
@@ -297,12 +298,11 @@ class SpApiConnector {
     body = {},
     logContext,
     createLog,
+    flushBuffer,
     apiOperation,
     isGrantless = false,
     rateLimitConfig = { rate: 1, burst: 5 },
   ) {
-    let logMessage = `Sending request to ${apiOperation} API operation with rate limit: ${rateLimitConfig.rate} requests per second and burst of ${rateLimitConfig.burst} requests.\n`;
-
     // Retrieve an existing limiter or create a new one with dynamic settings based on rateLimitConfig
     const limiter = this.limiterGroup.key(apiOperation, () => ({
       reservoir: rateLimitConfig.burst,
@@ -321,21 +321,20 @@ class SpApiConnector {
           body,
           logContext,
           createLog,
+          flushBuffer,
           apiOperation,
           isGrantless,
           0, // Initial retry count
         ),
       )
       .then(response => {
-        // Successful request handling
-        logMessage += 'Request successfully schedule.\n';
-        return response; // Return the successful response
+        return response;
       })
       .catch(error => {
         // Error handling
-        logMessage += `Error scheduling the request: ${error}\n`;
+        const logMessage = `Error scheduling the request: ${error}\n`;
         if (createLog) {
-          logger(logMessage, logContext);
+          logger(logMessage, logContext, '', flushBuffer);
         }
         throw error; // Re-throw the error to be handled by the caller
       });
@@ -350,6 +349,7 @@ class SpApiConnector {
    * @param {Object} [body={}] - Request body for POST/PUT methods.
    * @param {string} logContext - Identifier for the log context.
    * @param {boolean} createLog - Flag to indicate if the request and response should be logged.
+   * @param {boolean} flushBuffer - Flag to indicate if the log buffer should be flushed.
    * @param {string} apiOperation - Identifier for the API operation.
    * @param {boolean} [isGrantless=false] - Flag for grantless operations.
    * @param {number} [retryCount=0] - Current retry attempt count.
@@ -362,8 +362,9 @@ class SpApiConnector {
     body,
     logContext,
     createLog,
+    flushBuffer,
     apiOperation,
-    isGrantless,
+    isGrantless = false,
     retryCount,
   ) {
     let logMessage = `Sending request to ${apiOperation} API operation with retry attempt ${retryCount}.\n`;
@@ -473,7 +474,7 @@ class SpApiConnector {
       }
     } finally {
       if (createLog) {
-        logger(logMessage, logContext);
+        logger(logMessage, logContext, '', flushBuffer);
       }
     }
   }

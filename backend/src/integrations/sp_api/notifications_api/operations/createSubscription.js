@@ -10,9 +10,15 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @param {Object} [config.processingDirective] - Additional information for processing notifications.
  * @param {boolean} createLog - Indicates if the operation should be logged.
  * @param {string} logContext - The context for the log.
+ * @param {boolean} flushBuffer - Whether to flush the log buffer.
  * @return {Promise<Object>} - Response from the API call.
  */
-async function createSubscription(config, createLog = false, logContext = 'createSubscription') {
+async function createSubscription(
+  config,
+  createLog = false,
+  logContext = 'createSubscription',
+  flushBuffer = false,
+) {
   const {
     notificationType,
     payloadVersion,
@@ -37,8 +43,9 @@ async function createSubscription(config, createLog = false, logContext = 'creat
       body,
       logContext,
       createLog,
+      flushBuffer,
       apiOperation,
-      (isGrantless = true),
+      (isGrantless = false),
       (rateLimitConfig = { rate: 1, burst: 5 }),
     );
 
@@ -58,4 +65,4 @@ const config = {
   payloadVersion: '1.0',
   destinationId: 'f7b4283f-ec83-462a-a999-925dbe6d32c3',
 };
-createSubscription(config, true);
+createSubscription(config, true, 'createSubscription', true);

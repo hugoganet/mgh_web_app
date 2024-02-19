@@ -5,9 +5,17 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @description Fetches fees estimate for a given ASIN.
  * @async
  * @param {Object} params - Parameters for the fee estimates request.
+ * @param {boolean} createLog - Indicates if the operation should be logged.
+ * @param {string} logContext - The context for the log.
+ * @param {boolean} flushBuffer - Whether to flush the log buffer.
  * @return {Promise<Object>} - Fees estimate for the specified ASIN.
  */
-async function getMyFeesEstimateForAsin(params) {
+async function getMyFeesEstimateForAsin(
+  params,
+  createLog = false,
+  logContext = 'getMyFeesEstimateForAsin',
+  flushBuffer = false,
+) {
   const {
     marketplaceId,
     asin,
@@ -15,8 +23,6 @@ async function getMyFeesEstimateForAsin(params) {
     isAmazonFulfilled,
     currencyCode,
     OptionalFulfillmentProgram,
-    createLog,
-    logContext = 'getMyFeesEstimateForAsin',
   } = params;
 
   const apiOperation = 'getMyFeesEstimateForASIN';
@@ -46,6 +52,7 @@ async function getMyFeesEstimateForAsin(params) {
       body,
       logContext,
       createLog,
+      flushBuffer,
       apiOperation,
       (isGrantless = false),
       (rateLimitConfig = { rate: 1, burst: 2 }),

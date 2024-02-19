@@ -4,7 +4,7 @@ const path = require('path');
 const zlib = require('zlib');
 const { pipeline } = require('stream/promises');
 const { PassThrough } = require('stream');
-const { logger } = require('../../../utils/logger');
+const { logger } = require('./logger');
 
 /**
  * Downloads and decompresses a document from a given URL.

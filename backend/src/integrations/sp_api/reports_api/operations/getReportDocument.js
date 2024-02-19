@@ -9,12 +9,14 @@ const { logger } = require('../../../../utils/logger');
  * @param {string} reportDocumentId - The report document ID.
  * @param {boolean} createLog - Whether to create a log file for the request.
  * @param {string} logContext - The context for the log file.
+ * @param {boolean} flushBuffer - Whether to flush the log buffer.
  * @return {Promise<string>} - A promise that resolves to the URL of the report document.
  */
 async function getReportDocument(
   reportDocumentId,
   createLog = false,
   logContext = 'getReportDocument',
+  flushBuffer = false,
 ) {
   const apiOperation = 'getReportDocument';
   const endpoint = `/reports/2021-06-30/documents/${reportDocumentId}`;
@@ -28,6 +30,7 @@ async function getReportDocument(
       (body = {}),
       logContext,
       createLog,
+      flushBuffer,
       apiOperation,
       (isGrantless = false),
       (rateLimitConfig = { rate: 0.0167, burst: 15 }),
@@ -41,13 +44,18 @@ async function getReportDocument(
     return { documentUrl, compressionAlgorithm, reportDocumentId };
   } catch (error) {
     if (createLog) {
-      logger(`Error in getReportDocument: ${error}\n`, logContext);
+      logger(
+        `Error in getReportDocument: ${error}\n`,
+        logContext,
+        '',
+        flushBuffer,
+      );
     }
     console.error(`Error in getReportDocument`);
     throw error;
   } finally {
     if (createLog) {
-      logger(`documentUrl fectched !\n`, logContext, 1.1);
+      logger(`documentUrl fectched !\n`, logContext, '', flushBuffer);
     }
   }
 }

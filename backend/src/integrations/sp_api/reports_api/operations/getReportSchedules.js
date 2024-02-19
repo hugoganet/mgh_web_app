@@ -7,12 +7,14 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @param {string} reportType - The type of report being scheduled.
  * @param {boolean} createLog - Indicates if the operation should be logged.
  * @param {string} logContext - The context for the log.
+ * @param {boolean} flushBuffer - Whether to flush the log buffer.
  * @return {Promise<Object>} - reportId
  */
 async function getReportSchedules(
   reportType,
   createLog = false,
   logContext = 'getReportSchedules',
+  flushBuffer = false,
 ) {
   const queryParams = {
     reportTypes: [reportType], // Ensure this is an array of string(s)
@@ -29,6 +31,7 @@ async function getReportSchedules(
       (body = {}),
       logContext,
       createLog,
+      flushBuffer,
       apiOperation,
       (isGrantless = false),
       (rateLimitConfig = { rate: 0.0222, burst: 10 }),

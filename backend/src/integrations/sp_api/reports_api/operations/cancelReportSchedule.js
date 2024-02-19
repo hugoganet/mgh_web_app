@@ -7,12 +7,14 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @param {string} reportScheduleId - The identifier for the report schedule.
  * @param {boolean} createLog - Indicates if the operation should be logged.
  * @param {string} logContext - The context for the log.
+ * @param {boolean} flushBuffer - Whether to flush the log buffer.
  * @return {Promise<Object>} - ReportSchedule - Detailed information about a report schedule.
  */
 async function cancelReportSchedule(
   reportScheduleId,
   createLog = false,
   logContext = 'cancelReportSchedule',
+  flushBuffer = false,
 ) {
   const apiOperation = 'cancelReportSchedule';
   const endpoint = `/reports/2021-06-30/schedules/${reportScheduleId}`;
@@ -26,6 +28,7 @@ async function cancelReportSchedule(
       (body = {}),
       logContext,
       createLog,
+      flushBuffer,
       apiOperation,
       (isGrantless = false),
       (rateLimitConfig = { rate: 0.0222, burst: 10 }),

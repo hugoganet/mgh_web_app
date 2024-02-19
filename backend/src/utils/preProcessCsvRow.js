@@ -1,4 +1,4 @@
-const { logger } = require('../../utils/logger');
+const { logger } = require('./logger');
 
 /**
  * Preprocesses a single row from the CSV file.

@@ -10,8 +10,14 @@ let logBuffer = [];
  * @param {string} message - The message to log.
  * @param {string} logContext - The context of the log, used for file naming.
  * @param {string} [callStackIdentifier=''] - An optional string representing the call stack order for sorting purposes.
+ * @param {boolean} flushBuffer - Indicates if the log buffer should be flushed after adding the log message.
  */
-function bufferedLogger(message, logContext, callStackIdentifier = '') {
+function bufferedLogger(
+  message,
+  logContext,
+  callStackIdentifier = '',
+  flushBuffer = false,
+) {
   const now = new Date();
   // Push a new log entry with its context and identifier into the buffer
   logBuffer.push({
@@ -21,11 +27,7 @@ function bufferedLogger(message, logContext, callStackIdentifier = '') {
     logContext,
   });
 
-  // Example condition to flush the buffer; can be adapted as needed
-
-  // TODO Consider flushing periodically or based on application events
-  // ! I have to flush this when the logContext is over
-  if (logBuffer.length > 1000) {
+  if (flushBuffer) {
     flushLogBuffer();
   }
 }
