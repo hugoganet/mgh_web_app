@@ -5,9 +5,16 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @async
  * @param {Object} config - Configuration for fetching reports.
  * @param {Array} accumulatedReports - Accumulator for reports across multiple pages.
+ * @param {boolean} createLog - Indicates if the operation should be logged.
+ * @param {string} logContext - The context for the log.
  * @return {Promise<Object>} - Response containing all report details across pages.
  */
-async function getReports(config, accumulatedReports = []) {
+async function getReports(
+  config,
+  accumulatedReports = [],
+  createLog = false,
+  logContext = 'getReports',
+) {
   const {
     reportTypes,
     processingStatuses,
@@ -16,7 +23,6 @@ async function getReports(config, accumulatedReports = []) {
     createdSince,
     createdUntil,
     nextToken,
-    createLog,
   } = config;
 
   const queryParams = {
@@ -38,10 +44,11 @@ async function getReports(config, accumulatedReports = []) {
       method,
       endpoint,
       queryParams,
-      {},
+      (body = {}),
+      logContext,
       createLog,
       apiOperation,
-      false,
+      (isGrantless = false),
       (rateLimitConfig = { rate: 0.0222, burst: 10 }),
     );
 
@@ -69,12 +76,12 @@ async function getReports(config, accumulatedReports = []) {
 
 module.exports = { getReports };
 
-// Example usage
-const config = {
-  reportTypes: ['GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA'],
-  createLog: true,
-  pageSize: 100,
-  createdSince: '2024-01-15T00:00:00+00:00',
-  processingStatuses: 'DONE',
-};
-getReports(config);
+// // Example usage
+// const config = {
+//   reportTypes: ['GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA'],
+//   createLog: true,
+//   pageSize: 100,
+//   createdSince: '2024-01-15T00:00:00+00:00',
+//   processingStatuses: 'DONE',
+// };
+// getReports(config);

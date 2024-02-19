@@ -8,16 +8,16 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @param {string} config.payloadVersion - The version of the payload for the notification.
  * @param {string} config.destinationId - The ID of the destination where notifications will be delivered.
  * @param {Object} [config.processingDirective] - Additional information for processing notifications.
- * @param {boolean} config.createLog - Indicates if the operation should be logged.
+ * @param {boolean} createLog - Indicates if the operation should be logged.
+ * @param {string} logContext - The context for the log.
  * @return {Promise<Object>} - Response from the API call.
  */
-async function createSubscription(config) {
+async function createSubscription(config, createLog = false, logContext = 'createSubscription') {
   const {
     notificationType,
     payloadVersion,
     destinationId,
     processingDirective,
-    createLog,
   } = config;
 
   const apiOperation = 'createSubscription';
@@ -33,8 +33,9 @@ async function createSubscription(config) {
     const response = await spApiInstance.sendRequest(
       method,
       endpoint,
-      {}, // Empty queryParams for POST request
+      (queryParams = {}),
       body,
+      logContext,
       createLog,
       apiOperation,
       (isGrantless = true),
@@ -56,6 +57,5 @@ const config = {
   notificationType: 'REPORT_PROCESSING_FINISHED',
   payloadVersion: '1.0',
   destinationId: 'f7b4283f-ec83-462a-a999-925dbe6d32c3',
-  createLog: true,
 };
-createSubscription(config);
+createSubscription(config, true);

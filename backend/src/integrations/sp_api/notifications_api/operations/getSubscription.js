@@ -5,12 +5,14 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @param {string} notificationType - The type of notification to retrieve information about.
  * @param {string} [payloadVersion] - The version of the payload for the notification (optional).
  * @param {boolean} createLog - Indicates if the operation should be logged.
+ * @param {string} logContext - The context for the log.
  * @return {Promise<Object>} - Response from the API call.
  */
 async function getSubscription(
   notificationType,
   payloadVersion = null,
   createLog = false,
+  logContext = 'getSubscription',
 ) {
   const apiOperation = 'getSubscription';
   const endpoint = `/notifications/v1/subscriptions/${notificationType}`;
@@ -22,7 +24,8 @@ async function getSubscription(
       method,
       endpoint,
       queryParams,
-      {},
+      (body = {}),
+      logContext,
       createLog,
       apiOperation,
       (isGrantless = false),

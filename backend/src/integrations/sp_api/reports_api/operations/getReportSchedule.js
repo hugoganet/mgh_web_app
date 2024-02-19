@@ -4,11 +4,16 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @function getReportSchedule
  * @description Returns report schedule details for the report schedule that you specify.
  * @async
- * @param {Object} config - config to apply when fetching reports.
+ * @param {string} reportScheduleId - The identifier for the report schedule.
+ * @param {boolean} createLog - Indicates if the operation should be logged.
+ * @param {string} logContext - The context for the log.
  * @return {Promise<Object>} - ReportSchedule - Detailed information about a report schedule.
  */
-async function getReportSchedule(config) {
-  const { reportScheduleId, createLog } = config;
+async function getReportSchedule(
+  reportScheduleId,
+  createLog = false,
+  logContext = 'getReportSchedule',
+) {
   const apiOperation = 'getReportSchedule';
   const endpoint = `/reports/2021-06-30/schedules/${reportScheduleId}`;
   const method = 'GET';
@@ -17,8 +22,9 @@ async function getReportSchedule(config) {
     const response = await spApiInstance.sendRequest(
       method,
       endpoint,
-      {},
-      {},
+      (queryParams = {}),
+      (body = {}),
+      logContext,
       createLog,
       apiOperation,
       (isGrantless = false),
@@ -32,9 +38,3 @@ async function getReportSchedule(config) {
 }
 
 module.exports = { getReportSchedule };
-
-config = {
-  reportScheduleId: '50001018108',
-  createLog: true,
-};
-getReportSchedule(config);

@@ -24,8 +24,8 @@ async function getReportDocument(
     const response = await spApiInstance.sendRequest(
       method,
       endpoint,
-      {},
-      {},
+      (queryParams = {}),
+      (body = {}),
       logContext,
       createLog,
       apiOperation,

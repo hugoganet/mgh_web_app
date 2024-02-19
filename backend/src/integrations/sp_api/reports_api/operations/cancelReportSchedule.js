@@ -4,11 +4,16 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @function cancelReportSchedule
  * @description Returns report schedule details for the report schedule that you specify.
  * @async
- * @param {Object} config - config to apply when fetching reports.
+ * @param {string} reportScheduleId - The identifier for the report schedule.
+ * @param {boolean} createLog - Indicates if the operation should be logged.
+ * @param {string} logContext - The context for the log.
  * @return {Promise<Object>} - ReportSchedule - Detailed information about a report schedule.
  */
-async function cancelReportSchedule(config) {
-  const { reportScheduleId, createLog } = config;
+async function cancelReportSchedule(
+  reportScheduleId,
+  createLog = false,
+  logContext = 'cancelReportSchedule',
+) {
   const apiOperation = 'cancelReportSchedule';
   const endpoint = `/reports/2021-06-30/schedules/${reportScheduleId}`;
   const method = 'DELETE';
@@ -17,8 +22,9 @@ async function cancelReportSchedule(config) {
     const response = await spApiInstance.sendRequest(
       method,
       endpoint,
-      {},
-      {},
+      (queryParams = {}),
+      (body = {}),
+      logContext,
       createLog,
       apiOperation,
       (isGrantless = false),
@@ -32,9 +38,3 @@ async function cancelReportSchedule(config) {
 }
 
 module.exports = { cancelReportSchedule };
-
-config = {
-  reportScheduleId: '50062019737',
-  createLog: true,
-};
-cancelReportSchedule(config);

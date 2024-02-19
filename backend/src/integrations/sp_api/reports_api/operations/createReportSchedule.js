@@ -12,9 +12,15 @@ const calculateNextReportCreationTime = require('../../schedule_reports/calculat
  * @param {string} config.reportType - The type of report being scheduled.
  * @param {string} config.period - The frequency of the report generation.
  * @param {string} config.nextReportCreationTime - (Optional) The date and time for the next report creation.
+ * @param {boolean} createLog - Indicates if the operation should be logged.
+ * @param {string} logContext - The context for the log.
  * @return {Promise<string>} - A promise that resolves to the report schedule ID.
  */
-async function createReportSchedule(config) {
+async function createReportSchedule(
+  config,
+  createLog = false,
+  logContext = 'createReportSchedule',
+) {
   const { marketplaceIds, reportType, period, nextReportCreationTime } = config;
 
   const apiOperation = 'createReportSchedule';
@@ -25,13 +31,14 @@ async function createReportSchedule(config) {
     const response = await spApiInstance.sendRequest(
       method,
       endpoint,
-      {}, // No query parameters for this request
+      (queryParams = {}),
       {
         reportType,
         marketplaceIds: marketplaceIds,
         period,
         nextReportCreationTime,
       },
+      logContext,
       createLog,
       apiOperation,
       (isGrantless = false),
@@ -46,22 +53,22 @@ async function createReportSchedule(config) {
 
 module.exports = { createReportSchedule };
 
-// const config = {
-//   marketplaceIds: [
-//     marketplaces.unitedKingdom.marketplaceId,
-//     // marketplaces.france.marketplaceId,
-//     // marketplaces.germany.marketplaceId,
-//     // marketplaces.italy.marketplaceId,
-//     // marketplaces.spain.marketplaceId,
-//     // marketplaces.netherlands.marketplaceId,
-//     // marketplaces.sweden.marketplaceId,
-//     // marketplaces.poland.marketplaceId,
-//     // marketplaces.turkey.marketplaceId,
-//     // marketplaces.belgium.marketplaceId,
-//   ],
-//   reportType: 'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
-//   period: 'P1D', // Daily report generation
-//   nextReportCreationTime: calculateNextReportCreationTime('02:00:00'),
-// };
+const config = {
+  marketplaceIds: [
+    marketplaces.unitedKingdom.marketplaceId,
+    // marketplaces.france.marketplaceId,
+    // marketplaces.germany.marketplaceId,
+    // marketplaces.italy.marketplaceId,
+    // marketplaces.spain.marketplaceId,
+    // marketplaces.netherlands.marketplaceId,
+    // marketplaces.sweden.marketplaceId,
+    // marketplaces.poland.marketplaceId,
+    // marketplaces.turkey.marketplaceId,
+    // marketplaces.belgium.marketplaceId,
+  ],
+  reportType: 'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
+  period: 'P1D', // Daily report generation
+  nextReportCreationTime: calculateNextReportCreationTime('02:00:00'),
+};
 
 // createReportSchedule(config);

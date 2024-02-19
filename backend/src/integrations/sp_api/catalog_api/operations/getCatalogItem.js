@@ -35,7 +35,7 @@ async function getCatalogItem(
       method,
       endpoint,
       queryParams,
-      {},
+      (body = {}),
       logContext,
       createLog,
       apiOperation,

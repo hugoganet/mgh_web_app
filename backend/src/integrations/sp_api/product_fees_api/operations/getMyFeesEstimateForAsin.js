@@ -16,13 +16,14 @@ async function getMyFeesEstimateForAsin(params) {
     currencyCode,
     OptionalFulfillmentProgram,
     createLog,
+    logContext = 'getMyFeesEstimateForAsin',
   } = params;
 
   const apiOperation = 'getMyFeesEstimateForASIN';
   const endpoint = '/products/fees/v0/items/' + asin + '/feesEstimate';
   const method = 'POST';
 
-  const feeEstimateRequest = {
+  const body = {
     FeesEstimateRequest: {
       MarketplaceId: marketplaceId,
       IsAmazonFulfilled: isAmazonFulfilled,
@@ -41,8 +42,9 @@ async function getMyFeesEstimateForAsin(params) {
     const response = await spApiInstance.sendRequest(
       method,
       endpoint,
-      {}, // Path parameters if any, in this case, ASIN is part of the endpoint
-      feeEstimateRequest, // Request body
+      (queryParams = {}), // ASIN is part of the endpoint
+      body,
+      logContext,
       createLog,
       apiOperation,
       (isGrantless = false),
@@ -56,12 +58,12 @@ async function getMyFeesEstimateForAsin(params) {
 
 module.exports = { getMyFeesEstimateForAsin };
 
-getMyFeesEstimateForAsin({
-  marketplaceId: 'A33AVAJ2PDY3EV', // Turkey
-  asin: 'B00008D0TQ',
-  price: 100,
-  isAmazonFulfilled: true,
-  currencyCode: 'TRY',
-  OptionalFulfillmentProgram: 'FBA_CORE', // 'FBA_EFN' / 'FBA_CORE'
-  createLog: true,
-});
+// getMyFeesEstimateForAsin({
+//   marketplaceId: 'A33AVAJ2PDY3EV', // Turkey
+//   asin: 'B00008D0TQ',
+//   price: 100,
+//   isAmazonFulfilled: true,
+//   currencyCode: 'TRY',
+//   OptionalFulfillmentProgram: 'FBA_CORE', // 'FBA_EFN' / 'FBA_CORE'
+//   createLog: true,
+// });

@@ -4,11 +4,16 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @function getReportSchedules
  * @description Create reports based on the specified config.
  * @async
- * @param {Object} config - config to apply when fetching reports.
+ * @param {string} reportType - The type of report being scheduled.
+ * @param {boolean} createLog - Indicates if the operation should be logged.
+ * @param {string} logContext - The context for the log.
  * @return {Promise<Object>} - reportId
  */
-async function getReportSchedules(config) {
-  const { reportType, createLog } = config;
+async function getReportSchedules(
+  reportType,
+  createLog = false,
+  logContext = 'getReportSchedules',
+) {
   const queryParams = {
     reportTypes: [reportType], // Ensure this is an array of string(s)
   };
@@ -21,7 +26,8 @@ async function getReportSchedules(config) {
       method,
       endpoint,
       queryParams,
-      {},
+      (body = {}),
+      logContext,
       createLog,
       apiOperation,
       (isGrantless = false),
@@ -41,8 +47,8 @@ async function getReportSchedules(config) {
 
 module.exports = { getReportSchedules };
 
-config = {
-  reportType: ['GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA'],
-  createLog: true,
-};
-getReportSchedules(config);
+// config = {
+//   reportType: ['GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA'],
+//   createLog: true,
+// };
+// getReportSchedules(config);

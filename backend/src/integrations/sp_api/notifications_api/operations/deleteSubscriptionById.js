@@ -5,12 +5,14 @@ const { spApiInstance } = require('../../connection/spApiConnector');
  * @param {string} notificationType - The type of notification.
  * @param {string} subscriptionId - The identifier for the subscription to delete.
  * @param {boolean} createLog - Indicates if the operation should be logged.
+ * @param {string} logContext - The context for the log.
  * @return {Promise<Object>} - Response from the API call.
  */
 async function deleteSubscriptionById(
   notificationType,
   subscriptionId,
   createLog = false,
+  logContext = 'deleteSubscriptionById',
 ) {
   const apiOperation = 'deleteSubscriptionById';
   const endpoint = `/notifications/v1/subscriptions/${notificationType}/${subscriptionId}`;
@@ -20,8 +22,9 @@ async function deleteSubscriptionById(
     const response = await spApiInstance.sendRequest(
       method,
       endpoint,
-      {},
-      {},
+      (queryParams = {}),
+      (body = {}),
+      logContext,
       createLog,
       apiOperation,
       (isGrantless = true),

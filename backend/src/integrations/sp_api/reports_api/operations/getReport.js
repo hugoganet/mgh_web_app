@@ -25,8 +25,8 @@ async function getReport(reportId, createLog, logContext) {
       const response = await spApiInstance.sendRequest(
         method,
         endpoint,
-        {},
-        {},
+        (queryParams = {}),
+        (body = {}),
         logContext,
         createLog,
         apiOperation,
