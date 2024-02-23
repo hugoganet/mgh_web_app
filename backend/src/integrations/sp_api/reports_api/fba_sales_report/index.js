@@ -45,11 +45,12 @@ async function requestFbaSalesReport(
     // await new Promise(resolve => setTimeout(resolve, 60000 * 2));
 
     // // Request report document ID
-    // const reportDocumentId = await getReport(
-    //   reportIdResponse.reportId,
-    //   config.createLog,
-    //   config.reportType,
-    // );
+    //  const response = await getReport(
+    //     reportIdResponse.reportId,
+    //     createLog,
+    //     logContext,
+    //   );
+    //   const reportDocumentId = response.reportDocumentId;
 
     const reportDocumentId =
       //   'amzn1.spdoc.1.4.eu.16c2a3bb-7246-484e-9fc7-b45e64bb3958.T198MMEP8AX7GM.2511';

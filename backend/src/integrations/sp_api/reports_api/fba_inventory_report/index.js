@@ -49,16 +49,17 @@ async function requestFbaInventoryReport(
     // // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
     // await new Promise(resolve => setTimeout(resolve, 60000 * 2));
 
-    // // Step 2 : Request report document ID
-    // const reportDocumentId = await getReport(
-    //   reportIdResponse.reportId,
-    //   createLog,
-    //   logContext,
-    // );
+    // Step 2: Request report document ID
+    const response = await getReport(
+      reportIdResponse.reportId,
+      createLog,
+      logContext,
+    );
+    const reportDocumentId = response.reportDocumentId;
 
-    const reportDocumentId =
-      // 'amzn1.spdoc.1.4.eu.483d7947-0adf-43c5-bcf4-de0acb2adf3a.T3FR42143VKPCQ.2651'; // FR
-      'amzn1.spdoc.1.4.eu.8d2ae6c7-06f7-470f-ab0b-7cc37e17a9b0.TSM368VPLQYVE.2651'; // IT
+    // const reportDocumentId =
+    //   // 'amzn1.spdoc.1.4.eu.483d7947-0adf-43c5-bcf4-de0acb2adf3a.T3FR42143VKPCQ.2651'; // FR
+    //   'amzn1.spdoc.1.4.eu.8d2ae6c7-06f7-470f-ab0b-7cc37e17a9b0.TSM368VPLQYVE.2651'; // IT
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getReportDocument(

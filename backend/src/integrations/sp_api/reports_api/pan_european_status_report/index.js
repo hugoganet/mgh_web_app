@@ -47,13 +47,12 @@ async function requestPanEuropeanReport(
     await new Promise(resolve => setTimeout(resolve, 60000 * 2));
 
     // Step 2 : Request report document ID
-    const reportDocumentId = await getReport(
+    const response = await getReport(
       reportIdResponse.reportId,
       createLog,
       logContext,
     );
-
-    // const reportDocumentId =
+    const reportDocumentId = response.reportDocumentId;
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getReportDocument(

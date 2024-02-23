@@ -31,16 +31,22 @@ async function processReportProcessingFinishedNotification(
   let logMessage = '';
   const notification = JSON.parse(message.Body);
   const payload = notification.payload;
+  const reportDocumentId =
+    payload.reportProcessingFinishedNotification.reportDocumentId;
+  const reportType = payload.reportProcessingFinishedNotification.reportType;
+  const reportId = payload.reportProcessingFinishedNotification.reportId;
+  const notificationId = notification.notificationMetadata.notificationId;
   try {
-    const reportDocumentId =
-      payload.reportProcessingFinishedNotification.reportDocumentId;
-    const reportType = payload.reportProcessingFinishedNotification.reportType;
-    const reportId = payload.reportProcessingFinishedNotification.reportId;
-    const notificationId = notification.notificationMetadata.notificationId;
-
     if (reportType === 'GET_FBA_MYI_ALL_INVENTORY_DATA') {
       logMessage += `Received ${reportType} notification : ${JSON.stringify(
         notification,
+        null,
+        2,
+      )}\n`;
+
+      const response = await getReport(reportId, false, logContext);
+      logMessage += `Retrieved report details for reportId ${reportId} : ${JSON.stringify(
+        response,
         null,
         2,
       )}\n`;
@@ -50,17 +56,17 @@ async function processReportProcessingFinishedNotification(
         true,
         logContext,
       );
-      const countryKeys = convertMarketplaceIdentifier(
-        response.marketplaceIds[0],
-        true,
-        logContext,
-      );
+      // const countryKeys = convertMarketplaceIdentifier(
+      //   response.marketplaceIds[0],
+      //   true,
+      //   logContext,
+      // );
 
       try {
         await fetchAndProcessInventoryReport(
           documentDetails.documentUrl,
           documentDetails.compressionAlgorithm,
-          documentDetails.reportDocumentId,
+          reportDocumentId,
           [countryKeys.countryName],
           true,
           logContext,
@@ -90,6 +96,11 @@ async function processReportProcessingFinishedNotification(
       }
     } else if (reportType === 'GET_AFN_INVENTORY_DATA') {
       try {
+        logMessage += `Received ${reportType} notification : ${JSON.stringify(
+          notification,
+          null,
+          2,
+        )}\n`;
         logMessage += `Deleting message with ReceiptHandle ${message.ReceiptHandle}\n`;
         const deleteMessage = deleteMessageCommand(
           message.ReceiptHandle,

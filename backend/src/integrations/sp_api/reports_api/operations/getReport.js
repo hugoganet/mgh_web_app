@@ -24,7 +24,7 @@ async function getReport(
   const apiOperation = 'getReport';
   const endpoint = `/reports/2021-06-30/reports/${reportId}`;
   const method = 'GET';
-  let reportDocumentId = null;
+  const reportDocumentId = null;
 
   while (reportDocumentId === null) {
     try {
@@ -42,9 +42,11 @@ async function getReport(
       );
 
       if (response.data.reportDocumentId) {
-        reportDocumentId = response.data.reportDocumentId;
-        console.log('Report Document ID fetched:', reportDocumentId);
-        return reportDocumentId;
+        console.log(
+          'Report Document ID fetched:',
+          response.data.reportDocumentId,
+        );
+        return response.data;
       } else {
         console.log('Waiting for report to be ready...');
         await new Promise(resolve => setTimeout(resolve, 60000 * 5)); // Wait for 5 minutes
