@@ -5,7 +5,7 @@ const marketplaces = require('../../../../config/marketplaces.js');
 const {
   chooseDecompressionStream,
 } = require('../../../../utils/chooseDecompressionStream.js');
-const { preProcessCsvRow } = require('../../preProcessCsvRow.js');
+const { preProcessCsvRow } = require('../../../../utils/preProcessCsvRow.js');
 const { processInventoryChunk } = require('./processInventoryChunk.js');
 const { seedSellingPriceHistory } = require('./seedSellingPricesHistory.js');
 const { logger } = require('../../../../utils/logger');
@@ -34,9 +34,10 @@ async function fetchAndProcessInventoryReport(
   compressionAlgorithm,
   reportDocumentId,
   country,
-  createLog,
-  logContext,
+  createLog = false,
+  logContext = 'fetchAndProcessInventoryReport',
 ) {
+  console.log(country);
   const countryCode = marketplaces[country[0]].countryCode;
   const currencyCode = marketplaces[country[0]].currencyCode;
   const processingPromises = [];
@@ -49,7 +50,7 @@ async function fetchAndProcessInventoryReport(
     totalLines = await countLinesInReport(
       documentUrl,
       compressionAlgorithm,
-      createLog,
+      (createLog = true),
       logContext,
     );
 
@@ -121,7 +122,7 @@ async function fetchAndProcessInventoryReport(
           Created ${counts.sellingPriceHistory.sellingPriceHistory_created} new sellingPriceHistory records and found ${counts.sellingPriceHistory.sellingPriceHistory_found}.\n`;
 
           if (createLog) {
-            logger(logMessage, logContext, 1.2);
+            logger(logMessage, logContext);
           }
           // Seed SellingPriceHistory table with recent data
           await seedSellingPriceHistory(createLog, logContext);

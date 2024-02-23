@@ -61,7 +61,7 @@ module.exports = { createSubscription };
 
 const config = {
   notificationType: 'REPORT_PROCESSING_FINISHED',
-  payloadVersion: null,
-  destinationId: '490f7538-13f7-4958-9b53-1ee89f0fc0cf',
+  payloadVersion: '1.0',
+  destinationId: '55cc118f-ad33-42c0-8c58-11a5083d6da2',
 };
 createSubscription(config, true, 'createSubscription', true);

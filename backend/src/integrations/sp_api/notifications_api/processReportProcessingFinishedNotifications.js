@@ -6,8 +6,8 @@ const {
 } = require('../reports_api/fba_inventory_report/fetchAndProcessInventoryReport.js');
 const { getReport } = require('../reports_api/operations/getReport.js');
 const {
-  getCountryNameFromMarketplaceId,
-} = require('../../../utils/getCountryNameFromMarketplaceId.js');
+  convertMarketplaceIdentifier,
+} = require('../../../utils/convertMarketplaceIdentifier');
 const { logger } = require('../../../utils/logger');
 const {
   deleteMessageCommand,
@@ -15,16 +15,19 @@ const {
 const { sqsClient } = require('./aws_sqs_queue/sqsClient.js');
 
 /**
- * Processes a "REPORT_PROCESSING_FINISHED" type notification.
+ * @description Processes a "REPORT_PROCESSING_FINISHED" type notification.
+ * @async
+ * @function processReportProcessingFinishedNotification
  * @param {Object} message - The SQS message.
  * @param {function} createLog - The logger function.
+ * @param {string} logContext - The context for the log.
  * @return {Promise<void>}
  */
 async function processReportProcessingFinishedNotification(
   message,
   createLog = true,
+  logContext = 'processReportProcessingFinishedNotification',
 ) {
-  const apiOperation = 'ReceiveAndProcessNotifications';
   let logMessage = '';
   const notification = JSON.parse(message.Body);
   const payload = notification.payload;
@@ -42,33 +45,25 @@ async function processReportProcessingFinishedNotification(
         2,
       )}\n`;
 
-      let response;
-      let documentDetails;
-      try {
-        response = await getReport(reportId, true, reportType);
-        documentDetails = await getReportDocument(
-          reportDocumentId,
-          true,
-          reportType,
-        );
-      } catch (reportError) {
-        console.error('Error processing report:', reportError);
-        logMessage += `Error processing report: ${reportError}\n`;
-      }
-
-      const countryKeys = getCountryNameFromMarketplaceId(
-        response.marketplaceIds[0],
+      const documentDetails = await getReportDocument(
+        reportDocumentId,
+        true,
+        logContext,
       );
-      logMessage += `Processing report for country: ${countryKeys}\n`;
+      const countryKeys = convertMarketplaceIdentifier(
+        response.marketplaceIds[0],
+        true,
+        logContext,
+      );
 
       try {
         await fetchAndProcessInventoryReport(
           documentDetails.documentUrl,
           documentDetails.compressionAlgorithm,
           documentDetails.reportDocumentId,
-          [countryKeys],
-          reportType,
+          [countryKeys.countryName],
           true,
+          logContext,
         );
       } catch (processError) {
         console.error('Error processing inventory report:', processError);
@@ -115,14 +110,11 @@ async function processReportProcessingFinishedNotification(
       }
     }
   } catch (error) {
-    console.log(
-      'Overall error in processReportProcessingFinishedNotification:',
-      error,
-    );
+    console.log('Overall error in processReportProcessingFinishedNotification');
     logMessage += `Overall error in processReportProcessingFinishedNotification: ${error}\n`;
   } finally {
     if (createLog) {
-      logger(logMessage, apiOperation);
+      logger(logMessage, logContext);
     }
   }
 }

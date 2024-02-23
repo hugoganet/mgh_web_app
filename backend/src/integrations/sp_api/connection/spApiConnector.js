@@ -266,6 +266,8 @@ class SpApiConnector {
       'User-Agent': 'MyApp/1.0 (Platform=Node.js; Language=JavaScript)',
       'x-amz-access-token': accessToken,
       'x-amz-date': date,
+      Host: 'sellingpartnerapi-eu.amazon.com',
+      'Accept-Encoding': 'gzip, deflate, br',
       Authorization: this.createAuthorizationHeader(
         process.env.AWS_ACCESS_KEY,
         date,

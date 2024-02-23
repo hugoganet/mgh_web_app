@@ -36,6 +36,7 @@ function convertMarketplaceIdentifier(
       marketplaceId: marketplace.marketplaceId,
       currencyCode: marketplace.currencyCode,
       domain: marketplace.domain,
+      countryName: marketplace.countryName,
     };
 
     return result;

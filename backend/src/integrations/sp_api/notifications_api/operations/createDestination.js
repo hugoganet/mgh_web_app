@@ -55,7 +55,4 @@ async function createDestination(
 
 module.exports = { createDestination };
 
-// Example usage
-const destinationName = 'MGHWebAppNotificationsTest';
-
-createDestination(destinationName, true);
+createDestination('MGHWebAppNotificationsQueue');

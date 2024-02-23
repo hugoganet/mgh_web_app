@@ -44,12 +44,9 @@ async function deleteSubscriptionById(
 
 module.exports = { deleteSubscriptionById };
 
-// Example usage
-const notificationType = 'REPORT_PROCESSING_FINISHED';
-const subscriptionId = '633f70aa-495c-463a-b21b-60d85a676719';
 deleteSubscriptionById(
-  notificationType,
-  subscriptionId,
+  'REPORT_PROCESSING_FINISHED',
+  '4b2ec6cc-78a6-4a19-b9ab-b2add419eb07',
   true,
   'deleteSubscriptionById',
   true,
