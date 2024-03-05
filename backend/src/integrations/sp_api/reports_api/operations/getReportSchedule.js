@@ -41,3 +41,5 @@ async function getReportSchedule(
 }
 
 module.exports = { getReportSchedule };
+
+getReportSchedule('50001018108', true, 'getReportSchedule', true);

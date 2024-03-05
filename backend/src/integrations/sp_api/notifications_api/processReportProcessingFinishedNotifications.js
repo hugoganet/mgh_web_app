@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const {
   getReportDocument,
 } = require('../reports_api/operations/getReportDocument.js');
@@ -37,7 +38,7 @@ async function processReportProcessingFinishedNotification(
   const reportId = payload.reportProcessingFinishedNotification.reportId;
   const notificationId = notification.notificationMetadata.notificationId;
   try {
-    if (reportType === 'GET_FBA_MYI_ALL_INVENTORY_DATA') {
+    if (reportType === 'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA') {
       logMessage += `Received ${reportType} notification : ${JSON.stringify(
         notification,
         null,
@@ -63,14 +64,14 @@ async function processReportProcessingFinishedNotification(
       // );
 
       try {
-        await fetchAndProcessInventoryReport(
-          documentDetails.documentUrl,
-          documentDetails.compressionAlgorithm,
-          reportDocumentId,
-          [countryKeys.countryName],
-          true,
-          logContext,
-        );
+        // await fetchAndProcessInventoryReport(
+        //   documentDetails.documentUrl,
+        //   documentDetails.compressionAlgorithm,
+        //   reportDocumentId,
+        //   [countryKeys.countryName],
+        //   true,
+        //   logContext,
+        // );
       } catch (processError) {
         console.error('Error processing inventory report:', processError);
         logMessage += `Error processing inventory report: ${processError}\n`;
@@ -94,24 +95,19 @@ async function processReportProcessingFinishedNotification(
           2,
         )}\n`;
       }
-    } else if (reportType === 'GET_AFN_INVENTORY_DATA') {
+    } else {
+      let deleteResponse;
       try {
-        logMessage += `Received ${reportType} notification : ${JSON.stringify(
-          notification,
-          null,
-          2,
-        )}\n`;
+        console.log('Unknown report type:', reportType);
+        logMessage += `Unknown report type: ${reportType}\n`;
+
         logMessage += `Deleting message with ReceiptHandle ${message.ReceiptHandle}\n`;
         const deleteMessage = deleteMessageCommand(
           message.ReceiptHandle,
           false,
         );
-        const deleteResponse = await sqsClient.send(deleteMessage);
-        logMessage += `Deleted ${notificationId} notification of type ${reportType} from queue\n DeleteMessageCommand response: ${JSON.stringify(
-          deleteResponse,
-          null,
-          2,
-        )}\n`;
+        deleteResponse = await sqsClient.send(deleteMessage);
+        logMessage += `Deleted ${notificationId} notification of type ${reportType} from queue\n`;
       } catch (error) {
         logMessage += `Error deleting ${notificationId} notification of type ${reportType} from queue : ${error} DeleteMessageCommand response: ${JSON.stringify(
           deleteResponse,

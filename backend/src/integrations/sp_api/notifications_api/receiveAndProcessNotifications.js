@@ -50,6 +50,7 @@ async function receiveAndProcessNotifications(
           const notificationId =
             notification.NotificationMetadata.NotificationId;
           try {
+            logMessage += `Received ${notificationType} notification`;
             const deleteMessage = deleteMessageCommand(
               message.ReceiptHandle,
               false,
@@ -63,6 +64,13 @@ async function receiveAndProcessNotifications(
               2,
             )}\n`;
           }
+        }
+        if (
+          notificationType !== 'REPORT_PROCESSING_FINISHED' &&
+          notificationType !== 'ANY_OFFER_CHANGED'
+        ) {
+          console.log('Unknown notification type:', notificationType);
+          logMessage += `Unknown notification type: ${notificationType}\n`;
         }
       }
     } else {
