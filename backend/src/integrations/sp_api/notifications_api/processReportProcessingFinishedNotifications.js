@@ -30,6 +30,7 @@ async function processReportProcessingFinishedNotification(
   logContext = 'processReportProcessingFinishedNotification',
 ) {
   let logMessage = '';
+  let countryKeys = {};
   const notification = JSON.parse(message.Body);
   const payload = notification.payload;
   const reportDocumentId =
@@ -57,21 +58,28 @@ async function processReportProcessingFinishedNotification(
         true,
         logContext,
       );
-      // const countryKeys = convertMarketplaceIdentifier(
-      //   response.marketplaceIds[0],
-      //   true,
-      //   logContext,
-      // );
+
+      if (response.marketplaceIds[0]) {
+        countryKeys = convertMarketplaceIdentifier(
+          response.marketplaceIds[0],
+          true,
+          logContext,
+        );
+      } else {
+        console.error('No marketplaceId found in report');
+        logMessage += 'No marketplaceId found in report\n';
+        return;
+      }
 
       try {
-        // await fetchAndProcessInventoryReport(
-        //   documentDetails.documentUrl,
-        //   documentDetails.compressionAlgorithm,
-        //   reportDocumentId,
-        //   [countryKeys.countryName],
-        //   true,
-        //   logContext,
-        // );
+        await fetchAndProcessInventoryReport(
+          documentDetails.documentUrl,
+          documentDetails.compressionAlgorithm,
+          reportDocumentId,
+          [countryKeys.countryName],
+          true,
+          logContext,
+        );
       } catch (processError) {
         console.error('Error processing inventory report:', processError);
         logMessage += `Error processing inventory report: ${processError}\n`;
@@ -98,7 +106,6 @@ async function processReportProcessingFinishedNotification(
     } else {
       let deleteResponse;
       try {
-        console.log('Unknown report type:', reportType);
         logMessage += `Unknown report type: ${reportType}\n`;
 
         logMessage += `Deleting message with ReceiptHandle ${message.ReceiptHandle}\n`;

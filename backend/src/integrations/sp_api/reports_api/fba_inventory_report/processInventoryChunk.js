@@ -64,6 +64,12 @@ async function processInventoryChunk(
       (createLog = true),
       logContext,
     );
+
+    if (!skuRecord) {
+      throw new Error(
+        `Error in processInventoryChunk: SKU record not found or created for SKU: ${sku} on ${countryCode}.\n`,
+      );
+    }
     const skuId = skuRecord.skuId;
 
     // Handle ASIN record
