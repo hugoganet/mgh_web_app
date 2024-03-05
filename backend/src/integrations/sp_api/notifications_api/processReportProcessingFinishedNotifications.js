@@ -76,7 +76,7 @@ async function processReportProcessingFinishedNotification(
           documentDetails.documentUrl,
           documentDetails.compressionAlgorithm,
           reportDocumentId,
-          [countryKeys.countryName],
+          countryKeys.countryName,
           true,
           logContext,
         );

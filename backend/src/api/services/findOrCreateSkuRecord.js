@@ -1,6 +1,7 @@
 const db = require('../models/index');
 const { logger } = require('../../utils/logger');
 const eventBus = require('../../utils/eventBus');
+const { convertToEur } = require('../../utils/convertToEur');
 
 /**
  * @description This function automatically creates a SKU record in the database if it does not exist.
