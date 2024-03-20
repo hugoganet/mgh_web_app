@@ -1,6 +1,5 @@
-amazon_removal_order_id,request_date,order_id,order_source,order_type,order_status,last_updated_date,sku,fnsku,disposition,requested_quantity,cancelled_quantity,disposed_quantity,shipped_quantity,in_process_quantity,removal_fee,currency
-,request-date,order-id,order-source,order-type,order-status,last-updated-date,sku,fnsku,disposition,requested-quantity,cancelled-quantity,disposed-quantity,shipped-quantity,in-process-quantity,removal-fee,currency
-,2024-03-16T17:47:54+01:00,YRQ4ZJ7gwi,Seller-configured Automated Fulfillable Removal System,Return,Pending,2024-03-16T20:34:58+01:00,"SOCA-07.22-9,96-B01K1P3JCY",X001LR0G7V,Sellable,1,0,,0,1,,
+afnRemovalOrderId,requestDate,orderId,orderSource,orderType,orderStatus,lastUpdatedDate,sku,fnsku,disposition,requestedQuantity,cancelledQuantity,disposedQuantity,shippedQuantity,inProcessQuantity,removalFee,currency
+,2024-03-16T17:47:54+01:01,YRQ4ZJ7gwi,Seller-configured Automated Fulfillable Removal System,Return,Pending,2024-03-16T20:34:58+01:00,"SOCA-07.22-9,96-B01K1P3JCY",X001LR0G7V,Sellable,1,0,,0,1,,
 ,2024-03-16T17:47:54+01:00,YRQ4ZJ7gwi,Seller-configured Automated Fulfillable Removal System,Return,Pending,2024-03-16T20:34:58+01:00,LBM-03.23-4-B01NB20C2V,X001QM06CV,Sellable,14,0,,0,14,,
 ,2024-03-16T17:47:54+01:00,YRQ4ZJ7gwi,Seller-configured Automated Fulfillable Removal System,Return,Pending,2024-03-16T20:34:58+01:00,"LBM-03.23-2,4-B00BFWOIPU",X001QM06DP,Sellable,10,0,,0,10,,
 ,2024-03-16T17:47:54+01:00,YRQ4ZJ7gwi,Seller-configured Automated Fulfillable Removal System,Return,Pending,2024-03-16T20:34:58+01:00,"LBM-03.23-11,4-B009M398KY",X001QM08FL,Sellable,2,0,,0,2,,

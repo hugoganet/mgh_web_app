@@ -28,6 +28,7 @@ const modelToFileMap = {
   ProductAndAmzReferralFeeCategory:
     'product_and_amz_referral_fees_categories.csv',
   DailyAverageExchangeRate: 'daily_average_exchange_rates.csv',
+  AfnRemovalOrders: 'afn_removal_orders.csv',
 };
 
 module.exports = modelToFileMap;

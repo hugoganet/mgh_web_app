@@ -31,6 +31,7 @@ module.exports = db => {
     AfnInventoryDailyUpdate,
     FbaSaleProcessed,
     SellingPriceHistory,
+    AfnRemovalOrders,
   } = db;
 
   // Associations for Asin
@@ -378,6 +379,11 @@ module.exports = db => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
+  Warehouse.hasMany(AfnRemovalOrders, {
+    foreignKey: 'warehouseId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
 
   // Associations for MinimumSellingPrice
   MinimumSellingPrice.belongsTo(Sku, {
@@ -499,6 +505,13 @@ module.exports = db => {
   // Associations for SellingPriceHistory
   SellingPriceHistory.belongsTo(Sku, {
     foreignKey: 'skuId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for AfnRemovalOrders
+  AfnRemovalOrders.belongsTo(Warehouse, {
+    foreignKey: 'warehouseId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
