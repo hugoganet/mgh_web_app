@@ -43,6 +43,7 @@ async function initializeDatabase({ forceSync = false } = {}) {
       'FbaSaleProcessed',
       'DailyAverageExchangeRate', // Commented out because I want to keep the data that has been collected so far
       'AfnRemovalOrders',
+      'AfnRemovalShipments',
     ];
 
     // Synchronize each model in order

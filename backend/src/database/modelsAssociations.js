@@ -1,5 +1,4 @@
 module.exports = db => {
-  // Destructuring models from db
   const {
     Asin,
     Brand,
@@ -31,7 +30,7 @@ module.exports = db => {
     AfnInventoryDailyUpdate,
     FbaSaleProcessed,
     SellingPriceHistory,
-    AfnRemovalOrders,
+    AfnRemovalShipments,
   } = db;
 
   // Associations for Asin
@@ -379,7 +378,7 @@ module.exports = db => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  Warehouse.hasMany(AfnRemovalOrders, {
+  Warehouse.hasMany(AfnRemovalShipments, {
     foreignKey: 'warehouseId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
@@ -509,8 +508,8 @@ module.exports = db => {
     onUpdate: 'CASCADE',
   });
 
-  // Associations for AfnRemovalOrders
-  AfnRemovalOrders.belongsTo(Warehouse, {
+  // Associations for AfnRemovalShipments
+  AfnRemovalShipments.belongsTo(Warehouse, {
     foreignKey: 'warehouseId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',

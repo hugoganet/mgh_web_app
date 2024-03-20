@@ -95,6 +95,7 @@ async function runSeeding(db) {
       'WarehouseStock',
       'DailyAverageExchangeRate', // Commented out because to avoid an error because it is commented out in intialize.js
       'AfnRemovalOrders',
+      'AfnRemovalShipments',
     ];
 
     // Sequentially seed each table
