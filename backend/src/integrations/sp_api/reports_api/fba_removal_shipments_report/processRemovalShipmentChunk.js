@@ -1,18 +1,66 @@
-// Check if a record already exist in db for the sku and order-id. If it does, update order-status and quantity.
+/* eslint-disable require-jsdoc */
+const { logger } = require('../../../../utils/logger');
+const {
+  parseAndValidateNumber,
+} = require('../../../../utils/parseAndValidateNumber');
+const db = require('../../../../api/models/index');
 
-// If order-type == 'Return'
-  // 
+async function processRemovalShipmentChunk(
+  chunk,
+  dataStartTime,
+  dataEndTime,
+  createLog = false,
+  logContext = 'processRemovalShipmentChunk',
+) {
+  let logMessage = ``;
+  try {
+    const sku = chunk['sku'];
+    const requestDate = chunk['request-date'];
+    const orderId = chunk['order-id'];
+    const shipmentDate = chunk['shipment-date'];
+    const fnsku = chunk['fnsku'];
+    const disposition = chunk['disposition'];
+    const shippedQuantity = parseAndValidateNumber(chunk['shipped-quantity']);
+    const carrier = chunk['carrier'];
+    const trackingNumber = chunk['tracking-number'];
+    const orderType = chunk['order-type'];
+    const warehouseId = 2; // DOCK AVENUE
 
-  // If order-status == 'Pending', add the SKU to the incomming order file.
+    // get the skuId from the sku table
+    const skuRecord = await db.Sku.findOne({ where: { sku } });
+    if (!skuRecord) {
+      throw new Error(
+        `Error in processRemovalShipmentChunk: SKU record not found for: ${sku}.\n`,
+      );
+    }
+    const skuId = skuRecord.skuId;
 
-  // If order-status == 'Canceled', remove the SKU from the incomming order file.
+    // create a new record in the afn_removal_shipments table
+    await db.AfnRemovalShipment.create({
+      dataStartTime,
+      dataEndTime,
+      requestDate,
+      orderId,
+      shipmentDate,
+      skuId,
+      fnsku,
+      disposition,
+      shippedQuantity,
+      carrier,
+      trackingNumber,
+      orderType,
+      warehouseId,
+    });
+  } catch (error) {
+    logMessage += `Error in processRemovalShipmentChunk: ${error}\n`;
+    throw new Error(`Error in processRemovalShipmentChunk: ${error}\n`);
+  } finally {
+    if (createLog) {
+      logger(logMessage, logContext);
+    }
+  }
+}
 
-  // If order-status == 'Completed', add the quantity to the corresponding warehouse stock. (Every orders from 19/03/24 will be send to DOCK AVENUE)
-
-
-// If order-type == 'Disposal' || 'Liquidations'
-// ! No need to create another table to store Disposed or liquidated items as I will have the removal orders table.
-// ? Do I have to update AFN stock for disposed items ?
-// NO. My AFN stock quantities are uopdated directly from the report data daily. I need to be able to know the details on how I end up with those quantity, but that's all.
-
-// Convert removal fees to EUR and store them in the database.
+module.exports = {
+  processRemovalShipmentChunk,
+};

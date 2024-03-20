@@ -8,6 +8,9 @@ const {
 } = require('../../../../utils/downloadAndDecompressDocument.js');
 const { createReport } = require('../operations/createReport.js');
 const { logger, flushLogBuffer } = require('../../../../utils/logger.js');
+const {
+  fetchAndProcessRemovalShipmentReport,
+} = require('./fetchAndProcessRemovalShipmentReport.js');
 
 /**
  * Requests an FBA Removal Orders report from the Amazon Selling Partner API.
@@ -66,24 +69,25 @@ async function requestFbaRemovalShipmentsReport(
       logContext,
     );
 
-    downloadAndDecompressDocument(
-      documentUrl,
-      compressionAlgorithm,
-      reportType,
-      countryCode,
-      dataStartTime,
-      dataEndTime,
-    );
-
-    // // Fetch CSV data and process into database
-    // await fetchAndProcessInventoryReport(
+    // downloadAndDecompressDocument(
     //   documentUrl,
     //   compressionAlgorithm,
-    //   reportDocumentId,
-    //   country,
-    //   createLog,
-    //   logContext,
+    //   reportType,
+    //   countryCode,
+    //   dataStartTime,
+    //   dataEndTime,
     // );
+
+    // Fetch CSV data and process into database
+    await fetchAndProcessRemovalShipmentReport(
+      documentUrl,
+      compressionAlgorithm,
+      reportDocumentId,
+      dataStartTime,
+      dataEndTime,
+      createLog,
+      logContext,
+    );
 
     logMessage += `Finished fetching and processing inventory report for ${country} in index.js\n`;
   } catch (error) {

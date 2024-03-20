@@ -16,6 +16,9 @@ const {
 const {
   processRemovalShipmentChunk,
 } = require('./processRemovalShipmentChunk.js');
+const {
+  checkIfPeriodIsAlreadyProcessed,
+} = require('../../../../utils/checkIfPeriodIsAlreadyProcessed');
 
 /**
  * Fetches and processes a CSV file from a given URL.
@@ -23,6 +26,8 @@ const {
  * @param {string} documentUrl - The URL of the CSV file.
  * @param {string|null} compressionAlgorithm - The compression algorithm used (e.g., 'GZIP'), or null if uncompressed.
  * @param {string} reportDocumentId - The document ID associated with the report.
+ * @param {string} dataStartTime - The start date and time for the report data in ISO 8601 format.
+ * @param {string} dataEndTime - The end date and time for the report data in ISO 8601 format.
  * @param {boolean} createLog - Whether to create a log of the process.
  * @param {string} logContext - The context for the log message.
  * @return {Promise<void>} - A promise that resolves when the CSV file has been fetched and processed.
@@ -31,9 +36,22 @@ async function fetchAndProcessRemovalShipmentsReport(
   documentUrl,
   compressionAlgorithm,
   reportDocumentId,
+  dataStartTime,
+  dataEndTime,
   createLog = false,
   logContext = 'fetchAndProcessRemovalShipmentsReport',
 ) {
+  // Check if the period has already been processed
+  const periodAlreadyProcessed = await checkIfPeriodIsAlreadyProcessed(
+    dataStartTime,
+    dataEndTime,
+  );
+  if (periodAlreadyProcessed) {
+    console.log(
+      'This period has already been processed or overlaps with a processed period.',
+    );
+    return;
+  }
   startListening(); // Start listening for recordCreated events
 
   try {

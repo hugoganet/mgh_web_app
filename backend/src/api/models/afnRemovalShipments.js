@@ -16,6 +16,14 @@ module.exports = sequelize => {
         allowNull: false,
         autoIncrement: true,
       },
+      dataStartTime: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      dataEndTime: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
       requestDate: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -56,7 +64,7 @@ module.exports = sequelize => {
         type: DataTypes.STRING(200),
         allowNull: false,
       },
-      removalOrderType: {
+      orderType: {
         type: DataTypes.STRING(50),
         allowNull: false,
       },
