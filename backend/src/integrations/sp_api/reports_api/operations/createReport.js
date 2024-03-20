@@ -17,10 +17,10 @@ const { logger } = require('../../../../utils/logger');
 async function createReport(
   marketplaceIds = [],
   reportType,
+  logContext = 'createReport',
+  createLog = false,
   dataStartTime,
   dataEndTime,
-  createLog = false,
-  logContext = 'createReport',
   flushBuffer = false,
 ) {
   const apiOperation = 'createReport';
