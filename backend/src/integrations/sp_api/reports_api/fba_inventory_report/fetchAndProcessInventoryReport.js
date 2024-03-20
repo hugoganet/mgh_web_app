@@ -40,8 +40,7 @@ async function fetchAndProcessInventoryReport(
   if (country === 'united kingdom') {
     country = 'unitedKingdom';
   }
-  console.log(`country => ${country} : ${typeof country}`);
-  console.log(`countryCode => ${marketplaces[country].countryCode}`);
+
   const countryCode = marketplaces[country].countryCode;
   const currencyCode = marketplaces[country].currencyCode;
   const processingPromises = [];
