@@ -2,18 +2,18 @@
 const { getReport } = require('../operations/getReport.js');
 const { getReportDocument } = require('../operations/getReportDocument.js');
 
-const marketplaces = require('../../../../config/marketplaces');
+const marketplaces = require('../../../../config/marketplaces.js');
 const {
   downloadAndDecompressDocument,
 } = require('../../../../utils/downloadAndDecompressDocument.js');
 const { createReport } = require('../operations/createReport.js');
-const { logger, flushLogBuffer } = require('../../../../utils/logger');
+const { logger, flushLogBuffer } = require('../../../../utils/logger.js');
 
 /**
  * Requests an FBA Removal Orders report from the Amazon Selling Partner API.
  *
  * @async
- * @function requestFbaRemovalOrdersReport
+ * @function requestFbaRemovalShipmentsReport
  * @param {array} country - The marketplace identifier for which the report is requested.
  * @param {string} reportType - The type of report being requested.
  * @param {string} logContext - The type of report being requested.
@@ -22,7 +22,7 @@ const { logger, flushLogBuffer } = require('../../../../utils/logger');
  * @param {string} dataEndTime - The end date and time for the report data in ISO 8601 format.
  * @return {Promise<void>} - A promise that resolves when the report request is completed.
  */
-async function requestFbaRemovalOrdersReport(
+async function requestFbaRemovalShipmentsReport(
   country,
   reportType,
   logContext,
@@ -97,13 +97,13 @@ async function requestFbaRemovalOrdersReport(
   }
 }
 
-module.exports = { requestFbaRemovalOrdersReport };
+module.exports = { requestFbaRemovalShipmentsReport };
 
-requestFbaRemovalOrdersReport(
+requestFbaRemovalShipmentsReport(
   (country = ['france']), // this doesn't matter, the report is for all marketplaces
-  (reportType = 'GET_FBA_FULFILLMENT_REMOVAL_ORDER_DETAIL_DATA'),
-  (logContext = 'create_fetch_and_process_removal_order_report'),
+  (reportType = 'GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA'),
+  (logContext = 'create_fetch_and_process_removal_shipments_report'),
   (createLog = true),
-  (dataStartTime = null), // YYYY-MM-DD
-  (dataEndTime = null), // YYYY-MM-DD
+  (dataStartTime = '2024-01-01'), // YYYY-MM-DD
+  (dataEndTime = '2024-03-19'), // YYYY-MM-DD
 );
