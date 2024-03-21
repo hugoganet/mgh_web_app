@@ -4,7 +4,7 @@ const { Transform } = require('stream'); // To work with streams
 const {
   chooseDecompressionStream,
 } = require('../../../../utils/chooseDecompressionStream.js');
-const { logger } = require('../../../../utils/logger');
+const { logger } = require('../../../../utils/logger.js');
 const {
   countLinesInReport,
 } = require('../../../../utils/countLinesInReport.js');
@@ -12,13 +12,13 @@ const {
   startListening,
   stopListeningAndReset,
   getCounts,
-} = require('../../../../utils/recordEventHandlers');
+} = require('../../../../utils/recordEventHandlers.js');
 const {
   processRemovalShipmentChunk,
 } = require('./processRemovalShipmentChunk.js');
 const {
   checkIfPeriodIsAlreadyProcessed,
-} = require('../../../../utils/checkIfPeriodIsAlreadyProcessed');
+} = require('../../../../utils/checkIfPeriodIsAlreadyProcessed.js');
 
 /**
  * Fetches and processes a CSV file from a given URL.

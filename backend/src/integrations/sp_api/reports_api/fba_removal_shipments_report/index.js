@@ -9,8 +9,8 @@ const {
 const { createReport } = require('../operations/createReport.js');
 const { logger, flushLogBuffer } = require('../../../../utils/logger.js');
 const {
-  fetchAndProcessRemovalShipmentReport,
-} = require('./fetchAndProcessRemovalShipmentReport.js');
+  fetchAndProcessRemovalShipmentsReport,
+} = require('./fetchAndProcessRemovalShipmentsReport.js');
 
 /**
  * Requests an FBA Removal Orders report from the Amazon Selling Partner API.
@@ -56,11 +56,10 @@ async function requestFbaRemovalShipmentsReport(
       createLog,
       logContext,
     );
-    const reportDocumentId = response.reportDocumentId;
+    // const reportDocumentId = response.reportDocumentId;
 
-    // const reportDocumentId =
-    //   // 'amzn1.spdoc.1.4.eu.483d7947-0adf-43c5-bcf4-de0acb2adf3a.T3FR42143VKPCQ.2651'; // FR
-    //   'amzn1.spdoc.1.4.eu.8d2ae6c7-06f7-470f-ab0b-7cc37e17a9b0.TSM368VPLQYVE.2651'; // IT
+    const reportDocumentId =
+      'amzn1.spdoc.1.4.eu.d1f06f39-3f9b-43de-a756-e32c11fa1416.T1YWK76USU3SWV.2661';
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getReportDocument(
@@ -79,7 +78,7 @@ async function requestFbaRemovalShipmentsReport(
     // );
 
     // Fetch CSV data and process into database
-    await fetchAndProcessRemovalShipmentReport(
+    await fetchAndProcessRemovalShipmentsReport(
       documentUrl,
       compressionAlgorithm,
       reportDocumentId,
