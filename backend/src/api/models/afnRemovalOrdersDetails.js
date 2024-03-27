@@ -6,9 +6,9 @@ module.exports = sequelize => {
    * @extends Model
    * @classdesc Model representing an Amazon removal order.
    */
-  class AfnRemovalOrders extends Model {}
+  class AfnRemovalOrdersDetails extends Model {}
 
-  AfnRemovalOrders.init(
+  AfnRemovalOrdersDetails.init(
     {
       afnRemovalOrderId: {
         type: DataTypes.INTEGER,
@@ -76,11 +76,11 @@ module.exports = sequelize => {
     },
     {
       sequelize,
-      modelName: 'AfnRemovalOrders',
-      tableName: 'afn_removal_orders',
+      modelName: 'AfnRemovalOrdersDetails',
+      tableName: 'afn_removal_orders_details',
       timestamps: false,
     },
   );
 
-  return AfnRemovalOrders;
+  return AfnRemovalOrdersDetails;
 };

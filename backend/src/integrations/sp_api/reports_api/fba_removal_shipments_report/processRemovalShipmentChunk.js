@@ -35,7 +35,7 @@ async function processRemovalShipmentChunk(
     }
     const skuId = skuRecord.skuId;
 
-    // create a new record in the afn_removal_shipments table
+    // create a new record in the afn_removal_shipments_details table
     await db.AfnRemovalShipment.create({
       dataStartTime,
       dataEndTime,

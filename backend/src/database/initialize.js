@@ -42,8 +42,8 @@ async function initializeDatabase({ forceSync = false } = {}) {
       'SellingPriceHistory', // Commented out because I want to keep the data that has been collected so far
       'FbaSaleProcessed',
       'DailyAverageExchangeRate', // Commented out because I want to keep the data that has been collected so far
-      'AfnRemovalOrders',
-      'AfnRemovalShipments',
+      'AfnRemovalOrdersDetails',
+      'AfnRemovalShipmentsDetails',
       'EanInAfnRemovalShipment',
     ];
 

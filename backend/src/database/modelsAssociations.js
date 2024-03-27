@@ -30,8 +30,8 @@ module.exports = db => {
     AfnInventoryDailyUpdate,
     FbaSaleProcessed,
     SellingPriceHistory,
-    AfnRemovalShipments,
-    AfnRemovalOrders,
+    AfnRemovalShipmentsDetails,
+    AfnRemovalOrdersDetails,
     EanInAfnRemovalShipment,
   } = db;
 
@@ -385,7 +385,7 @@ module.exports = db => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  Warehouse.hasMany(AfnRemovalShipments, {
+  Warehouse.hasMany(AfnRemovalShipmentsDetails, {
     foreignKey: 'warehouseId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
@@ -515,32 +515,32 @@ module.exports = db => {
     onUpdate: 'CASCADE',
   });
 
-  // Associations for AfnRemovalShipments
-  AfnRemovalShipments.belongsTo(Warehouse, {
+  // Associations for AfnRemovalShipmentsDetails
+  AfnRemovalShipmentsDetails.belongsTo(Warehouse, {
     foreignKey: 'warehouseId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  AfnRemovalShipments.belongsTo(AfnRemovalOrders, {
+  AfnRemovalShipmentsDetails.belongsTo(AfnRemovalOrdersDetails, {
     foreignKey: 'afnRemovalOrderId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
 
-  // Associations for AfnRemovalOrders
-  AfnRemovalOrders.hasMany(AfnRemovalShipments, {
+  // Associations for AfnRemovalOrdersDetails
+  AfnRemovalOrdersDetails.hasMany(AfnRemovalShipmentsDetails, {
     foreignKey: 'afnRemovalOrderId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  AfnRemovalOrders.hasMany(EanInAfnRemovalShipment, {
+  AfnRemovalOrdersDetails.hasMany(EanInAfnRemovalShipment, {
     foreignKey: 'afnRemovalOrderId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
 
   // Associations for EanInAfnRemovalShipment
-  EanInAfnRemovalShipment.belongsTo(AfnRemovalOrders, {
+  EanInAfnRemovalShipment.belongsTo(AfnRemovalOrdersDetails, {
     foreignKey: 'afnRemovalOrderId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',

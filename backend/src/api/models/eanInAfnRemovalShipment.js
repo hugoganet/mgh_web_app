@@ -19,10 +19,6 @@ module.exports = sequelize => {
       orderId: {
         type: DataTypes.STRING(50),
         allowNull: false,
-        references: {
-          model: 'afn_removal_shipments',
-          key: 'order_id',
-        },
       },
       ean: {
         type: DataTypes.STRING(13),
@@ -40,7 +36,7 @@ module.exports = sequelize => {
     {
       sequelize,
       modelName: 'EanInAfnRemovalShipment',
-      tableName: 'eans_in_afn_removal_shipments',
+      tableName: 'eans_in_afn_removal_shipments_details',
       timestamps: false,
     },
   );

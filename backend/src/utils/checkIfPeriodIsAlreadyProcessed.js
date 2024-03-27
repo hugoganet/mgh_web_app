@@ -7,7 +7,7 @@ const db = require('../api/models/index');
  * @param {string} dataEndTime - The end date and time for the report data in ISO 8601 format.
  */
 async function checkIfPeriodIsAlreadyProcessed(dataStartTime, dataEndTime) {
-  const overlapCount = await db.AfnRemovalShipments.count({
+  const overlapCount = await db.AfnRemovalShipmentsDetails.count({
     where: {
       [Sequelize.Op.or]: [
         {
