@@ -6,19 +6,23 @@ module.exports = sequelize => {
    * @extends Model
    * @classdesc Model representing an EAN in Amazon removal shipments.
    */
-  class EanInAfnRemovalShipment extends Model {}
+  class EanInAfnRemovalOrder extends Model {}
 
-  EanInAfnRemovalShipment.init(
+  EanInAfnRemovalOrder.init(
     {
-      eanInAfnRemovalShipmentId: {
+      eanInAfnRemovalOrderId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
-      orderId: {
-        type: DataTypes.STRING(50),
+      afnRemovalOrderId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: 'afn_removal_orders',
+          key: 'afn_removal_order_id',
+        },
       },
       ean: {
         type: DataTypes.STRING(13),
@@ -28,18 +32,23 @@ module.exports = sequelize => {
           key: 'ean',
         },
       },
-      eanRemovalShipmentQuantity: {
+      eanShippedQuantity: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      eanReceivedQuantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
       },
     },
     {
       sequelize,
-      modelName: 'EanInAfnRemovalShipment',
+      modelName: 'EanInAfnRemovalOrder',
       tableName: 'eans_in_afn_removal_shipments_details',
       timestamps: false,
     },
   );
 
-  return EanInAfnRemovalShipment;
+  return EanInAfnRemovalOrder;
 };
