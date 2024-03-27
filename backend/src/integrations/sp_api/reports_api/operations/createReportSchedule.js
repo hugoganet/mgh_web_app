@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 const { spApiInstance } = require('../../connection/spApiConnector');
 const marketplaces = require('../../../../config/marketplaces');
-const calculateNextReportCreationTime = require('../../schedule_reports/calculateNextReportCreationTime');
+const calculateNextReportCreationTime = require('../../../../utils/calculateNextReportCreationTime');
+const moment = require('moment'); // Using moment.js for easy date manipulation
 
 /**
  * @async
@@ -56,10 +57,22 @@ async function createReportSchedule(
 
 module.exports = { createReportSchedule };
 
+const scheduleTime = moment().hour(4).minute(0).second(0); // Today at 04:00:00
+
+// Calculating start and end times for the previous day's data
+const dataEndTime = scheduleTime.clone(); // End time is the current scheduling time (04:00:00 on the current day)
+const dataStartTime = scheduleTime.clone().subtract(1, 'days'); // Start time is 24 hours before the end time
+
+// Format times for your configuration
+const formattedDataStartTime = dataStartTime.format('YYYY-MM-DDTHH:mm:ss');
+const formattedDataEndTime = dataEndTime.format('YYYY-MM-DDTHH:mm:ss');
+
+console.log(formattedDataStartTime, formattedDataEndTime);
+
 const config = {
   marketplaceIds: [
-    marketplaces.unitedKingdom.marketplaceId,
-    // marketplaces.france.marketplaceId,
+    // marketplaces.unitedKingdom.marketplaceId,
+    marketplaces.france.marketplaceId,
     // marketplaces.germany.marketplaceId,
     // marketplaces.italy.marketplaceId,
     // marketplaces.spain.marketplaceId,
@@ -69,9 +82,13 @@ const config = {
     // marketplaces.turkey.marketplaceId,
     // marketplaces.belgium.marketplaceId,
   ],
-  reportType: 'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA',
+  reportType: 'GET_FBA_FULFILLMENT_REMOVAL_SHIPMENT_DETAIL_DATA',
+  reportOptions: {
+    dataStartTime: formattedDataStartTime,
+    dataEndTime: formattedDataEndTime,
+  },
   period: 'P1D', // Daily report generation
-  nextReportCreationTime: calculateNextReportCreationTime('02:00:00'),
+  nextReportCreationTime: calculateNextReportCreationTime('04:00:00'),
 };
 
-// createReportSchedule(config);
+createReportSchedule(config);
