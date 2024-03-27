@@ -44,6 +44,7 @@ async function initializeDatabase({ forceSync = false } = {}) {
       'DailyAverageExchangeRate', // Commented out because I want to keep the data that has been collected so far
       'AfnRemovalOrders',
       'AfnRemovalShipments',
+      'EanInAfnRemovalShipment',
     ];
 
     // Synchronize each model in order
