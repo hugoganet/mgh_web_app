@@ -24,9 +24,13 @@ module.exports = sequelize => {
           key: 'afn_removal_order_id',
         },
       },
-      sku: {
-        type: DataTypes.STRING(50),
+      skuId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: 'skus',
+          key: 'sku_id',
+        },
       },
       fnsku: {
         type: DataTypes.STRING(50),

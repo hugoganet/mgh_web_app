@@ -16,6 +16,14 @@ module.exports = sequelize => {
         allowNull: false,
         autoIncrement: true,
       },
+      afnRemovalOrderId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'afn_removal_orders',
+          key: 'afn_removal_order_id',
+        },
+      },
       dataStartTime: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -26,10 +34,6 @@ module.exports = sequelize => {
       },
       requestDate: {
         type: DataTypes.DATE,
-        allowNull: false,
-      },
-      orderId: {
-        type: DataTypes.STRING(50),
         allowNull: false,
       },
       shipmentDate: {
@@ -63,18 +67,6 @@ module.exports = sequelize => {
       trackingNumber: {
         type: DataTypes.STRING(200),
         allowNull: false,
-      },
-      orderType: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-      },
-      warehouseId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'warehouses',
-          key: 'warehouse_id',
-        },
       },
     },
     {

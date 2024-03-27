@@ -516,24 +516,24 @@ module.exports = db => {
   });
 
   // Associations for AfnRemovalShipmentsDetails
-  AfnRemovalShipmentsDetails.belongsTo(Warehouse, {
-    foreignKey: 'warehouseId',
+  AfnRemovalShipmentsDetails.belongsTo(Sku, {
+    foreignKey: 'skuId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  AfnRemovalShipmentsDetails.belongsTo(AfnRemovalOrdersDetails, {
+  AfnRemovalShipmentsDetails.belongsTo(AfnRemovalOrders, {
     foreignKey: 'afnRemovalOrderId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
 
   // Associations for AfnRemovalOrdersDetails
-  AfnRemovalOrdersDetails.hasMany(AfnRemovalShipmentsDetails, {
-    foreignKey: 'afnRemovalOrderId',
+  AfnRemovalOrdersDetails.belongsTo(Sku, {
+    foreignKey: 'skuId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  AfnRemovalOrdersDetails.hasMany(EanInAfnRemovalShipment, {
+  AfnRemovalOrdersDetails.belongsTo(AfnRemovalOrders, {
     foreignKey: 'afnRemovalOrderId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
