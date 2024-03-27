@@ -16,29 +16,13 @@ module.exports = sequelize => {
         allowNull: false,
         autoIncrement: true,
       },
-      requestDate: {
-        type: DataTypes.DATE,
+      afnRemovalOrderId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-      },
-      orderId: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-      },
-      orderSource: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      orderType: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-      },
-      orderStatus: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-      },
-      lastUpdatedDate: {
-        type: DataTypes.DATE,
-        allowNull: false,
+        references: {
+          model: 'afn_removal_orders',
+          key: 'afn_removal_order_id',
+        },
       },
       sku: {
         type: DataTypes.STRING(50),
