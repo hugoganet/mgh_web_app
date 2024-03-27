@@ -33,6 +33,7 @@ module.exports = db => {
     AfnRemovalShipmentsDetails,
     AfnRemovalOrdersDetails,
     EanInAfnRemovalShipment,
+    AfnRemovalOrders,
   } = db;
 
   // Associations for Asin

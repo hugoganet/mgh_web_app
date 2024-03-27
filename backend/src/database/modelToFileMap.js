@@ -30,6 +30,7 @@ const modelToFileMap = {
   DailyAverageExchangeRate: 'daily_average_exchange_rates.csv',
   AfnRemovalOrdersDetails: 'afn_removal_orders_details.csv',
   AfnRemovalShipmentsDetails: 'afn_removal_shipments_details.csv',
+  AfnRemovalOrders: 'afn_removal_orders.csv',
 };
 
 module.exports = modelToFileMap;

@@ -45,6 +45,7 @@ async function initializeDatabase({ forceSync = false } = {}) {
       'AfnRemovalOrdersDetails',
       'AfnRemovalShipmentsDetails',
       'EanInAfnRemovalShipment',
+      'AfnRemovalOrders',
     ];
 
     // Synchronize each model in order
