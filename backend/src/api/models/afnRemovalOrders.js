@@ -20,19 +20,19 @@ module.exports = sequelize => {
         type: DataTypes.STRING(50),
         allowNull: false,
       },
-      requestDate: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
       source: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      orderType: {
-        type: DataTypes.STRING(50),
+      requestDate: {
+        type: DataTypes.DATE,
         allowNull: false,
       },
-      orderStatus: {
+      lastUpdate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      orderType: {
         type: DataTypes.STRING(50),
         allowNull: false,
       },
@@ -43,8 +43,8 @@ module.exports = sequelize => {
           key: 'warehouse_id',
         },
       },
-      lastUpdate: {
-        type: DataTypes.DATE,
+      orderStatus: {
+        type: DataTypes.STRING(50),
         allowNull: false,
       },
       totalRemovalFee: {
