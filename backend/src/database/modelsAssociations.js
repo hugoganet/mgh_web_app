@@ -34,6 +34,8 @@ module.exports = db => {
     AfnRemovalOrdersDetails,
     EanInAfnRemovalOrder,
     AfnRemovalOrders,
+    AfnShipments,
+    EanInAfnShipments,
   } = db;
 
   // Associations for Asin
@@ -555,18 +557,6 @@ module.exports = db => {
     onUpdate: 'CASCADE',
   });
 
-  // Associations for EanInAfnRemovalOrder
-  EanInAfnRemovalOrder.belongsTo(AfnRemovalOrders, {
-    foreignKey: 'afnRemovalOrderId',
-    onDelete: 'NO ACTION',
-    onUpdate: 'CASCADE',
-  });
-  EanInAfnRemovalOrder.belongsTo(Ean, {
-    foreignKey: 'ean',
-    onDelete: 'NO ACTION',
-    onUpdate: 'CASCADE',
-  });
-
   // Associations for AfnRemovalOrders
   AfnRemovalOrders.hasMany(AfnRemovalOrdersDetails, {
     foreignKey: 'afnRemovalOrderId',
@@ -580,6 +570,37 @@ module.exports = db => {
   });
   AfnRemovalOrders.hasMany(AfnRemovalShipmentsDetails, {
     foreignKey: 'afnRemovalOrderId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for EanInAfnRemovalOrder
+  EanInAfnRemovalOrder.belongsTo(AfnRemovalOrders, {
+    foreignKey: 'afnRemovalOrderId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  EanInAfnRemovalOrder.belongsTo(Ean, {
+    foreignKey: 'ean',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for AfnShipments
+  AfnShipments.belongsTo(Warehouse, {
+    foreignKey: 'warehouseId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for EanInAfnShipments
+  EanInAfnShipments.belongsTo(AfnShipments, {
+    foreignKey: 'afnShipmentId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  EanInAfnShipments.belongsTo(Ean, {
+    foreignKey: 'ean',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
