@@ -1,0 +1,15 @@
+{
+  "name": "mgh-web-app",
+  "version": "1.0.0",
+  "scripts": {
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && npm install",
+    "postinstall": "npm run install:frontend && npm run install:backend",
+    "build:frontend": "cd frontend && npm run build",
+    "start:backend": "cd backend && npm start",
+    "start": "npm run build:frontend && npm run start:backend"
+  },
+  "engines": {
+    "node": "v20.7.0"
+  }
+}
