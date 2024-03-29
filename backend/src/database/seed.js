@@ -66,7 +66,7 @@ async function seedDb(db, tableName) {
 async function runSeeding(db) {
   try {
     const tables = [
-      // 'Country',
+      'Country',
       'Brand',
       'VatCategory',
       'ProductCategory',
