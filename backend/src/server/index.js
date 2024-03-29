@@ -1,6 +1,6 @@
 require('dotenv').config({ path: 'backend/.env' });
 const app = require('../app');
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001; // Use Heroku's PORT or 3001 if local
 const initializeDatabase = require('../database/initialize');
 
 const isTest = process.env.NODE_ENV === 'test';
@@ -10,7 +10,7 @@ const isTest = process.env.NODE_ENV === 'test';
     console.log('Initializing database...');
     await initializeDatabase({ forceSync: true });
   } else {
-    await initializeDatabase({ forceSync: true });
+    await initializeDatabase({ forceSync: false }); // Typically you wouldn't force sync in non-test environments
   }
 
   app.listen(PORT, () => {
