@@ -5,13 +5,13 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('afn_removal_shipments_details', {
       afnRemovalShipmentId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
       afnRemovalOrderId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'afn_removal_orders',
@@ -19,23 +19,23 @@ module.exports = {
         },
       },
       dataStartTime: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       dataEndTime: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       requestDate: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       shipmentDate: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       skuId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'skus',
@@ -43,23 +43,23 @@ module.exports = {
         },
       },
       fnsku: {
-        type: DataTypes.STRING(50),
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
       disposition: {
-        type: DataTypes.STRING(50),
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
       shippedQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       carrier: {
-        type: DataTypes.STRING(200),
+        type: Sequelize.STRING(200),
         allowNull: false,
       },
       trackingNumber: {
-        type: DataTypes.STRING(200),
+        type: Sequelize.STRING(200),
         allowNull: false,
       },
     });

@@ -5,7 +5,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('selling_prices_history', {
       skuId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'skus',
@@ -13,15 +13,15 @@ module.exports = {
         },
       },
       dailyPrice: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       currencyCode: {
-        type: DataTypes.STRING(5),
+        type: Sequelize.STRING(5),
         allowNull: false,
       },
       date: {
-        type: DataTypes.DATEONLY,
+        type: Sequelize.DATEONLY,
         allowNull: false,
       },
     });

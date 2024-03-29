@@ -5,13 +5,13 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('eans_in_suppliers_orders', {
       eanInSupplierOrderId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
       ean: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'eans',
@@ -19,7 +19,7 @@ module.exports = {
         },
       },
       supplierOrderId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'supplier_orders',
@@ -27,24 +27,24 @@ module.exports = {
         },
       },
       eanOrderedQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       eanReceivedQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0,
       },
       productPurchaseCostExc: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       productVatRate: {
-        type: DataTypes.DECIMAL(7, 5),
+        type: Sequelize.DECIMAL(7, 5),
         allowNull: false,
       },
       bestBeforeDate: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
       },
     });
   },

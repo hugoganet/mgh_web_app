@@ -5,13 +5,13 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('amazon_referral_fees', {
       referralFeeCategoryId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
       countryCode: {
-        type: DataTypes.CHAR(2),
+        type: Sequelize.CHAR(2),
         allowNull: false,
         references: {
           model: 'countries',
@@ -19,32 +19,32 @@ module.exports = {
         },
       },
       referralFeeCategoryNameEn: {
-        type: DataTypes.STRING(100),
+        type: Sequelize.STRING(100),
         allowNull: false,
       },
       referralFeePercentage: {
-        type: DataTypes.DECIMAL(7, 5),
+        type: Sequelize.DECIMAL(7, 5),
         allowNull: false,
       },
       reducedReferralFeePercentage: {
-        type: DataTypes.DECIMAL(7, 5),
+        type: Sequelize.DECIMAL(7, 5),
       },
       reducedReferralFeeLimit: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
       },
       reducedReferralFeeThreshold: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
       },
       perItemMinimumReferralFee: {
-        type: DataTypes.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(5, 2),
         allowNull: false,
       },
       closingFee: {
-        type: DataTypes.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(5, 2),
         allowNull: false,
       },
       currencyCode: {
-        type: DataTypes.CHAR(3),
+        type: Sequelize.CHAR(3),
         allowNull: false,
       },
     });

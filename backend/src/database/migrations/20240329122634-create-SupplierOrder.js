@@ -5,13 +5,13 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('supplier_orders', {
       supplierOrderId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
       supplierId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'suppliers',
@@ -19,14 +19,14 @@ module.exports = {
         },
       },
       supplierOrderMadeDate: {
-        type: DataTypes.DATEONLY,
+        type: Sequelize.DATEONLY,
         allowNull: false,
       },
       supplierOrderDeliveryDate: {
-        type: DataTypes.DATEONLY,
+        type: Sequelize.DATEONLY,
       },
       warehouseId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'warehouses',
@@ -34,27 +34,27 @@ module.exports = {
         },
       },
       supplierOrderNumberOfUnit: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       supplierOrderTotalPaidExc: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       supplierOrderDeliveryCostExc: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       supplierOrderDeliveryCostVatRate: {
-        type: DataTypes.DECIMAL(6, 5),
+        type: Sequelize.DECIMAL(6, 5),
         allowNull: false,
       },
       supplierOrderVatPaid: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       supplierOrderInvoiceFileLink: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
       },
     });
   },

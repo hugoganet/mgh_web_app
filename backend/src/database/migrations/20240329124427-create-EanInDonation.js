@@ -5,13 +5,13 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('eans_in_donations', {
       eanInDonationId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
       ean: {
-        type: DataTypes.STRING(13),
+        type: Sequelize.STRING(13),
         allowNull: false,
         references: {
           model: 'eans',
@@ -19,7 +19,7 @@ module.exports = {
         },
       },
       donationId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'donations',
@@ -27,7 +27,7 @@ module.exports = {
         },
       },
       eanDonationQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
     });

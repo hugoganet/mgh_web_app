@@ -5,47 +5,47 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('afn_removal_orders', {
       afnRemovalOrderId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
       amazonId: {
-        type: DataTypes.STRING(50),
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
       source: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       requestDate: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       lastUpdate: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       orderType: {
-        type: DataTypes.STRING(50),
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
       warehouseId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         references: {
           model: 'warehouses',
           key: 'warehouse_id',
         },
       },
       orderStatus: {
-        type: DataTypes.STRING(50),
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
       totalRemovalFee: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
       },
       removalFeeCurrency: {
-        type: DataTypes.CHAR(3),
+        type: Sequelize.CHAR(3),
       },
     });
   },

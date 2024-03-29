@@ -5,13 +5,13 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('fba_fees', {
       fbaFeeId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
       asinId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
         references: {
@@ -20,23 +20,23 @@ module.exports = {
         },
       },
       packageLength: {
-        type: DataTypes.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(5, 2),
         allowNull: false,
       },
       packageWidth: {
-        type: DataTypes.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(5, 2),
         allowNull: false,
       },
       packageHeight: {
-        type: DataTypes.DECIMAL(5, 2),
+        type: Sequelize.DECIMAL(5, 2),
         allowNull: false,
       },
       packageWeight: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       priceGridFbaFeeId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'price_grid_fba_fees',

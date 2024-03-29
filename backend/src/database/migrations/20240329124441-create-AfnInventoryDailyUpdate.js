@@ -5,13 +5,13 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('afn_inventory_daily_updates', {
       afnInventoryDailyUpdateId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
       skuId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: true,
         references: {
           model: 'skus',
@@ -19,26 +19,26 @@ module.exports = {
         },
       },
       sku: {
-        type: DataTypes.STRING(250),
+        type: Sequelize.STRING(250),
         allowNull: false,
       },
       countryCode: {
-        type: DataTypes.STRING(2),
+        type: Sequelize.STRING(2),
         allowNull: false,
       },
       actualPrice: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       currencyCode: {
-        type: DataTypes.STRING(3),
+        type: Sequelize.STRING(3),
         allowNull: false,
       },
       afnFulfillableQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       reportDocumentId: {
-        type: DataTypes.STRING(250),
+        type: Sequelize.STRING(250),
       },
     });
   },

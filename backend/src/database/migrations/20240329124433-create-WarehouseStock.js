@@ -5,13 +5,13 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('warehouses_stock', {
       warehouseStockId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
       warehouseId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'warehouses',
@@ -19,14 +19,14 @@ module.exports = {
         },
       },
       eanSupplierOrderId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         references: {
           model: 'eans_in_suppliers_orders',
           key: 'ean_in_supplier_order_id',
         },
       },
       ean: {
-        type: DataTypes.STRING(13),
+        type: Sequelize.STRING(13),
         allowNull: false,
         references: {
           model: 'eans',
@@ -34,15 +34,15 @@ module.exports = {
         },
       },
       warehouseTotalReceivedQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         defaultValue: 0,
       },
       warehouseTotalShippedQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         defaultValue: 0,
       },
       warehouseInStockQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         defaultValue: 0,
       },
     });

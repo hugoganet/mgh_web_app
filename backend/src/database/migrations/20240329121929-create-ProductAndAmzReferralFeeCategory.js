@@ -7,13 +7,13 @@ module.exports = {
       'product_and_amz_referral_fees_categories',
       {
         productAndAmzReferralFeeCategoryId: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           primaryKey: true,
           allowNull: false,
           autoIncrement: true,
         },
         productCategoryId: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           allowNull: false,
           references: {
             model: 'product_categories',
@@ -21,7 +21,7 @@ module.exports = {
           },
         },
         referralFeeCategoryId: {
-          type: DataTypes.INTEGER,
+          type: Sequelize.INTEGER,
           allowNull: false,
           references: {
             model: 'amazon_referral_fees',

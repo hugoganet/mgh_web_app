@@ -5,13 +5,13 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('afn_removal_orders_details', {
       afnRemovalOrderId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
       afnRemovalOrderId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'afn_removal_orders',
@@ -19,7 +19,7 @@ module.exports = {
         },
       },
       skuId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'skus',
@@ -27,33 +27,33 @@ module.exports = {
         },
       },
       fnsku: {
-        type: DataTypes.STRING(50),
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
       disposition: {
-        type: DataTypes.STRING(50),
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
       requestedQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       cancelledQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       disposedQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       shippedQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       inProcessQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       removalFee: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
       },
       currency: {
-        type: DataTypes.CHAR(3),
+        type: Sequelize.CHAR(3),
       },
     });
   },

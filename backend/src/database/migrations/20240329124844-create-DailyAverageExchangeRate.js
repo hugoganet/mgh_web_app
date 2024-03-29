@@ -5,21 +5,21 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('daily_average_exchange_rates', {
       dailyAverageExchangeRateId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
       currencyCode: {
-        type: DataTypes.STRING(3),
+        type: Sequelize.STRING(3),
         allowNull: false,
       },
       rateToEur: {
-        type: DataTypes.DECIMAL(10, 5),
+        type: Sequelize.DECIMAL(10, 5),
         allowNull: false,
       },
       date: {
-        type: DataTypes.DATEONLY,
+        type: Sequelize.DATEONLY,
         allowNull: false,
       },
     });

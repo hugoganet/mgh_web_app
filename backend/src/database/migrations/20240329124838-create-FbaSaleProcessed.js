@@ -5,12 +5,12 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('fba_sales_processed', {
       fbaSaleProcessedId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
       skuId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'skus',
@@ -18,7 +18,7 @@ module.exports = {
         },
       },
       countryCode: {
-        type: DataTypes.CHAR(2),
+        type: Sequelize.CHAR(2),
         allowNull: true,
         references: {
           model: 'countries',
@@ -26,11 +26,11 @@ module.exports = {
         },
       },
       amazonSalesId: {
-        type: DataTypes.STRING(50),
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
       salesShipCountryCode: {
-        type: DataTypes.CHAR(2),
+        type: Sequelize.CHAR(2),
         allowNull: false,
         references: {
           model: 'countries',
@@ -38,55 +38,55 @@ module.exports = {
         },
       },
       salesItemSellingPriceExc: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       salesItemCurrency: {
-        type: DataTypes.CHAR(3),
+        type: Sequelize.CHAR(3),
         allowNull: false,
       },
       salesSkuQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       salesFbaFee: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: true,
       },
       salesPurchaseDate: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       salesCogs: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: true,
       },
       salesGrossMarginTotal: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: true,
       },
       salesGrossMarginPerItem: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: true,
       },
       salesGrossMarginPercentagePerItem: {
-        type: DataTypes.DECIMAL(10, 5),
+        type: Sequelize.DECIMAL(10, 5),
         allowNull: true,
       },
       salesNetMarginTotal: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: true,
       },
       salesNetMarginPerItem: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: true,
       },
       salesNetMarginPercentagePerItem: {
-        type: DataTypes.DECIMAL(10, 5),
+        type: Sequelize.DECIMAL(10, 5),
         allowNull: true,
       },
       salesRoiPerItem: {
-        type: DataTypes.DECIMAL(10, 5),
+        type: Sequelize.DECIMAL(10, 5),
         allowNull: true,
       },
     });

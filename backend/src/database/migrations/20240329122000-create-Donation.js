@@ -5,13 +5,13 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('donations', {
       donationId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
       warehouseId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'warehouses',
@@ -19,15 +19,15 @@ module.exports = {
         },
       },
       donationTo: {
-        type: DataTypes.STRING(250),
+        type: Sequelize.STRING(250),
         allowNull: false,
       },
       donationDate: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       donationNote: {
-        type: DataTypes.TEXT,
+        type: Sequelize.TEXT,
       },
     });
   },

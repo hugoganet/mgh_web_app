@@ -23,67 +23,67 @@ module.exports = {
         },
       },
       fnsku: {
-        type: DataTypes.STRING(50),
+        type: Sequelize.STRING(50),
         allowNull: true,
       },
       skuAcquisitionCostExc: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       skuAcquisitionCostInc: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       skuAfnTotalQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0,
       },
       skuAverageSellingPrice: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: true,
       },
       skuAverageNetMargin: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: true,
       },
       skuAverageNetMarginPercentage: {
-        type: DataTypes.DECIMAL(10, 5),
+        type: Sequelize.DECIMAL(10, 5),
         allowNull: true,
       },
       skuAverageReturnOnInvestmentRate: {
-        type: DataTypes.DECIMAL(10, 5),
+        type: Sequelize.DECIMAL(10, 5),
         allowNull: true,
       },
       skuAverageDailyReturnOnInvestmentRate: {
-        type: DataTypes.DECIMAL(10, 5),
+        type: Sequelize.DECIMAL(10, 5),
         allowNull: true,
       },
       isActive: {
-        type: DataTypes.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
       numberOfActiveDays: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
       numberOfUnitSold: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0,
       },
       skuAverageUnitSoldPerDay: {
-        type: DataTypes.DECIMAL(10, 5),
+        type: Sequelize.DECIMAL(10, 5),
         allowNull: true,
       },
       skuRestockAlertQuantity: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 1,
       },
       skuIsTest: {
-        type: DataTypes.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },

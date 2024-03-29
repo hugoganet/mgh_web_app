@@ -38,10 +38,10 @@ async function initializeDatabase({ forceSync = false } = {}) {
       'EanInSupplierOrder',
       'EanInDonation',
       'WarehouseStock',
-      'AfnInventoryDailyUpdate', // Commented out because I want to keep the data that has been collected so far
-      'SellingPriceHistory', // Commented out because I want to keep the data that has been collected so far
+      'AfnInventoryDailyUpdate',
+      'SellingPriceHistory',
       'FbaSaleProcessed',
-      'DailyAverageExchangeRate', // Commented out because I want to keep the data that has been collected so far
+      'DailyAverageExchangeRate',
       'AfnShipments',
       'AfnRemovalOrders',
       'AfnRemovalOrdersDetails',
@@ -51,11 +51,11 @@ async function initializeDatabase({ forceSync = false } = {}) {
     ];
 
     // Synchronize each model in order
-    for (const modelName of modelOrder) {
-      if (db[modelName] && db[modelName].sync) {
-        await db[modelName].sync({ force: forceSync });
-      }
-    }
+    // for (const modelName of modelOrder) {
+    //   if (db[modelName] && db[modelName].sync) {
+    //     await db[modelName].sync({ force: forceSync });
+    //   }
+    // }
 
     if (forceSync) {
       await runSeeding(db);

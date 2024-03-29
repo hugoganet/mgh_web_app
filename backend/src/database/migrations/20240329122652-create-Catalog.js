@@ -5,13 +5,13 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('catalog', {
       catalogId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
       },
       ean: {
-        type: DataTypes.STRING(13),
+        type: Sequelize.STRING(13),
         allowNull: false,
         validate: {
           is: {
@@ -21,7 +21,7 @@ module.exports = {
         },
       },
       supplierId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'suppliers',
@@ -29,11 +29,11 @@ module.exports = {
         },
       },
       supplierPartNumber: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       brandId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'brands',
@@ -41,19 +41,19 @@ module.exports = {
         },
       },
       unitPackSize: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       productPriceExc: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       productVatRate: {
-        type: DataTypes.DECIMAL(6, 5),
+        type: Sequelize.DECIMAL(6, 5),
         allowNull: false,
       },
       catalogEntryLastUpdate: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
       },
     });

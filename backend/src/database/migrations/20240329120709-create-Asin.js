@@ -23,7 +23,7 @@ module.exports = {
         },
       },
       productCategoryId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'product_categories',
@@ -31,7 +31,7 @@ module.exports = {
         },
       },
       productCategoryRankId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: true,
         references: {
           model: 'product_categories_ranks',
@@ -39,7 +39,7 @@ module.exports = {
         },
       },
       productTaxCategoryId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'product_tax_categories',
@@ -47,38 +47,38 @@ module.exports = {
         },
       },
       asinPreparation: {
-        type: DataTypes.TEXT,
+        type: Sequelize.TEXT,
         allowNull: true,
       },
       urlAmazon: {
-        type: DataTypes.TEXT(),
+        type: Sequelize.TEXT(),
         allowNull: true,
       },
       urlImage: {
-        type: DataTypes.TEXT(),
+        type: Sequelize.TEXT(),
         allowNull: true,
       },
       asinName: {
-        type: DataTypes.TEXT(),
+        type: Sequelize.TEXT(),
         allowNull: false,
       },
       asinNumberOfActiveSku: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0,
       },
       asinAverageUnitSoldPerDay: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
         defaultValue: 0.0,
       },
       isBatteryRequired: {
-        type: DataTypes.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
       isHazmat: {
-        type: DataTypes.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
