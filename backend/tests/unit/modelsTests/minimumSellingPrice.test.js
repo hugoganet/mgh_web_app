@@ -27,6 +27,7 @@ describe(`MinimumSellingPrice Model Tests`, () => {
       minimumSellingPriceEfn: 20.0,
       maximumSellingPriceLocalAndPanEu: 25.0,
       maximumSellingPriceEfn: 30.0,
+      currencyCode: 'EUR',
     });
     expect(minimumSellingPrice).toHaveProperty('minimumSellingPriceId');
   });

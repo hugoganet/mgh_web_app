@@ -18,6 +18,7 @@ describe(`priceGridFbaFee Model Tests`, () => {
   test('Create a valid priceGridFbaFee', async () => {
     const newPriceGridFbaFee = await db.PriceGridFbaFee.create({
       countryCode: 'FR',
+      currencyCode: 'EUR',
       fbaPackageCategoryName: 'test package category name',
       categoryMaxWeight: 15.0,
       categoryMaxLength: 20.0,
