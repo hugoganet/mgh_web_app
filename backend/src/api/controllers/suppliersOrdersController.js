@@ -1,4 +1,4 @@
-const db = require('../models');
+const db = require('../../database/models/index');
 const { ValidationError } = require('sequelize');
 
 // Function to handle error responses

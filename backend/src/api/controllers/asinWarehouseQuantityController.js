@@ -1,4 +1,4 @@
-const db = require('../models/index');
+const db = require('../../database/models/index');
 
 // Common function to send error responses
 const sendErrorResponse = (res, error, statusCode = 500) => {

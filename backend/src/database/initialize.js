@@ -1,4 +1,4 @@
-const db = require('../api/models');
+const db = require('./models/index');
 const runSeeding = require('./seed');
 const createSqlViews = require('./createSqlViews');
 

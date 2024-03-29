@@ -1,4 +1,4 @@
-const db = require('../models');
+const db = require('../../database/models/index');
 
 // If the sku has the pan EU advantage, the fba fee used are local and pan EU, otherwise it's the EFN fee
 // I'm not 100% sure how to get this information, so I'll just check in minimum_selling_price table. If for a skuId (sku + countryCode), the enrolledInPanEU is true, then I'll apply the Local and PanEu fee. Otherwise, I'll apply the EFN fee.

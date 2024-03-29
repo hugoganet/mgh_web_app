@@ -1,4 +1,4 @@
-const db = require('../models');
+const db = require('../../database/models/index');
 
 const getFbaFees = async asinId => {
   try {

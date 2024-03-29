@@ -1,4 +1,4 @@
-const db = require('../models/index');
+const db = require('../../database/models/index');
 
 /**
  * Retrieves the SKU acquisition cost based on the SKU ID.

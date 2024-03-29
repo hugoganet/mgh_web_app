@@ -1,4 +1,4 @@
-const db = require('../models/index');
+const db = require('../../database/models/index');
 const { logger } = require('../../utils/logger');
 const { getPriceGridFbaFeeId } = require('./getPriceGridFbaFeeId');
 const eventBus = require('../../../src/utils/eventBus');

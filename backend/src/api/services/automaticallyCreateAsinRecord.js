@@ -1,4 +1,4 @@
-const db = require('../models/index');
+const db = require('../../database/models/index');
 const {
   getCatalogItem,
 } = require('../../integrations/sp_api/catalog_api/operations/getCatalogItem');

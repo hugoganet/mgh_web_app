@@ -1,4 +1,4 @@
-const db = require('../models/index');
+const db = require('../../database/models/index');
 const { logger } = require('../../utils/logger');
 const eventBus = require('../../utils/eventBus');
 const {
