@@ -1,15 +1,9 @@
-const { Model, DataTypes } = require('sequelize');
+/* eslint-disable new-cap */
+'use strict';
 
-module.exports = sequelize => {
-  /**
-   * @class
-   * @extends Model
-   * @classdesc Model representing an EAN in Amazon removal shipments.
-   */
-  class EanInAfnRemovalOrder extends Model {}
-
-  EanInAfnRemovalOrder.init(
-    {
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('eans_in_afn_removal_orders', {
       eanInAfnRemovalOrderId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -41,14 +35,10 @@ module.exports = sequelize => {
         allowNull: false,
         defaultValue: 0,
       },
-    },
-    {
-      sequelize,
-      modelName: 'EanInAfnRemovalOrder',
-      tableName: 'eans_in_afn_removal_orders',
-      timestamps: false,
-    },
-  );
+    });
+  },
 
-  return EanInAfnRemovalOrder;
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('eans_in_afn_removal_orders');
+  },
 };
