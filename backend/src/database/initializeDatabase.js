@@ -11,7 +11,7 @@ async function initializeDatabase({ forceSync = false } = {}) {
   try {
     // Define the order of model synchronization
     const modelOrder = [
-      'Country',
+      // 'Country',
       'Brand',
       'VatCategory',
       'ProductCategory',
