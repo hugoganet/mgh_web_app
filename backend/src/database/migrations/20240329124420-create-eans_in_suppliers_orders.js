@@ -3,8 +3,8 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('catalog', {
-      catalog_id: {
+    await queryInterface.createTable('eans_in_suppliers_orders', {
+      ean_in_supplier_order_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
@@ -13,53 +13,43 @@ module.exports = {
       ean: {
         type: Sequelize.STRING(13),
         allowNull: false,
-        validate: {
-          is: {
-            args: /^[0-9]{13}$/,
-            msg: 'EAN must be 13 digits long.',
-          },
+        references: {
+          model: 'eans',
+          key: 'ean',
         },
       },
-      supplier_id: {
+      supplier_order_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'suppliers',
-          key: 'supplier_id',
+          model: 'supplier_orders',
+          key: 'supplier_order_id',
         },
       },
-      supplier_part_number: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      brand_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'brands',
-          key: 'brand_id',
-        },
-      },
-      unit_pack_size: {
+      ean_ordered_quantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      product_price_exc: {
+      ean_received_quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      product_purchase_cost_exc: {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
       product_vat_rate: {
-        type: Sequelize.DECIMAL(6, 5),
+        type: Sequelize.DECIMAL(7, 5),
         allowNull: false,
       },
-      catalog_entry_last_update: {
+      best_before_date: {
         type: Sequelize.DATE,
-        allowNull: false,
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('catalog');
+    await queryInterface.dropTable('eans_in_suppliers_orders');
   },
 };

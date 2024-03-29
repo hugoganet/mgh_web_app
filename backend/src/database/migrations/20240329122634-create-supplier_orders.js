@@ -3,22 +3,12 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('catalog', {
-      catalog_id: {
+    await queryInterface.createTable('supplier_orders', {
+      supplier_order_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,
         autoIncrement: true,
-      },
-      ean: {
-        type: Sequelize.STRING(13),
-        allowNull: false,
-        validate: {
-          is: {
-            args: /^[0-9]{13}$/,
-            msg: 'EAN must be 13 digits long.',
-          },
-        },
       },
       supplier_id: {
         type: Sequelize.INTEGER,
@@ -28,38 +18,48 @@ module.exports = {
           key: 'supplier_id',
         },
       },
-      supplier_part_number: {
-        type: Sequelize.STRING,
+      supplier_order_made_date: {
+        type: Sequelize.DATEONLY,
         allowNull: false,
       },
-      brand_id: {
+      supplier_order_delivery_date: {
+        type: Sequelize.DATEONLY,
+      },
+      warehouse_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'brands',
-          key: 'brand_id',
+          model: 'warehouses',
+          key: 'warehouse_id',
         },
       },
-      unit_pack_size: {
+      supplier_order_number_of_unit: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      product_price_exc: {
+      supplier_order_total_paid_exc: {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
-      product_vat_rate: {
+      supplier_order_delivery_cost_exc: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false,
+      },
+      supplier_order_delivery_cost_vat_rate: {
         type: Sequelize.DECIMAL(6, 5),
         allowNull: false,
       },
-      catalog_entry_last_update: {
-        type: Sequelize.DATE,
+      supplier_order_vat_paid: {
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
+      },
+      supplier_order_invoice_file_link: {
+        type: Sequelize.STRING(255),
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('catalog');
+    await queryInterface.dropTable('supplier_orders');
   },
 };

@@ -58,7 +58,7 @@ module.exports = sequelize => {
       removalFee: {
         type: DataTypes.DECIMAL(10, 2),
       },
-      currency: {
+      currencyCode: {
         type: DataTypes.CHAR(3),
       },
     },

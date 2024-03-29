@@ -68,6 +68,11 @@ module.exports = sequelize => {
         type: DataTypes.TEXT(),
         allowNull: false,
       },
+      asinPotentialWarehouseQuantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
       asinNumberOfActiveSku: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -84,6 +89,11 @@ module.exports = sequelize => {
         defaultValue: false,
       },
       isHazmat: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      isLawLang: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,

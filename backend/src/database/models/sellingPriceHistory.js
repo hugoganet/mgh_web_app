@@ -10,6 +10,12 @@ module.exports = sequelize => {
 
   SellingPricesHistory.init(
     {
+      sellingPriceHistoryId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
       skuId: {
         type: DataTypes.INTEGER,
         allowNull: false,

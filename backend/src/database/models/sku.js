@@ -45,7 +45,7 @@ module.exports = sequelize => {
         allowNull: false,
         defaultValue: 0,
       },
-      skuAverageSellingPrice: {
+      skuAverageSellingPriceInc: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
       },
