@@ -57,6 +57,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'EanInSupplierOrder',
       tableName: 'eans_in_suppliers_orders',
+      timestamps: false,
     },
   );
 

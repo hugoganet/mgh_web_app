@@ -36,7 +36,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'PricingRule',
       tableName: 'pricing_rules',
-      timestamps: false,
+      timestamps: true,
     },
   );
 

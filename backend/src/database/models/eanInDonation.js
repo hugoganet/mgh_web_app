@@ -41,6 +41,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'EanInDonation',
       tableName: 'eans_in_donations',
+      timestamps: false,
     },
   );
 

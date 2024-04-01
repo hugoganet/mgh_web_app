@@ -25,6 +25,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'VatCategory',
       tableName: 'vat_categories',
+      timestamps: false,
     },
   );
 

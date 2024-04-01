@@ -56,6 +56,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'WarehouseStock',
       tableName: 'warehouses_stock',
+      timestamps: false,
     },
   );
 

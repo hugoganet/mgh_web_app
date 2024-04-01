@@ -37,6 +37,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'AsinSku',
       tableName: 'asins_skus',
+      timestamps: false,
     },
   );
 

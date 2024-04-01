@@ -46,6 +46,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'ProductCategoryRank',
       tableName: 'product_categories_ranks',
+      timestamps: false,
     },
   );
 

@@ -54,6 +54,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'FbaFee',
       tableName: 'fba_fees',
+      timestamps: false,
     },
   );
 

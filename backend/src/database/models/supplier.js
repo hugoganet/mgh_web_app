@@ -95,6 +95,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'Supplier',
       tableName: 'suppliers',
+      timestamps: false,
     },
   );
 

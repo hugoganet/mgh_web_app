@@ -43,6 +43,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'VatRatePerCountry',
       tableName: 'vat_rates_per_country',
+      timestamps: false,
     },
   );
 

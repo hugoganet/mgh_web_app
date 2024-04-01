@@ -100,6 +100,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'FbaSaleProcessed',
       tableName: 'fba_sales_processed',
+      timestamps: false,
     },
   );
 

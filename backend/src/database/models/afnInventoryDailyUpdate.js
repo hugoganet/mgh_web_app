@@ -51,7 +51,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'AfnInventoryDailyUpdate',
       tableName: 'afn_inventory_daily_updates',
-      timestamps: true,
+      timestamps: false,
     },
   );
 

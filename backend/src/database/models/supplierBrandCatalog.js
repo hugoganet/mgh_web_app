@@ -36,6 +36,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'SupplierBrandCatalog',
       tableName: 'suppliers_brands_catalog',
+      timestamps: false,
     },
   );
 

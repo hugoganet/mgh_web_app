@@ -66,7 +66,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'MinimumSellingPrice',
       tableName: 'minimum_selling_prices',
-      timestamps: false,
+      timestamps: true,
     },
   );
 

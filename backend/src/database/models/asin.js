@@ -103,6 +103,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'Asin',
       tableName: 'asins',
+      timestamps: false,
       indexes: [
         {
           unique: true,
