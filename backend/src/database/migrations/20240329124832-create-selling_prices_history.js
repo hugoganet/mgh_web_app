@@ -26,9 +26,15 @@ module.exports = {
         type: Sequelize.STRING(5),
         allowNull: false,
       },
-      date: {
-        type: Sequelize.DATEONLY,
+      created_at: {
+        type: Sequelize.DATE,
         allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      },
+      updated_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
     });
   },
