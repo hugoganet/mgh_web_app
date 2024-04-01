@@ -28,6 +28,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'Country',
       tableName: 'countries',
+      timestamps: false,
     },
   );
 

@@ -22,9 +22,7 @@ module.exports = sequelize => {
       sequelize,
       modelName: 'AsinWarehouseQuantity',
       tableName: 'asin_warehouse_quantities',
-      timestamps: false,
-      createdAt: false,
-      updatedAt: false,
+      timestamps: true,
       freezeTableName: true,
     },
   );

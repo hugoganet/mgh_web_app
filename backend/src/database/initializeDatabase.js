@@ -56,6 +56,8 @@ async function initializeDatabase({ forceSync = false } = {}) {
     //     await db[modelName].sync({ force: forceSync });
     //   }
     // }
+    console.log('testing model file name...');
+    console.log(await db.Country.findAll());
 
     if (forceSync) {
       await runSeeding(db);
