@@ -10,7 +10,7 @@ module.exports = sequelize => {
 
   AfnRemovalOrdersDetails.init(
     {
-      afnRemovalOrderId: {
+      afnRemovalOrderDetailId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false,

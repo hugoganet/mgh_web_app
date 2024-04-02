@@ -1,4 +1,4 @@
-afnRemovalShipmentId,afnRemovalOrderId,dataStartTime,dataEndTime,requestDate,shipmentDate,skuId,fnsku,disposition,shippedQuantity,carrier,trackingNumber
+afnRemovalShipmentDetailId,afnRemovalOrderId,dataStartTime,dataEndTime,requestDate,shipmentDate,skuId,fnsku,disposition,shippedQuantity,carrier,trackingNumber
 ,1,2019-01-01,2024-03-19,2024-03-16,2024-03-19,3786,X001QM3GLJ,Sellable,2,AMZN,FR2399694473
 ,1,2019-01-01,2024-03-19,2024-03-16,2024-03-19,4021,X001RANPB1,Sellable,3,AMZN,FR2399694473
 ,1,2019-01-01,2024-03-19,2024-03-16,2024-03-19,3893,X001RDXIJR,Sellable,1,AMZN,FR2399694473

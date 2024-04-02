@@ -1,3 +1,4 @@
+const db = require('./models/index');
 const fs = require('fs');
 const path = require('path');
 const csvParser = require('csv-parser');
@@ -93,7 +94,7 @@ async function runSeeding(db) {
       'EanInSupplierOrder',
       'EanInDonation',
       'WarehouseStock',
-      'DailyAverageExchangeRate', // Commented out because to avoid an error because it is commented out in intialize.js
+      'DailyAverageExchangeRate',
       'AfnRemovalOrders',
       'AfnRemovalOrdersDetails',
       'AfnRemovalShipmentsDetails',
@@ -101,12 +102,23 @@ async function runSeeding(db) {
 
     // Sequentially seed each table
     for (const table of tables) {
-      await seedDb(db, table);
+      // Check if the table is empty before seeding
+      const recordCount = await db[table].count();
+      if (recordCount === 0) {
+        await seedDb(db, table);
+        console.log(`${table} table seeded.`);
+      } else {
+        console.log(`${table} table already has data.`);
+      }
     }
     console.log('All seeding completed.');
   } catch (error) {
     console.error('Seeding failed:', error);
   }
+}
+// To prevent automatic running in case of import
+if (require.main === module) {
+  runSeeding(db);
 }
 
 module.exports = runSeeding;

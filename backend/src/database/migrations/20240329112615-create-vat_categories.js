@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         allowNull: false,
       },
-      vat_category_description: {
+      vat_category_definition: {
         type: Sequelize.STRING(30),
         allowNull: false,
         unique: true,

@@ -1,4 +1,4 @@
-priceGridFbaFeeId,countryCode,fbaPackageCategoryName,categoryMaxWeight,categoryMaxLength,categoryMaxWidth,categoryMaxHeight,fbaFeeLocalAndPanEu,fbaFeeEfn,fbaFeeLowPriceLocalAndPanEu,fbaFeeLowPriceEfn,lowPriceThresholdInc,hazmatFee,currencyCode
+priceGridFbaFeeId,countryCode,fbaPackageCategoryName,categoryMaxWeight,categoryMaxLength,categoryMaxWidth,categoryMaxHeight,fbaFeeLocalAndPanEu,fbaFeeEfnEu,fbaFeeLowPriceLocalAndPanEu,fbaFeeLowPriceEfn,lowPriceThresholdInc,hazmatFee,currencyCode
 ,FR,small envelope,80,20,15,1,2.70,5.06,2.09,5.06,12.00,0.1,EUR
 ,FR,standard envelope,60,33,23,2.5,2.80,5.22,2.19,5.22,12.00,0.1,EUR
 ,FR,standard envelope,210,33,23,2.5,3.34,5.57,2.73,5.57,12.00,0.1,EUR

@@ -43,7 +43,7 @@ module.exports = sequelize => {
       fbaFeeLocalAndPanEu: {
         type: DataTypes.DECIMAL(10, 2),
       },
-      fbaFeeEfn: {
+      fbaFeeEfnEu: {
         type: DataTypes.DECIMAL(10, 2),
       },
       fbaFeeLowPriceLocalAndPanEu: {

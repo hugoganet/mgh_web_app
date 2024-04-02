@@ -4,7 +4,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('asins_skus', {
-      asins_skus_id: {
+      asin_sku_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,

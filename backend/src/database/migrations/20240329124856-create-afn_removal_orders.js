@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      lastUpdate: {
+      last_update: {
         type: Sequelize.DATE,
         allowNull: false,
       },
@@ -37,7 +37,7 @@ module.exports = {
           key: 'warehouse_id',
         },
       },
-      orderStatus: {
+      order_status: {
         type: Sequelize.STRING(50),
         allowNull: false,
       },

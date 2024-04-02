@@ -24,7 +24,7 @@ module.exports = sequelize => {
           key: 'warehouse_id',
         },
       },
-      eanSupplierOrderId: {
+      eanInSupplierOrderId: {
         type: DataTypes.INTEGER,
         references: {
           model: 'eans_in_suppliers_orders',

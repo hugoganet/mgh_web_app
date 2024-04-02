@@ -324,11 +324,11 @@ module.exports = db => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  AmazonReferralFee.hasMany(MinimumSellingPrice, {
-    foreignKey: 'referralFeeCategoryId',
-    onDelete: 'NO ACTION',
-    onUpdate: 'CASCADE',
-  });
+  // AmazonReferralFee.hasMany(MinimumSellingPrice, {
+  //   foreignKey: 'referralFeeCategoryId',
+  //   onDelete: 'NO ACTION',
+  //   onUpdate: 'CASCADE',
+  // });
 
   // Associations for PriceGridFbaFee
   PriceGridFbaFee.belongsTo(Country, {
@@ -398,11 +398,6 @@ module.exports = db => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  Warehouse.hasMany(AfnRemovalShipmentsDetails, {
-    foreignKey: 'warehouseId',
-    onDelete: 'NO ACTION',
-    onUpdate: 'CASCADE',
-  });
 
   // Associations for MinimumSellingPrice
   MinimumSellingPrice.belongsTo(Sku, {
@@ -415,11 +410,11 @@ module.exports = db => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
-  MinimumSellingPrice.belongsTo(AmazonReferralFee, {
-    foreignKey: 'referralFeeCategoryId',
-    onDelete: 'NO ACTION',
-    onUpdate: 'CASCADE',
-  });
+  // MinimumSellingPrice.belongsTo(AmazonReferralFee, {
+  //   foreignKey: 'referralFeeCategoryId',
+  //   onDelete: 'NO ACTION',
+  //   onUpdate: 'CASCADE',
+  // });
 
   // Associations for PricingRule
   PricingRule.hasMany(MinimumSellingPrice, {
@@ -489,6 +484,11 @@ module.exports = db => {
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
+  EanInSupplierOrder.belongsTo(WarehouseStock, {
+    foreignKey: 'eanInSupplierOrderId',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
 
   // Associations for WarehouseStock
   WarehouseStock.belongsTo(Warehouse, {
@@ -497,7 +497,7 @@ module.exports = db => {
     onUpdate: 'CASCADE',
   });
   WarehouseStock.belongsTo(EanInSupplierOrder, {
-    foreignKey: 'eanSupplierOrderId',
+    foreignKey: 'eanInSupplierOrderId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
@@ -536,11 +536,6 @@ module.exports = db => {
   // Associations for AfnRemovalShipmentsDetails
   AfnRemovalShipmentsDetails.belongsTo(Sku, {
     foreignKey: 'skuId',
-    onDelete: 'NO ACTION',
-    onUpdate: 'CASCADE',
-  });
-  AfnRemovalShipmentsDetails.belongsTo(Warehouse, {
-    foreignKey: 'warehouseId',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });
