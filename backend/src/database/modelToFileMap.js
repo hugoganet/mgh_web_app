@@ -32,6 +32,7 @@ const modelToFileMap = {
   AfnRemovalShipmentsDetails: 'afn_removal_shipments_details.csv',
   AfnRemovalOrders: 'afn_removal_orders.csv',
   FormattedCatalog: 'formatted_catalog.csv',
+  KeepaData: 'keepa_data.csv',
 };
 
 module.exports = modelToFileMap;
