@@ -36,6 +36,9 @@ module.exports = db => {
     AfnRemovalOrders,
     AfnShipments,
     EanInAfnShipments,
+    FormattedCatalog,
+    KeepaData,
+    AsinSourcingCatalog,
   } = db;
 
   // Associations for Asin
@@ -595,6 +598,32 @@ module.exports = db => {
     onUpdate: 'CASCADE',
   });
   EanInAfnShipments.belongsTo(Ean, {
+    foreignKey: 'ean',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for AsinSourcingCatalog
+  AsinSourcingCatalog.belongsTo(KeepaData, {
+    foreignKey: 'asin',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+  AsinSourcingCatalog.belongsTo(FormattedCatalog, {
+    foreignKey: 'ean',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for KeepaData
+  KeepaData.hasMany(AsinSourcingCatalog, {
+    foreignKey: 'asin',
+    onDelete: 'NO ACTION',
+    onUpdate: 'CASCADE',
+  });
+
+  // Associations for FormattedCatalog
+  FormattedCatalog.hasOne(AsinSourcingCatalog, {
     foreignKey: 'ean',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
