@@ -299,14 +299,14 @@ priceGridFbaFeeId,countryCode,fbaPackageCategoryName,categoryMaxWeight,categoryM
 ,BE,special oversize,50000,,,,,,,,,0.1,EUR
 ,BE,special oversize,60000,,,,,,,,,0.1,EUR
 ,BE,special oversize,60000,,,,,,,,,0.1,EUR
-,SE,small envelope,80,20,15,1,30.04,47.08,27.60,47.08,,1,SEK
-,SE,standard envelope,60,33,23,2.5,30.86,49.59,28.42,49.59,,1,SEK
-,SE,standard envelope,210,33,23,2.5,32.20,52.91,29.76,52.91,,1,SEK
-,SE,standard envelope,460,33,23,2.5,37.09,53.22,34.65,53.22,,1,SEK
-,SE,large envelope,960,33,23,4,38.55,57.38,36.11,57.38,,1,SEK
-,SE,extra large envelope,960,33,23,6,42.24,62.10,39.80,62.10,,1,SEK
-,SE,small parcel,150,35,25,12,43.67,62.34,41.23,62.34,,1,SEK
-,SE,small parcel,400,35,25,12,45.75,67.95,43.31,67.95,,1,SEK
+,SE,small envelope,80,20,15,1,30.04,47.08,27.60,47.08,140,1,SEK
+,SE,standard envelope,60,33,23,2.5,30.86,49.59,28.42,49.59,140,1,SEK
+,SE,standard envelope,210,33,23,2.5,32.20,52.91,29.76,52.91,140,1,SEK
+,SE,standard envelope,460,33,23,2.5,37.09,53.22,34.65,53.22,140,1,SEK
+,SE,large envelope,960,33,23,4,38.55,57.38,36.11,57.38,140,1,SEK
+,SE,extra large envelope,960,33,23,6,42.24,62.10,39.80,62.10,140,1,SEK
+,SE,small parcel,150,35,25,12,43.67,62.34,41.23,62.34,140,1,SEK
+,SE,small parcel,400,35,25,12,45.75,67.95,43.31,67.95,140,1,SEK
 ,SE,small parcel,900,35,25,12,46.38,81.39,,,,1,SEK
 ,SE,small parcel,1400,35,25,12,47.77,89.49,,,,1,SEK
 ,SE,small parcel,1900,35,25,12,49.37,101.90,,,,1,SEK
@@ -349,14 +349,14 @@ priceGridFbaFeeId,countryCode,fbaPackageCategoryName,categoryMaxWeight,categoryM
 ,SE,special oversize,50000,,,,,,,,,1,SEK
 ,SE,special oversize,60000,,,,,,,,,1,SEK
 ,SE,special oversize,60000,,,,,,,,,1,SEK
-,PL,small envelope,80,20,15,1,4.75,20.25,3.89,20.25,,40,PLN
-,PL,standard envelope,60,33,23,2.5,4.80,21.12,3.94,21.12,,40,PLN
-,PL,standard envelope,210,33,23,2.5,4.94,22.61,4.08,22.61,,40,PLN
-,PL,standard envelope,460,33,23,2.5,5.20,22.95,4.34,22.95,,40,PLN
-,PL,large envelope,960,33,23,4,5.64,24.57,4.78,24.57,,40,PLN
-,PL,extra large envelope,960,33,23,6,5.70,29.68,4.84,29.68,,40,PLN
-,PL,small parcel,150,35,25,12,5.70,29.68,4.84,29.68,,40,PLN
-,PL,small parcel,400,35,25,12,5.77,32.33,4.91,32.33,,40,PLN
+,PL,small envelope,80,20,15,1,4.75,20.25,3.89,20.25,55,40,PLN
+,PL,standard envelope,60,33,23,2.5,4.80,21.12,3.94,21.12,55,40,PLN
+,PL,standard envelope,210,33,23,2.5,4.94,22.61,4.08,22.61,55,40,PLN
+,PL,standard envelope,460,33,23,2.5,5.20,22.95,4.34,22.95,55,40,PLN
+,PL,large envelope,960,33,23,4,5.64,24.57,4.78,24.57,55,40,PLN
+,PL,extra large envelope,960,33,23,6,5.70,29.68,4.84,29.68,55,40,PLN
+,PL,small parcel,150,35,25,12,5.70,29.68,4.84,29.68,55,40,PLN
+,PL,small parcel,400,35,25,12,5.77,32.33,4.91,32.33,55,40,PLN
 ,PL,small parcel,900,35,25,12,6.55,38.43,,,,40,PLN
 ,PL,small parcel,1400,35,25,12,6.81,42.11,,,,40,PLN
 ,PL,small parcel,1900,35,25,12,6.82,47.74,,,,40,PLN
