@@ -10,7 +10,7 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
-      asin: {
+      keepaDataId: {
         type: Sequelize.STRING(20),
         allowNull: false,
         references: {
@@ -39,46 +39,46 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
       },
       minimumSellingPriceLocalAndPanEu: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
       },
       minimumSellingPriceEfn: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
       },
       estimMonthlyRevenu: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
       },
       estimMonthlyMarginExc: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
       },
       estimAcquisitionCostExc: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
       },
       estimPersonalMonthlyQuantitySold: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       pvMoyenConstate: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
       },
       fbaFees: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
       },
       prepFees: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
       },
       transportFees: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 2),
       },
       isHazmat: {
-        type: DataTypes.BOOLEAN,
+        type: Sequelize.BOOLEAN,
       },
       estimMonthlyQuantitySold: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       estimNumberOfSeller: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       desiredNumberOfWeeksCovered: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
     });
   },

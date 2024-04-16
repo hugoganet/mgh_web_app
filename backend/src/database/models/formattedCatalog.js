@@ -19,6 +19,7 @@ module.exports = sequelize => {
       ean: {
         type: DataTypes.STRING(13),
         allowNull: false,
+        unique: true,
         validate: {
           is: {
             args: /^[0-9]{13}$/,

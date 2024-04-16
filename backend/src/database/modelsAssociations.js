@@ -617,7 +617,7 @@ module.exports = db => {
 
   // Associations for KeepaData
   KeepaData.hasMany(AsinSourcingCatalog, {
-    foreignKey: 'asin',
+    foreignKey: '',
     onDelete: 'NO ACTION',
     onUpdate: 'CASCADE',
   });

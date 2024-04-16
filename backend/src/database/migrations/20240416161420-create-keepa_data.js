@@ -154,6 +154,7 @@ module.exports = {
       },
       asin: {
         type: Sequelize.STRING(20),
+        unique: true,
       },
       ean: {
         type: Sequelize.CHAR(13),

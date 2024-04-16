@@ -160,6 +160,7 @@ module.exports = sequelize => {
       },
       asin: {
         type: DataTypes.STRING(20),
+        unique: true,
       },
       ean: {
         type: DataTypes.CHAR(13),
