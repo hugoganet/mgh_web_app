@@ -22,6 +22,7 @@ import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
+import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined';
 
 import { tokens } from '../../theme';
 
@@ -188,29 +189,36 @@ const Sidebar = () => {
             color={colors.grey[300]}
             sx={{ m: '15px 0 5px 20px' }}
           >
-            Pages
+            Tools
           </Typography>
           <Item
+            title="Scan Catalog"
+            to="/scan_catalog"
+            icon={<ManageSearchOutlinedIcon />}
+            selected={selected}
+            setSelected={setSelected}
+          />
+          {/* <Item
             title="Profile Form"
             to="/form"
             icon={<PersonOutlinedIcon />}
             selected={selected}
             setSelected={setSelected}
-          />
-          <Item
+          /> */}
+          {/* <Item
             title="Calendar"
             to="/calendar"
             icon={<CalendarTodayOutlinedIcon />}
             selected={selected}
             setSelected={setSelected}
-          />
-          <Item
+          /> */}
+          {/* <Item
             title="FAQ Page"
             to="/faq"
             icon={<HelpOutlineOutlinedIcon />}
             selected={selected}
             setSelected={setSelected}
-          />
+          /> */}
 
           <Typography
             variant="h6"
