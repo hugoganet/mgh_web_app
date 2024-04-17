@@ -4,156 +4,156 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('keepa_data', {
-      keepaDataId: {
+      keepa_data_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      countryCode: {
+      country_code: {
         type: Sequelize.CHAR(2),
         allowNull: false,
       },
-      urlImage: {
+      url_image: {
         type: Sequelize.STRING(500),
       },
-      productName: {
+      product_name: {
         type: Sequelize.STRING(250),
       },
-      salesRanking30DaysAvg: {
+      sales_ranking_30_days_avg: {
         type: Sequelize.INTEGER,
       },
-      salesRanking90DaysAvg: {
+      sales_ranking_90_days_avg: {
         type: Sequelize.INTEGER,
       },
-      salesRanking180DaysAvg: {
+      sales_ranking_180_days_avg: {
         type: Sequelize.INTEGER,
       },
-      productCategory: {
+      product_category_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'product_category',
-          key: 'productCategoryId',
+          model: 'product_categories', // Make sure this matches the actual table name in your database
+          key: 'product_category_id',
         },
       },
-      reviewsRating: {
+      reviews_rating: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      reviewsCount: {
+      reviews_count: {
         type: Sequelize.INTEGER,
       },
-      amazonCurrent: {
+      amazon_current: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      amazon30DaysAvg: {
+      amazon_30_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      amazon90DaysAvg: {
+      amazon_90_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      amazon180DaysAvg: {
+      amazon_180_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      amazonLowest: {
+      amazon_lowest: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      amazonHighest: {
+      amazon_highest: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      amazon90DaysOOS: {
+      amazon_90_days_oos: {
         type: Sequelize.INTEGER,
       },
-      newCurrent: {
+      new_current: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      new30DaysAvg: {
+      new_30_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      new90DaysAvg: {
+      new_90_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      new180DaysAvg: {
+      new_180_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      newThirdPartyFBACurrent: {
+      new_third_party_fba_current: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      newThirdPartyFBA30DaysAvg: {
+      new_third_party_fba_30_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      newThirdPartyFBA90DaysAvg: {
+      new_third_party_fba_90_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      newThirdPartyFBA180DaysAvg: {
+      new_third_party_fba_180_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      newThirdPartyFBALowest: {
+      new_third_party_fba_lowest: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      fbaPickPackFee: {
+      fba_pick_pack_fee: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      newThirdPartyFBMCurrent: {
+      new_third_party_fbm_current: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      newThirdPartyFBM30DaysAvg: {
+      new_third_party_fbm_30_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      newThirdPartyFBM90DaysAvg: {
+      new_third_party_fbm_90_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      newThirdPartyFBM180DaysAvg: {
+      new_third_party_fbm_180_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      newOffersCurrentCount: {
+      new_offers_current_count: {
         type: Sequelize.INTEGER,
       },
-      newOffers90DaysAvgCount: {
+      new_offers_90_days_avg_count: {
         type: Sequelize.INTEGER,
       },
-      countRetrievedLiveOffersNewFBA: {
+      count_retrieved_live_offers_new_fba: {
         type: Sequelize.INTEGER,
       },
-      countRetrievedLiveOffersNewFBM: {
+      count_retrieved_live_offers_new_fbm: {
         type: Sequelize.INTEGER,
       },
-      buyBoxCurrent: {
+      buy_box_current: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      buyBox30DaysAvg: {
+      buy_box_30_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      buyBox90DaysAvg: {
+      buy_box_90_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      buyBox180DaysAvg: {
+      buy_box_180_days_avg: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      buyBoxLowest: {
+      buy_box_lowest: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      buyBoxHighest: {
+      buy_box_highest: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      buyBoxSeller: {
+      buy_box_seller: {
         type: Sequelize.STRING(100),
       },
-      buyBoxIsFBA: {
+      buy_box_is_fba: {
         type: Sequelize.BOOLEAN,
       },
-      buyBoxUnqualified: {
+      buy_box_unqualified: {
         type: Sequelize.BOOLEAN,
       },
-      urlAmazon: {
+      url_amazon: {
         type: Sequelize.STRING(500),
       },
-      urlKeepa: {
+      url_keepa: {
         type: Sequelize.STRING(500),
       },
-      categoriesRoot: {
+      categories_root: {
         type: Sequelize.STRING(150),
       },
-      categoriesSub: {
+      categories_sub: {
         type: Sequelize.STRING(150),
       },
       asin: {
@@ -166,22 +166,22 @@ module.exports = {
       brand: {
         type: Sequelize.STRING(100),
       },
-      numberOfItems: {
+      number_of_items: {
         type: Sequelize.INTEGER,
       },
-      packageLengthCm: {
+      package_length_cm: {
         type: Sequelize.INTEGER,
       },
-      packageWidthCm: {
+      package_width_cm: {
         type: Sequelize.INTEGER,
       },
-      packageHeightCm: {
+      package_height_cm: {
         type: Sequelize.INTEGER,
       },
-      packageWeightG: {
+      package_weight_g: {
         type: Sequelize.INTEGER,
       },
-      isHazmat: {
+      is_hazmat: {
         type: Sequelize.BOOLEAN,
       },
     });

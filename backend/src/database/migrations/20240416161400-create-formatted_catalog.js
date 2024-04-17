@@ -4,7 +4,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('formatted_catalog', {
-      formattedCatalogId: {
+      formatted_catalog_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -21,19 +21,19 @@ module.exports = {
           },
         },
       },
-      supplierPartNumber: {
+      supplier_part_number: {
         type: Sequelize.STRING(50),
       },
-      productName: {
+      product_name: {
         type: Sequelize.STRING(250),
       },
-      productPriceExc: {
+      product_price_exc: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      productVatRate: {
+      product_vat_rate: {
         type: Sequelize.DECIMAL(6, 5),
       },
-      currencyCode: {
+      currency_code: {
         type: Sequelize.CHAR(3),
       },
     });
