@@ -4,35 +4,22 @@ import { Box, Button, useTheme } from '@mui/material';
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
 import { tokens } from '../../theme';
 import Header from '../../components/Header';
+import { uploadFile } from '../../services/fileUploadService';
 
 const ScanCatalog = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const fileInput = useRef(null); // Create a ref using useRef hook
-  const [file, setFile] = useState(null);
 
-  const handleFileChange = event => {
-    setFile(event.target.files[0]); // Handle file selection
-  };
-
-  const handleUpload = async () => {
-    if (!file) {
-      alert('No file selected');
-      return;
-    }
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const response = await fetch('http://localhost:3001/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      const result = await response.json();
-      alert('Upload successful');
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      alert('Upload failed');
+  const handleFileChange = async event => {
+    const file = event.target.files[0]; // Handle file selection
+    if (file) {
+      try {
+        const result = await uploadFile(file); // Use the upload service
+        alert('Upload successful: ' + JSON.stringify(result));
+      } catch (error) {
+        alert('Upload failed: ' + error.message);
+      }
     }
   };
 
