@@ -3,7 +3,7 @@ const uploadCatalog = async file => {
   formData.append('file', file);
 
   try {
-    const response = await fetch('http://localhost:3001/uploadCatalog', {
+    const response = await fetch('http://localhost:3001/uploadatalog', {
       method: 'POST',
       body: formData,
     });

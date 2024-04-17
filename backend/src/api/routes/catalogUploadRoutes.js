@@ -1,13 +1,13 @@
 const express = require('express');
-const keepaDataUploadController = require('../controllers/keepaDataUploadController');
+const catalogUploadController = require('../controllers/catalogUploadController');
 const upload = require('../middleware/fileUploadMiddleware');
 const router = express.Router();
 
 /**
  * @swagger
- * /uploadKeepaData:
+ * /uploadCatalog:
  *   post:
- *     summary: Upload Keepa data file
+ *     summary: Upload supplier catalog file
  *     tags: [File Upload]
  *     requestBody:
  *       required: true
@@ -19,7 +19,7 @@ const router = express.Router();
  *               file:
  *                 type: string
  *                 format: binary
- *                 description: Keepa CSV file to upload.
+ *                 description: Supplier catalog file to upload.
  *     responses:
  *       200:
  *         description: File uploaded successfully.
@@ -31,7 +31,7 @@ const router = express.Router();
 router.post(
   '/',
   upload.single('file'),
-  keepaDataUploadController.uploadKeepaFile,
+  catalogUploadController.uploadCatalogFile,
 );
 
 module.exports = router;
