@@ -29,8 +29,12 @@ module.exports = {
       salesRanking180DaysAvg: {
         type: Sequelize.INTEGER,
       },
-      salesRankingReference: {
+      productCategory: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'product_category',
+          key: 'productCategoryId',
+        },
       },
       reviewsRating: {
         type: Sequelize.DECIMAL(10, 2),
