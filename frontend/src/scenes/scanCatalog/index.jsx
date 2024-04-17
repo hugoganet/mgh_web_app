@@ -1,24 +1,38 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Box, Button, useTheme } from '@mui/material';
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
 import { tokens } from '../../theme';
 import Header from '../../components/Header';
-import { uploadKeepaData } from '../../services/uploadKeepaDataService';
+import uploadKeepaData from '../../services/uploadKeepaDataService';
+import uploadCatalog from '../../services/uploadCatalogService';
 
 const ScanCatalog = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const fileInput = useRef(null); // Create a ref using useRef hook
+  const fileInputKeepa = useRef(null);
+  const fileInputCatalog = useRef(null);
 
-  const handleFileChange = async event => {
-    const file = event.target.files[0]; // Handle file selection
+  const handleFileChangeKeepa = async event => {
+    const file = event.target.files[0];
     if (file) {
       try {
-        const result = await uploadKeepaData(file); // Use the upload service
-        alert('Upload successful: ' + JSON.stringify(result));
+        const result = await uploadKeepaData(file);
+        console.log('Keepa data upload successful:', result);
       } catch (error) {
-        alert('Upload failed: ' + error.message);
+        console.error('Keepa data upload failed:', error.message);
+      }
+    }
+  };
+
+  const handleFileChangeCatalog = async event => {
+    const file = event.target.files[0];
+    if (file) {
+      try {
+        const result = await uploadCatalog(file);
+        console.log('Catalog upload successful:', result);
+      } catch (error) {
+        console.error('Catalog upload failed:', error.message);
       }
     }
   };
@@ -32,9 +46,9 @@ const ScanCatalog = () => {
         />
         <input
           type="file"
-          onChange={handleFileChange}
+          onChange={handleFileChangeKeepa}
           style={{ display: 'none' }}
-          ref={fileInput}
+          ref={fileInputKeepa}
         />
         <Button
           sx={{
@@ -47,10 +61,32 @@ const ScanCatalog = () => {
               backgroundColor: colors.blueAccent[800],
             },
           }}
-          onClick={() => fileInput.current.click()} // Access the ref's current value to trigger click
+          onClick={() => fileInputKeepa.current.click()} // Trigger the hidden file input
         >
           <DownloadOutlinedIcon sx={{ mr: '10px' }} />
           Upload Keepa Data
+        </Button>
+        <input
+          type="file"
+          onChange={handleFileChangeCatalog}
+          style={{ display: 'none' }}
+          ref={fileInputCatalog}
+        />
+        <Button
+          sx={{
+            backgroundColor: colors.greenAccent[700],
+            color: colors.grey[100],
+            fontSize: '14px',
+            fontWeight: 'bold',
+            padding: '10px 20px',
+            '&:hover': {
+              backgroundColor: colors.greenAccent[800],
+            },
+          }}
+          onClick={() => fileInputCatalog.current.click()} // Trigger the hidden file input for catalog
+        >
+          <DownloadOutlinedIcon sx={{ mr: '10px' }} />
+          Upload Catalog
         </Button>
       </Box>
     </Box>

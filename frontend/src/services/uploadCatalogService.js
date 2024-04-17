@@ -1,9 +1,9 @@
-const uploadKeepaData = async file => {
+const uploadCatalog = async file => {
   const formData = new FormData();
   formData.append('file', file);
 
   try {
-    const response = await fetch('http://localhost:3001/uploadKeepaData', {
+    const response = await fetch('http://localhost:3001/uploadCatalog', {
       method: 'POST',
       body: formData,
     });
@@ -11,12 +11,12 @@ const uploadKeepaData = async file => {
       const result = await response.json();
       return result; // Return result for further processing or confirmation messages
     } else {
-      throw new Error('Failed to upload file: ' + response.statusText);
+      throw new Error('Failed to upload catalog file: ' + response.statusText);
     }
   } catch (error) {
-    console.error('Error uploading file:', error);
+    console.error('Error uploading catalog file:', error);
     throw error; // Re-throw to handle it in the component
   }
 };
 
-export default uploadKeepaData;
+export default uploadCatalog;
