@@ -4,7 +4,7 @@ import { Box, Button, useTheme } from '@mui/material';
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
 import { tokens } from '../../theme';
 import Header from '../../components/Header';
-import { uploadFile } from '../../services/fileUploadService';
+import { uploadKeepaData } from '../../services/uploadKeepaDataService';
 
 const ScanCatalog = () => {
   const theme = useTheme();
@@ -15,7 +15,7 @@ const ScanCatalog = () => {
     const file = event.target.files[0]; // Handle file selection
     if (file) {
       try {
-        const result = await uploadFile(file); // Use the upload service
+        const result = await uploadKeepaData(file); // Use the upload service
         alert('Upload successful: ' + JSON.stringify(result));
       } catch (error) {
         alert('Upload failed: ' + error.message);
@@ -50,7 +50,7 @@ const ScanCatalog = () => {
           onClick={() => fileInput.current.click()} // Access the ref's current value to trigger click
         >
           <DownloadOutlinedIcon sx={{ mr: '10px' }} />
-          Upload Catalog
+          Upload Keepa Data
         </Button>
       </Box>
     </Box>

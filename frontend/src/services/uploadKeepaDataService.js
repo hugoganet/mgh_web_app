@@ -1,9 +1,9 @@
-const uploadFile = async file => {
+const uploadKeepaData = async file => {
   const formData = new FormData();
   formData.append('file', file);
 
   try {
-    const response = await fetch('http://localhost:3001/upload', {
+    const response = await fetch('http://localhost:3001/uploadKeepaData', {
       method: 'POST',
       body: formData,
     });
@@ -19,4 +19,4 @@ const uploadFile = async file => {
   }
 };
 
-module.exports = { uploadFile };
+module.exports = { uploadKeepaData };
