@@ -346,19 +346,6 @@ const processKeepaDataFile = async filePath => {
         }
       })
       .on('end', async () => {
-        // // Log and check for NaN values before attempting to insert into the database
-        // console.log('Data to be inserted:', results);
-        // results.forEach((data, index) => {
-        //   Object.keys(data).forEach(key => {
-        //     if (Number.isNaN(data[key])) {
-        //       console.error(
-        //         `NaN found in entry ${index} at key ${key} with value ${data[key]}`,
-        //       );
-        //       // Optionally, you can handle the NaN case, like setting it to null if allowed
-        //       // data[key] = null; // Only do this if your database schema allows null values for this field
-        //     }
-        //   });
-        // });
         if (results.length > 0) {
           try {
             await db.KeepaData.bulkCreate(results, { ignoreDuplicates: true });
