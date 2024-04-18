@@ -23,8 +23,25 @@ module.exports = sequelize => {
       urlImage: {
         type: DataTypes.STRING(500),
       },
+      asin: {
+        type: DataTypes.STRING(20),
+        unique: true,
+      },
+      ean: {
+        type: DataTypes.CHAR(13),
+      },
+      brand: {
+        type: DataTypes.STRING(100),
+      },
       productName: {
         type: DataTypes.STRING(250),
+      },
+      productCategoryId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'product_category',
+          key: 'productCategoryId',
+        },
       },
       salesRanking30DaysAvg: {
         type: DataTypes.INTEGER,
@@ -34,13 +51,6 @@ module.exports = sequelize => {
       },
       salesRanking180DaysAvg: {
         type: DataTypes.INTEGER,
-      },
-      productCategoryId: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'product_category',
-          key: 'productCategoryId',
-        },
       },
       reviewsRating: {
         type: DataTypes.DECIMAL(10, 2),
@@ -156,21 +166,8 @@ module.exports = sequelize => {
       urlKeepa: {
         type: DataTypes.STRING(500),
       },
-      categoriesRoot: {
-        type: DataTypes.STRING(150),
-      },
       categoriesSub: {
         type: DataTypes.STRING(150),
-      },
-      asin: {
-        type: DataTypes.STRING(20),
-        unique: true,
-      },
-      ean: {
-        type: DataTypes.CHAR(13),
-      },
-      brand: {
-        type: DataTypes.STRING(100),
       },
       numberOfItems: {
         type: DataTypes.INTEGER,

@@ -32,7 +32,7 @@ module.exports = {
       product_category_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'product_categories', // Make sure this matches the actual table name in your database
+          model: 'product_categories',
           key: 'product_category_id',
         },
       },
@@ -149,9 +149,6 @@ module.exports = {
       },
       url_keepa: {
         type: Sequelize.STRING(500),
-      },
-      categories_root: {
-        type: Sequelize.STRING(150),
       },
       categories_sub: {
         type: Sequelize.STRING(150),
