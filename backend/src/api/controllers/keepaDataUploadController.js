@@ -1,15 +1,31 @@
+const {
+  processKeepaDataFile,
+} = require('../services/keepaDataProcessingService');
+
 const sendErrorResponse = (res, error, statusCode = 500) => {
   console.error(error);
   const message = statusCode === 500 ? 'Internal server error' : error.message;
   res.status(statusCode).send({ error: message });
 };
 
-// Simplified Keepa data upload function
+// Function to handle the upload and processing of Keepa data files
 exports.uploadKeepaFile = async (req, res) => {
   if (!req.file) {
     return sendErrorResponse(res, new Error('No file uploaded'), 400);
   }
 
-  // At this point, the file is already saved in the uploads/ directory by Multer
-  res.status(200).send({ message: 'Keepa data file uploaded successfully' });
+  try {
+    // Process the uploaded file
+    const processResult = await processKeepaDataFile(req.file.path);
+    // If processing is successful, return a detailed response
+    res.status(200).send({
+      message: 'Keepa data file processed successfully',
+      results: processResult.results,
+      duplicates: processResult.duplicates,
+      errors: processResult.errors,
+    });
+  } catch (error) {
+    // Handle any errors during the processing
+    sendErrorResponse(res, error);
+  }
 };

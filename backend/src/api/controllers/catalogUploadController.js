@@ -1,10 +1,10 @@
+const catalogProcessingService = require('../services/catalogProcessingService');
+
 const sendErrorResponse = (res, error, statusCode = 500) => {
   console.error(error);
   const message = statusCode === 500 ? 'Internal server error' : error.message;
   res.status(statusCode).send({ error: message });
 };
-
-const catalogProcessingService = require('../services/catalogProcessingService');
 
 // Function to handle the upload and processing of supplier catalog files
 exports.uploadCatalogFile = async (req, res) => {
