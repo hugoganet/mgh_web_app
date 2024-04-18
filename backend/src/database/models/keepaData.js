@@ -20,12 +20,12 @@ module.exports = sequelize => {
         type: DataTypes.CHAR(2),
         allowNull: false,
       },
-      urlImage: {
-        type: DataTypes.STRING(500),
-      },
       asin: {
         type: DataTypes.STRING(20),
-        unique: true,
+        allowNull: false,
+      },
+      urlImage: {
+        type: DataTypes.STRING(500),
       },
       ean: {
         type: DataTypes.CHAR(13),
@@ -193,6 +193,12 @@ module.exports = sequelize => {
       modelName: 'KeepaData',
       tableName: 'keepa_data',
       timestamps: false,
+      indexes: [
+        {
+          unique: true,
+          fields: ['asin', 'country_code'],
+        },
+      ],
     },
   );
 

@@ -9,40 +9,45 @@ const getProductCategoryId = require('./getProductCategoryId');
 const processKeepaDataFile = async filePath => {
   const results = [];
   const errors = [];
+  const duplicates = [];
+  const existingCombos = new Set(); // To track unique asin and countryCode combinations
 
   return new Promise((resolve, reject) => {
     fs.createReadStream(filePath)
       .pipe(csv())
       .on('data', async data => {
         try {
-          const productCategoryId = await getProductCategoryId(
-            data['Catégories: Root'],
-            data.Locale,
-          );
-          if (!productCategoryId) {
-            errors.push({
-              error:
-                'No valid product category ID found for the provided category reference.',
-              row: data,
-              reference: data['Catégories: Root'],
-            });
-            return; // Skip further processing for this row
-          }
-
+          const countryCode = data.Locale.toUpperCase();
           const asin = data.ASIN;
-          if (existingAsins.has(asin)) {
+          const comboKey = `${asin}-${countryCode}`;
+
+          if (existingCombos.has(comboKey)) {
             duplicates.push({
               asin,
-              error: 'Duplicate ASIN in the batch',
-              row: data,
+              countryCode,
+              reason:
+                'Duplicate ASIN and Country Code combination in the batch',
             });
-            return; // Skip this duplicate entry
+            return;
           }
-          existingAsins.add(asin);
-          console.log(data);
+          existingCombos.add(comboKey);
+
+          const productCategoryId = await getProductCategoryId(
+            data['Catégories: Root'],
+            countryCode,
+          );
+
+          if (!productCategoryId) {
+            errors.push({
+              error: 'No valid product category ID found',
+              asin,
+              productCategory: data['Catégories: Root'],
+            });
+            return;
+          }
 
           const mappedData = {
-            countryCode: data.Locale,
+            countryCode,
             urlImage: data.Image,
             asin,
             ean: data['Product Codes: EAN'],
@@ -207,22 +212,22 @@ const processKeepaDataFile = async filePath => {
         }
       })
       .on('end', async () => {
-        try {
-          // Batch insert while ignoring duplicates
-          await db.KeepaData.bulkCreate(results, {
-            ignoreDuplicates: true,
-          });
-
-          fs.unlinkSync(filePath); // Optionally remove file after processing
-          resolve({
-            message: 'Keepa data processed successfully.',
-            results: results.length - duplicates.length,
-            duplicates: duplicates.length,
-            errors,
-          });
-        } catch (error) {
-          reject(error);
+        if (results.length > 0) {
+          try {
+            await db.KeepaData.bulkCreate(results, { ignoreDuplicates: true });
+          } catch (bulkError) {
+            reject(bulkError);
+          }
         }
+
+        fs.unlinkSync(filePath); // Optionally remove file after processing
+        resolve({
+          message: 'Keepa data processed successfully.',
+          processed: results.length - duplicates.length,
+          successful: results.length,
+          duplicates: duplicates.length,
+          errors: errors,
+        });
       })
       .on('error', error => reject(error));
   });

@@ -1,5 +1,5 @@
 /**
- * @description Parses a string to a number, validates it against a range, and optionally rounds it to a specified number of decimal places.
+ * @description Parses a string to a number, validates it against a range, removes currency symbols and spaces, and optionally rounds it to a specified number of decimal places.
  * @function parseAndValidateNumber
  * @param {string} value - The value to parse and validate.
  * @param {Object} options - The options for the function.
@@ -13,7 +13,12 @@ function parseAndValidateNumber(
   value,
   { min = -Infinity, max = Infinity, paramName = '', decimals = null } = {},
 ) {
-  let number = parseFloat(value);
+  // Remove currency symbols and spaces from the string
+  const cleanedValue = value.replace(/[€$£ ]/g, '');
+
+  // Convert the cleaned string to a number
+  let number = parseFloat(cleanedValue);
+
   if (isNaN(number) || number < min || number > max) {
     throw new Error(
       `Invalid value for ${paramName}: ${value}. Must be a number between ${min} and ${max}.`,

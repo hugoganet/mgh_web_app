@@ -11,11 +11,12 @@ module.exports = {
         allowNull: false,
       },
       keepaDataId: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.INTEGER,
+        unique: true,
         allowNull: false,
         references: {
           model: 'keepa_data',
-          key: 'asin',
+          key: 'keepa_data_id',
         },
       },
       ean: {

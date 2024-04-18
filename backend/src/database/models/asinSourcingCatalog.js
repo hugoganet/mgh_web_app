@@ -16,12 +16,12 @@ module.exports = sequelize => {
         allowNull: false,
         autoIncrement: true,
       },
-      asin: {
-        type: DataTypes.STRING(20),
+      keepaDataId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
           model: 'keepa_data',
-          key: 'asin',
+          key: 'keepa_data_id',
         },
       },
       ean: {

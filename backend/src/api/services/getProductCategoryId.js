@@ -1,3 +1,5 @@
+const db = require('../../database/models/index');
+
 /**
  * @description This function is used to retrieve the product category ID based on the product category name and country code.
  * @function getProductCategoryId

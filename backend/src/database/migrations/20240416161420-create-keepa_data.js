@@ -14,6 +14,16 @@ module.exports = {
         type: Sequelize.CHAR(2),
         allowNull: false,
       },
+      asin: {
+        type: Sequelize.STRING(20),
+        allowNull: false,
+      },
+      ean: {
+        type: Sequelize.CHAR(13),
+      },
+      brand: {
+        type: Sequelize.STRING(100),
+      },
       url_image: {
         type: Sequelize.STRING(500),
       },
@@ -153,16 +163,6 @@ module.exports = {
       categories_sub: {
         type: Sequelize.STRING(150),
       },
-      asin: {
-        type: Sequelize.STRING(20),
-        unique: true,
-      },
-      ean: {
-        type: Sequelize.CHAR(13),
-      },
-      brand: {
-        type: Sequelize.STRING(100),
-      },
       number_of_items: {
         type: Sequelize.INTEGER,
       },
@@ -181,6 +181,12 @@ module.exports = {
       is_hazmat: {
         type: Sequelize.BOOLEAN,
       },
+    });
+
+    // Create a unique index on asin and country_code after the table creation
+    await queryInterface.addIndex('keepa_data', ['asin', 'country_code'], {
+      unique: true,
+      name: 'keepa_data_asin_country_code_unique',
     });
   },
 
