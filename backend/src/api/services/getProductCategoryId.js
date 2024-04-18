@@ -15,12 +15,15 @@ async function getProductCategoryId(productCategory, countryCode) {
     GB: 'productCategoryNameEn',
   };
 
+  // Convert countryCode to uppercase to handle case insensitivity
+  const normalizedCountryCode = countryCode.toUpperCase();
+
   // Get the appropriate field name for the product category based on the country code
-  const categoryFieldName = categoryFieldMapping[countryCode];
+  const categoryFieldName = categoryFieldMapping[normalizedCountryCode];
 
   // Guard clause for unsupported country codes
   if (!categoryFieldName) {
-    console.error(`Unsupported country code: ${countryCode}`);
+    console.error(`Unsupported country code: ${normalizedCountryCode}`);
     return null;
   }
 
