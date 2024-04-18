@@ -16,7 +16,8 @@ async function getProductCategoryId(productCategory, countryCode) {
     ES: 'productCategoryNameEs',
     GB: 'productCategoryNameEn',
   };
-
+  console.log('productCategory', productCategory);
+  console.log('countryCode', countryCode);
   // Convert countryCode to uppercase to handle case insensitivity
   const normalizedCountryCode = countryCode.toUpperCase();
 
@@ -35,6 +36,8 @@ async function getProductCategoryId(productCategory, countryCode) {
       [categoryFieldName]: productCategory,
     },
   });
+
+  console.log(productCategoryData.productCategoryId);
 
   return productCategoryData ? productCategoryData.productCategoryId : null;
 }

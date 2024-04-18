@@ -18,14 +18,14 @@ module.exports = {
         type: Sequelize.STRING(20),
         allowNull: false,
       },
+      url_image: {
+        type: Sequelize.STRING(500),
+      },
       ean: {
         type: Sequelize.CHAR(13),
       },
       brand: {
         type: Sequelize.STRING(100),
-      },
-      url_image: {
-        type: Sequelize.STRING(500),
       },
       product_name: {
         type: Sequelize.STRING(250),
