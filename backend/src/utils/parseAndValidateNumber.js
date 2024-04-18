@@ -2,17 +2,31 @@
  * @description Parses a string to a number, validates it against a range, removes currency symbols and spaces, and optionally rounds it to a specified number of decimal places.
  * @function parseAndValidateNumber
  * @param {string} value - The value to parse and validate.
- * @param {Object} options - The options for the function.
+ * @param {Object} options - The options for the function including min, max, decimals, paramName, and allowNull.
  * @param {number} options.min - The minimum value for the number. Defaults to -Infinity.
  * @param {number} options.max - The maximum value for the number. Defaults to Infinity.
  * @param {string} options.paramName - The name of the parameter for the error message. Defaults to an empty string.
  * @param {number} options.decimals - The number of decimal places to round the number to. Defaults to null (no rounding).
- * @return {number} The parsed, validated, and optionally rounded number.
+ * @param {boolean} options.allowNull - Allows null values without throwing an error. Defaults to false.
+ * @return {number|null} The parsed, validated, and optionally rounded number, or null if allowNull is true and value is empty.
  */
 function parseAndValidateNumber(
   value,
-  { min = -Infinity, max = Infinity, paramName = '', decimals = null } = {},
+  {
+    min = -Infinity,
+    max = Infinity,
+    paramName = '',
+    decimals = null,
+    allowNull = false,
+  } = {},
 ) {
+  if (
+    allowNull &&
+    (value === null || value === undefined || value.trim() === '')
+  ) {
+    return null;
+  }
+
   // Remove currency symbols and spaces from the string
   let cleanedValue = value.replace(/[€$£ ]/g, '');
 
@@ -20,10 +34,8 @@ function parseAndValidateNumber(
   const isPercentage =
     cleanedValue.endsWith('%') || cleanedValue.startsWith('%');
   if (isPercentage) {
-    // Remove the percentage sign from either side
-    cleanedValue = cleanedValue.replace(/%/, '');
-    // Convert to a decimal by dividing by 100
-    let number = parseFloat(cleanedValue) / 100;
+    cleanedValue = cleanedValue.replace(/%/, ''); // Remove the percentage sign
+    let number = parseFloat(cleanedValue) / 100; // Convert to a decimal
 
     if (isNaN(number) || number < min || number > max) {
       throw new Error(
@@ -31,7 +43,6 @@ function parseAndValidateNumber(
       );
     }
 
-    // If decimals is specified, round the number to the specified number of decimal places
     if (decimals !== null && Number.isInteger(decimals) && decimals >= 0) {
       const factor = Math.pow(10, decimals);
       number = Math.round(number * factor) / factor;
@@ -39,7 +50,6 @@ function parseAndValidateNumber(
 
     return number;
   } else {
-    // Handle non-percentage numbers as usual
     let number = parseFloat(cleanedValue);
 
     if (isNaN(number) || number < min || number > max) {
@@ -48,7 +58,6 @@ function parseAndValidateNumber(
       );
     }
 
-    // If decimals is specified and is a non-negative integer, round the number to the specified number of decimal places
     if (decimals !== null && Number.isInteger(decimals) && decimals >= 0) {
       const factor = Math.pow(10, decimals);
       number = Math.round(number * factor) / factor;
