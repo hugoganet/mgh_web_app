@@ -45,12 +45,15 @@ module.exports = sequelize => {
       },
       salesRanking30DaysAvg: {
         type: DataTypes.INTEGER,
+        field: 'sales_ranking_30_days_avg',
       },
       salesRanking90DaysAvg: {
         type: DataTypes.INTEGER,
+        field: 'sales_ranking_90_days_avg',
       },
       salesRanking180DaysAvg: {
         type: DataTypes.INTEGER,
+        field: 'sales_ranking_180_days_avg',
       },
       reviewsRating: {
         type: DataTypes.DECIMAL(10, 2),
@@ -63,12 +66,15 @@ module.exports = sequelize => {
       },
       amazon30DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'amazon_30_days_avg',
       },
       amazon90DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'amazon_90_days_avg',
       },
       amazon180DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'amazon_180_days_avg',
       },
       amazonLowest: {
         type: DataTypes.DECIMAL(10, 2),
@@ -77,73 +83,92 @@ module.exports = sequelize => {
         type: DataTypes.DECIMAL(10, 2),
       },
       amazon90DaysOOS: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(6, 5),
+        field: 'amazon_90_days_oos',
       },
       newCurrent: {
         type: DataTypes.DECIMAL(10, 2),
       },
       new30DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'new_30_days_avg',
       },
       new90DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'new_90_days_avg',
       },
       new180DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'new_180_days_avg',
       },
       newThirdPartyFBACurrent: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'new_third_party_fba_current',
       },
       newThirdPartyFBA30DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'new_third_party_fba_30_days_avg',
       },
       newThirdPartyFBA90DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'new_third_party_fba_90_days_avg',
       },
       newThirdPartyFBA180DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'new_third_party_fba_180_days_avg',
       },
       newThirdPartyFBALowest: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'new_third_party_fba_lowest',
       },
       fbaPickPackFee: {
         type: DataTypes.DECIMAL(10, 2),
       },
       newThirdPartyFBMCurrent: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'new_third_party_fbm_current',
       },
       newThirdPartyFBM30DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'new_third_party_fbm_30_days_avg',
       },
       newThirdPartyFBM90DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'new_third_party_fbm_90_days_avg',
       },
       newThirdPartyFBM180DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'new_third_party_fbm_180_days_avg',
       },
       newOffersCurrentCount: {
         type: DataTypes.INTEGER,
       },
       newOffers90DaysAvgCount: {
         type: DataTypes.INTEGER,
+        field: 'new_offers_90_days_avg_count',
       },
       countRetrievedLiveOffersNewFBA: {
         type: DataTypes.INTEGER,
+        field: 'count_retrieved_live_offers_new_fba',
       },
       countRetrievedLiveOffersNewFBM: {
         type: DataTypes.INTEGER,
+        field: 'count_retrieved_live_offers_new_fbm',
       },
       buyBoxCurrent: {
         type: DataTypes.DECIMAL(10, 2),
       },
       buyBox30DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'buy_box_30_days_avg',
       },
       buyBox90DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'buy_box_90_days_avg',
       },
       buyBox180DaysAvg: {
         type: DataTypes.DECIMAL(10, 2),
+        field: 'buy_box_180_days_avg',
       },
       buyBoxLowest: {
         type: DataTypes.DECIMAL(10, 2),
@@ -156,6 +181,7 @@ module.exports = sequelize => {
       },
       buyBoxIsFBA: {
         type: DataTypes.BOOLEAN,
+        field: 'buy_box_is_fba',
       },
       buyBoxUnqualified: {
         type: DataTypes.BOOLEAN,
