@@ -14,24 +14,48 @@ function parseAndValidateNumber(
   { min = -Infinity, max = Infinity, paramName = '', decimals = null } = {},
 ) {
   // Remove currency symbols and spaces from the string
-  const cleanedValue = value.replace(/[€$£ ]/g, '');
+  let cleanedValue = value.replace(/[€$£ ]/g, '');
 
-  // Convert the cleaned string to a number
-  let number = parseFloat(cleanedValue);
+  // Detect and convert percentage values whether the % sign is before or after the number
+  const isPercentage =
+    cleanedValue.endsWith('%') || cleanedValue.startsWith('%');
+  if (isPercentage) {
+    // Remove the percentage sign from either side
+    cleanedValue = cleanedValue.replace(/%/, '');
+    // Convert to a decimal by dividing by 100
+    let number = parseFloat(cleanedValue) / 100;
 
-  if (isNaN(number) || number < min || number > max) {
-    throw new Error(
-      `Invalid value for ${paramName}: ${value}. Must be a number between ${min} and ${max}.`,
-    );
+    if (isNaN(number) || number < min || number > max) {
+      throw new Error(
+        `Invalid value for ${paramName}: ${value}. Must be a number between ${min} and ${max}.`,
+      );
+    }
+
+    // If decimals is specified, round the number to the specified number of decimal places
+    if (decimals !== null && Number.isInteger(decimals) && decimals >= 0) {
+      const factor = Math.pow(10, decimals);
+      number = Math.round(number * factor) / factor;
+    }
+
+    return number;
+  } else {
+    // Handle non-percentage numbers as usual
+    let number = parseFloat(cleanedValue);
+
+    if (isNaN(number) || number < min || number > max) {
+      throw new Error(
+        `Invalid value for ${paramName}: ${value}. Must be a number between ${min} and ${max}.`,
+      );
+    }
+
+    // If decimals is specified and is a non-negative integer, round the number to the specified number of decimal places
+    if (decimals !== null && Number.isInteger(decimals) && decimals >= 0) {
+      const factor = Math.pow(10, decimals);
+      number = Math.round(number * factor) / factor;
+    }
+
+    return number;
   }
-
-  // If decimals is specified and is a non-negative integer, round the number to the specified number of decimal places
-  if (decimals !== null && Number.isInteger(decimals) && decimals >= 0) {
-    const factor = Math.pow(10, decimals);
-    number = Math.round(number * factor) / factor;
-  }
-
-  return number;
 }
 
 module.exports = { parseAndValidateNumber };
