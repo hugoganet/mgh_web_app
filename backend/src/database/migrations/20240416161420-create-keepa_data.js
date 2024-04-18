@@ -19,7 +19,7 @@ module.exports = {
         allowNull: false,
       },
       url_image: {
-        type: Sequelize.STRING(500),
+        type: Sequelize.STRING(1000),
       },
       ean: {
         type: Sequelize.CHAR(13),
@@ -155,10 +155,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
       url_amazon: {
-        type: Sequelize.STRING(500),
+        type: Sequelize.STRING(1000),
       },
       url_keepa: {
-        type: Sequelize.STRING(500),
+        type: Sequelize.STRING(1000),
       },
       categories_sub: {
         type: Sequelize.STRING(150),

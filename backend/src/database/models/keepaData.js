@@ -25,7 +25,7 @@ module.exports = sequelize => {
         allowNull: false,
       },
       urlImage: {
-        type: DataTypes.STRING(500),
+        type: DataTypes.STRING(1000),
       },
       ean: {
         type: DataTypes.CHAR(13),
@@ -187,10 +187,10 @@ module.exports = sequelize => {
         type: DataTypes.BOOLEAN,
       },
       urlAmazon: {
-        type: DataTypes.STRING(500),
+        type: DataTypes.STRING(1000),
       },
       urlKeepa: {
-        type: DataTypes.STRING(500),
+        type: DataTypes.STRING(1000),
       },
       categoriesSub: {
         type: DataTypes.STRING(150),
