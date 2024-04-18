@@ -55,15 +55,15 @@ const processKeepaDataFile = async filePath => {
             productName: data.Titre,
             salesRanking30DaysAvg: parseAndValidateNumber(
               data['Classement des ventes: 30 days avg.'],
-              { min: 0, paramName: 'salesRanking30DaysAvg' },
+              { min: 0, paramName: 'salesRanking30DaysAvg', allowNull: true },
             ),
             salesRanking90DaysAvg: parseAndValidateNumber(
               data['Classement des ventes: 90 days avg.'],
-              { min: 0, paramName: 'salesRanking90DaysAvg' },
+              { min: 0, paramName: 'salesRanking90DaysAvg', allowNull: true },
             ),
             salesRanking180DaysAvg: parseAndValidateNumber(
               data['Classement des ventes: 180 days avg.'],
-              { min: 0, paramName: 'salesRanking180DaysAvg' },
+              { min: 0, paramName: 'salesRanking180DaysAvg', allowNull: true },
             ),
             productCategoryId,
             reviewsRating: parseAndValidateNumber(data['Revues: Évaluation'], {
@@ -71,135 +71,260 @@ const processKeepaDataFile = async filePath => {
               max: 5,
               decimals: 2,
               paramName: 'reviewsRating',
+              allowNull: true,
             }),
             reviewsCount: parseAndValidateNumber(
               data['Reviews: Nombre de revu est'],
-              { min: 0, decimals: 0, paramName: 'reviewsCount' },
+              {
+                min: 0,
+                decimals: 0,
+                paramName: 'reviewsCount',
+                allowNull: true,
+              },
             ),
             amazonCurrent: parseAndValidateNumber(data['Amazon: Courant'], {
               min: 0,
               decimals: 2,
               paramName: 'amazonCurrent',
+              allowNull: true,
             }),
             amazon30DaysAvg: parseAndValidateNumber(
               data['Amazon: 30 days avg.'],
-              { min: 0, decimals: 2, paramName: 'amazon30DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'amazon30DaysAvg',
+                allowNull: true,
+              },
             ),
             amazon90DaysAvg: parseAndValidateNumber(
               data['Amazon: 90 days avg.'],
-              { min: 0, decimals: 2, paramName: 'amazon90DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'amazon90DaysAvg',
+                allowNull: true,
+              },
             ),
             amazon180DaysAvg: parseAndValidateNumber(
               data['Amazon: 180 days avg.'],
-              { min: 0, decimals: 2, paramName: 'amazon180DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'amazon180DaysAvg',
+                allowNull: true,
+              },
             ),
             amazonLowest: parseAndValidateNumber(data['Amazon: Lowest'], {
               min: 0,
               decimals: 2,
               paramName: 'amazonLowest',
+              allowNull: true,
             }),
             amazonHighest: parseAndValidateNumber(data['Amazon: Highest'], {
               min: 0,
               decimals: 2,
               paramName: 'amazonHighest',
+              allowNull: true,
             }),
-            amazon90DaysOOS: parseInt(data['Amazon: 90 days OOS']),
+            amazon90DaysOOS: parseAndValidateNumber(
+              data['Amazon: 90 days OOS'],
+              {
+                min: 0,
+                max: 1,
+                decimals: 5,
+                paramName: 'amazon90DaysOOS',
+                allowNull: true,
+              },
+            ),
             newCurrent: parseAndValidateNumber(data['Nouveau: Courant'], {
               min: 0,
               decimals: 2,
               paramName: 'newCurrent',
+              allowNull: true,
             }),
             new30DaysAvg: parseAndValidateNumber(
               data['Nouveau: 30 days avg.'],
-              { min: 0, decimals: 2, paramName: 'new30DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'new30DaysAvg',
+                allowNull: true,
+              },
             ),
             new90DaysAvg: parseAndValidateNumber(
               data['Nouveau: 90 days avg.'],
-              { min: 0, decimals: 2, paramName: 'new90DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'new90DaysAvg',
+                allowNull: true,
+              },
             ),
             new180DaysAvg: parseAndValidateNumber(
               data['Nouveau: 180 days avg.'],
-              { min: 0, decimals: 2, paramName: 'new180DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'new180DaysAvg',
+                allowNull: true,
+              },
             ),
             newThirdPartyFBACurrent: parseAndValidateNumber(
               data['Nouveau, Tierce Partie FBA: Courant'],
-              { min: 0, decimals: 2, paramName: 'newThirdPartyFBACurrent' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'newThirdPartyFBACurrent',
+                allowNull: true,
+              },
             ),
             newThirdPartyFBA30DaysAvg: parseAndValidateNumber(
               data['Nouveau, Tierce Partie FBA: 30 days avg.'],
-              { min: 0, decimals: 2, paramName: 'newThirdPartyFBA30DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'newThirdPartyFBA30DaysAvg',
+                allowNull: true,
+              },
             ),
             newThirdPartyFBA90DaysAvg: parseAndValidateNumber(
               data['Nouveau, Tierce Partie FBA: 90 days avg.'],
-              { min: 0, decimals: 2, paramName: 'newThirdPartyFBA90DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'newThirdPartyFBA90DaysAvg',
+                allowNull: true,
+              },
             ),
             newThirdPartyFBA180DaysAvg: parseAndValidateNumber(
               data['Nouveau, Tierce Partie FBA: 180 days avg.'],
-              { min: 0, decimals: 2, paramName: 'newThirdPartyFBA180DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'newThirdPartyFBA180DaysAvg',
+                allowNull: true,
+              },
             ),
             newThirdPartyFBALowest: parseAndValidateNumber(
               data['Nouveau, Tierce Partie FBA: Lowest'],
-              { min: 0, decimals: 2, paramName: 'newThirdPartyFBALowest' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'newThirdPartyFBALowest',
+                allowNull: true,
+              },
             ),
             fbaPickPackFee: parseAndValidateNumber(data['FBA Pick&Pack Fee'], {
               min: 0,
               decimals: 2,
               paramName: 'fbaPickPackFee',
+              allowNull: true,
             }),
             newThirdPartyFBMCurrent: parseAndValidateNumber(
               data['Nouveau, Tierce Partie FBM 🚚: Courant'],
-              { min: 0, decimals: 2, paramName: 'newThirdPartyFBMCurrent' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'newThirdPartyFBMCurrent',
+                allowNull: true,
+              },
             ),
             newThirdPartyFBM30DaysAvg: parseAndValidateNumber(
               data['Nouveau, Tierce Partie FBM 🚚: 30 days avg.'],
-              { min: 0, decimals: 2, paramName: 'newThirdPartyFBM30DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'newThirdPartyFBM30DaysAvg',
+                allowNull: true,
+              },
             ),
             newThirdPartyFBM90DaysAvg: parseAndValidateNumber(
               data['Nouveau, Tierce Partie FBM 🚚: 90 days avg.'],
-              { min: 0, decimals: 2, paramName: 'newThirdPartyFBM90DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'newThirdPartyFBM90DaysAvg',
+                allowNull: true,
+              },
             ),
             newThirdPartyFBM180DaysAvg: parseAndValidateNumber(
               data['Nouveau, Tierce Partie FBM 🚚: 180 days avg.'],
-              { min: 0, decimals: 2, paramName: 'newThirdPartyFBM180DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'newThirdPartyFBM180DaysAvg',
+                allowNull: true,
+              },
             ),
-            newOffersCurrentCount: parseInt(
+            newOffersCurrentCount: parseAndValidateNumber(
               data["Nombre d'offre Neuf: Courant"],
+              { min: 0, paramName: 'newOffersCurrentCount', allowNull: true },
             ),
-            newOffers90DaysAvgCount: parseInt(
+            newOffers90DaysAvgCount: parseAndValidateNumber(
               data["Nombre d'offre Neuf: 90 days avg."],
+              { min: 0, paramName: 'newOffers90DaysAvgCount', allowNull: true },
             ),
-            countRetrievedLiveOffersNewFBA: parseInt(
+            countRetrievedLiveOffersNewFBA: parseAndValidateNumber(
               data['Count of retrieved live offers: New, FBA'],
+              {
+                min: 0,
+                paramName: 'countRetrievedLiveOffersNewFBA',
+                allowNull: true,
+              },
             ),
-            countRetrievedLiveOffersNewFBM: parseInt(
+            countRetrievedLiveOffersNewFBM: parseAndValidateNumber(
               data['Count of retrieved live offers: New, FBM'],
+              {
+                min: 0,
+                paramName: 'countRetrievedLiveOffersNewFBM',
+                allowNull: true,
+              },
             ),
             buyBoxCurrent: parseAndValidateNumber(data['Buy Box 🚚: Courant'], {
               min: 0,
               decimals: 2,
               paramName: 'buyBoxCurrent',
+              allowNull: true,
             }),
             buyBox30DaysAvg: parseAndValidateNumber(
               data['Buy Box 🚚: 30 days avg.'],
-              { min: 0, decimals: 2, paramName: 'buyBox30DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'buyBox30DaysAvg',
+                allowNull: true,
+              },
             ),
             buyBox90DaysAvg: parseAndValidateNumber(
               data['Buy Box 🚚: 90 days avg.'],
-              { min: 0, decimals: 2, paramName: 'buyBox90DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'buyBox90DaysAvg',
+                allowNull: true,
+              },
             ),
             buyBox180DaysAvg: parseAndValidateNumber(
               data['Buy Box 🚚: 180 days avg.'],
-              { min: 0, decimals: 2, paramName: 'buyBox180DaysAvg' },
+              {
+                min: 0,
+                decimals: 2,
+                paramName: 'buyBox180DaysAvg',
+                allowNull: true,
+              },
             ),
             buyBoxLowest: parseAndValidateNumber(data['Buy Box 🚚: Lowest'], {
               min: 0,
               decimals: 2,
               paramName: 'buyBoxLowest',
+              allowNull: true,
             }),
             buyBoxHighest: parseAndValidateNumber(data['Buy Box 🚚: Highest'], {
               min: 0,
               decimals: 2,
               paramName: 'buyBoxHighest',
+              allowNull: true,
             }),
             buyBoxSeller: data['Buy Box Seller'],
             buyBoxIsFBA: data['Buy Box: Is FBA'] === 'true',
@@ -221,6 +346,19 @@ const processKeepaDataFile = async filePath => {
         }
       })
       .on('end', async () => {
+        // // Log and check for NaN values before attempting to insert into the database
+        // console.log('Data to be inserted:', results);
+        // results.forEach((data, index) => {
+        //   Object.keys(data).forEach(key => {
+        //     if (Number.isNaN(data[key])) {
+        //       console.error(
+        //         `NaN found in entry ${index} at key ${key} with value ${data[key]}`,
+        //       );
+        //       // Optionally, you can handle the NaN case, like setting it to null if allowed
+        //       // data[key] = null; // Only do this if your database schema allows null values for this field
+        //     }
+        //   });
+        // });
         if (results.length > 0) {
           try {
             await db.KeepaData.bulkCreate(results, { ignoreDuplicates: true });
