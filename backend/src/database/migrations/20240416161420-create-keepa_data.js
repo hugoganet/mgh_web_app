@@ -19,16 +19,16 @@ module.exports = {
         allowNull: false,
       },
       url_image: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(500),
       },
       ean: {
         type: Sequelize.CHAR(13),
       },
       brand: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(500),
       },
       product_name: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(500),
       },
       sales_ranking_30_days_avg: {
         type: Sequelize.INTEGER,
@@ -146,7 +146,7 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
       },
       buy_box_seller: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(500),
       },
       buy_box_is_fba: {
         type: Sequelize.BOOLEAN,
@@ -155,13 +155,13 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
       url_amazon: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(500),
       },
       url_keepa: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(500),
       },
       categories_sub: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(500),
       },
       number_of_items: {
         type: Sequelize.INTEGER,

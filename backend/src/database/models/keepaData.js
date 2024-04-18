@@ -25,16 +25,16 @@ module.exports = sequelize => {
         allowNull: false,
       },
       urlImage: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(500),
       },
       ean: {
         type: DataTypes.CHAR(13),
       },
       brand: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(500),
       },
       productName: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(500),
       },
       productCategoryId: {
         type: DataTypes.INTEGER,
@@ -177,7 +177,7 @@ module.exports = sequelize => {
         type: DataTypes.DECIMAL(10, 2),
       },
       buyBoxSeller: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(500),
       },
       buyBoxIsFBA: {
         type: DataTypes.BOOLEAN,
@@ -187,13 +187,13 @@ module.exports = sequelize => {
         type: DataTypes.BOOLEAN,
       },
       urlAmazon: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(500),
       },
       urlKeepa: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(500),
       },
       categoriesSub: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(500),
       },
       numberOfItems: {
         type: DataTypes.INTEGER,
