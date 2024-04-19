@@ -10,6 +10,7 @@ const processKeepaDataFile = async filePath => {
   const results = [];
   const errors = [];
   const duplicates = [];
+  const missingProductCategories = [];
   const existingCombos = new Set(); // To track unique asin and countryCode combinations
 
   return new Promise((resolve, reject) => {
@@ -39,12 +40,12 @@ const processKeepaDataFile = async filePath => {
             );
 
             if (!productCategoryId) {
-              errors.push({
-                error: 'No valid product category ID found',
+              missingProductCategories.push({
                 asin,
                 productCategory: data['Catégories: Root'],
+                reason: 'No valid product category ID found',
               });
-              return;
+              return; // Skip this entry but continue processing
             }
 
             const mappedData = {
@@ -370,19 +371,24 @@ const processKeepaDataFile = async filePath => {
       .on('end', async () => {
         if (results.length > 0) {
           try {
-            await db.KeepaData.bulkCreate(results, { ignoreDuplicates: true });
+            console.log(results.length, 'records to insert.');
+            const insertResult = await db.KeepaData.bulkCreate(results);
+            console.log(`${insertResult.length} records inserted.`);
           } catch (bulkError) {
+            console.error('Error during bulk insert:', bulkError);
             reject(bulkError);
           }
         }
 
         fs.unlinkSync(filePath); // Optionally remove file after processing
-        resolve({
+        console.log({
           message: 'Keepa data processed successfully.',
           processed: results.length - duplicates.length,
+          missingProductCategories: missingProductCategories.length,
           successful: results.length,
           duplicates: duplicates.length,
-          errors: errors,
+          errors: errors.length,
+          errors,
         });
       })
       .on('error', error => reject(error));
