@@ -35,8 +35,6 @@ async function getProductCategoryId(productCategory, countryCode) {
     },
   });
 
-  console.log(productCategoryData.productCategoryId);
-
   return productCategoryData ? productCategoryData.productCategoryId : null;
 }
 
