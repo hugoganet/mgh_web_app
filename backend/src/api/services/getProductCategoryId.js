@@ -34,11 +34,12 @@ async function getProductCategoryId(productCategory, countryCode) {
       [categoryFieldName]: productCategory,
     },
   });
-  console.log(productCategory);
-  console.log(countryCode);
+
   console.log(productCategoryData.productCategoryId);
 
   return productCategoryData ? productCategoryData.productCategoryId : null;
 }
 
 module.exports = getProductCategoryId;
+
+// getProductCategoryId('Livres', 'FR');
