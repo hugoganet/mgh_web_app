@@ -372,7 +372,9 @@ const processKeepaDataFile = async filePath => {
         if (results.length > 0) {
           try {
             console.log(results.length, 'records to insert.');
-            const insertResult = await db.KeepaData.bulkCreate(results);
+            const insertResult = await db.KeepaData.bulkCreate(results, {
+              ignoreDuplicates: true,
+            });
             console.log(`${insertResult.length} records inserted.`);
           } catch (bulkError) {
             console.error('Error during bulk insert:', bulkError);
