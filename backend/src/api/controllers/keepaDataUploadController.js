@@ -21,6 +21,9 @@ exports.uploadKeepaFile = async (req, res) => {
     res.status(200).send({
       message: 'Keepa data file processed successfully',
       results: processResult.results,
+      processed: processResult.processed,
+      missingProductCategories: processResult.missingProductCategories,
+      successful: processResult.successful,
       duplicates: processResult.duplicates,
       errors: processResult.errors,
     });
