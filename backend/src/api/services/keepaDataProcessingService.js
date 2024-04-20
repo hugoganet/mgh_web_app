@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const csv = require('csv-parser');
 const db = require('../../database/models/index');
 const {
@@ -11,7 +12,7 @@ const processKeepaDataFile = async filePath => {
   const errors = [];
   const duplicates = [];
   const missingProductCategories = [];
-  const existingCombos = new Set(); // To track unique asin and countryCode combinations
+  const existingCombos = new Set();
 
   return new Promise((resolve, reject) => {
     fs.createReadStream(filePath)
@@ -382,7 +383,7 @@ const processKeepaDataFile = async filePath => {
           }
         }
 
-        fs.unlinkSync(filePath); // Optionally remove file after processing
+        // fs.unlinkSync(filePath); // Optionally remove file after processing
         console.log({
           message: 'Keepa data processed successfully.',
           processed: results.length - duplicates.length,
@@ -398,3 +399,12 @@ const processKeepaDataFile = async filePath => {
 };
 
 module.exports = { processKeepaDataFile };
+
+const filePath = path.resolve(
+  __dirname,
+  '../../../uploads/file-1713591845018.csv',
+);
+// console.log('Resolved File Path:', filePath);
+
+// /Users/hugoganet/Code/MGHWebApp/mgh_web_app/backend/uploads/file-1713591845018.csv
+processKeepaDataFile(filePath);
