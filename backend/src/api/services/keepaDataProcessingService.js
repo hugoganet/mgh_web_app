@@ -31,13 +31,7 @@ const processKeepaDataFile = async (
 
       if (existingCombos.has(comboKey)) {
         duplicates.add(comboKey);
-        if (createLog) {
-          logger(
-            `Duplicate ASIN: ${asin} for ${countryCode} in the batch.`,
-            logContext,
-            flushBuffer,
-          );
-        }
+        logMessage += `Duplicate ASIN: ${asin} for ${countryCode} in the batch.`;
         continue;
       }
       existingCombos.add(comboKey);
@@ -56,13 +50,7 @@ const processKeepaDataFile = async (
           productCategory: data['Catégories: Root'],
           reason: 'No valid product category ID found',
         });
-        if (createLog) {
-          logger(
-            `Missing category for ASIN: ${asin} with category: ${data['Catégories: Root']}`,
-            logContext,
-            flushBuffer,
-          );
-        }
+        logMessage += `Missing category for ASIN: ${asin} with category: ${data['Catégories: Root']}`;
         continue;
       }
 
@@ -378,13 +366,7 @@ const processKeepaDataFile = async (
       results.push(mappedData);
     } catch (error) {
       errors.push({ error: error.message, row: data });
-      if (createLog) {
-        logger(
-          `Error processing row: ${error.message}`,
-          logContext,
-          flushBuffer,
-        );
-      }
+      logMessage += `Error processing row: ${error.message}`;
     }
   }
 
@@ -393,29 +375,26 @@ const processKeepaDataFile = async (
       const insertResult = await db.KeepaData.bulkCreate(results, {
         ignoreDuplicates: true,
       });
-      logger(
-        `${insertResult.length} records inserted.`,
-        logContext,
-        flushBuffer,
-      );
+      logMessage += `Keepa data processed successfully. ${insertResult.length} records inserted.`;
     }
-    logger('Keepa data processed successfully.', logContext, flushBuffer);
   } catch (error) {
-    logger(
-      'Error during bulk insert: ' + error.message,
-      logContext,
-      flushBuffer,
-    );
-  }
+    logMessage += `Error during bulk insert: ${error.message}`;
+  } finally {
+    if (createLog) {
+      logger(logMessage, logContext, flushBuffer);
+    }
 
-  return {
-    message: 'Keepa data processed successfully.',
-    processed: results.length,
-    duplicates: duplicates.size,
-    missingProductCategories: missingProductCategories.length,
-    errors: errors.length,
-  };
+    return {
+      message: 'Keepa data processed successfully.',
+      processed: results.length,
+      duplicates: duplicates.size,
+      missingProductCategories: missingProductCategories.length,
+      errors: errors.length,
+    };
+  }
 };
+
+module.exports = { processKeepaDataFile };
 
 // Use the function
 const filePath = path.resolve(
