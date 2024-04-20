@@ -9,14 +9,14 @@ let logBuffer = [];
  *
  * @param {string} message - The message to log.
  * @param {string} logContext - The context of the log, used for file naming.
- * @param {string} [callStackIdentifier=''] - An optional string representing the call stack order for sorting purposes.
  * @param {boolean} flushBuffer - Indicates if the log buffer should be flushed after adding the log message.
+ * @param {string} [callStackIdentifier=''] - An optional string representing the call stack order for sorting purposes.
  */
 function bufferedLogger(
   message,
   logContext,
-  callStackIdentifier = '',
   flushBuffer = false,
+  callStackIdentifier = '',
 ) {
   const now = new Date();
   // Push a new log entry with its context and identifier into the buffer

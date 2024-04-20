@@ -38,7 +38,7 @@ async function automaticallyCreateAsinRecord(
   let logMessage = '';
   try {
     if (!marketplaceId && !countryCode) {
-      logMessage = +'Error: Both marketplaceId and countryCode cannot be null.';
+      logMessage += 'Error: Both marketplaceId and countryCode cannot be null.';
       console.error(errorMessage);
       throw new Error(logMessage);
     }

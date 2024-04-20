@@ -23,8 +23,8 @@ fs.readdirSync(__dirname)
     db[model.name] = model;
   });
 
-// setupAssociations(db);
-// runSeeding(db);
+setupAssociations(db);
+runSeeding(db);
 
 console.log('Sequelize models loaded and associations set up.');
 // Assign the Sequelize instance and class to the db object
