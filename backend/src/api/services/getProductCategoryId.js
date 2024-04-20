@@ -60,4 +60,8 @@ async function getProductCategoryId(
 
 module.exports = getProductCategoryId;
 
-// getProductCategoryId('Livres', 'FR', true, 'getProductCategoryId', true);
+// getProductCategoryId('Livres', 'FR', true, 'getProductCategoryId', true).then(
+//   result => {
+//     console.log(result);
+//   },
+// );

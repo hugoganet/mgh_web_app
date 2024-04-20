@@ -19,6 +19,7 @@ const processKeepaDataFile = async (
   const duplicates = new Set();
   const missingProductCategories = [];
   const existingCombos = new Set();
+  let logMessage = '';
 
   const fileStream = fs.createReadStream(filePath);
   const csvStream = fileStream.pipe(csv());
@@ -366,7 +367,11 @@ const processKeepaDataFile = async (
       results.push(mappedData);
     } catch (error) {
       errors.push({ error: error.message, row: data });
-      logMessage += `Error processing row: ${error.message}`;
+      logMessage += `Error processing row: ${JSON.stringify(
+        error.message,
+        null,
+        2,
+      )}`;
     }
   }
 
@@ -378,7 +383,11 @@ const processKeepaDataFile = async (
       logMessage += `Keepa data processed successfully. ${insertResult.length} records inserted.`;
     }
   } catch (error) {
-    logMessage += `Error during bulk insert: ${error.message}`;
+    logMessage += `Error during bulk insert: ${JSON.stringify(
+      error.message,
+      null,
+      2,
+    )}`;
   } finally {
     if (createLog) {
       logger(logMessage, logContext, flushBuffer);
@@ -396,11 +405,12 @@ const processKeepaDataFile = async (
 
 module.exports = { processKeepaDataFile };
 
-// Use the function
-const filePath = path.resolve(
-  __dirname,
-  '../../../uploads/file-1713591845018.csv',
-);
-processKeepaDataFile(filePath, true, 'keepaProcessingService', true).then(
-  result => console.log(result),
-);
+if (require.main === module) {
+  const filePath = path.resolve(
+    __dirname,
+    '../../../uploads/file-1713591845018.csv',
+  );
+  processKeepaDataFile(filePath, true, 'keepaProcessingService', true).then(
+    result => console.log(result),
+  );
+}

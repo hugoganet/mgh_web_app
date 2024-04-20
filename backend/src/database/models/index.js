@@ -3,8 +3,6 @@ const path = require('path');
 const { Sequelize } = require('sequelize');
 const sequelize = require('../../database/database.js'); // Sequelize instance
 const setupAssociations = require('../../database/modelsAssociations');
-const runSeeding = require('../../database/seed');
-
 const db = {}; // Database object to hold our models
 
 // Read all files in the current directory, filter out non-model files, and import each model
@@ -24,7 +22,7 @@ fs.readdirSync(__dirname)
   });
 
 setupAssociations(db);
-runSeeding(db);
+// runSeeding(db); I should execute direclty in the seed.js file
 
 console.log('Sequelize models loaded and associations set up.');
 // Assign the Sequelize instance and class to the db object
