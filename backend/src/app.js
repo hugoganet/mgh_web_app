@@ -2,7 +2,6 @@ require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 const cors = require('cors');
-
 const express = require('express');
 
 const app = express();
@@ -13,6 +12,41 @@ app.use(
   }),
 );
 
+app.use(express.json()); // Enable parsing JSON bodies
+
+// Swagger definition
+const swaggerDefinition = {
+  openapi: '3.0.0',
+  info: {
+    title: 'Your API Title',
+    version: '1.0.0',
+    description: 'Description of your API',
+  },
+  servers: [
+    {
+      url: 'http://localhost:3001', // Replace with your server's URL
+      description: 'Local server',
+    },
+  ],
+};
+
+// Options for the swagger docs
+const options = {
+  swaggerDefinition,
+  apis: ['./src/api/controllers/*.js', './src/api/routes/*.js'], // Paths to files containing OpenAPI annotations
+};
+
+// Initialize swagger-jsdoc
+const swaggerSpec = swaggerJSDoc(options);
+
+// Use the Swagger UI
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, { explorer: true }),
+);
+
+// Import routes
 const eansRoutes = require('./api/routes/eansRoutes');
 const asinsRoutes = require('./api/routes/asinsRoutes');
 const skusRoutes = require('./api/routes/skusRoutes');
@@ -46,36 +80,6 @@ const keepaDataUploadRoutes = require('./api/routes/keepaDataUploadRoutes');
 const catalogUploadRoutes = require('./api/routes/catalogUploadRoutes');
 const asinSourcingCatalogRoutes = require('./api/routes/asinSourcingCatalogRoutes');
 const keepaDataRoutes = require('./api/routes/keepaDataRoutes');
-
-app.use(express.json()); // Enable parsing JSON bodies
-
-// Swagger definition
-const swaggerDefinition = {
-  openapi: '3.0.0', // Specify the OpenAPI/Swagger version
-  info: {
-    title: 'MGH API',
-    version: '1.0.0',
-    description: 'MGH Web App API documentation',
-  },
-  servers: [
-    {
-      url: 'http://localhost:3001', // URL of your API
-    },
-  ],
-};
-
-const options = {
-  swaggerDefinition,
-  apis: ['src/api/routes/*.js'],
-};
-
-const swaggerSpec = swaggerJSDoc(options);
-
-app.use(
-  '/api-docs',
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerSpec, { explorer: true }),
-);
 
 // Routes
 app.use('/eans', eansRoutes);
