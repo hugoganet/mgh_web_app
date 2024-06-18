@@ -1,17 +1,24 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Box, Dialog, DialogContent } from '@mui/material';
+import {
+  Box,
+  Dialog,
+  DialogContent,
+  CircularProgress,
+  Typography,
+} from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { tokens } from '../../theme';
 import Header from '../../components/Header';
 import { useTheme } from '@mui/material';
+import { fetchAsins, fetchAsinWarehouseQuantities } from '../../data/asinData';
 
 const Asin = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const [asins, setAsins] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   // State for controlling the visibility and content of the image modal
@@ -30,50 +37,33 @@ const Asin = () => {
     setSelectedImageUrl('');
   };
 
-  const fetchAsins = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3001/asins`);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching ASIN data:', error);
-      setError('Failed to load ASIN data'); // Set a user-friendly error message
-      return []; // Return an empty array in case of error
-    }
-  };
-
-  const fetchAsinWarehouseQuantities = async () => {
-    try {
-      const response = await axios.get(
-        'http://localhost:3001/asinwarehousequantity',
-      );
-      return response.data; // Assuming the response data is the array of warehouse quantities
-    } catch (error) {
-      console.error('Error fetching ASIN data:', error);
-      setError('Failed to load ASIN data'); // Set a user-friendly error message
-      return []; // Return an empty array in case of error
-    }
-  };
-
   const fetchAndCombineData = async () => {
-    const [asinsData, asinWarehouseQuantities] = await Promise.all([
-      fetchAsins(),
-      fetchAsinWarehouseQuantities(),
-    ]);
+    try {
+      const [asinsData, asinWarehouseQuantities] = await Promise.all([
+        fetchAsins(),
+        fetchAsinWarehouseQuantities(),
+      ]);
 
-    // Combine the data
-    const combinedData = asinsData.map(asin => {
-      const warehouseQuantity = asinWarehouseQuantities.find(
-        q => q.asinId === asin.asinId,
-      );
-      return {
-        ...asin,
-        totalWarehouseQuantity: warehouseQuantity
-          ? warehouseQuantity.totalWarehouseQuantity
-          : 0,
-      };
-    });
+      // Combine the data
+      const combinedData = asinsData.map(asin => {
+        const warehouseQuantity = asinWarehouseQuantities.find(
+          q => q.asinId === asin.asinId,
+        );
+        return {
+          ...asin,
+          totalWarehouseQuantity: warehouseQuantity
+            ? warehouseQuantity.totalWarehouseQuantity
+            : 0,
+        };
+      });
 
-    setAsins(combinedData);
+      setAsins(combinedData);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching ASIN data:', error);
+      setError('Failed to load ASIN data');
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -134,7 +124,6 @@ const Asin = () => {
         </a>
       ),
     },
-
     {
       field: 'asinNumberOfActiveSku',
       headerName: 'Number of Active SKU',
@@ -165,75 +154,91 @@ const Asin = () => {
   return (
     <Box m="20px">
       <Header title="ASIN" subtitle="List of all ASINs." />
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-      <Dialog open={isImageModalOpen} onClose={closeImageModal}>
-        <DialogContent>
-          <img
-            src={selectedImageUrl}
-            alt="Selected"
-            style={{ width: '100%' }}
-          />
-        </DialogContent>
-      </Dialog>
-      <Box
-        m="40px 0 0 0"
-        height="75vh"
-        sx={{
-          '& .MuiDataGrid-root': {
-            border: 'none',
-          },
-          '& .MuiDataGrid-cell': {
-            borderBottom: 'none',
-          },
-          '& .name-column--cell': {
-            color: colors.greenAccent[300],
-          },
-          '& .MuiDataGrid-virtualScroller': {
-            backgroundColor: colors.primary[400],
-          },
-          '& .MuiDataGrid-footerContainer': {
-            borderTop: 'none',
-            backgroundColor: colors.blueAccent[700],
-          },
-          '& .MuiCheckbox-root': {
-            color: `${colors.greenAccent[200]} !important`,
-          },
-          '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
-            color: `${colors.grey[100]} !important`,
-          },
-          '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: colors.blueAccent[700],
-            borderBottom: 'none',
-            justifyContent: 'center', // Center align the column headers
-            whiteSpace: 'normal', // Allow text to wrap
-            lineHeight: 'normal', // Adjust line height for wrapped text
-            textAlign: 'center', // Center align the text
-            '& .MuiDataGrid-columnHeaderTitle': {
-              overflow: 'hidden', // Hide overflow
-              textOverflow: 'ellipsis', // Use ellipsis for overflowed text
-              whiteSpace: 'normal', // Allow text to wrap
-              lineHeight: 'normal', // Adjust line height for wrapped text
-              textAlign: 'center', // Center align the text
-            },
-          },
-        }}
-      >
-        <DataGrid
-          rows={asins}
-          columns={columns}
-          pageSize={50}
-          rowsPerPageOptions={[25, 50, 100]}
-          checkboxSelection
-          disableSelectionOnClick
-          slots={{ toolbar: GridToolbar }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-            },
-          }}
-          getRowId={row => row.asinId}
-        />
-      </Box>
+      {loading ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="75vh"
+        >
+          <CircularProgress />
+        </Box>
+      ) : error ? (
+        <Typography color="error" align="center">
+          {error}
+        </Typography>
+      ) : (
+        <>
+          <Dialog open={isImageModalOpen} onClose={closeImageModal}>
+            <DialogContent>
+              <img
+                src={selectedImageUrl}
+                alt="Selected"
+                style={{ width: '100%' }}
+              />
+            </DialogContent>
+          </Dialog>
+          <Box
+            m="40px 0 0 0"
+            height="75vh"
+            sx={{
+              '& .MuiDataGrid-root': {
+                border: 'none',
+              },
+              '& .MuiDataGrid-cell': {
+                borderBottom: 'none',
+              },
+              '& .name-column--cell': {
+                color: colors.greenAccent[300],
+              },
+              '& .MuiDataGrid-virtualScroller': {
+                backgroundColor: colors.primary[400],
+              },
+              '& .MuiDataGrid-footerContainer': {
+                borderTop: 'none',
+                backgroundColor: colors.blueAccent[700],
+              },
+              '& .MuiCheckbox-root': {
+                color: `${colors.greenAccent[200]} !important`,
+              },
+              '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
+                color: `${colors.grey[100]} !important`,
+              },
+              '& .MuiDataGrid-columnHeaders': {
+                backgroundColor: colors.blueAccent[700],
+                borderBottom: 'none',
+                justifyContent: 'center', // Center align the column headers
+                whiteSpace: 'normal', // Allow text to wrap
+                lineHeight: 'normal', // Adjust line height for wrapped text
+                textAlign: 'center', // Center align the text
+                '& .MuiDataGrid-columnHeaderTitle': {
+                  overflow: 'hidden', // Hide overflow
+                  textOverflow: 'ellipsis', // Use ellipsis for overflowed text
+                  whiteSpace: 'normal', // Allow text to wrap
+                  lineHeight: 'normal', // Adjust line height for wrapped text
+                  textAlign: 'center', // Center align the text
+                },
+              },
+            }}
+          >
+            <DataGrid
+              rows={asins}
+              columns={columns}
+              pageSize={50}
+              rowsPerPageOptions={[25, 50, 100]}
+              checkboxSelection
+              disableSelectionOnClick
+              slots={{ toolbar: GridToolbar }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                },
+              }}
+              getRowId={row => row.asinId}
+            />
+          </Box>
+        </>
+      )}
     </Box>
   );
 };
