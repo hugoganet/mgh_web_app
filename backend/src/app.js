@@ -44,6 +44,8 @@ const afnInventoryDailyUpdatesRoutes = require('./api/routes/afnInventoryDailyUp
 const sellingPriceHistory = require('./api/routes/sellingPricesHistoryRoutes');
 const keepaDataUploadRoutes = require('./api/routes/keepaDataUploadRoutes');
 const catalogUploadRoutes = require('./api/routes/catalogUploadRoutes');
+const asinSourcingCatalogRoutes = require('./api/routes/asinSourcingCatalogRoutes');
+const keepaDataRoutes = require('./api/routes/keepaDataRoutes');
 
 app.use(express.json()); // Enable parsing JSON bodies
 
@@ -110,6 +112,8 @@ app.use('/afnInventoryDailyUpdates', afnInventoryDailyUpdatesRoutes);
 app.use('/sellingPricesHistory', sellingPriceHistory);
 app.use('/uploadKeepaData', keepaDataUploadRoutes);
 app.use('/uploadCatalog', catalogUploadRoutes);
+app.use('/keepaData', keepaDataRoutes);
+app.use('/asinSourcingCatalog', asinSourcingCatalogRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).send('Hello World!');
