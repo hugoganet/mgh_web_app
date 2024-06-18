@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Box } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { tokens } from '../../theme';
 import Header from '../../components/Header';
 import { useTheme } from '@mui/material';
+import { fetchEans } from '../../services/eanService';
 
 const Ean = () => {
   const theme = useTheme();
@@ -13,14 +13,16 @@ const Ean = () => {
 
   const [eans, setEans] = useState([]);
   const [warehouseColumns, setWarehouseColumns] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const fetchEans = async () => {
+  const loadEans = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/eans`);
-      setEans(response.data.data);
+      const data = await fetchEans();
+      setEans(data.data);
 
-      if (response.data.warehouses && warehouseColumns.length === 0) {
-        const newColumns = response.data.warehouses.map(warehouseName => ({
+      if (data.warehouses && warehouseColumns.length === 0) {
+        const newColumns = data.warehouses.map(warehouseName => ({
           field: `stock_${warehouseName}`,
           headerName: `Stock ${warehouseName}`,
           type: 'number',
@@ -35,11 +37,14 @@ const Ean = () => {
       }
     } catch (error) {
       console.error('Error fetching EAN data:', error);
+      setError('Failed to fetch data');
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchEans();
+    loadEans();
   }, []);
 
   const baseColumns = [
@@ -56,53 +61,68 @@ const Ean = () => {
   return (
     <Box m="20px">
       <Header title="EAN" subtitle="List of all EANs." />
-      <Box
-        m="40px 0 0 0"
-        height="75vh"
-        sx={{
-          '& .MuiDataGrid-root': {
-            border: 'none',
-          },
-          '& .MuiDataGrid-cell': {
-            borderBottom: 'none',
-          },
-          '& .name-column--cell': {
-            color: colors.greenAccent[300],
-          },
-          '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: colors.blueAccent[700],
-            borderBottom: 'none',
-          },
-          '& .MuiDataGrid-virtualScroller': {
-            backgroundColor: colors.primary[400],
-          },
-          '& .MuiDataGrid-footerContainer': {
-            borderTop: 'none',
-            backgroundColor: colors.blueAccent[700],
-          },
-          '& .MuiCheckbox-root': {
-            color: `${colors.greenAccent[200]} !important`,
-          },
-          '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
-            color: `${colors.grey[100]} !important`,
-          },
-        }}
-      >
-        <DataGrid
-          rows={eans}
-          columns={columns}
-          slots={{ toolbar: GridToolbar }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
+      {loading ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="75vh"
+        >
+          <CircularProgress />
+        </Box>
+      ) : error ? (
+        <Typography color="error" align="center">
+          {error}
+        </Typography>
+      ) : (
+        <Box
+          m="40px 0 0 0"
+          height="75vh"
+          sx={{
+            '& .MuiDataGrid-root': {
+              border: 'none',
+            },
+            '& .MuiDataGrid-cell': {
+              borderBottom: 'none',
+            },
+            '& .name-column--cell': {
+              color: colors.greenAccent[300],
+            },
+            '& .MuiDataGrid-columnHeaders': {
+              backgroundColor: colors.blueAccent[700],
+              borderBottom: 'none',
+            },
+            '& .MuiDataGrid-virtualScroller': {
+              backgroundColor: colors.primary[400],
+            },
+            '& .MuiDataGrid-footerContainer': {
+              borderTop: 'none',
+              backgroundColor: colors.blueAccent[700],
+            },
+            '& .MuiCheckbox-root': {
+              color: `${colors.greenAccent[200]} !important`,
+            },
+            '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
+              color: `${colors.grey[100]} !important`,
             },
           }}
-          checkboxSelection={true}
-          disableSelectionOnClick
-          pageSizeOptions={[25, 50, 100]}
-          getRowId={row => row.ean}
-        />
-      </Box>
+        >
+          <DataGrid
+            rows={eans}
+            columns={columns}
+            slots={{ toolbar: GridToolbar }}
+            slotProps={{
+              toolbar: {
+                showQuickFilter: true,
+              },
+            }}
+            checkboxSelection={true}
+            disableSelectionOnClick
+            pageSizeOptions={[25, 50, 100]}
+            getRowId={row => row.ean}
+          />
+        </Box>
+      )}
     </Box>
   );
 };

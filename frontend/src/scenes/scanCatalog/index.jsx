@@ -6,6 +6,7 @@ import { tokens } from '../../theme';
 import Header from '../../components/Header';
 import uploadKeepaData from '../../services/uploadKeepaDataService';
 import uploadCatalog from '../../services/uploadCatalogService';
+import List from './list.jsx';
 
 const ScanCatalog = () => {
   const theme = useTheme();
@@ -88,6 +89,14 @@ const ScanCatalog = () => {
           <DownloadOutlinedIcon sx={{ mr: '10px' }} />
           Upload Catalog
         </Button>
+      </Box>
+      <Box m="20px">
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <p>
+            Upload the Keepa data and the catalog to start scanning the catalog.
+          </p>
+          <List />
+        </Box>
       </Box>
     </Box>
   );
