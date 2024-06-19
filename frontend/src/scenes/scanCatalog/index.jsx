@@ -5,6 +5,8 @@ import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
 import { tokens } from '../../theme';
 import Header from '../../components/Header';
 import List from './list';
+import uploadKeepaData from '../../services/uploadKeepaDataService';
+import uploadCatalog from '../../services/uploadCatalogService';
 
 const ScanCatalog = () => {
   const theme = useTheme();
@@ -28,11 +30,14 @@ const ScanCatalog = () => {
     const file = event.target.files[0];
     if (file) {
       try {
+        console.log('File selected:', file);
         const result = await uploadCatalog(file);
         console.log('Catalog upload successful:', result);
       } catch (error) {
         console.error('Catalog upload failed:', error.message);
       }
+    } else {
+      console.error('No file selected.');
     }
   };
 

@@ -44,11 +44,11 @@ const processCatalogFile = async filePath => {
 
           results.push({
             ean,
-            supplier_part_number: supplierPartNumber,
-            product_name: productName,
-            product_price_exc: productPriceExc,
-            product_vat_rate: productVatRate,
-            currency_code: currencyCode,
+            supplierPartNumber,
+            productName,
+            productPriceExc,
+            productVatRate,
+            currencyCode,
           });
         } catch (error) {
           errors.push({ error: error.message, row: data });
