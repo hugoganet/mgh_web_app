@@ -1,12 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useRef } from 'react';
-import { Box, Button, useTheme } from '@mui/material';
+import { Box, Button, useTheme, Typography } from '@mui/material';
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
 import { tokens } from '../../theme';
 import Header from '../../components/Header';
-import uploadKeepaData from '../../services/uploadKeepaDataService';
-import uploadCatalog from '../../services/uploadCatalogService';
-import List from './list.jsx';
+import List from './list';
 
 const ScanCatalog = () => {
   const theme = useTheme();
@@ -40,11 +38,16 @@ const ScanCatalog = () => {
 
   return (
     <Box m="20px">
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header
-          title="SCAN CATALOG"
-          subtitle="Find the right product in a glimpse."
-        />
+      <Header
+        title="SCAN CATALOG"
+        subtitle="Find the right product in a glimpse."
+      />
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        mb="20px"
+      >
         <input
           type="file"
           onChange={handleFileChangeKeepa}
@@ -62,7 +65,7 @@ const ScanCatalog = () => {
               backgroundColor: colors.blueAccent[800],
             },
           }}
-          onClick={() => fileInputKeepa.current.click()} // Trigger the hidden file input
+          onClick={() => fileInputKeepa.current.click()}
         >
           <DownloadOutlinedIcon sx={{ mr: '10px' }} />
           Upload Keepa Data
@@ -84,17 +87,17 @@ const ScanCatalog = () => {
               backgroundColor: colors.greenAccent[800],
             },
           }}
-          onClick={() => fileInputCatalog.current.click()} // Trigger the hidden file input for catalog
+          onClick={() => fileInputCatalog.current.click()}
         >
           <DownloadOutlinedIcon sx={{ mr: '10px' }} />
           Upload Catalog
         </Button>
       </Box>
-      <Box m="20px">
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <p>
-            Upload the Keepa data and the catalog to start scanning the catalog.
-          </p>
+      <Box display="flex" flexDirection="column" height="75vh">
+        <Typography variant="body1" mb="20px">
+          Upload the Keepa data and the catalog to start scanning the catalog.
+        </Typography>
+        <Box flex={1}>
           <List />
         </Box>
       </Box>
