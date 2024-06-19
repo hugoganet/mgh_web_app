@@ -22,16 +22,15 @@ async function updateAfnQuantity(
     });
 
     if (!latestUpdate) {
-      throw new Error(
-        `No AfnInventoryDailyUpdate found for SKU ID: ${skuId}. No update performed.\n`,
-      );
+      logMessage += `No AfnInventoryDailyUpdate found for SKU ID: ${skuId}. No update performed.\n`;
+      return;
     } else {
       const skuAfnTotalQuantity = latestUpdate.afnFulfillableQuantity;
       await db.Sku.update({ skuAfnTotalQuantity }, { where: { skuId } });
     }
   } catch (error) {
     logMessage += `Error in AfnInventoryDailyUpdate: ${error}\n`;
-    throw new Error('Error in AfnInventoryDailyUpdate');
+    throw error;
   } finally {
     if (createLog) {
       logger(logMessage, logContext);

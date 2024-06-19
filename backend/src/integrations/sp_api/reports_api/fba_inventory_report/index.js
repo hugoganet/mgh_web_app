@@ -36,30 +36,29 @@ async function requestFbaInventoryReport(
   const countryCode = country.map(key => marketplaces[key].countryCode);
   let logMessage = '';
   try {
-    // Step 1: Create Report to get ReportId
-    const reportIdResponse = await createReport(
-      marketplaceIds,
-      reportType,
-      logContext,
-      createLog,
-      dataStartTime,
-      dataEndTime,
-    );
+    // // Step 1: Create Report to get ReportId
+    // const reportIdResponse = await createReport(
+    //   marketplaceIds,
+    //   reportType,
+    //   logContext,
+    //   createLog,
+    //   dataStartTime,
+    //   dataEndTime,
+    // );
 
-    // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
-    await new Promise(resolve => setTimeout(resolve, 60000 * 2));
+    // // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
+    // await new Promise(resolve => setTimeout(resolve, 60000 * 2));
 
-    // Step 2: Request report document ID
-    const response = await getReport(
-      reportIdResponse.reportId,
-      createLog,
-      logContext,
-    );
-    const reportDocumentId = response.reportDocumentId;
+    // // Step 2: Request report document ID
+    // const response = await getReport(
+    //   reportIdResponse.reportId,
+    //   createLog,
+    //   logContext,
+    // );
+    // const reportDocumentId = response.reportDocumentId;
 
-    // const reportDocumentId =
-    //   // 'amzn1.spdoc.1.4.eu.483d7947-0adf-43c5-bcf4-de0acb2adf3a.T3FR42143VKPCQ.2651'; // FR
-    //   'amzn1.spdoc.1.4.eu.8d2ae6c7-06f7-470f-ab0b-7cc37e17a9b0.TSM368VPLQYVE.2651'; // IT
+    const reportDocumentId =
+      'amzn1.spdoc.1.4.eu.ee4f3be4-0c16-4f19-b291-816e73ab8ade.T25DCG66QG77S2.2651';
 
     // Request report document URL
     const { documentUrl, compressionAlgorithm } = await getReportDocument(

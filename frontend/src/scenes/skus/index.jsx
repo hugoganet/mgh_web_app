@@ -52,8 +52,8 @@ const Sku = () => {
       flex: 1,
     },
     {
-      field: 'skuAverageSellingPrice',
-      headerName: 'Average Selling Price',
+      field: 'skuAverageSellingPriceInc',
+      headerName: 'Average Selling Price Inc.',
       type: 'number',
       flex: 1,
     },

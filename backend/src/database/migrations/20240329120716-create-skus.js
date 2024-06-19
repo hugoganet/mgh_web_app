@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.CHAR(2),
         allowNull: false,
         references: {
-          model: 'countries', // Ensure this matches the actual table name and primary key
+          model: 'countries',
           key: 'country_code',
         },
       },

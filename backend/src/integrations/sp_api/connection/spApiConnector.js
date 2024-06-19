@@ -1,4 +1,6 @@
-require('dotenv').config({ path: 'backend/.env' });
+// require('dotenv').config({ path: 'backend/.env' });
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../../../.env') });
 const axios = require('axios');
 const crypto = require('crypto');
 const { logger } = require('../../../utils/logger');

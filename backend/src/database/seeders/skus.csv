@@ -1,4 +1,4 @@
-skuId,sku,countryCode,fnsku,skuAcquisitionCostExc,skuAcquisitionCostInc,skuAfnTotalQuantity,skuAverageSellingPrice,skuAverageNetMargin,skuAverageNetMarginPercentage,skuAverageReturnOnInvestmentRate,skuAverageDailyReturnOnInvestmentRate,isActive,numberOfActiveDays,numberOfUnitSold,skuAverageUnitSoldPerDay,skuRestockAlertQuantity,skuIsTest
+skuId,sku,countryCode,fnsku,skuAcquisitionCostExc,skuAcquisitionCostInc,skuAfnTotalQuantity,skuAverageSellingPriceInc,skuAverageNetMargin,skuAverageNetMarginPercentage,skuAverageReturnOnInvestmentRate,skuAverageDailyReturnOnInvestmentRate,isActive,numberOfActiveDays,numberOfUnitSold,skuAverageUnitSoldPerDay,skuRestockAlertQuantity,skuIsTest
 ,54-91BV-PNZ6,FR,null,0.00,0.00,0,9.99,2.77,0.27730,null,null,FALSE,null,2,0.01,1,FALSE
 ,8K-89QT-O64E,FR,null,0.00,0.00,0,7.41,0.31,0.05410,null,null,FALSE,null,1,0.00,1,FALSE
 ,GC-U8AO-WGK6,FR,null,4.74,5.00,0,15.00,2.06,0.14840,0.43460,0.01614,FALSE,null,15,0.04,1,FALSE
