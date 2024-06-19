@@ -1,4 +1,4 @@
-const marketplaces = require('../config/marketplaces'); // Adjust the path as necessary
+const marketplaces = require('../utils/marketplaces.js'); // Adjust the path as necessary
 const { logger } = require('./logger');
 
 /**

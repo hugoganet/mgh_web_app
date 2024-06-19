@@ -6,7 +6,7 @@ const { fetchAndProcessSalesReport } = require('./fetchAndProcessSalesReport');
 const {
   downloadAndDecompressDocument,
 } = require('../downloadAndDecompressDocument');
-const marketplaces = require('../../../../config/marketplaces');
+const marketplaces = require('../../../../utils/marketplaces.js');
 
 /**
  * Requests an FBA Inventory report from the Amazon Selling Partner API.

@@ -3,7 +3,7 @@ const { logger } = require('../../../../utils/logger');
 const {
   parseAndValidateNumber,
 } = require('../../../../utils/parseAndValidateNumber');
-const db = require('../../../../api/models/index');
+const db = require('../../../../database/models/index');
 
 async function processRemovalShipmentChunk(
   chunk,

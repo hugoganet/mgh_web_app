@@ -1,5 +1,5 @@
 const { logger } = require('../../utils/logger');
-const db = require('../../api/models/index');
+const db = require('../../database/models/index');
 
 /**
  * @function saveHistoricalExchangeRates

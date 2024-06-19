@@ -1,4 +1,4 @@
-const db = require('../../src/api/models/index');
+const db = require('../../src/database/models/index');
 const { logger } = require('../utils/logger');
 
 /**

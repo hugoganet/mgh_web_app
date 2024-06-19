@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 const { spApiInstance } = require('../../connection/spApiConnector');
-const marketplaces = require('../../../../config/marketplaces');
+const marketplaces = require('../../../../utils/marketplaces.js');
 const calculateNextReportCreationTime = require('../../../../utils/calculateNextReportCreationTime');
 const moment = require('moment'); // Using moment.js for easy date manipulation
 

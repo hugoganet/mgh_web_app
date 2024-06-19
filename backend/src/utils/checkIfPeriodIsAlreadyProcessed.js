@@ -1,4 +1,4 @@
-const db = require('../api/models/index');
+const db = require('../database/models/index');
 
 /**
  * @description Check if the period has already been processed.

@@ -4,7 +4,7 @@ const { getReportDocument } = require('../operations/getReportDocument.js');
 const {
   fetchAndProcessInventoryReport,
 } = require('./fetchAndProcessInventoryReport');
-const marketplaces = require('../../../../config/marketplaces');
+const marketplaces = require('../../../../utils/marketplaces.js');
 const {
   downloadAndDecompressDocument,
 } = require('../../../../utils/downloadAndDecompressDocument.js');
@@ -36,18 +36,18 @@ async function requestFbaInventoryReport(
   const countryCode = country.map(key => marketplaces[key].countryCode);
   let logMessage = '';
   try {
-    // // Step 1: Create Report to get ReportId
-    // const reportIdResponse = await createReport(
-    //   marketplaceIds,
-    //   reportType,
-    //   logContext,
-    //   createLog,
-    //   dataStartTime,
-    //   dataEndTime,
-    // );
+    // Step 1: Create Report to get ReportId
+    const reportIdResponse = await createReport(
+      marketplaceIds,
+      reportType,
+      logContext,
+      createLog,
+      dataStartTime,
+      dataEndTime,
+    );
 
-    // // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
-    // await new Promise(resolve => setTimeout(resolve, 60000 * 2));
+    // Waiting for 2 minutes (120000 milliseconds) before proceeding to the next step
+    await new Promise(resolve => setTimeout(resolve, 60000 * 2));
 
     // Step 2: Request report document ID
     const response = await getReport(
@@ -102,7 +102,7 @@ async function requestFbaInventoryReport(
 module.exports = { requestFbaInventoryReport };
 
 requestFbaInventoryReport(
-  (country = ['italy']),
+  (country = ['france']),
   (reportType = 'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA'),
   (logContext = 'create_fetch_and_process_inventory_report'),
   (createLog = true),

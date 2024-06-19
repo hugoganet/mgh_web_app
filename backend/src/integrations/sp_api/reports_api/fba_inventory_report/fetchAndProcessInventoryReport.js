@@ -1,7 +1,7 @@
 const axios = require('axios');
 const csvParser = require('csv-parser');
 const { Transform } = require('stream'); // To work with streams
-const marketplaces = require('../../../../config/marketplaces.js');
+const marketplaces = require('../../../../utils/marketplaces.js');
 const {
   chooseDecompressionStream,
 } = require('../../../../utils/chooseDecompressionStream.js');
