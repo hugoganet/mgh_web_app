@@ -4,13 +4,13 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('asin_sourcing_catalog', {
-      asinSourcingCatalogId: {
+      asin_sourcing_catalog_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      keepaDataId: {
+      keepa_data_id: {
         type: Sequelize.INTEGER,
         unique: true,
         allowNull: false,
@@ -27,58 +27,58 @@ module.exports = {
           key: 'ean',
         },
       },
-      productCategoryRank: {
+      product_category_rank: {
         type: Sequelize.DECIMAL(6, 5),
       },
-      averageSellingPriceInc: {
+      average_selling_price_inc: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      estimAsinAcquisitionCostExc: {
+      estim_asin_acquisition_cost_exc: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      estimAsinAcquisitionCostInc: {
+      estim_asin_acquisition_cost_inc: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      minimumSellingPriceLocalAndPanEu: {
+      minimum_selling_price_local_and_pan_eu: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      minimumSellingPriceEfn: {
+      minimum_selling_price_efn: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      estimMonthlyRevenu: {
+      estim_monthly_revenu: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      estimMonthlyMarginExc: {
+      estim_monthly_margin_exc: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      estimAcquisitionCostExc: {
+      estim_acquisition_cost_exc: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      estimPersonalMonthlyQuantitySold: {
+      estim_personal_monthly_quantity_sold: {
         type: Sequelize.INTEGER,
       },
-      pvMoyenConstate: {
+      pv_moyen_constate: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      fbaFees: {
+      fba_fees: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      prepFees: {
+      prep_fees: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      transportFees: {
+      transport_fees: {
         type: Sequelize.DECIMAL(10, 2),
       },
-      isHazmat: {
+      is_hazmat: {
         type: Sequelize.BOOLEAN,
       },
-      estimMonthlyQuantitySold: {
+      estim_monthly_quantity_sold: {
         type: Sequelize.INTEGER,
       },
-      estimNumberOfSeller: {
+      estim_number_of_seller: {
         type: Sequelize.INTEGER,
       },
-      desiredNumberOfWeeksCovered: {
+      desired_number_of_weeks_covered: {
         type: Sequelize.INTEGER,
       },
     });

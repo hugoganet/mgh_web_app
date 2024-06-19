@@ -1,6 +1,6 @@
 require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
-const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerSpec = require('./swaggerConfig');
 const cors = require('cors');
 const express = require('express');
 
@@ -13,31 +13,6 @@ app.use(
 );
 
 app.use(express.json()); // Enable parsing JSON bodies
-
-// Swagger definition
-const swaggerDefinition = {
-  openapi: '3.0.0',
-  info: {
-    title: 'Your API Title',
-    version: '1.0.0',
-    description: 'Description of your API',
-  },
-  servers: [
-    {
-      url: 'http://localhost:3001', // Replace with your server's URL
-      description: 'Local server',
-    },
-  ],
-};
-
-// Options for the swagger docs
-const options = {
-  swaggerDefinition,
-  apis: ['./src/api/controllers/*.js', './src/api/routes/*.js'], // Paths to files containing OpenAPI annotations
-};
-
-// Initialize swagger-jsdoc
-const swaggerSpec = swaggerJSDoc(options);
 
 // Use the Swagger UI
 app.use(
