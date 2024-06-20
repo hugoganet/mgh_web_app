@@ -109,7 +109,7 @@ async function fetchAndProcessInventoryReport(
           Created ${counts.eanInAsin.eanInAsin_created} new eanInAsin records and found ${counts.eanInAsin.eanInAsin_found} eanInAsin.
           Created ${counts.fbaFee.fbaFee_created} new fbaFee records and found ${counts.fbaFee.fbaFee_found} fbaFee.
           Created ${counts.asinSku.asinSku_created} new asinSku records and found ${counts.asinSku.asinSku_found} asinSku.
-          Created ${counts.minimumSellingPrice.minimumSellingPrice_created} new minimumSellingPrice records and found ${counts.minimumSellingPrice.minimumSellingPrice_found} asinSku.
+          Created ${counts.minimumSellingPrice.minimumSellingPrice_created} new minimumSellingPrice records and found ${counts.minimumSellingPrice.minimumSellingPrice_found} minimumSellingPrice.
           Created ${counts.afnInventoryDailyUpdate.afnInventoryDailyUpdate_created} new afnInventoryDailyUpdate records and update ${counts.afnInventoryDailyUpdate.afnInventoryDailyUpdate_updated}.
           Created ${counts.sellingPriceHistory.sellingPriceHistory_created} new sellingPriceHistory records and found ${counts.sellingPriceHistory.sellingPriceHistory_found}.`,
           );
@@ -120,7 +120,7 @@ async function fetchAndProcessInventoryReport(
           Created ${counts.eanInAsin.eanInAsin_created} new eanInAsin records and found ${counts.eanInAsin.eanInAsin_found} eanInAsin.
           Created ${counts.fbaFee.fbaFee_created} new fbaFee records and found ${counts.fbaFee.fbaFee_found} fbaFee.
           Created ${counts.asinSku.asinSku_created} new asinSku records and found ${counts.asinSku.asinSku_found} asinSku.
-          Created ${counts.minimumSellingPrice.minimumSellingPrice_created} new minimumSellingPrice records and found ${counts.minimumSellingPrice.minimumSellingPrice_found} asinSku.
+          Created ${counts.minimumSellingPrice.minimumSellingPrice_created} new minimumSellingPrice records and found ${counts.minimumSellingPrice.minimumSellingPrice_found} minimumSellingPrice.
           Created ${counts.afnInventoryDailyUpdate.afnInventoryDailyUpdate_created} new afnInventoryDailyUpdate records and update ${counts.afnInventoryDailyUpdate.afnInventoryDailyUpdate_updated}.
           Created ${counts.sellingPriceHistory.sellingPriceHistory_created} new sellingPriceHistory records and found ${counts.sellingPriceHistory.sellingPriceHistory_found}.\n`;
 
