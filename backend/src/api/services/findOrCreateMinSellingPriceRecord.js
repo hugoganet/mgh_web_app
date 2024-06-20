@@ -21,6 +21,7 @@ async function findOrCreateMinSellingPriceRecord(skuId, createLog, logContext) {
         skuId,
       },
     });
+
     if (minimumSellingPriceRecord) {
       eventBus.emit('recordCreated', {
         type: 'minimumSellingPrice',
@@ -29,19 +30,22 @@ async function findOrCreateMinSellingPriceRecord(skuId, createLog, logContext) {
       });
       logMessage += `Found minimumSellingPrice record for SKU: ${skuId}\n`;
     } else {
-      // else if (!associatedAsinRecord) {
-      // I don't know what "associatedAsinRecord" is, but it's not defined in this function.
       minimumSellingPriceRecord =
-        await automaticallyCreateMinSellingPriceRecord(
-          skuRecord.skuId,
-          true,
-          logContext,
+        await automaticallyCreateMinSellingPriceRecord(skuId, true, logContext);
+
+      logMessage += `Created new minimumSellingPrice record for SKU: ${skuId}\n`;
+
+      if (!minimumSellingPriceRecord) {
+        throw new Error(
+          `Failed to create minimumSellingPrice record for SKU: ${skuId}`,
         );
-      logMessage += `No minimumSellingPrice record found in findOrCreateMinSellingPriceRecord. Created new record for ASIN: ${asin} in ${countryCode}\n`;
+      }
     }
+
     return minimumSellingPriceRecord;
   } catch (error) {
-    logMessage += `Error in findOrCreateMinSellingPrice for skuId: ${skuId}.\n`;
+    logMessage += `Error in findOrCreateMinSellingPrice for skuId: ${skuId}: ${error.message}\n`;
+    throw error; // Rethrow the error to ensure it is handled by the calling function
   } finally {
     if (createLog) {
       logger(logMessage, logContext);

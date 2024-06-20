@@ -45,7 +45,9 @@ async function calculateSellingPrices(
         fbaFeeLowPrice: data.fbaFeeLowPriceEfn,
       },
     ];
-    const sellingPrices = {};
+    const sellingPrices = {
+      currencyCode: data.currencyCode,
+    };
 
     for (const { type, fbaFee, fbaFeeLowPrice } of feeTypes) {
       let calculationResults;
@@ -87,7 +89,6 @@ async function calculateSellingPrices(
             maximumSellingPrice: parseAndValidateNumber(maximumSellingPrice, {
               decimals: 2,
             }),
-            currencyCode: data.currencyCode,
           };
           continue;
         }
@@ -126,7 +127,6 @@ async function calculateSellingPrices(
         maximumSellingPrice: parseAndValidateNumber(maximumSellingPrice, {
           decimals: 2,
         }),
-        currencyCode: data.currencyCode,
       };
     }
 

@@ -42,6 +42,7 @@ function calculateMinimumSellingPrice(
     {
       paramName: 'minimumSellingPrice',
       min: 0,
+      decimals: 2,
     },
   );
   return minimumSellingPrice;

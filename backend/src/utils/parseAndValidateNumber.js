@@ -8,6 +8,7 @@
  * @param {string} options.paramName - The name of the parameter for the error message. Defaults to an empty string.
  * @param {number} options.decimals - The number of decimal places to round the number to. Defaults to null (no rounding).
  * @param {boolean} options.allowNull - Allows null values without throwing an error. Defaults to false.
+ * @param {boolean} options.applyRounding - Whether to apply rounding after the calculation. Defaults to false.
  * @return {number|null} The parsed, validated, and optionally rounded number, or null if allowNull is true and value is empty.
  */
 function parseAndValidateNumber(
@@ -18,14 +19,25 @@ function parseAndValidateNumber(
     paramName = '',
     decimals = null,
     allowNull = false,
+    applyRounding = false,
   } = {},
 ) {
   if (
-    allowNull &&
-    (value === null || value === undefined || value.trim() === '')
+    value === null ||
+    value === undefined ||
+    (typeof value === 'string' && value.trim() === '')
   ) {
-    return null;
+    if (allowNull) {
+      return null;
+    } else {
+      throw new Error(
+        `Invalid value for ${paramName}: ${value}. Value cannot be null or undefined.`,
+      );
+    }
   }
+
+  // Ensure value is a string
+  value = String(value);
 
   // Remove currency symbols and spaces from the string
   let cleanedValue = value.replace(/[€$£ ]/g, '');
@@ -58,7 +70,12 @@ function parseAndValidateNumber(
       );
     }
 
-    if (decimals !== null && Number.isInteger(decimals) && decimals >= 0) {
+    if (
+      applyRounding &&
+      decimals !== null &&
+      Number.isInteger(decimals) &&
+      decimals >= 0
+    ) {
       const factor = Math.pow(10, decimals);
       number = Math.round(number * factor) / factor;
     }

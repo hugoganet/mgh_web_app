@@ -20,6 +20,8 @@ async function automaticallyCreateMinSellingPriceRecord(
   let logMessage = '';
 
   try {
+    const sellingPrices = await calculateSellingPrices(skuId, true, logContext);
+
     const {
       LocalAndPanEU: {
         minimumSellingPrice: minimumSellingPriceLocalAndPanEu,
@@ -30,7 +32,7 @@ async function automaticallyCreateMinSellingPriceRecord(
         maximumSellingPrice: maximumSellingPriceEfn,
       },
       currencyCode,
-    } = await calculateSellingPrices(skuId, true, logContext);
+    } = sellingPrices;
 
     // Create minimum selling price record
     const newMinimumSellingPriceRecord = await db.MinimumSellingPrice.create({
@@ -38,14 +40,13 @@ async function automaticallyCreateMinSellingPriceRecord(
       pricingRuleId: 1,
       enrolledInPanEu: false,
       eligibleForPanEu: false,
-      // referralFeeCategoryId: data.referralFeeCategoryId, // I got rid of those 2 fields beause I don't need to store them.
-      // minimumMarginAmount: data.minimumMarginAmount,
       minimumSellingPriceLocalAndPanEu,
       minimumSellingPriceEfn,
       maximumSellingPriceLocalAndPanEu,
       maximumSellingPriceEfn,
       currencyCode,
     });
+
     if (newMinimumSellingPriceRecord.minimumSellingPriceId) {
       eventBus.emit('recordCreated', {
         type: 'minimumSellingPrice',
@@ -53,17 +54,6 @@ async function automaticallyCreateMinSellingPriceRecord(
         id: newMinimumSellingPriceRecord.minimumSellingPriceId,
       });
     }
-
-    console.log(
-      `Local/Pan-EU: 
-      minimumSellingPrice: ${minimumSellingPriceLocalAndPanEu} ${currencyCode},
-      maximumSellingPrice: ${maximumSellingPriceLocalAndPanEu} ${currencyCode}`,
-    );
-    console.log(
-      `EFN: 
-      minimumSellingPrice: ${minimumSellingPriceEfn} ${currencyCode},
-      maximumSellingPrice: ${maximumSellingPriceEfn} ${currencyCode}`,
-    );
   } catch (error) {
     console.error(
       `Error in automaticallyCreateMinSellingPriceRecord: ${error}`,
@@ -77,6 +67,3 @@ async function automaticallyCreateMinSellingPriceRecord(
 }
 
 module.exports = { automaticallyCreateMinSellingPriceRecord };
-
-// automaticallyCreateMinSellingPriceRecord(2, true); // Book Low-price
-// automaticallyCreateMinSellingPriceRecord(3635, true); // Low-price, reduced referral fee

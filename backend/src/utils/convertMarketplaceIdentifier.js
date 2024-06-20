@@ -1,12 +1,26 @@
-const marketplaces = require('../utils/marketplaces.js'); // Adjust the path as necessary
+const marketplaces = require('../utils/marketplaces'); // Adjust the path as necessary
 const { logger } = require('./logger');
+
+// Mapping of country codes to marketplace object keys
+const countryCodeToKeyMap = {
+  FR: 'france',
+  DE: 'germany',
+  ES: 'spain',
+  IT: 'italy',
+  NL: 'netherlands',
+  BE: 'belgium',
+  SE: 'sweden',
+  PL: 'poland',
+  TR: 'turkey',
+  UK: 'unitedKingdom',
+};
 
 /**
  * Converts between marketplace identifiers, country codes, and sales channels.
  * @param {string} identifier - The identifier to be converted (marketplaceId, countryCode, or domain).
  * @param {boolean} createLog - Whether to create a log of the process.
  * @param {string} logContext - The context for the log message.
- * @return {string|null} - The converted value or null if not found.
+ * @return {Object|null} - The converted value or null if not found.
  */
 function convertMarketplaceIdentifier(
   identifier,
@@ -21,12 +35,20 @@ function convertMarketplaceIdentifier(
   } else {
     identifierType = 'marketplaceId';
   }
+
   let result = null;
 
   try {
-    const marketplace = Object.values(marketplaces).find(
-      m => m[identifierType] === identifier,
-    );
+    let marketplace;
+    if (identifierType === 'countryCode') {
+      const key = countryCodeToKeyMap[identifier];
+      marketplace = marketplaces[key];
+    } else {
+      marketplace = Object.values(marketplaces).find(
+        m => m[identifierType] === identifier,
+      );
+    }
+
     if (!marketplace) {
       throw new Error(`No match found for identifier: ${identifier}`);
     }
@@ -39,13 +61,22 @@ function convertMarketplaceIdentifier(
       countryName: marketplace.countryName,
     };
 
+    if (createLog) {
+      logger(
+        `Converted ${identifierType}: ${identifier} to ${JSON.stringify(
+          result,
+        )}`,
+        logContext,
+      );
+    }
+
     return result;
   } catch (error) {
-    console.error(`Error in convertMarketplaceIdentifier`);
     const errorMessage = `Error in convertMarketplaceIdentifier: ${error.message}`;
     if (createLog) {
       logger(errorMessage, logContext);
     }
+    console.error(errorMessage);
     throw new Error(errorMessage);
   }
 }

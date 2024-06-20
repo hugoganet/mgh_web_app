@@ -1,8 +1,6 @@
 const db = require('../../database/models/index');
 const { logger } = require('../../utils/logger');
-const {
-  parseAndValidateNumber,
-} = require('../../utils/parseAndValidateNumber');
+const { parseData } = require('../../utils/parseData');
 const {
   convertMarketplaceIdentifier,
 } = require('../../utils/convertMarketplaceIdentifier');
@@ -20,24 +18,38 @@ async function fetchDataForSellingPriceCalculation(
   logContext = 'fetchDataForSellingPriceCalculation',
 ) {
   let logMessage = '';
-  try {
-    const skuRecord = await db.Sku.findOne({ where: { skuId } });
-    if (!skuRecord) {
-      logMessage += `No SKU record found in fetchDataForSellingPriceCalculation for SKU ID ${skuId}.`;
-    } else {
-      logMessage += `Fetched SKU in fetchDataForSellingPriceCalculation record for SKU ID ${skuId}.`;
-    }
+  let skuRecord;
+  let asinRecord;
+  let amazonReferralFeeRecord;
+  let fbaFeeRecord;
+  let priceGridFbaFeeRecord;
+  let pricingRuleRecord;
+  let productTaxCategory;
+  let vatRateRecord;
 
-    const asinRecord = await db.Asin.findOne({
+  try {
+    skuRecord = await db.Sku.findOne({ where: { skuId } });
+    if (!skuRecord) throw new Error(`No SKU record found for SKU ID ${skuId}.`);
+    logMessage += `Fetched SKU record for SKU ID ${skuId}. `;
+  } catch (error) {
+    logMessage += `Error fetching SKU record for SKU ID ${skuId}: ${error.message}`;
+    throw error;
+  }
+
+  try {
+    asinRecord = await db.Asin.findOne({
       include: [{ model: db.Sku, where: { skuId }, required: true }],
     });
-    if (!asinRecord) {
-      logMessage += `No ASIN record in fetchDataForSellingPriceCalculation found for SKU ID ${skuId}.`;
-    } else {
-      logMessage += `Fetched ASIN record in fetchDataForSellingPriceCalculation for SKU ID ${skuId}.`;
-    }
+    if (!asinRecord)
+      throw new Error(`No ASIN record found for SKU ID ${skuId}.`);
+    logMessage += `Fetched ASIN record for SKU ID ${skuId}. `;
+  } catch (error) {
+    logMessage += `Error fetching ASIN record for SKU ID ${skuId}: ${error.message}`;
+    throw error;
+  }
 
-    const amazonReferralFeeRecord = await db.AmazonReferralFee.findOne({
+  try {
+    amazonReferralFeeRecord = await db.AmazonReferralFee.findOne({
       include: [
         {
           model: db.ProductCategory,
@@ -50,144 +62,112 @@ async function fetchDataForSellingPriceCalculation(
       ],
       where: { countryCode: skuRecord.countryCode },
     });
-    if (!amazonReferralFeeRecord) {
-      logMessage += `No referral fee record found for product category ID ${asinRecord.productCategoryId} and country code ${skuRecord.countryCode}.`;
-    } else {
-      logMessage += `Fetched referral fee record in fetchDataForSellingPriceCalculation for product category ID ${asinRecord.productCategoryId} and country code ${skuRecord.countryCode}.`;
-    }
+    if (!amazonReferralFeeRecord)
+      throw new Error(
+        `No referral fee record found for product category ID ${asinRecord.productCategoryId} and country code ${skuRecord.countryCode}.`,
+      );
+    logMessage += `Fetched referral fee record for product category ID ${asinRecord.productCategoryId} and country code ${skuRecord.countryCode}. `;
+  } catch (error) {
+    logMessage += `Error fetching referral fee record: ${error.message}`;
+    throw error;
+  }
 
-    const fbaFeeRecord = await db.FbaFee.findOne({
+  try {
+    fbaFeeRecord = await db.FbaFee.findOne({
       where: { asinId: asinRecord.asinId },
     });
-    if (!fbaFeeRecord) {
-      logMessage += `No FBA fee record found for ASIN ID ${asinRecord.asinId}.`;
-    } else {
-      logMessage += `Fetched FBA fee record in fetchDataForSellingPriceCalculation for ASIN ID ${asinRecord.asinId}.`;
-    }
+    if (!fbaFeeRecord)
+      throw new Error(
+        `No FBA fee record found for ASIN ID ${asinRecord.asinId}.`,
+      );
+    logMessage += `Fetched FBA fee record for ASIN ID ${asinRecord.asinId}. `;
+  } catch (error) {
+    logMessage += `Error fetching FBA fee record: ${error.message}`;
+    throw error;
+  }
 
-    const priceGridFbaFeeRecord = await db.PriceGridFbaFee.findOne({
+  try {
+    priceGridFbaFeeRecord = await db.PriceGridFbaFee.findOne({
       where: { priceGridFbaFeeId: fbaFeeRecord.priceGridFbaFeeId },
     });
-    if (!priceGridFbaFeeRecord) {
-      logMessage += `No PriceGridFbaFee record found for priceGridFbaFeeId ${fbaFeeRecord.priceGridFbaFeeId}.`;
-    } else {
-      logMessage += `Fetched PriceGridFbaFee record in fetchDataForSellingPriceCalculation for priceGridFbaFeeId ${fbaFeeRecord.priceGridFbaFeeId}.`;
-    }
+    if (!priceGridFbaFeeRecord)
+      throw new Error(
+        `No PriceGridFbaFee record found for priceGridFbaFeeId ${fbaFeeRecord.priceGridFbaFeeId}.`,
+      );
+    logMessage += `Fetched PriceGridFbaFee record for priceGridFbaFeeId ${fbaFeeRecord.priceGridFbaFeeId}. `;
+  } catch (error) {
+    logMessage += `Error fetching PriceGridFbaFee record: ${error.message}`;
+    throw error;
+  }
 
-    const pricingRuleRecord = await db.PricingRule.findOne({
+  try {
+    pricingRuleRecord = await db.PricingRule.findOne({
       where: { pricingRuleId: 1 },
     });
-    if (!pricingRuleRecord) {
-      logMessage += 'No pricing rule record found for pricing rule ID 1.';
-    } else {
-      logMessage +=
-        'Fetched pricing rule record in fetchDataForSellingPriceCalculation for pricing rule ID 1.';
-    }
+    if (!pricingRuleRecord)
+      throw new Error('No pricing rule record found for pricing rule ID 1.');
+    logMessage += `Fetched pricing rule record for pricing rule ID 1. `;
+  } catch (error) {
+    logMessage += `Error fetching pricing rule record: ${error.message}`;
+    throw error;
+  }
 
-    const productTaxCategory = await db.ProductTaxCategory.findByPk(
+  try {
+    productTaxCategory = await db.ProductTaxCategory.findByPk(
       asinRecord.productTaxCategoryId,
     );
-    if (!productTaxCategory) {
-      logMessage += `No productTaxCategory record found in fetchDataForSellingPriceCalculation for productTaxCategoryId: ${asinRecord.productTaxCategoryId}.`;
-    } else {
-      logMessage += `Fetched productTaxCategory record in fetchDataForSellingPriceCalculation for productTaxCategoryId: ${asinRecord.productTaxCategoryId}.`;
-    }
+    if (!productTaxCategory)
+      throw new Error(
+        `No productTaxCategory record found for productTaxCategoryId: ${asinRecord.productTaxCategoryId}.`,
+      );
+    logMessage += `Fetched productTaxCategory record for productTaxCategoryId: ${asinRecord.productTaxCategoryId}. `;
+  } catch (error) {
+    logMessage += `Error fetching productTaxCategory record: ${error.message}`;
+    throw error;
+  }
 
-    const vatRateRecord = await db.VatRatePerCountry.findOne({
+  try {
+    vatRateRecord = await db.VatRatePerCountry.findOne({
       where: {
         countryCode: skuRecord.countryCode,
         vatCategoryId: productTaxCategory.vatCategoryId,
       },
     });
-    if (!vatRateRecord) {
-      logMessage += `No VAT rate record found for country code ${skuRecord.countryCode}.`;
-    } else {
-      logMessage += `Fetched VAT rate record in fetchDataForSellingPriceCalculation for country code ${skuRecord.countryCode}.`;
+    if (!vatRateRecord)
+      throw new Error(
+        `No VAT rate record found for country code ${skuRecord.countryCode}.`,
+      );
+    logMessage += `Fetched VAT rate record for country code ${skuRecord.countryCode}. `;
+  } catch (error) {
+    logMessage += `Error fetching VAT rate record: ${error.message}`;
+    throw error;
+  }
+
+  try {
+    const marketplaceInfo = convertMarketplaceIdentifier(skuRecord.countryCode);
+    if (!marketplaceInfo || !marketplaceInfo.currencyCode) {
+      throw new Error(
+        `No currency code found for country code ${skuRecord.countryCode}`,
+      );
     }
 
-    // Convert currency if necessary
-    const currencyCode = convertMarketplaceIdentifier(
-      skuRecord.countryCode,
-    ).currencyCode;
+    const currencyCode = marketplaceInfo.currencyCode;
 
-    // Parse and validate numerical fields
-    const parsedData = {
-      skuAcquisitionCostExc: parseAndValidateNumber(
-        skuRecord.skuAcquisitionCostExc,
-        { paramName: 'skuAcquisitionCostExc', min: 0, decimals: 2 },
-      ),
-      minimumMarginAmount: Math.max(
-        parseAndValidateNumber(skuRecord.skuAcquisitionCostExc, {
-          paramName: 'skuAcquisitionCostExc',
-          min: 0,
-        }) *
-          parseAndValidateNumber(
-            pricingRuleRecord.pricingRuleMinimumRoiPercentage,
-            { paramName: 'pricingRuleMinimumRoiPercentage', min: 0, max: 1 },
-          ),
-        parseAndValidateNumber(
-          pricingRuleRecord.pricingRuleMinimumMarginAmount,
-          { paramName: 'pricingRuleMinimumMarginAmount', min: 0 },
-        ),
-      ),
-      closingFee: parseAndValidateNumber(amazonReferralFeeRecord.closingFee, {
-        paramName: 'closingFee',
-        min: 0,
-        decimals: 2,
-      }),
-      fbaFeeLocalAndPanEu: parseAndValidateNumber(
-        priceGridFbaFeeRecord.fbaFeeLocalAndPanEu,
-        { paramName: 'fbaFeeLocalAndPanEu', min: 0, decimals: 2 },
-      ),
-      fbaFeeLowPriceLocalAndPanEu: parseAndValidateNumber(
-        priceGridFbaFeeRecord.fbaFeeLowPriceLocalAndPanEu || 0,
-        { paramName: 'fbaFeeLowPriceLocalAndPanEu', min: 0, decimals: 2 },
-      ),
-      fbaFeeEfn: parseAndValidateNumber(priceGridFbaFeeRecord.fbaFeeEfn, {
-        paramName: 'fbaFeeEfn',
-        min: 0,
-        decimals: 2,
-      }),
-      fbaFeeLowPriceEfn: parseAndValidateNumber(
-        priceGridFbaFeeRecord.fbaFeeLowPriceEfn || 0,
-        { paramName: 'fbaFeeLowPriceEfn', min: 0, decimals: 2 },
-      ),
-      lowPriceThresholdInc: parseAndValidateNumber(
-        priceGridFbaFeeRecord.lowPriceThresholdInc || 0,
-        { paramName: 'lowPriceThresholdInc', min: 0, decimals: 2 },
-      ),
-      vatRate: parseAndValidateNumber(vatRateRecord.vatRate, {
-        paramName: 'vatRate',
-        min: 0,
-        max: 1,
-      }),
-      referralFeePercentage: parseAndValidateNumber(
-        amazonReferralFeeRecord.referralFeePercentage,
-        { paramName: 'referralFeePercentage', min: 0, max: 1 },
-      ),
-      reducedReferralFeePercentage: parseAndValidateNumber(
-        amazonReferralFeeRecord.reducedReferralFeePercentage || 0,
-        { paramName: 'reducedReferralFeePercentage', min: 0, max: 1 },
-      ),
-      reducedReferralFeeLimit: parseAndValidateNumber(
-        amazonReferralFeeRecord.reducedReferralFeeLimit || 0,
-        { paramName: 'reducedReferralFeeLimit', min: 0, decimals: 2 },
-      ),
-      referralFeeCategoryId: amazonReferralFeeRecord.referralFeeCategoryId,
-      isHazmat: asinRecord.isHazmat,
-      countryCode: skuRecord.countryCode,
+    const parsedData = parseData(
+      skuRecord,
+      pricingRuleRecord,
+      amazonReferralFeeRecord,
+      priceGridFbaFeeRecord,
+      vatRateRecord,
+      asinRecord,
       currencyCode,
-    };
+    );
+    logMessage += `Parsed data for SKU ID ${skuId}. `;
 
-    logMessage = `Fetched data for SKU ID ${skuId}. DATA: ${JSON.stringify(
-      parsedData,
-      '',
-      2,
-    )}`;
     return parsedData;
   } catch (error) {
-    console.error(`Error in fetchDataForSellingPriceCalculation: ${error}`);
-    throw error; // Rethrow to handle it in the caller or log it
+    logMessage += `Error parsing data: ${error.message}`;
+    throw error;
   } finally {
     if (createLog) {
       logger(logMessage, logContext);

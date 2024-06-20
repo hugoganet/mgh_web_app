@@ -39,7 +39,7 @@ async function automaticallyCreateAsinRecord(
   try {
     if (!marketplaceId && !countryCode) {
       logMessage += 'Error: Both marketplaceId and countryCode cannot be null.';
-      console.error(errorMessage);
+      console.error(logMessage);
       throw new Error(logMessage);
     }
 
@@ -61,21 +61,29 @@ async function automaticallyCreateAsinRecord(
     countryCode = conversionResult.countryCode;
     marketplaceId = conversionResult.marketplaceId;
 
-    const similarAsin = await db.Asin.findOne({
-      where: {
-        asin,
-        countryCode: { [db.Sequelize.Op.ne]: countryCode },
-      },
-    });
+    let similarAsin;
+    try {
+      similarAsin = await db.Asin.findOne({
+        where: {
+          asin,
+          countryCode: { [db.Sequelize.Op.ne]: countryCode },
+        },
+      });
 
-    if (similarAsin) {
-      logMessage += `Found similar asin in ${similarAsin.countryCode} with asinId : ${similarAsin.asinId}\n`;
-    } else {
-      console.log("No similar asin found. Can't automatically create an ASIN");
-      logMessage += `No similar asin found. Can't automatically create an ASIN\n`;
-      throw new Error(
-        "No similar asin found. Can't automatically create an ASIN",
-      );
+      if (similarAsin) {
+        logMessage += `Found similar asin in ${similarAsin.countryCode} with asinId : ${similarAsin.asinId}\n`;
+      } else {
+        console.log(
+          "No similar asin found. Can't automatically create an ASIN",
+        );
+        logMessage += `No similar asin found. Can't automatically create an ASIN\n`;
+        throw new Error(
+          "No similar asin found. Can't automatically create an ASIN",
+        );
+      }
+    } catch (error) {
+      logMessage += `Error fetching similar ASIN: ${error.message}\n`;
+      throw error;
     }
 
     let catalogItem;
@@ -104,9 +112,9 @@ async function automaticallyCreateAsinRecord(
 
     let productCategoryRankId;
     if (
-      countryCode !== 'FR' ||
-      countryCode !== 'DE' ||
-      countryCode !== 'IT' ||
+      countryCode !== 'FR' &&
+      countryCode !== 'DE' &&
+      countryCode !== 'IT' &&
       countryCode !== 'ES'
     ) {
       productCategoryRankId = null;
@@ -151,8 +159,9 @@ async function automaticallyCreateAsinRecord(
       isHazmat: similarAsin?.isHazmat,
     };
 
+    let newAsin;
     try {
-      const newAsin = await db.Asin.create(asinRecord);
+      newAsin = await db.Asin.create(asinRecord);
       if (newAsin.asinId) {
         eventBus.emit('recordCreated', {
           type: 'asin',
@@ -161,49 +170,49 @@ async function automaticallyCreateAsinRecord(
         });
         logMessage += `ASIN record created successfully with id : ${newAsin.asinId}.\n`;
       }
-      try {
-        if (similarAsin) {
-          await automaticallyCreateEanInAsinRecord(
-            similarAsin.asinId,
-            newAsin.asinId,
-            createLog,
-            logContext,
-          );
-        }
-        logMessage += `EAN in ASIN record created successfully.\n`;
-      } catch (error) {
-        console.error('Error automatically creating EAN in ASIN record:');
-        logMessage += `Error automatically creating EAN in ASIN record: ${error}\n`;
-        throw new Error(
-          `Error automatically creating EAN in ASIN record: ${error}`,
-        );
-      }
-      try {
-        if (countryCode !== 'TR') {
-          await automaticallyCreateFbaFeesRecord(
-            packageLength,
-            packageWidth,
-            packageHeight,
-            packageWeight,
-            (newlyCreatedAsinId = newAsin.asinId),
-            countryCode,
-            createLog,
-            logContext,
-          );
-          logMessage += `FBA fees record created successfully.\n`;
-        }
-      } catch (error) {
-        logMessage += `Error automatically creating FBA fees record: ${error}\n`;
-        throw new Error(
-          `Error automatically creating FBA fees record: ${error}`,
-        );
-      }
-      return newAsin;
     } catch (error) {
       logMessage += `Error creating ASIN record in the database: ${error}
       asinRecord : ${JSON.stringify(asinRecord, '', 2)}\n`;
       throw new Error(`Error creating ASIN record in the database: ${error}`);
     }
+
+    try {
+      await automaticallyCreateEanInAsinRecord(
+        similarAsin.asinId,
+        newAsin.asinId,
+        createLog,
+        logContext,
+      );
+      logMessage += `EAN in ASIN record created successfully.\n`;
+    } catch (error) {
+      console.error('Error automatically creating EAN in ASIN record:');
+      logMessage += `Error automatically creating EAN in ASIN record: ${error}\n`;
+      throw new Error(
+        `Error automatically creating EAN in ASIN record: ${error}`,
+      );
+    }
+
+    try {
+      if (countryCode !== 'TR') {
+        console.log('Creating FBA fees record');
+        await automaticallyCreateFbaFeesRecord(
+          packageLength,
+          packageWidth,
+          packageHeight,
+          packageWeight,
+          newAsin.asinId,
+          countryCode,
+          createLog,
+          logContext,
+        );
+        logMessage += `FBA fees record created successfully.\n`;
+      }
+    } catch (error) {
+      logMessage += `Error automatically creating FBA fees record: ${error}\n`;
+      throw new Error(`Error automatically creating FBA fees record: ${error}`);
+    }
+
+    return newAsin;
   } catch (error) {
     logMessage += `Overall error in automaticallyCreateAsinRecord: ${error}\n`;
     console.error('Error automaticallyCreateAsinRecord:', error);
@@ -224,11 +233,11 @@ module.exports = {
 // const marketplaceId = 'A1RKKUPIHCS9HS'; // ES
 // const marketplaceId = 'A1F83G8C2ARO7P'; // UK
 
-// // exemple Parrot DE
+// // example Parrot DE
 // const asin = 'B07HS6PBJX';
 // const marketplaceId = 'A1PA6795UKMFR9'; // DE
 
-// // exemple Schwarzkopf SE
+// // example Schwarzkopf SE
 // const asin = 'B07DYYGK7V';
 // const countryCode = 'SE';
 // const marketplaceId = null; // SE
