@@ -159,8 +159,8 @@ async function automaticallyCreateAsinRecord(
           action: 'asin_created',
           id: newAsin.asinId,
         });
+        logMessage += `ASIN record created successfully with id : ${newAsin.asinId}.\n`;
       }
-      logMessage += `ASIN record created successfully with id : ${newAsin.asinId}.\n`;
       try {
         if (similarAsin) {
           await automaticallyCreateEanInAsinRecord(

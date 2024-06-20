@@ -129,7 +129,7 @@ async function fetchAndProcessInventoryReport(
           }
           // Seed SellingPriceHistory table with recent data
           await seedSellingPriceHistory(createLog, logContext);
-          stopListeningAndReset(); // Stop listening and reset counters
+          stopListeningAndReset();
         } catch (error) {
           logMessage += `Error processing inventory data stream in fetchAndProcessInventoryReport: ${error}\n`;
           console.error(

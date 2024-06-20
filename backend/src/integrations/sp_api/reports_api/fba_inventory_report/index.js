@@ -102,7 +102,7 @@ module.exports = { requestFbaInventoryReport };
 
 requestFbaInventoryReport(
   (country = ['france']),
-  (reportType = 'GET_FBA_MYI_UNSUPPRESSED_INVENTORY_DATA'),
+  (reportType = 'GET_FBA_MYI_ALL_INVENTORY_DATA'),
   (logContext = 'create_fetch_and_process_inventory_report'),
   (createLog = true),
   (dataStartTime = null),

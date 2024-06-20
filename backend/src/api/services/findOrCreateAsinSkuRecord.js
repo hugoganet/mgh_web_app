@@ -21,29 +21,36 @@ async function findOrCreateAsinSkuRecord(
 ) {
   let logMessage = '';
   try {
-    const [asinSkuRecord, createdAsinSkuRecord] = await db.AsinSku.findOrcreate(
+    logMessage += `findOrCreateAsinSkuRecord for ASIN: ${asinId} and SKU: ${skuId} in ${countryCode}\n`;
+    const [asinSkuRecord, createdAsinSkuRecord] = await db.AsinSku.findOrCreate(
       {
-        asinId: asinId,
-        skuId: skuId,
+        where: {
+          asinId: asinId,
+          skuId: skuId,
+        },
       },
     );
+
     if (createdAsinSkuRecord) {
       eventBus.emit('recordCreated', {
         type: 'asinSku',
         action: 'asinSku_created',
         id: asinSkuRecord.asinSkuId,
       });
-      logMessage += `Created new AsinSku record for ASIN: ${asin} and SKU: ${sku} in ${countryCode}\n`;
+      logMessage += `Created new AsinSku record for ASIN: ${asinId} and SKU: ${skuId} in ${countryCode}\n`;
     } else {
       eventBus.emit('recordCreated', {
         type: 'asinSku',
         action: 'asinSku_found',
         id: asinSkuRecord.asinSkuId,
       });
-      logMessage += `Error creating AsinSku record in processInventoryChunk : ${err}\n`;
+      logMessage += `Found existing AsinSku record for ASIN: ${asinId} and SKU: ${skuId} in ${countryCode}\n`;
     }
+
     return asinSkuRecord;
   } catch (error) {
+    logMessage += `Error creating or finding AsinSku record: ${error.message}\n`;
+    console.error(error); // Log the error for debugging purposes
   } finally {
     if (createLog) {
       logger(logMessage, logContext);

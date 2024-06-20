@@ -3,7 +3,7 @@ const { logger } = require('../../utils/logger');
 const eventBus = require('../../utils/eventBus');
 
 /**
- * @description This function finds or creates an ASIN-SKU record in the database if it does not exist.
+ * @description This function finds or creates an AfnInventoryDailyUpdateRecord record in the database if it does not exist.
  * @async
  * @function findOrCreateAfnInventoryDailyUpdateRecord
  * @param {string} skuId - The SKU ID for which to create a record.
@@ -29,6 +29,7 @@ async function findOrCreateAfnInventoryDailyUpdateRecord(
 ) {
   let logMessage = '';
   try {
+    // console.log('Hello World !');
     const [afnInventoryRecord, createdAfnInventoryRecord] =
       await db.AfnInventoryDailyUpdate.findOrCreate({
         where: { skuId: skuRecord.skuId },
@@ -42,6 +43,7 @@ async function findOrCreateAfnInventoryDailyUpdateRecord(
           reportDocumentId,
         },
       });
+
     // If the record already existed, update the actualPrice and afnFulfillableQuantity fields
     if (!createdAfnInventoryRecord) {
       eventBus.emit('recordCreated', {
@@ -55,6 +57,9 @@ async function findOrCreateAfnInventoryDailyUpdateRecord(
       await afnInventoryRecord.save();
       logMessage += `Updated existing AfnInventoryDailyUpdate record for skuId: ${skuId}.\n`;
     } else {
+      console.log(
+        'Created new AfnInventoryDailyUpdate record for skuId: ${skuId}.',
+      );
       eventBus.emit('recordCreated', {
         type: 'afnInventoryDailyUpdate',
         action: 'afnInventoryDailyUpdate_created',
@@ -62,11 +67,14 @@ async function findOrCreateAfnInventoryDailyUpdateRecord(
       });
       logMessage += `Created new AfnInventoryDailyUpdate record for skuId: ${skuId}.\n`;
     }
+    console.log(
+      'Created new AfnInventoryDailyUpdate record for skuId: ${skuId}.',
+    );
     return afnInventoryRecord;
   } catch (error) {
   } finally {
     if (createLog) {
-      logger(logMessage, logContext);
+      logger(logMessage, logContext, true);
     }
   }
 }

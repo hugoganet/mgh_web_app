@@ -28,7 +28,9 @@ async function findOrCreateMinSellingPriceRecord(skuId, createLog, logContext) {
         id: minimumSellingPriceRecord.minimumSellingPriceId,
       });
       logMessage += `Found minimumSellingPrice record for SKU: ${skuId}\n`;
-    } else if (!associatedAsinRecord) {
+    } else {
+      // else if (!associatedAsinRecord) {
+      // I don't know what "associatedAsinRecord" is, but it's not defined in this function.
       minimumSellingPriceRecord =
         await automaticallyCreateMinSellingPriceRecord(
           skuRecord.skuId,
