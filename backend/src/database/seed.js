@@ -98,8 +98,8 @@ async function runSeeding(db) {
       'AfnRemovalOrders',
       'AfnRemovalOrdersDetails',
       'AfnRemovalShipmentsDetails',
+      'KeepaData',
       // 'FormattedCatalog',
-      // 'KeepaData',
     ];
 
     // Sequentially seed each table

@@ -199,16 +199,16 @@ module.exports = sequelize => {
         type: DataTypes.INTEGER,
       },
       packageLengthCm: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
       },
       packageWidthCm: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
       },
       packageHeightCm: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
       },
       packageWeightG: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
       },
       isHazmat: {
         type: DataTypes.BOOLEAN,
@@ -316,6 +316,10 @@ module.exports = sequelize => {
         field: 'item_width_cm',
       },
       itemHeightCm: {
+        type: DataTypes.DECIMAL(10, 2),
+        field: 'item_height_cm',
+      },
+      itemWeightG: {
         type: DataTypes.DECIMAL(10, 2),
         field: 'item_height_cm',
       },

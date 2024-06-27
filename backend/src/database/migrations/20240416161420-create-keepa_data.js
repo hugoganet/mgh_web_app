@@ -167,16 +167,16 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       package_length_cm: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL(10, 2),
       },
       package_width_cm: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL(10, 2),
       },
       package_height_cm: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL(10, 2),
       },
       package_weight_g: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL(10, 2),
       },
       is_hazmat: {
         type: Sequelize.BOOLEAN,
@@ -260,6 +260,9 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
       },
       item_height_cm: {
+        type: Sequelize.DECIMAL(10, 2),
+      },
+      item_weight_g: {
         type: Sequelize.DECIMAL(10, 2),
       },
       description: {
