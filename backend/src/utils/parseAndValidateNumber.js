@@ -25,13 +25,14 @@ function parseAndValidateNumber(
   if (
     value === null ||
     value === undefined ||
-    (typeof value === 'string' && value.trim() === '')
+    (typeof value === 'string' && value.trim() === '') ||
+    value === '-'
   ) {
     if (allowNull) {
       return null;
     } else {
       throw new Error(
-        `Invalid value for ${paramName}: ${value}. Value cannot be null or undefined.`,
+        `Invalid value for ${paramName}: ${value}. Value cannot be null, undefined, or a dash.`,
       );
     }
   }

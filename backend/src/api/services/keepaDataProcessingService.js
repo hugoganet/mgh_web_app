@@ -10,9 +10,9 @@ const getProductCategoryId = require('./getProductCategoryId');
 
 const processKeepaDataFile = async (
   filePath,
-  createLog = false,
+  createLog = true,
   logContext = 'keepaProcessingService',
-  flushBuffer = false,
+  flushBuffer = true,
 ) => {
   const results = [];
   const errors = [];
@@ -22,9 +22,15 @@ const processKeepaDataFile = async (
   let logMessage = '';
 
   const fileStream = fs.createReadStream(filePath);
-  const csvStream = fileStream.pipe(csv());
+  const csvStream = fileStream.pipe(
+    csv({
+      mapHeaders: ({ header }) => header.trim().replace(/^"|"$/g, ''),
+      mapValues: ({ value }) => value.trim().replace(/^"|"$/g, ''),
+    }),
+  );
 
   for await (const data of csvStream) {
+    console.log(data);
     try {
       const countryCode = data.Locale.toUpperCase();
       const asin = data.ASIN;
@@ -324,8 +330,8 @@ const processKeepaDataFile = async (
         listPrice30DaysDropPercent: parseAndValidateNumber(
           data['List Price: 30 days drop %'],
           {
-            min: 0,
-            max: 1,
+            min: -100,
+            max: 0,
             decimals: 5,
             paramName: 'listPrice30DaysDropPercent',
             allowNull: true,
@@ -334,8 +340,8 @@ const processKeepaDataFile = async (
         listPrice90DaysDropPercent: parseAndValidateNumber(
           data['List Price: 90 days drop %'],
           {
-            min: 0,
-            max: 1,
+            min: -100,
+            max: 0,
             decimals: 5,
             paramName: 'listPrice90DaysDropPercent',
             allowNull: true,
@@ -682,8 +688,8 @@ const processKeepaDataFile = async (
         listPrice1DayDropPercent: parseAndValidateNumber(
           data['List Price: 1 day drop %'],
           {
-            min: 0,
-            max: 1,
+            min: -100,
+            max: 0,
             decimals: 5,
             paramName: 'listPrice1DayDropPercent',
             allowNull: true,
@@ -692,8 +698,8 @@ const processKeepaDataFile = async (
         listPrice7DaysDropPercent: parseAndValidateNumber(
           data['List Price: 7 days drop %'],
           {
-            min: 0,
-            max: 1,
+            min: -100,
+            max: 0,
             decimals: 5,
             paramName: 'listPrice7DaysDropPercent',
             allowNull: true,
