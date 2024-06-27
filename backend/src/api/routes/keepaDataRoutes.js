@@ -150,18 +150,193 @@ const keepaDataController = require('../controllers/keepaDataController');
  *        numberOfItems:
  *          type: integer
  *        packageLengthCm:
- *          type: integer
+ *          type: number
+ *          format: double
  *        packageWidthCm:
- *          type: integer
+ *          type: number
+ *          format: double
  *        packageHeightCm:
- *          type: integer
+ *          type: number
+ *          format: double
  *        packageWeightG:
- *          type: integer
+ *          type: number
+ *          format: double
  *        isHazmat:
  *          type: boolean
- * tags:
- *  name: KeepaData
- *  description: The Keepa data managing API
+ *        salesRankingCurrent:
+ *          type: integer
+ *        reviewsCount30DaysAvg:
+ *          type: integer
+ *        reviewsCount90DaysAvg:
+ *          type: integer
+ *        reviewsCount180DaysAvg:
+ *          type: integer
+ *        mapRestriction:
+ *          type: string
+ *        lowestFBASeller:
+ *          type: string
+ *        listPriceCurrent:
+ *          type: number
+ *          format: double
+ *        listPrice30DaysAvg:
+ *          type: number
+ *          format: double
+ *        listPrice90DaysAvg:
+ *          type: number
+ *          format: double
+ *        listPrice180DaysAvg:
+ *          type: number
+ *          format: double
+ *        listPrice30DaysDropPercent:
+ *          type: number
+ *          format: double
+ *        listPrice90DaysDropPercent:
+ *          type: number
+ *          format: double
+ *        listPriceLowest:
+ *          type: number
+ *          format: double
+ *        listPriceHighest:
+ *          type: number
+ *          format: double
+ *        trackingSince:
+ *          type: string
+ *          format: date
+ *        listedSince:
+ *          type: string
+ *          format: date
+ *        categoriesRoot:
+ *          type: string
+ *        upc:
+ *          type: string
+ *        partNumber:
+ *          type: string
+ *        variationASINs:
+ *          type: string
+ *        freqBoughtTogether:
+ *          type: string
+ *        manufacturer:
+ *          type: string
+ *        variationAttributes:
+ *          type: string
+ *        itemDimensionCm3:
+ *          type: number
+ *          format: double
+ *        itemLengthCm:
+ *          type: number
+ *          format: double
+ *        itemWidthCm:
+ *          type: number
+ *          format: double
+ *        itemHeightCm:
+ *          type: number
+ *          format: double
+ *        itemWeightG:
+ *          type: number
+ *          format: double
+ *        description:
+ *          type: string
+ *        feature1:
+ *          type: string
+ *        feature2:
+ *          type: string
+ *        feature3:
+ *          type: string
+ *        feature4:
+ *          type: string
+ *        feature5:
+ *          type: string
+ *        newOfferCount30DaysAvg:
+ *          type: integer
+ *        newOfferCount180DaysAvg:
+ *          type: integer
+ *        contributors:
+ *          type: string
+ *        packageQuantity:
+ *          type: integer
+ *        feature6:
+ *          type: string
+ *        feature7:
+ *          type: string
+ *        feature8:
+ *          type: string
+ *        feature9:
+ *          type: string
+ *        feature10:
+ *          type: string
+ *        referralFeeBuyBoxPrice:
+ *          type: number
+ *          format: double
+ *        imageCount:
+ *          type: integer
+ *        buyBoxPercentAmazon30Days:
+ *          type: number
+ *          format: double
+ *        buyBoxPercentAmazon90Days:
+ *          type: number
+ *          format: double
+ *        buyBoxPercentAmazon180Days:
+ *          type: number
+ *          format: double
+ *        buyBoxPercentAmazon365Days:
+ *          type: number
+ *          format: double
+ *        buyBoxPercentTopSeller30Days:
+ *          type: number
+ *          format: double
+ *        buyBoxPercentTopSeller90Days:
+ *          type: number
+ *          format: double
+ *        buyBoxPercentTopSeller180Days:
+ *          type: number
+ *          format: double
+ *        buyBoxPercentTopSeller365Days:
+ *          type: number
+ *          format: double
+ *        buyBoxWinnerCount30Days:
+ *          type: integer
+ *        buyBoxWinnerCount90Days:
+ *          type: integer
+ *        buyBoxWinnerCount180Days:
+ *          type: integer
+ *        buyBoxWinnerCount365Days:
+ *          type: integer
+ *        competitivePriceThreshold:
+ *          type: number
+ *          format: double
+ *        suggestedLowerPrice:
+ *          type: number
+ *          format: double
+ *        buyBoxEligibleOfferCountsNewFBA:
+ *          type: integer
+ *        buyBoxEligibleOfferCountsNewFBM:
+ *          type: integer
+ *        buyBoxEligibleOfferCountsUsedFBA:
+ *          type: integer
+ *        buyBoxEligibleOfferCountsUsedFBM:
+ *          type: integer
+ *        buyBoxEligibleOfferCountsCollectibleFBA:
+ *          type: integer
+ *        buyBoxEligibleOfferCountsCollectibleFBM:
+ *          type: integer
+ *        buyBoxEligibleOfferCountsRefurbishedFBA:
+ *          type: integer
+ *        buyBoxEligibleOfferCountsRefurbishedFBM:
+ *          type: integer
+ *        listPrice1DayDropPercent:
+ *          type: number
+ *          format: double
+ *        listPrice7DaysDropPercent:
+ *          type: number
+ *          format: double
+ *        importedByCode:
+ *          type: string
+ *        variationCount:
+ *          type: integer
+ *        type:
+ *          type: string
+ *        hazardousMaterials:
+ *          type: string
  */
 
 /**
@@ -387,15 +562,193 @@ router.post('/', keepaDataController.createKeepaData);
  *               numberOfItems:
  *                 type: integer
  *               packageLengthCm:
- *                 type: integer
+ *                 type: number
+ *                 format: double
  *               packageWidthCm:
- *                 type: integer
+ *                 type: number
+ *                 format: double
  *               packageHeightCm:
- *                 type: integer
+ *                 type: number
+ *                 format: double
  *               packageWeightG:
- *                 type: integer
+ *                 type: number
+ *                 format: double
  *               isHazmat:
  *                 type: boolean
+ *               salesRankingCurrent:
+ *                 type: integer
+ *               reviewsCount30DaysAvg:
+ *                 type: integer
+ *               reviewsCount90DaysAvg:
+ *                 type: integer
+ *               reviewsCount180DaysAvg:
+ *                 type: integer
+ *               mapRestriction:
+ *                 type: string
+ *               lowestFBASeller:
+ *                 type: string
+ *               listPriceCurrent:
+ *                 type: number
+ *                 format: double
+ *               listPrice30DaysAvg:
+ *                 type: number
+ *                 format: double
+ *               listPrice90DaysAvg:
+ *                 type: number
+ *                 format: double
+ *               listPrice180DaysAvg:
+ *                 type: number
+ *                 format: double
+ *               listPrice30DaysDropPercent:
+ *                 type: number
+ *                 format: double
+ *               listPrice90DaysDropPercent:
+ *                 type: number
+ *                 format: double
+ *               listPriceLowest:
+ *                 type: number
+ *                 format: double
+ *               listPriceHighest:
+ *                 type: number
+ *                 format: double
+ *               trackingSince:
+ *                 type: string
+ *                 format: date
+ *               listedSince:
+ *                 type: string
+ *                 format: date
+ *               categoriesRoot:
+ *                 type: string
+ *               upc:
+ *                 type: string
+ *               partNumber:
+ *                 type: string
+ *               variationASINs:
+ *                 type: string
+ *               freqBoughtTogether:
+ *                 type: string
+ *               manufacturer:
+ *                 type: string
+ *               variationAttributes:
+ *                 type: string
+ *               itemDimensionCm3:
+ *                 type: number
+ *                 format: double
+ *               itemLengthCm:
+ *                 type: number
+ *                 format: double
+ *               itemWidthCm:
+ *                 type: number
+ *                 format: double
+ *               itemHeightCm:
+ *                 type: number
+ *                 format: double
+ *               itemWeightG:
+ *                 type: number
+ *                 format: double
+ *               description:
+ *                 type: string
+ *               feature1:
+ *                 type: string
+ *               feature2:
+ *                 type: string
+ *               feature3:
+ *                 type: string
+ *               feature4:
+ *                 type: string
+ *               feature5:
+ *                 type: string
+ *               newOfferCount30DaysAvg:
+ *                 type: integer
+ *               newOfferCount180DaysAvg:
+ *                 type: integer
+ *               contributors:
+ *                 type: string
+ *               packageQuantity:
+ *                 type: integer
+ *               feature6:
+ *                 type: string
+ *               feature7:
+ *                 type: string
+ *               feature8:
+ *                 type: string
+ *               feature9:
+ *                 type: string
+ *               feature10:
+ *                 type: string
+ *               referralFeeBuyBoxPrice:
+ *                 type: number
+ *                 format: double
+ *               imageCount:
+ *                 type: integer
+ *               buyBoxPercentAmazon30Days:
+ *                 type: number
+ *                 format: double
+ *               buyBoxPercentAmazon90Days:
+ *                 type: number
+ *                 format: double
+ *               buyBoxPercentAmazon180Days:
+ *                 type: number
+ *                 format: double
+ *               buyBoxPercentAmazon365Days:
+ *                 type: number
+ *                 format: double
+ *               buyBoxPercentTopSeller30Days:
+ *                 type: number
+ *                 format: double
+ *               buyBoxPercentTopSeller90Days:
+ *                 type: number
+ *                 format: double
+ *               buyBoxPercentTopSeller180Days:
+ *                 type: number
+ *                 format: double
+ *               buyBoxPercentTopSeller365Days:
+ *                 type: number
+ *                 format: double
+ *               buyBoxWinnerCount30Days:
+ *                 type: integer
+ *               buyBoxWinnerCount90Days:
+ *                 type: integer
+ *               buyBoxWinnerCount180Days:
+ *                 type: integer
+ *               buyBoxWinnerCount365Days:
+ *                 type: integer
+ *               competitivePriceThreshold:
+ *                 type: number
+ *                 format: double
+ *               suggestedLowerPrice:
+ *                 type: number
+ *                 format: double
+ *               buyBoxEligibleOfferCountsNewFBA:
+ *                 type: integer
+ *               buyBoxEligibleOfferCountsNewFBM:
+ *                 type: integer
+ *               buyBoxEligibleOfferCountsUsedFBA:
+ *                 type: integer
+ *               buyBoxEligibleOfferCountsUsedFBM:
+ *                 type: integer
+ *               buyBoxEligibleOfferCountsCollectibleFBA:
+ *                 type: integer
+ *               buyBoxEligibleOfferCountsCollectibleFBM:
+ *                 type: integer
+ *               buyBoxEligibleOfferCountsRefurbishedFBA:
+ *                 type: integer
+ *               buyBoxEligibleOfferCountsRefurbishedFBM:
+ *                 type: integer
+ *               listPrice1DayDropPercent:
+ *                 type: number
+ *                 format: double
+ *               listPrice7DaysDropPercent:
+ *                 type: number
+ *                 format: double
+ *               importedByCode:
+ *                 type: string
+ *               variationCount:
+ *                 type: integer
+ *               type:
+ *                 type: string
+ *               hazardousMaterials:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Keepa data updated successfully.
