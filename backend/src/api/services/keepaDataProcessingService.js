@@ -38,7 +38,7 @@ const processKeepaDataFile = async (
       existingCombos.add(comboKey);
 
       const productCategoryId = await getProductCategoryId(
-        data['Catégories: Root'],
+        data['Categories: Root'],
         countryCode,
         createLog,
         logContext,
@@ -48,10 +48,10 @@ const processKeepaDataFile = async (
       if (!productCategoryId) {
         missingProductCategories.push({
           asin,
-          productCategory: data['Catégories: Root'],
+          productCategory: data['Categories: Root'],
           reason: 'No valid product category ID found',
         });
-        logMessage += `Missing category for ASIN: ${asin} with category: ${data['Catégories: Root']}`;
+        logMessage += `Missing category for ASIN: ${asin} with category: ${data['Categories: Root']}`;
         continue;
       }
 
@@ -60,18 +60,28 @@ const processKeepaDataFile = async (
         urlImage: data.Image,
         asin,
         ean: data['Product Codes: EAN'],
+        upc: data['Product Codes: UPC'],
+        partNumber: data['Product Codes: PartNumber'],
+        variationASINs: data['Variation ASINs'],
+        freqBoughtTogether: data['Freq. Bought Together'],
+        manufacturer: data['Manufacturer'],
         brand: data['Brand'],
-        productName: data.Titre,
+        productName: data.Title,
+        variationAttributes: data['Variation Attributes'],
+        salesRankingCurrent: parseAndValidateNumber(
+          data['Sales Rank: Current'],
+          { min: 0, paramName: 'salesRankingCurrent', allowNull: true },
+        ),
         salesRanking30DaysAvg: parseAndValidateNumber(
-          data['Classement des ventes: 30 days avg.'],
+          data['Sales Rank: 30 days avg.'],
           { min: 0, paramName: 'salesRanking30DaysAvg', allowNull: true },
         ),
         salesRanking90DaysAvg: parseAndValidateNumber(
-          data['Classement des ventes: 90 days avg.'],
+          data['Sales Rank: 90 days avg.'],
           { min: 0, paramName: 'salesRanking90DaysAvg', allowNull: true },
         ),
         salesRanking180DaysAvg: parseAndValidateNumber(
-          data['Classement des ventes: 180 days avg.'],
+          data['Sales Rank: 180 days avg.'],
           {
             min: 0,
             paramName: 'salesRanking180DaysAvg',
@@ -79,23 +89,47 @@ const processKeepaDataFile = async (
           },
         ),
         productCategoryId,
-        reviewsRating: parseAndValidateNumber(data['Revues: Évaluation'], {
+        reviewsRating: parseAndValidateNumber(data['Reviews: Rating'], {
           min: 0,
           max: 5,
           decimals: 2,
           paramName: 'reviewsRating',
           allowNull: true,
         }),
-        reviewsCount: parseAndValidateNumber(
-          data['Reviews: Nombre de revu est'],
+        reviewsCount: parseAndValidateNumber(data['Reviews: Review Count'], {
+          min: 0,
+          decimals: 0,
+          paramName: 'reviewsCount',
+          allowNull: true,
+        }),
+        reviewsCount30DaysAvg: parseAndValidateNumber(
+          data['Reviews: Review Count - 30 days avg.'],
           {
             min: 0,
             decimals: 0,
-            paramName: 'reviewsCount',
+            paramName: 'reviewsCount30DaysAvg',
             allowNull: true,
           },
         ),
-        amazonCurrent: parseAndValidateNumber(data['Amazon: Courant'], {
+        reviewsCount90DaysAvg: parseAndValidateNumber(
+          data['Reviews: Review Count - 90 days avg.'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'reviewsCount90DaysAvg',
+            allowNull: true,
+          },
+        ),
+        reviewsCount180DaysAvg: parseAndValidateNumber(
+          data['Reviews: Review Count - 180 days avg.'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'reviewsCount180DaysAvg',
+            allowNull: true,
+          },
+        ),
+        amazonCurrent: parseAndValidateNumber(data['Amazon: Current'], {
           min: 0,
           decimals: 2,
           paramName: 'amazonCurrent',
@@ -141,32 +175,33 @@ const processKeepaDataFile = async (
           paramName: 'amazon90DaysOOS',
           allowNull: true,
         }),
-        newCurrent: parseAndValidateNumber(data['Nouveau: Courant'], {
+        mapRestriction: data['MAP restriction'],
+        newCurrent: parseAndValidateNumber(data['New: Current'], {
           min: 0,
           decimals: 2,
           paramName: 'newCurrent',
           allowNull: true,
         }),
-        new30DaysAvg: parseAndValidateNumber(data['Nouveau: 30 days avg.'], {
+        new30DaysAvg: parseAndValidateNumber(data['New: 30 days avg.'], {
           min: 0,
           decimals: 2,
           paramName: 'new30DaysAvg',
           allowNull: true,
         }),
-        new90DaysAvg: parseAndValidateNumber(data['Nouveau: 90 days avg.'], {
+        new90DaysAvg: parseAndValidateNumber(data['New: 90 days avg.'], {
           min: 0,
           decimals: 2,
           paramName: 'new90DaysAvg',
           allowNull: true,
         }),
-        new180DaysAvg: parseAndValidateNumber(data['Nouveau: 180 days avg.'], {
+        new180DaysAvg: parseAndValidateNumber(data['New: 180 days avg.'], {
           min: 0,
           decimals: 2,
           paramName: 'new180DaysAvg',
           allowNull: true,
         }),
         newThirdPartyFBACurrent: parseAndValidateNumber(
-          data['Nouveau, Tierce Partie FBA: Courant'],
+          data['New, 3rd Party FBA: Current'],
           {
             min: 0,
             decimals: 2,
@@ -175,7 +210,7 @@ const processKeepaDataFile = async (
           },
         ),
         newThirdPartyFBA30DaysAvg: parseAndValidateNumber(
-          data['Nouveau, Tierce Partie FBA: 30 days avg.'],
+          data['New, 3rd Party FBA: 30 days avg.'],
           {
             min: 0,
             decimals: 2,
@@ -184,7 +219,7 @@ const processKeepaDataFile = async (
           },
         ),
         newThirdPartyFBA90DaysAvg: parseAndValidateNumber(
-          data['Nouveau, Tierce Partie FBA: 90 days avg.'],
+          data['New, 3rd Party FBA: 90 days avg.'],
           {
             min: 0,
             decimals: 2,
@@ -193,7 +228,7 @@ const processKeepaDataFile = async (
           },
         ),
         newThirdPartyFBA180DaysAvg: parseAndValidateNumber(
-          data['Nouveau, Tierce Partie FBA: 180 days avg.'],
+          data['New, 3rd Party FBA: 180 days avg.'],
           {
             min: 0,
             decimals: 2,
@@ -202,7 +237,7 @@ const processKeepaDataFile = async (
           },
         ),
         newThirdPartyFBALowest: parseAndValidateNumber(
-          data['Nouveau, Tierce Partie FBA: Lowest'],
+          data['New, 3rd Party FBA: Lowest'],
           {
             min: 0,
             decimals: 2,
@@ -210,6 +245,7 @@ const processKeepaDataFile = async (
             allowNull: true,
           },
         ),
+        lowestFBASeller: data['Lowest FBA Seller'],
         fbaPickPackFee: parseAndValidateNumber(data['FBA Pick&Pack Fee'], {
           min: 0,
           decimals: 2,
@@ -217,7 +253,7 @@ const processKeepaDataFile = async (
           allowNull: true,
         }),
         newThirdPartyFBMCurrent: parseAndValidateNumber(
-          data['Nouveau, Tierce Partie FBM 🚚: Courant'],
+          data['New, 3rd Party FBM 🚚: Current'],
           {
             min: 0,
             decimals: 2,
@@ -226,7 +262,7 @@ const processKeepaDataFile = async (
           },
         ),
         newThirdPartyFBM30DaysAvg: parseAndValidateNumber(
-          data['Nouveau, Tierce Partie FBM 🚚: 30 days avg.'],
+          data['New, 3rd Party FBM 🚚: 30 days avg.'],
           {
             min: 0,
             decimals: 2,
@@ -235,7 +271,7 @@ const processKeepaDataFile = async (
           },
         ),
         newThirdPartyFBM90DaysAvg: parseAndValidateNumber(
-          data['Nouveau, Tierce Partie FBM 🚚: 90 days avg.'],
+          data['New, 3rd Party FBM 🚚: 90 days avg.'],
           {
             min: 0,
             decimals: 2,
@@ -244,7 +280,7 @@ const processKeepaDataFile = async (
           },
         ),
         newThirdPartyFBM180DaysAvg: parseAndValidateNumber(
-          data['Nouveau, Tierce Partie FBM 🚚: 180 days avg.'],
+          data['New, 3rd Party FBM 🚚: 180 days avg.'],
           {
             min: 0,
             decimals: 2,
@@ -252,85 +288,95 @@ const processKeepaDataFile = async (
             allowNull: true,
           },
         ),
-        newOffersCurrentCount: parseAndValidateNumber(
-          data["Nombre d'offre Neuf: Courant"],
-          { min: 0, paramName: 'newOffersCurrentCount', allowNull: true },
-        ),
-        newOffers90DaysAvgCount: parseAndValidateNumber(
-          data["Nombre d'offre Neuf: 90 days avg."],
-          {
-            min: 0,
-            paramName: 'newOffers90DaysAvgCount',
-            allowNull: true,
-          },
-        ),
-        countRetrievedLiveOffersNewFBA: parseAndValidateNumber(
-          data['Count of retrieved live offers: New, FBA'],
-          {
-            min: 0,
-            paramName: 'countRetrievedLiveOffersNewFBA',
-            allowNull: true,
-          },
-        ),
-        countRetrievedLiveOffersNewFBM: parseAndValidateNumber(
-          data['Count of retrieved live offers: New, FBM'],
-          {
-            min: 0,
-            paramName: 'countRetrievedLiveOffersNewFBM',
-            allowNull: true,
-          },
-        ),
-        buyBoxCurrent: parseAndValidateNumber(data['Buy Box 🚚: Courant'], {
+        listPriceCurrent: parseAndValidateNumber(data['List Price: Current'], {
           min: 0,
           decimals: 2,
-          paramName: 'buyBoxCurrent',
+          paramName: 'listPriceCurrent',
           allowNull: true,
         }),
-        buyBox30DaysAvg: parseAndValidateNumber(
-          data['Buy Box 🚚: 30 days avg.'],
+        listPrice30DaysAvg: parseAndValidateNumber(
+          data['List Price: 30 days avg.'],
           {
             min: 0,
             decimals: 2,
-            paramName: 'buyBox30DaysAvg',
+            paramName: 'listPrice30DaysAvg',
             allowNull: true,
           },
         ),
-        buyBox90DaysAvg: parseAndValidateNumber(
-          data['Buy Box 🚚: 90 days avg.'],
+        listPrice90DaysAvg: parseAndValidateNumber(
+          data['List Price: 90 days avg.'],
           {
             min: 0,
             decimals: 2,
-            paramName: 'buyBox90DaysAvg',
+            paramName: 'listPrice90DaysAvg',
             allowNull: true,
           },
         ),
-        buyBox180DaysAvg: parseAndValidateNumber(
-          data['Buy Box 🚚: 180 days avg.'],
+        listPrice180DaysAvg: parseAndValidateNumber(
+          data['List Price: 180 days avg.'],
           {
             min: 0,
             decimals: 2,
-            paramName: 'buyBox180DaysAvg',
+            paramName: 'listPrice180DaysAvg',
             allowNull: true,
           },
         ),
-        buyBoxLowest: parseAndValidateNumber(data['Buy Box 🚚: Lowest'], {
+        listPrice30DaysDropPercent: parseAndValidateNumber(
+          data['List Price: 30 days drop %'],
+          {
+            min: 0,
+            max: 1,
+            decimals: 5,
+            paramName: 'listPrice30DaysDropPercent',
+            allowNull: true,
+          },
+        ),
+        listPrice90DaysDropPercent: parseAndValidateNumber(
+          data['List Price: 90 days drop %'],
+          {
+            min: 0,
+            max: 1,
+            decimals: 5,
+            paramName: 'listPrice90DaysDropPercent',
+            allowNull: true,
+          },
+        ),
+        listPriceLowest: parseAndValidateNumber(data['List Price: Lowest'], {
           min: 0,
           decimals: 2,
-          paramName: 'buyBoxLowest',
+          paramName: 'listPriceLowest',
           allowNull: true,
         }),
-        buyBoxHighest: parseAndValidateNumber(data['Buy Box 🚚: Highest'], {
+        listPriceHighest: parseAndValidateNumber(data['List Price: Highest'], {
           min: 0,
           decimals: 2,
-          paramName: 'buyBoxHighest',
+          paramName: 'listPriceHighest',
           allowNull: true,
         }),
-        buyBoxSeller: data['Buy Box Seller'],
-        buyBoxIsFBA: data['Buy Box: Is FBA'] === 'true',
-        buyBoxUnqualified: data['Buy Box: Unqualified'] === 'true',
+        newOfferCount30DaysAvg: parseAndValidateNumber(
+          data['New Offer Count: 30 days avg.'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'newOfferCount30DaysAvg',
+            allowNull: true,
+          },
+        ),
+        newOfferCount180DaysAvg: parseAndValidateNumber(
+          data['New Offer Count: 180 days avg.'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'newOfferCount180DaysAvg',
+            allowNull: true,
+          },
+        ),
+        trackingSince: data['Tracking since'],
+        listedSince: data['Listed since'],
         urlAmazon: data['URL: Amazon'],
         urlKeepa: data['URL: Keepa'],
-        categoriesSub: data['Catégories: Sub'],
+        categoriesRoot: data['Categories: Root'],
+        categoriesSub: data['Categories: Sub'],
         numberOfItems: parseAndValidateNumber(data['Number of Items'], {
           min: 0,
           decimals: 0,
@@ -361,7 +407,308 @@ const processKeepaDataFile = async (
           paramName: 'packageWeightG',
           allowNull: true,
         }),
-        isHazmat: data['Est Hazmat'] === 'true',
+        itemDimensionCm3: parseAndValidateNumber(
+          data['Item: Dimension (cm³)'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'itemDimensionCm3',
+            allowNull: true,
+          },
+        ),
+        itemLengthCm: parseAndValidateNumber(data['Item: Length (cm)'], {
+          min: 0,
+          decimals: 0,
+          paramName: 'itemLengthCm',
+          allowNull: true,
+        }),
+        itemWidthCm: parseAndValidateNumber(data['Item: Width (cm)'], {
+          min: 0,
+          decimals: 0,
+          paramName: 'itemWidthCm',
+          allowNull: true,
+        }),
+        itemHeightCm: parseAndValidateNumber(data['Item: Height (cm)'], {
+          min: 0,
+          decimals: 0,
+          paramName: 'itemHeightCm',
+          allowNull: true,
+        }),
+        itemWeightG: parseAndValidateNumber(data['Item: Weight (g)'], {
+          min: 0,
+          decimals: 0,
+          paramName: 'itemWeightG',
+          allowNull: true,
+        }),
+        description: data['Description & Features: Description'],
+        feature1: data['Description & Features: Feature 1'],
+        feature2: data['Description & Features: Feature 2'],
+        feature3: data['Description & Features: Feature 3'],
+        feature4: data['Description & Features: Feature 4'],
+        feature5: data['Description & Features: Feature 5'],
+        feature6: data['Description & Features: Feature 6'],
+        feature7: data['Description & Features: Feature 7'],
+        feature8: data['Description & Features: Feature 8'],
+        feature9: data['Description & Features: Feature 9'],
+        feature10: data['Description & Features: Feature 10'],
+        contributors: data['Contributors'],
+        packageQuantity: parseAndValidateNumber(data['Package: Quantity'], {
+          min: 0,
+          decimals: 0,
+          paramName: 'packageQuantity',
+          allowNull: true,
+        }),
+        referralFeeBuyBoxPrice: parseAndValidateNumber(
+          data['Referral Fee based on current Buy Box price'],
+          {
+            min: 0,
+            decimals: 2,
+            paramName: 'referralFeeBuyBoxPrice',
+            allowNull: true,
+          },
+        ),
+        imageCount: parseAndValidateNumber(data['Image Count'], {
+          min: 0,
+          decimals: 0,
+          paramName: 'imageCount',
+          allowNull: true,
+        }),
+        buyBoxPercentAmazon30Days: parseAndValidateNumber(
+          data['Buy Box: % Amazon 30 days'],
+          {
+            min: 0,
+            max: 1,
+            decimals: 5,
+            paramName: 'buyBoxPercentAmazon30Days',
+            allowNull: true,
+          },
+        ),
+        buyBoxPercentAmazon90Days: parseAndValidateNumber(
+          data['Buy Box: % Amazon 90 days'],
+          {
+            min: 0,
+            max: 1,
+            decimals: 5,
+            paramName: 'buyBoxPercentAmazon90Days',
+            allowNull: true,
+          },
+        ),
+        buyBoxPercentAmazon180Days: parseAndValidateNumber(
+          data['Buy Box: % Amazon 180 days'],
+          {
+            min: 0,
+            max: 1,
+            decimals: 5,
+            paramName: 'buyBoxPercentAmazon180Days',
+            allowNull: true,
+          },
+        ),
+        buyBoxPercentAmazon365Days: parseAndValidateNumber(
+          data['Buy Box: % Amazon 365 days'],
+          {
+            min: 0,
+            max: 1,
+            decimals: 5,
+            paramName: 'buyBoxPercentAmazon365Days',
+            allowNull: true,
+          },
+        ),
+        buyBoxPercentTopSeller30Days: parseAndValidateNumber(
+          data['Buy Box: % Top Seller 30 days'],
+          {
+            min: 0,
+            max: 1,
+            decimals: 5,
+            paramName: 'buyBoxPercentTopSeller30Days',
+            allowNull: true,
+          },
+        ),
+        buyBoxPercentTopSeller90Days: parseAndValidateNumber(
+          data['Buy Box: % Top Seller 90 days'],
+          {
+            min: 0,
+            max: 1,
+            decimals: 5,
+            paramName: 'buyBoxPercentTopSeller90Days',
+            allowNull: true,
+          },
+        ),
+        buyBoxPercentTopSeller180Days: parseAndValidateNumber(
+          data['Buy Box: % Top Seller 180 days'],
+          {
+            min: 0,
+            max: 1,
+            decimals: 5,
+            paramName: 'buyBoxPercentTopSeller180Days',
+            allowNull: true,
+          },
+        ),
+        buyBoxPercentTopSeller365Days: parseAndValidateNumber(
+          data['Buy Box: % Top Seller 365 days'],
+          {
+            min: 0,
+            max: 1,
+            decimals: 5,
+            paramName: 'buyBoxPercentTopSeller365Days',
+            allowNull: true,
+          },
+        ),
+        buyBoxWinnerCount30Days: parseAndValidateNumber(
+          data['Buy Box: Winner Count 30 days'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'buyBoxWinnerCount30Days',
+            allowNull: true,
+          },
+        ),
+        buyBoxWinnerCount90Days: parseAndValidateNumber(
+          data['Buy Box: Winner Count 90 days'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'buyBoxWinnerCount90Days',
+            allowNull: true,
+          },
+        ),
+        buyBoxWinnerCount180Days: parseAndValidateNumber(
+          data['Buy Box: Winner Count 180 days'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'buyBoxWinnerCount180Days',
+            allowNull: true,
+          },
+        ),
+        buyBoxWinnerCount365Days: parseAndValidateNumber(
+          data['Buy Box: Winner Count 365 days'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'buyBoxWinnerCount365Days',
+            allowNull: true,
+          },
+        ),
+        competitivePriceThreshold: parseAndValidateNumber(
+          data['Competitive Price Threshold'],
+          {
+            min: 0,
+            decimals: 2,
+            paramName: 'competitivePriceThreshold',
+            allowNull: true,
+          },
+        ),
+        suggestedLowerPrice: parseAndValidateNumber(
+          data['Suggested Lower Price'],
+          {
+            min: 0,
+            decimals: 2,
+            paramName: 'suggestedLowerPrice',
+            allowNull: true,
+          },
+        ),
+        buyBoxEligibleOfferCountsNewFBA: parseAndValidateNumber(
+          data['Buy Box Eligible Offer Counts: New FBA'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'buyBoxEligibleOfferCountsNewFBA',
+            allowNull: true,
+          },
+        ),
+        buyBoxEligibleOfferCountsNewFBM: parseAndValidateNumber(
+          data['Buy Box Eligible Offer Counts: New FBM'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'buyBoxEligibleOfferCountsNewFBM',
+            allowNull: true,
+          },
+        ),
+        buyBoxEligibleOfferCountsUsedFBA: parseAndValidateNumber(
+          data['Buy Box Eligible Offer Counts: Used FBA'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'buyBoxEligibleOfferCountsUsedFBA',
+            allowNull: true,
+          },
+        ),
+        buyBoxEligibleOfferCountsUsedFBM: parseAndValidateNumber(
+          data['Buy Box Eligible Offer Counts: Used FBM'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'buyBoxEligibleOfferCountsUsedFBM',
+            allowNull: true,
+          },
+        ),
+        buyBoxEligibleOfferCountsCollectibleFBA: parseAndValidateNumber(
+          data['Buy Box Eligible Offer Counts: Collectible FBA'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'buyBoxEligibleOfferCountsCollectibleFBA',
+            allowNull: true,
+          },
+        ),
+        buyBoxEligibleOfferCountsCollectibleFBM: parseAndValidateNumber(
+          data['Buy Box Eligible Offer Counts: Collectible FBM'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'buyBoxEligibleOfferCountsCollectibleFBM',
+            allowNull: true,
+          },
+        ),
+        buyBoxEligibleOfferCountsRefurbishedFBA: parseAndValidateNumber(
+          data['Buy Box Eligible Offer Counts: Refurbished FBA'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'buyBoxEligibleOfferCountsRefurbishedFBA',
+            allowNull: true,
+          },
+        ),
+        buyBoxEligibleOfferCountsRefurbishedFBM: parseAndValidateNumber(
+          data['Buy Box Eligible Offer Counts: Refurbished FBM'],
+          {
+            min: 0,
+            decimals: 0,
+            paramName: 'buyBoxEligibleOfferCountsRefurbishedFBM',
+            allowNull: true,
+          },
+        ),
+        listPrice1DayDropPercent: parseAndValidateNumber(
+          data['List Price: 1 day drop %'],
+          {
+            min: 0,
+            max: 1,
+            decimals: 5,
+            paramName: 'listPrice1DayDropPercent',
+            allowNull: true,
+          },
+        ),
+        listPrice7DaysDropPercent: parseAndValidateNumber(
+          data['List Price: 7 days drop %'],
+          {
+            min: 0,
+            max: 1,
+            decimals: 5,
+            paramName: 'listPrice7DaysDropPercent',
+            allowNull: true,
+          },
+        ),
+        importedByCode: data['Imported by Code'],
+        variationCount: parseAndValidateNumber(data['Variation Count'], {
+          min: 0,
+          decimals: 0,
+          paramName: 'variationCount',
+          allowNull: true,
+        }),
+        type: data['Type'],
+        hazardousMaterials: data['Hazardous Materials'],
+        isHazmat: data['Is HazMat'] === 'true',
       };
 
       results.push(mappedData);
