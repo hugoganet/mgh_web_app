@@ -14,7 +14,8 @@ const processKeepaDataFile = async (
   logContext = 'keepaProcessingService',
   flushBuffer = true,
 ) => {
-  const results = [];
+  const BATCH_SIZE = 1000;
+  const resultsBuffer = [];
   const errors = [];
   const duplicates = new Set();
   const missingProductCategories = [];
@@ -30,7 +31,6 @@ const processKeepaDataFile = async (
   );
 
   for await (const data of csvStream) {
-    console.log(data);
     try {
       const countryCode = data.Locale.toUpperCase();
       const asin = data.ASIN;
@@ -717,7 +717,14 @@ const processKeepaDataFile = async (
         isHazmat: data['Is HazMat'] === 'true',
       };
 
-      results.push(mappedData);
+      resultsBuffer.push(mappedData);
+
+      if (resultsBuffer.length >= BATCH_SIZE) {
+        await db.KeepaData.bulkCreate(resultsBuffer, {
+          ignoreDuplicates: true,
+        });
+        resultsBuffer.length = 0; // Clear the buffer
+      }
     } catch (error) {
       errors.push({ error: error.message, row: data });
       logMessage += `Error processing row: ${JSON.stringify(
@@ -729,12 +736,12 @@ const processKeepaDataFile = async (
   }
 
   try {
-    if (results.length > 0) {
-      const insertResult = await db.KeepaData.bulkCreate(results, {
+    if (resultsBuffer.length > 0) {
+      await db.KeepaData.bulkCreate(resultsBuffer, {
         ignoreDuplicates: true,
       });
-      logMessage += `Keepa data processed successfully. ${insertResult.length} records inserted.`;
     }
+    logMessage += `Keepa data processed successfully. ${resultsBuffer.length} records inserted.`;
   } catch (error) {
     logMessage += `Error during bulk insert: ${JSON.stringify(
       error.message,
@@ -748,7 +755,7 @@ const processKeepaDataFile = async (
 
     return {
       message: 'Keepa data processed successfully.',
-      processed: results.length,
+      processed: resultsBuffer.length,
       duplicates: duplicates.size,
       missingProductCategories: missingProductCategories.length,
       errors: errors.length,
