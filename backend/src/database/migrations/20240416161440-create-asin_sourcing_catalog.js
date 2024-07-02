@@ -12,7 +12,6 @@ module.exports = {
       },
       keepa_data_id: {
         type: Sequelize.INTEGER,
-        unique: true,
         allowNull: false,
         references: {
           model: 'keepa_data',
@@ -27,7 +26,23 @@ module.exports = {
           key: 'ean',
         },
       },
+      asin: {
+        type: Sequelize.CHAR(10),
+        allowNull: false,
+      },
       product_category_rank: {
+        type: Sequelize.DECIMAL(6, 5),
+      },
+      margin: {
+        type: Sequelize.DECIMAL(10, 2),
+      },
+      margin_percentage: {
+        type: Sequelize.DECIMAL(6, 5),
+      },
+      roi: {
+        type: Sequelize.DECIMAL(6, 5),
+      },
+      daily_roi: {
         type: Sequelize.DECIMAL(6, 5),
       },
       average_selling_price_inc: {

@@ -32,7 +32,23 @@ module.exports = sequelize => {
           key: 'ean',
         },
       },
+      asin: {
+        type: DataTypes.CHAR(10),
+        allowNull: false,
+      },
       productCategoryRank: {
+        type: DataTypes.DECIMAL(6, 5),
+      },
+      margin: {
+        type: DataTypes.DECIMAL(10, 2),
+      },
+      marginPercentage: {
+        type: DataTypes.DECIMAL(6, 5),
+      },
+      roi: {
+        type: DataTypes.DECIMAL(6, 5),
+      },
+      dailyRoi: {
         type: DataTypes.DECIMAL(6, 5),
       },
       averageSellingPriceInc: {
